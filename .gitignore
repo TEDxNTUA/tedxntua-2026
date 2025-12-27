@@ -2,3 +2,4 @@ node_modules/
 .next/
 .env*
 EOF
+/out #Future developers wont upload out folder / lets go team
