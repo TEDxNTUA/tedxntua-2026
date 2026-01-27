@@ -1,5 +1,11 @@
-node_modules/
-.next/
-.env*
-EOF
-/out #Future developers wont upload out folder / lets go team
+/node_modules/
+/.next/
+dist/
+build/
+.env
+.env.local
+*.log
+.DS_Store
+coverage/
+.idea/
+.vscode/

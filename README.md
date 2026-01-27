@@ -1,2 +1,2 @@
-# Not started Yet
-Check issues ... learn it team
+# .gitignore
+This file is for making the git to ignore files/folders that are auto generated when someone of us build the website. If you are about to commit and see files that are irrational just stop an modify this file well , do not commit these. After the new modifications in gitignore push.
