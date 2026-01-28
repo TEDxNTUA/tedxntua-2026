@@ -26,11 +26,34 @@ export default function TeamTimeline({ teams }: Props) {
       const elTop = rect.top;
       const elHeight = rect.height;
 
-      // Calculate how far we've scrolled through the container
-      const start = windowH * 0.5;
-      const scrolled = start - elTop;
-      const total = elHeight;
-      const progress = Math.max(0, Math.min(1, scrolled / total));
+      // Use document-scroll based mapping for more stable progress:
+      // progress = (scrollY + windowHeight - elementDocumentTop) / (elementHeight + windowHeight)
+      const docTop = rect.top + window.pageYOffset;
+      const scrollY = window.pageYOffset || window.scrollY || 0;
+      // Account for any fixed header that reduces visible viewport height
+      let headerHeight = 0;
+      try {
+        const headerEl = document.querySelector("header, nav, .navbar, .topbar, .site-header");
+        if (headerEl) {
+          const cs = getComputedStyle(headerEl as Element);
+          if (cs.position === "fixed" || cs.position === "sticky") {
+            headerHeight = (headerEl as HTMLElement).offsetHeight || 0;
+          }
+        }
+      } catch (e) {
+        headerHeight = 0;
+      }
+
+      const effectiveWindowH = Math.max(0, windowH - headerHeight);
+
+      // Map progress so 0 = bottom of viewport at element top,
+      // 1 = bottom of viewport at element bottom. Use elHeight
+      // as denominator so the ball reaches the bottom when the
+      // element is fully visible in the viewport.
+      const progress = Math.max(
+        0,
+        Math.min(1, (scrollY + effectiveWindowH - docTop) / Math.max(elHeight, 1))
+      );
       setScrollProgress(progress);
     };
 
@@ -39,12 +62,32 @@ export default function TeamTimeline({ teams }: Props) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Ensure the timeline container is tall enough so the vertical bar reaches bottom
+  // Measure actual content height and use that for minHeight so the bar
+  // truly spans the entire content and the ball can reach the bottom.
   useEffect(() => {
-    const rowEstimate = 260; // estimated px per team row (includes gaps)
-    const padding = 320; // extra padding in px
-    const target = Math.max(teams.length * rowEstimate + padding, typeof window !== 'undefined' ? window.innerHeight : 800);
-    setMinHeight(`${target}px`);
+    const el = containerRef.current;
+    if (!el) return;
+
+    const measure = () => {
+      // el.scrollHeight includes children and gaps
+      const scrollH = el.scrollHeight || el.offsetHeight || 0;
+      const target = Math.max(scrollH, typeof window !== 'undefined' ? window.innerHeight : 800);
+      setMinHeight(`${target}px`);
+    };
+
+    // initial measure
+    // use rAF to ensure layout settled
+    requestAnimationFrame(measure);
+
+    // watch for resizes and content changes
+    window.addEventListener("resize", measure, { passive: true });
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+
+    return () => {
+      window.removeEventListener("resize", measure);
+      ro.disconnect();
+    };
   }, [teams.length]);
 
   return (
@@ -57,10 +100,10 @@ export default function TeamTimeline({ teams }: Props) {
           style={{ height: `${scrollProgress * 100}%` }}
         />
         {/* Moving ball (moves with scroll) */}
-        <div
-          className="absolute left-1/2 -translate-x-1/2 w-5 h-5 bg-red-600 border-4 border-black rounded-full shadow-lg transition-all duration-100 z-10"
-          style={{ top: `calc(${scrollProgress * 100}% - 10px)` }}
-        />
+          <div
+            className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-red-600 border-4 border-black rounded-full shadow-lg transition-all duration-100 z-10"
+            style={{ top: `${scrollProgress * 100}%` }}
+          />
       </div>
 
       {/* Teams */}

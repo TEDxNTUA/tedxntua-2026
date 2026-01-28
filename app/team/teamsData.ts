@@ -46,6 +46,20 @@ export const teams: Team[] = [
     ]
   },
   {
+    slug: "fundraising",
+    title: "Fundraising",
+    description: "Sponsorships, donations and budget planning.",
+    heroImages: [
+      "https://via.placeholder.com/1000x400?text=Fundraising+1",
+      "https://via.placeholder.com/1000x400?text=Fundraising+2",
+      "https://via.placeholder.com/1000x400?text=Fundraising+3"
+    ],
+    members: [
+      { id: "f1", name: "Maria", role: "Head of Fundraising", photo: "https://via.placeholder.com/300?text=Maria" },
+      { id: "f2", name: "Ilias", role: "Sponsorships", photo: "https://via.placeholder.com/300?text=Ilias" }
+    ]
+  },
+  {
     slug: "design",
     title: "Design",
     description: "Visual identity, stage visuals and branding.",

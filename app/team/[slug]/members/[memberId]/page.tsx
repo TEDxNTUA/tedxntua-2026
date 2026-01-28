@@ -1,5 +1,4 @@
-import Link from "next/link";
-import teams from "../../teamsData";
+import teams from "../../../teamsData";
 
 type Props = { params: { slug: string; memberId: string } };
 
@@ -14,7 +13,7 @@ export default function MemberPage({ params }: Props) {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-semibold">Not found</h2>
           <p className="text-gray-600">No member matches &quot;{memberId}&quot; in team &quot;{slug}&quot;.</p>
-          <Link href={`/team/${slug}`} className="text-blue-600 mt-4 block">Back to team</Link>
+          <a href={`/team/${slug}`} className="text-blue-600 mt-4 block">Back to team</a>
         </div>
       </section>
     );
@@ -23,7 +22,7 @@ export default function MemberPage({ params }: Props) {
   return (
     <section className="min-h-screen p-8">
       <div className="max-w-3xl mx-auto">
-        <Link href={`/team/${slug}`} className="text-blue-600 mb-4 inline-block">← Back to team</Link>
+        <a href={`/team/${slug}`} className="text-blue-600 mb-4 inline-block">← Back to team</a>
         <div className="flex gap-6 items-start">
           <div className="w-40 h-40 rounded overflow-hidden bg-gray-100">
             {member.photo ? (

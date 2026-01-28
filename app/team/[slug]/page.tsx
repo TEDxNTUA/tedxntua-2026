@@ -1,4 +1,3 @@
-import Link from "next/link";
 import TeamHero from "../components/TeamHero";
 import teams from "../teamsData";
 
@@ -14,7 +13,7 @@ export default function TeamDetailPage({ params }: Props) {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-semibold">Team not found</h2>
           <p className="text-gray-600">No team matches &quot;{slug}&quot;.</p>
-          <Link href="/team" className="text-blue-600 mt-4 block">Back to teams</Link>
+          <a href="/team" className="text-blue-600 mt-4 block">Back to teams</a>
         </div>
       </section>
     );
@@ -46,7 +45,7 @@ export default function TeamDetailPage({ params }: Props) {
                 </div>
                 <h3 className="font-medium">{m.name}</h3>
                 {m.role && <p className="text-sm text-gray-500">{m.role}</p>}
-                <Link href={`/team/${team.slug}/members/${m.id}`} className="mt-3 text-blue-600">View profile</Link>
+                <a href={`/team/${team.slug}/members/${m.id}`} className="mt-3 text-blue-600">View profile</a>
               </div>
             ))}
           </div>
