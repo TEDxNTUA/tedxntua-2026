@@ -4,16 +4,8 @@ export default function Home() {
       <main className="flex flex-col items-center justify-center text-center px-8">
         <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tight mb-4">
           TEDxNTUA
-        </h1>
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold text-white/90 tracking-wide">
-          2026
-        </h2>
+        </h1>        
       </main>
-      <footer className="w-full py-4 bg-black text-white text-center">
-        <p className="text-sm">
-          © 2026 TEDxNTUA. All rights reserved.
-        </p>
-      </footer>
     </div>
   );
 }

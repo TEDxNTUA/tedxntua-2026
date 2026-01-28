@@ -24,3 +24,178 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Page enter animation for route transitions */
+/* smooth, slightly bouncy enter with de-blur */
+@keyframes page-in {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(.985);
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 0.98;
+    transform: translateY(4px) scale(0.995);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.page-transition-container {
+  position: relative;
+  overflow: visible;
+}
+
+.page-content {
+  will-change: transform, opacity, filter;
+}
+
+/* Make slide animations smoother: longer duration, subtle overshoot and deblur, GPU-backed transforms */
+.page-transition-container {
+  perspective: 1000px;
+}
+
+.page-content {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform, opacity, filter;
+}
+
+@keyframes slide-in-from-right {
+  0% {
+    transform: translate3d(30px,0,0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0,0,0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-from-left {
+  0% {
+    transform: translate3d(-30px,0,0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0,0,0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-from-right,
+.animate-slide-in-from-left {
+  animation-duration: 400ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+  will-change: transform, opacity;
+}
+
+.animate-slide-in-from-right { animation-name: slide-in-from-right; }
+.animate-slide-in-from-left { animation-name: slide-in-from-left; }
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide-in-from-right,
+  .animate-slide-in-from-left {
+    animation-duration: 0ms;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Header nav pills */
+.nav-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(248, 250, 252, 0.22);
+  background:
+    radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.28), transparent 55%),
+    rgba(15, 23, 42, 0.55);
+  color: #f9fafb;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  overflow: hidden;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.85),
+    0 0 0 1px rgba(148, 163, 184, 0.25);
+  transition:
+    transform 260ms cubic-bezier(0.22, 0.9, 0.25, 1),
+    box-shadow 260ms cubic-bezier(0.22, 0.9, 0.25, 1),
+    border-color 220ms ease-out,
+    background-color 220ms ease-out,
+    color 220ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .nav-pill {
+    padding: 0.45rem 1.4rem;
+    font-size: 0.8rem;
+  }
+}
+
+.nav-pill::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 15, 15, 0.98),
+    rgba(30, 30, 30, 0.98)
+  );
+  opacity: 0;
+  transform: translate3d(-30%, 0, 0);
+  transition:
+    opacity 420ms cubic-bezier(0.16, 0.84, 0.24, 1),
+    transform 420ms cubic-bezier(0.16, 0.84, 0.24, 1);
+  z-index: -1;
+}
+
+.nav-pill:hover::before {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.nav-pill:hover {
+  transform: translateY(-1px) scale(1.07);
+  border-color: rgba(248, 113, 113, 0.95);
+  box-shadow:
+    0 18px 45px rgba(15, 23, 42, 0.95),
+    0 0 26px rgba(248, 113, 113, 0.85);
+}
+
+.nav-pill:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow:
+    0 10px 26px rgba(15, 23, 42, 0.9),
+    0 0 18px rgba(248, 113, 113, 0.7);
+}
+
+.nav-pill--active {
+  border-color: rgba(248, 113, 113, 1);
+  background:
+    radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.38), transparent 55%),
+    linear-gradient(120deg, rgba(248, 113, 113, 0.95), rgba(239, 68, 68, 0.96));
+  box-shadow:
+    0 20px 50px rgba(127, 29, 29, 0.9),
+    0 0 32px rgba(248, 113, 113, 0.95);
+  color: #fefce8;
+}
+
+
+
