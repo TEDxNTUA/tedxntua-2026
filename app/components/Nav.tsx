@@ -1,18 +1,14 @@
 "use client";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
-function handleClick(index: number) {
-  try {
-    sessionStorage.setItem("nav-target-index", String(index));
-  } catch {
-    // ignore (server-side or private mode)
-  }
-}
+const ROUTES = ["/", "/sponsors", "/team"];
 
-export default function Nav() {
-  const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+export default function Nav(): JSX.Element {
+  const router = useRouter();
+  const pathnameRaw = usePathname();
+  const pathname = pathnameRaw ?? "/";
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const baseClass = "nav-pill";
 
@@ -20,9 +16,18 @@ export default function Nav() {
   const sponsorsClass = pathname === "/sponsors" ? `${baseClass} nav-pill--active` : baseClass;
   const teamClass = pathname === "/team" ? `${baseClass} nav-pill--active` : baseClass;
 
-  const handleNavClick = (index: number) => {
-    handleClick(index);
+  const navigate = (index: number): void => {
+    try {
+      sessionStorage.setItem("nav-target-index", String(index));
+    } catch {
+      // ignore
+    }
+    router.push(ROUTES[index]);
+  };
+
+  const handleNavClick = (index: number): void => {
     setIsOpen(false);
+    navigate(index);
   };
 
   return (
@@ -30,9 +35,10 @@ export default function Nav() {
       {/* Mobile hamburger button */}
       <button
         className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 z-50"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen((s) => !s)}
         aria-label="Toggle navigation menu"
         aria-expanded={isOpen}
+        type="button"
       >
         <span
           className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
@@ -53,15 +59,15 @@ export default function Nav() {
 
       {/* Desktop navigation */}
       <nav className="hidden md:flex items-center gap-3">
-        <a href="/" onClick={() => handleClick(0)} className={homeClass}>
+        <button type="button" onClick={() => navigate(0)} className={homeClass}>
           Home
-        </a>
-        <a href="/sponsors" onClick={() => handleClick(1)} className={sponsorsClass}>
+        </button>
+        <button type="button" onClick={() => navigate(1)} className={sponsorsClass}>
           Sponsors
-        </a>
-        <a href="/team" onClick={() => handleClick(2)} className={teamClass}>
+        </button>
+        <button type="button" onClick={() => navigate(2)} className={teamClass}>
           Team
-        </a>
+        </button>
       </nav>
 
       {/* Mobile navigation overlay */}
@@ -77,27 +83,19 @@ export default function Nav() {
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <a
-            href="/"
-            onClick={() => handleNavClick(0)}
-            className={`${homeClass} text-lg`}
-          >
+          <button type="button" onClick={() => handleNavClick(0)} className={`${homeClass} text-lg`}>
             Home
-          </a>
-          <a
-            href="/sponsors"
+          </button>
+          <button
+            type="button"
             onClick={() => handleNavClick(1)}
             className={`${sponsorsClass} text-lg`}
           >
             Sponsors
-          </a>
-          <a
-            href="/team"
-            onClick={() => handleNavClick(2)}
-            className={`${teamClass} text-lg`}
-          >
+          </button>
+          <button type="button" onClick={() => handleNavClick(2)} className={`${teamClass} text-lg`}>
             Team
-          </a>
+          </button>
         </nav>
       </div>
     </>

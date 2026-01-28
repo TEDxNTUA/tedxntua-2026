@@ -5,10 +5,14 @@ import { usePathname } from "next/navigation";
 // Define the canonical order of routes for directional transitions
 const ROUTE_ORDER = ["/", "/sponsors", "/team"];
 
-export default function PageTransition({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
+type Direction = "from-right" | "from-left";
+
+export default function PageTransition({ children }: { children: ReactNode }): JSX.Element {
+  const pathnameRaw = usePathname();
+  const pathname = pathnameRaw ?? "/";
+
   const prevRef = useRef<string | null>(null);
-  const [direction, setDirection] = useState<"from-right" | "from-left">("from-right");
+  const [direction, setDirection] = useState<Direction>("from-left");
 
   useEffect(() => {
     const prev = prevRef.current;
