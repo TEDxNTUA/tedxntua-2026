@@ -9,6 +9,11 @@ export default function Home() {
           2026
         </h2>
       </main>
+      <footer className="w-full py-4 bg-black text-white text-center">
+        <p className="text-sm">
+          © 2026 TEDxNTUA. All rights reserved.
+        </p>
+      </footer>
     </div>
   );
 }

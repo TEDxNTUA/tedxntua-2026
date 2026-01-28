@@ -2,22 +2,10 @@
 import type { Metadata } from "next";
 // Import ReactNode type for children prop typing
 import type { ReactNode } from "react";
-// Import Google Fonts (Geist and Geist Mono) for typography
-import { Geist, Geist_Mono } from "next/font/google";
 // Import global CSS styles
 import "./globals.css";
-
-// Configure Geist Sans font with CSS variable for use throughout the app
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-// Configure Geist Mono font with CSS variable for monospace text
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// Import the Link component from next/link
+import Link from "next/link";
 
 // Page metadata for SEO and browser tab display
 export const metadata: Metadata = {
@@ -25,21 +13,36 @@ export const metadata: Metadata = {
   description: "TEDxNTUA 2026 - Ideas Worth Spreading",
 };
 
-// Root layout component that wraps all pages in the app
-// This is the top-level component that defines the HTML structure
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: ReactNode;
-}>) {
+
+
+// Define the layout component
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      {/* Apply font variables and antialiasing to the body */}
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* Render child pages/components */}
-        {children}
+      <body className="bg-blue-100 text-gray-900">
+        {/* Header */}
+        <header className="bg-black-900 text-white py-4 h-30">
+          <div className="relative top-4 left-30">
+            <Link href="https://www.tedxntua.com/">
+            <img
+              src="/tedxntua-logo.png"
+              alt="TEDxNTUA official logo"
+              className="w-66 h-15 transition-transform duration-300 hover:scale-120"
+            />
+            </Link>
+          </div>
+        </header>
+
+        {/* Main Content */}
+       <main>
+        <div className="w-full h-screen bg-red-200"/>
+       </main>
+        {/* Footer */}
+        <footer className="bg-black text-white py-4">
+          <div className="container mx-auto text-center">
+            <p className="text-sm">© 2026 TEDxNTUA. All rights reserved.</p>
+          </div>
+        </footer>
       </body>
     </html>
   );
