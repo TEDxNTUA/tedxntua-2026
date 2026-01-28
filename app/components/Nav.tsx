@@ -66,7 +66,7 @@ export default function Nav(): JSX.Element {
           Sponsors
         </button>
         <button type="button" onClick={() => navigate(2)} className={teamClass}>
-          Team
+          The Team
         </button>
       </nav>
 
@@ -94,7 +94,7 @@ export default function Nav(): JSX.Element {
             Sponsors
           </button>
           <button type="button" onClick={() => handleNavClick(2)} className={`${teamClass} text-lg`}>
-            Team
+            The Team
           </button>
         </nav>
       </div>
