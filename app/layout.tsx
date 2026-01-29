@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className="container mx-auto flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
             <a href="https://www.tedxntua.com/" aria-label="TEDxNTUA home">
               <img
-                src="/tedxntua-logo.png"
+                src="/tedxntua_logo.png"
                 alt="TEDxNTUA official logo"
                 className="w-32 sm:w-40 md:w-48 h-auto transition-transform duration-300 hover:scale-110"
               />
