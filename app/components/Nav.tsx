@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-const ROUTES = ["/", "/sponsors", "/team"];
+const ROUTES = ["/","/program", "/sponsors", "/team"];
 
 export default function Nav(): JSX.Element {
   const router = useRouter();
@@ -15,7 +15,8 @@ export default function Nav(): JSX.Element {
   const homeClass = pathname === "/" ? `${baseClass} nav-pill--active` : baseClass;
   const sponsorsClass = pathname === "/sponsors" ? `${baseClass} nav-pill--active` : baseClass;
   const teamClass = pathname === "/team" ? `${baseClass} nav-pill--active` : baseClass;
-
+  const programClass = pathname === "/program" ? `${baseClass} nav-pill--active` : baseClass;
+  
   const navigate = (index: number): void => {
     try {
       sessionStorage.setItem("nav-target-index", String(index));
@@ -62,10 +63,15 @@ export default function Nav(): JSX.Element {
         <button type="button" onClick={() => navigate(0)} className={homeClass}>
           Home
         </button>
-        <button type="button" onClick={() => navigate(1)} className={sponsorsClass}>
+
+        <button type="button" onClick={() => navigate(1)} className={programClass}>
+          Program
+        </button>
+        
+        <button type="button" onClick={() => navigate(2)} className={sponsorsClass}>
           Sponsors
         </button>
-        <button type="button" onClick={() => navigate(2)} className={teamClass}>
+        <button type="button" onClick={() => navigate(3)} className={teamClass}>
           The Team
         </button>
       </nav>
@@ -86,16 +92,29 @@ export default function Nav(): JSX.Element {
           <button type="button" onClick={() => handleNavClick(0)} className={`${homeClass} text-lg`}>
             Home
           </button>
+
+
           <button
             type="button"
             onClick={() => handleNavClick(1)}
+            className={`${programClass} text-lg`}
+          >
+            Program
+          </button>
+
+
+          <button
+            type="button"
+            onClick={() => handleNavClick(2)}
             className={`${sponsorsClass} text-lg`}
           >
             Sponsors
           </button>
-          <button type="button" onClick={() => handleNavClick(2)} className={`${teamClass} text-lg`}>
+
+          <button type="button" onClick={() => handleNavClick(3)} className={`${teamClass} text-lg`}>
             The Team
           </button>
+
         </nav>
       </div>
     </>
