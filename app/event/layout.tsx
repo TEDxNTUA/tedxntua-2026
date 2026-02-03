@@ -3,22 +3,23 @@ import EventNav from "./components/EventNav";
 
 export default function EventLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="container mx-auto px-4 py-6">
-      <div className="flex gap-8">
-        <aside className="w-64 hidden md:block sticky top-[72px] self-start">
-          <div className="pt-4">
-            <EventNav />
-          </div>
-        </aside>
-
-        <div className="flex-1">
-          {children}
+    <div>
+      {/* Desktop: horizontal nav under main header */}
+      <div className="bg-white border-b sticky top-[72px] z-40 hidden md:block">
+        <div className="container mx-auto px-4 py-3">
+          <EventNav variant="horizontal" />
         </div>
       </div>
 
-      {/* Mobile: show a compact horizontal nav under the header */}
-      <div className="md:hidden mt-4">
-        <EventNav />
+      {/* Mobile: show compact horizontal nav under the header */}
+      <div className="md:hidden bg-white border-b">
+        <div className="container mx-auto px-4 py-2">
+          <EventNav variant="horizontal" />
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-6">
+        <div>{children}</div>
       </div>
     </div>
   );

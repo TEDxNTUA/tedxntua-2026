@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
+type Variant = "vertical" | "horizontal";
+
 const tabs = [
   { label: "Program", path: "/event/program", hash: "#program" },
   { label: "Speakers", path: "/event/more", hash: "#speakers" },
@@ -12,7 +14,7 @@ const tabs = [
   { label: "Side Happenings", path: "/event/more", hash: "#side-happenings" },
 ];
 
-export default function EventNav(): JSX.Element {
+export default function EventNav({ variant = "vertical" }: { variant?: Variant }): JSX.Element {
   const router = useRouter();
   const pathname = usePathname();
   const [activeKey, setActiveKey] = useState<string>("/event/program#program");
@@ -47,12 +49,18 @@ export default function EventNav(): JSX.Element {
     setActiveKey(target);
   };
 
+  const navClass = variant === "vertical" ? "event-nav-vertical" : "event-nav-horizontal";
+
   return (
-    <nav className="event-nav-vertical" aria-label="Event navigation">
+    <nav className={navClass} aria-label="Event navigation">
       {tabs.map((t) => {
         const key = `${t.path}${t.hash}`;
         const isActive = key === activeKey;
-        const className = isActive ? "nav-pill nav-pill--active" : "nav-pill";
+        const isProgram = t.path === "/event/program";
+        const base = isActive ? "nav-pill nav-pill--active" : "nav-pill";
+        const special = isProgram ? "nav-pill--program" : "";
+        const className = `${base} ${special}`.trim();
+
         return (
           <button
             key={key}
