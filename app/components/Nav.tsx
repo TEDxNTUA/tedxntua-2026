@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { useEventNav } from "./EventNavProvider";
 
 const ROUTES = ["/","/event", "/sponsors", "/team"];
 
@@ -9,13 +10,17 @@ export default function Nav(): JSX.Element {
   const pathnameRaw = usePathname();
   const pathname = pathnameRaw ?? "/";
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { toggle: toggleEventNav } = useEventNav();
+
+  // Check if we're on an event page
+  const isEventPage = pathname.startsWith("/event");
 
   const baseClass = "nav-pill";
 
   const homeClass = pathname === "/" ? `${baseClass} nav-pill--active` : baseClass;
   const sponsorsClass = pathname === "/sponsors" ? `${baseClass} nav-pill--active` : baseClass;
   const teamClass = pathname === "/team" ? `${baseClass} nav-pill--active` : baseClass;
-  const eventClass = pathname === "/event" ? `${baseClass} nav-pill--active` : baseClass;
+  const eventClass = isEventPage ? `${baseClass} nav-pill--active` : baseClass;
   
   const navigate = (index: number): void => {
     try {
@@ -29,6 +34,16 @@ export default function Nav(): JSX.Element {
   const handleNavClick = (index: number): void => {
     setIsOpen(false);
     navigate(index);
+  };
+
+  const handleEventClick = (): void => {
+    if (isEventPage) {
+      // If already on event page, toggle the sidebar
+      toggleEventNav();
+    } else {
+      // Navigate to event page
+      navigate(1);
+    }
   };
 
   return (
@@ -64,7 +79,7 @@ export default function Nav(): JSX.Element {
           Home
         </button>
 
-        <button type="button" onClick={() => navigate(1)} className={eventClass}>
+        <button type="button" onClick={handleEventClick} className={eventClass}>
           Event
         </button>
         
@@ -93,15 +108,16 @@ export default function Nav(): JSX.Element {
             Home
           </button>
 
-
           <button
             type="button"
-            onClick={() => handleNavClick(1)}
+            onClick={() => {
+              handleEventClick();
+              setIsOpen(false);
+            }}
             className={`${eventClass} text-lg`}
           >
-            Program
+            Event
           </button>
-
 
           <button
             type="button"
