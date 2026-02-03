@@ -141,10 +141,11 @@ body {
     color 220ms ease-out;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 568px) {
   .nav-pill {
-    padding: 0.45rem 1.4rem;
-    font-size: 0.8rem;
+    /* Increased padding and font-size for better desktop readability and click targets */
+    padding: 0.7rem 1.25rem;
+    font-size: 0.75rem;
   }
 }
 
