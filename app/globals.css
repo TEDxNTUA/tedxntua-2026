@@ -235,6 +235,39 @@ body {
 /* Add a small extra offset so headings don't sit flush with the sticky header */
 .scroll-mt-24 { scroll-margin-top: calc(6rem + 12px); }
 
+/* More page sections: black background, white text, double white separator */
+.more-section {
+  background: #000;
+  color: #fff;
+  position: relative;
+}
+
+.more-section .container { color: inherit; }
+.more-section h1, .more-section h2, .more-section p, .more-section li { color: inherit; }
+
+/* give extra bottom padding to make room for separators */
+.more-section { padding-bottom: 4.5rem; }
+
+.more-section::before,
+.more-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px; /* thicker lines */
+  background: #fff;
+  z-index: 10;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* place the two lines with a clear gap between them */
+.more-section::before { bottom: -24px; }
+.more-section::after { bottom: -14px; }
+
+/* Small responsive tweak so separators don't overlap footer */
+.more-section:last-child::before,
+.more-section:last-child::after { bottom: -10px; }
+
 /* Horizontal event nav (desktop and mobile compact) */
 .event-nav-horizontal {
   display: flex;
