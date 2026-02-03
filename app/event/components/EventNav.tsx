@@ -91,8 +91,11 @@ export default function EventNav({ variant = "vertical" }: { variant?: Variant }
 
   const navClass = variant === "vertical" ? "event-nav-vertical" : "event-nav-horizontal";
 
-  return (
-    <nav className={navClass} aria-label="Event navigation">
+  // open state controls visibility of the nav (true = visible)
+  const [open, setOpen] = useState<boolean>(true);
+
+  const buttons = (
+    <>
       {tabs.map((t) => {
         const key = `${t.path}${t.hash}`;
         const isActive = key === activeKey;
@@ -113,6 +116,58 @@ export default function EventNav({ variant = "vertical" }: { variant?: Variant }
           </button>
         );
       })}
-    </nav>
+    </>
+  );
+
+  // Toggle SVG with drawn path
+  const Chevron = ({ open }: { open: boolean }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={`w-6 h-6 transform transition-transform ${open ? "rotate-180" : ""}`} aria-hidden="true">
+      <path d="M4 9l8 8 8-8" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={`chev-path ${open ? "drawn" : ""}`} />
+    </svg>
+  );
+
+  if (variant === "horizontal") {
+    return (
+      <div className="flex items-center justify-center gap-3">
+        <div className={`event-nav-container ${open ? "open" : "closed"}`} aria-hidden={!open}>
+          <nav className={navClass} aria-label="Event navigation">
+            {buttons}
+          </nav>
+        </div>
+
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-label={open ? "Close event nav" : "Open event nav"}
+          onClick={() => setOpen((o) => !o)}
+          className={`p-2 rounded-md hover:bg-gray-100 transition-colors event-nav-toggle ${open ? 'open' : 'closed'}`}
+        >
+          <Chevron open={open} />
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full">
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-medium">Event</span>
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-label={open ? "Close event nav" : "Open event nav"}
+          onClick={() => setOpen((o) => !o)}
+          className={`p-2 rounded-md hover:bg-gray-100 transition-colors event-nav-toggle ${open ? 'open' : 'closed'}`}
+        >
+          <Chevron open={open} />
+        </button>
+      </div>
+
+      <div className={`event-nav-container ${open ? "open" : "closed"}`} aria-hidden={!open}>
+        <nav className={navClass} aria-label="Event navigation">
+          {buttons}
+        </nav>
+      </div>
+    </div>
   );
 }
