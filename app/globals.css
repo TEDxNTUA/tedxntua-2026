@@ -232,7 +232,8 @@ body {
 }
 
 /* Make sure anchor targets don't hide under sticky header */
-.scroll-mt-24 { scroll-margin-top: 6rem; }
+/* Add a small extra offset so headings don't sit flush with the sticky header */
+.scroll-mt-24 { scroll-margin-top: calc(6rem + 12px); }
 
 /* Horizontal event nav (desktop and mobile compact) */
 .event-nav-horizontal {
