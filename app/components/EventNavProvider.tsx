@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import EventSidebar from "./EventSidebar";
 import EventNavToggle from "./EventNavToggle";
@@ -10,7 +10,8 @@ interface EventNavContextType {
   close: () => void;
 }
 
-const EventNavContext = createContext<EventNavContextType | undefined>(undefined);
+// Use null as the default; `useEventNav` will throw outside provider
+const EventNavContext: import("react").Context<EventNavContextType | null> = createContext<EventNavContextType | null>(null);
 
 export function useEventNav() {
   const context = useContext(EventNavContext);
@@ -37,12 +38,14 @@ export default function EventNavProvider({ children }: { children: ReactNode }) 
   const toggle = () => setIsOpen((prev) => !prev);
   const close = () => setIsOpen(false);
 
-  return (
-    <EventNavContext.Provider value={{ isOpen, toggle, close }}>
-      {children}
-      <EventNavToggle isOpen={isOpen} onToggle={toggle} visible={isEventPage} />
-      <EventSidebar isOpen={isOpen} onClose={close} />
-    </EventNavContext.Provider>
+  return React.createElement(
+    EventNavContext.Provider,
+    { value: { isOpen, toggle, close } },
+    React.createElement(React.Fragment, null,
+      children,
+      React.createElement(EventNavToggle, { isOpen, onToggle: toggle, visible: isEventPage }),
+      React.createElement(EventSidebar, { isOpen, onClose: close })
+    )
   );
 }
 
