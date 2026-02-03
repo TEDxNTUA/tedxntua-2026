@@ -197,5 +197,42 @@ body {
   color: #fefce8;
 }
 
+/* Event sidebar variant: vertical, large, mono font like the screenshot */
+.event-nav-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.event-nav-vertical .nav-pill {
+  display: block;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 1rem 1.25rem;
+  border-radius: 0.25rem;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace);
+  font-size: 1.75rem;
+  text-transform: none;
+  letter-spacing: 0.04em;
+  box-shadow: none;
+}
+
+.event-nav-vertical .nav-pill:hover {
+  background: rgba(0,0,0,0.2);
+  transform: none;
+}
+
+.event-nav-vertical .nav-pill--active {
+  background: rgba(20,28,39,0.95); /* dark highlight */
+  color: #fff;
+  box-shadow: none;
+}
+
+/* Make sure anchor targets don't hide under sticky header */
+.scroll-mt-24 { scroll-margin-top: 6rem; }
+
 
 

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-const ROUTES = ["/","/program", "/sponsors", "/team"];
+const ROUTES = ["/","/event", "/sponsors", "/team"];
 
 export default function Nav(): JSX.Element {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function Nav(): JSX.Element {
   const homeClass = pathname === "/" ? `${baseClass} nav-pill--active` : baseClass;
   const sponsorsClass = pathname === "/sponsors" ? `${baseClass} nav-pill--active` : baseClass;
   const teamClass = pathname === "/team" ? `${baseClass} nav-pill--active` : baseClass;
-  const programClass = pathname === "/program" ? `${baseClass} nav-pill--active` : baseClass;
+  const eventClass = pathname === "/event" ? `${baseClass} nav-pill--active` : baseClass;
   
   const navigate = (index: number): void => {
     try {
@@ -64,8 +64,8 @@ export default function Nav(): JSX.Element {
           Home
         </button>
 
-        <button type="button" onClick={() => navigate(1)} className={programClass}>
-          Program
+        <button type="button" onClick={() => navigate(1)} className={eventClass}>
+          Event
         </button>
         
         <button type="button" onClick={() => navigate(2)} className={sponsorsClass}>
@@ -97,7 +97,7 @@ export default function Nav(): JSX.Element {
           <button
             type="button"
             onClick={() => handleNavClick(1)}
-            className={`${programClass} text-lg`}
+            className={`${eventClass} text-lg`}
           >
             Program
           </button>
