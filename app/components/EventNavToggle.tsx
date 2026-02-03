@@ -13,7 +13,9 @@ export default function EventNavToggle({ isOpen, onToggle, visible }: EventNavTo
     <button
       type="button"
       onClick={onToggle}
-      className="fixed right-0 top-1/2 -translate-y-1/2 z-50 bg-black text-white p-3 rounded-l-full shadow-lg hover:bg-gray-800 transition-all duration-300"
+      className={`fixed top-1/2 -translate-y-1/2 z-50 bg-black text-white p-3 rounded-l-full shadow-lg hover:bg-gray-800 transition-all duration-300 ease-in-out ${
+        isOpen ? "right-56 translate-x-0" : "right-0"
+      }`}
       aria-label={isOpen ? "Close event navigation" : "Open event navigation"}
       aria-expanded={isOpen}
     >
@@ -25,7 +27,10 @@ export default function EventNavToggle({ isOpen, onToggle, visible }: EventNavTo
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
-        className={`w-6 h-6 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+        className={`w-6 h-6 ${isOpen ? "rotate-180" : ""}`}
+        style={{ 
+          transition: 'transform 10000000ms cubic-bezier(0.2, 0.9, 0.2, 1)'
+        }}
       >
         <path d="M9 18l6-6-6-6" />
       </svg>
