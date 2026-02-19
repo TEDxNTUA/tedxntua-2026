@@ -1,0 +1,180 @@
+.wrap {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    width: min(80vmin, 44rem);
+    height: min(40vmin, 22rem);
+    margin: 0;
+    background: inherit;
+    transform: translateX(-50%) scale(0.8);
+    opacity: 1;
+    transition: transform .5s, opacity .5s;
+    border-radius: 0 0 40vmin 40vmin;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+
+.a {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 40vmin;
+    height: 40vmin;
+    overflow: hidden;
+    transform-origin: 0% 0%;
+    transform: scale(.2) translateZ(0px);
+    background: #000000;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.a div {
+    height: 100%;
+    background-size: cover;
+    opacity: .5;
+    transition: opacity .5s;
+    border-radius: inherit;
+}
+
+.a:nth-child(-n+4) div {
+    box-sizing: border-box;
+    border: 0.9vmin solid #E3DFD2;
+}
+
+.a:nth-child(1) {
+    transition: transform .4s;
+    transform: rotate(90deg) scale(.1) translateZ(0px);
+    clip-path: circle(100% at 0 0);
+}
+
+.a:nth-child(1) div {
+    background-image: url('/video-recap.png');
+    background-repeat: no-repeat;
+    background-position: center 30%;
+    transform: rotate(-90deg);
+}
+
+.a:nth-child(2) {
+    transition: transform .4s;
+    transform: rotate(45deg) scale(.1) translateZ(0px);
+    clip-path: circle(100% at 0 0);
+}
+
+.a:nth-child(2) div {
+    background-image: url('/1_.png');
+    background-repeat: no-repeat;
+    background-position: center 30%;
+    transform: rotate(-45deg);
+}
+
+.a:nth-child(3) {
+    transition: transform .4s;
+    transform: rotate(0deg) scale(.1) translateZ(0px);
+    clip-path: circle(100% at 0 0);
+}
+
+.a:nth-child(3) div {
+    background-image: url('/archive.png');
+    background-repeat: no-repeat;
+    background-position: center 30%;
+    background-size: contain;
+    transform: rotate(0deg);
+}
+
+.a:nth-child(4) {
+    transition: transform .4s;
+    transform: rotate(-45deg) scale(.1) translateZ(0px);
+    clip-path: circle(100% at 0 0);
+}
+
+.a:nth-child(4) div {
+    background-image: url('/team.jpg');
+    background-repeat: no-repeat;
+    background-position: center 65%;
+    transform: rotate(45deg);
+}
+
+.a:nth-child(5) {
+    width: 55%;
+    height: 55%;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) scale(1);
+    border-radius: 0 0 50vmin 50vmin;
+    box-shadow: 0 0 0 5vmin #E3DFD2;
+    clip-path: none;
+    z-index: 10;
+}
+
+.a:nth-child(5) div {
+    background-image: url('/tedxntua_logo.png');
+    background-repeat: no-repeat;
+    background-position: center 40%;
+    background-size: 220px auto;
+    border: none;
+    border-radius: 0;
+    clip-path: none;
+
+}
+
+
+
+.wrap:hover .a:nth-child(1) {
+    transform: rotate(90deg) scale(.93) translateZ(0px);
+}
+
+.wrap:hover .a:nth-child(2) {
+    transform: rotate(45deg) scale(.93) translateZ(0px);
+}
+
+.wrap:hover .a:nth-child(3) {
+    transform: rotate(0deg) scale(.93) translateZ(0px);
+}
+
+.wrap:hover .a:nth-child(4) {
+    transform: rotate(-45deg) scale(.93) translateZ(0px);
+}
+
+.a:hover div {
+    opacity: 1;
+}
+
+.active div {
+    opacity: 1;
+}
+
+.a:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
+}
+
+@media (max-width: 900px) {
+    .wrap {
+        width: min(96vmin, 30rem);
+        height: min(48vmin, 15rem);
+        transform: translateX(-50%) scale(0.95);
+    }
+
+    .a:nth-child(5) div {
+        background-size: clamp(120px, 34vw, 180px) auto;
+    }
+}
+
+/* Touch devices don't have hover; keep wedges open for reliable navigation */
+@media (hover: none), (pointer: coarse) {
+    .a:nth-child(1) {
+        transform: rotate(90deg) scale(.93) translateZ(0px);
+    }
+
+    .a:nth-child(2) {
+        transform: rotate(45deg) scale(.93) translateZ(0px);
+    }
+
+    .a:nth-child(3) {
+        transform: rotate(0deg) scale(.93) translateZ(0px);
+    }
+
+    .a:nth-child(4) {
+        transform: rotate(-45deg) scale(.93) translateZ(0px);
+    }
+}

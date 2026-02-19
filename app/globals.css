@@ -25,6 +25,28 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.site-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-main {
+  flex: 1 0 auto;
+  /* Keep page content clear of the fixed radial navbar across breakpoints. */
+  padding-top: clamp(7.5rem, 22vmin, 14rem);
+}
+
+.site-footer {
+  flex-shrink: 0;
+}
+
 /* Page enter animation for route transitions */
 /* smooth, slightly bouncy enter with de-blur */
 @keyframes page-in {
