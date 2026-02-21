@@ -21,6 +21,7 @@ export default function InfoBox({ time, title, itemColor, description }: Item) {
       <div className={`flex-1 flex items-center justify-center text-center ${separtorLine}`}>
         {time}
         </div>
+        
       <div className={`flex-1 flex-col items-center justify-center text-center`}>
         <p className="font-bold">{title}</p>
         <p className="text-sm">{description}</p>
