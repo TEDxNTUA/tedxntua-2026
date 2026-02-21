@@ -1,7 +1,10 @@
+'use client';
 import AnchorScrollHandler from "../components/AnchorScrollHandler";
 import InfoBox from "../components/SpeakersInfoBox";
 import SpeakersInfoBox from "../components/SpeakersInfoBox";
 import speaker1 from '../images/speakers/speaker1.jpg';
+import { useState } from 'react';
+import SpeakersPopup from '../components/SpeakersPopup'; // Adjust path as needed
 
 
 interface InfoItem {
@@ -45,6 +48,9 @@ const myDataSection: InfoItem[] = [
 
 
 export default function ProgramPage() {
+
+  const [showPopup, setShowPopup] = useState(false);
+
   return (
     <div>
       <AnchorScrollHandler />
@@ -61,11 +67,19 @@ export default function ProgramPage() {
       <section id="speakers" className="min-h-[70vh] py-20 scroll-mt-24">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {myDataSection.map((item, index) => (
-              <InfoBox key={index} {...item} />
+              <button key={index} onClick={() => setShowPopup(true)}>
+                <SpeakersInfoBox {...item} />
+              </button>
             ))}
         </div>
       </section>
           
+      <SpeakersPopup
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+        speaker={myDataSection[0]} // Pass the relevant speaker data here
+      />
+
     </div>
   );
 }
