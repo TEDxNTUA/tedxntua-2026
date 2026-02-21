@@ -5,11 +5,11 @@ import { usePathname, useRouter } from "next/navigation";
 // Event navigation tabs
 const eventTabs = [
   { label: "Program", path: "/event/program", hash: "#program" },
-  { label: "Speakers", path: "/event/more", hash: "#speakers" },
-  { label: "Performances", path: "/event/more", hash: "#performances" },
-  { label: "Professional Workshops", path: "/event/more", hash: "#professional-workshops" },
-  { label: "Experience Workshops", path: "/event/more", hash: "#experience-workshops" },
-  { label: "Side Happenings", path: "/event/more", hash: "#side-happenings" },
+  { label: "Speakers", path: "/event/speakers", hash: "#speakers" },
+  { label: "Performances", path: "/event/performances", hash: "#performances" },
+  { label: "Professional Workshops", path: "/event/professionalWorkshops", hash: "#professional-workshops" },
+  { label: "Experience Workshops", path: "/event/experienceWorkshops", hash: "#experience-workshops" },
+  { label: "Side Happenings", path: "/event/sideHappenings", hash: "#side-happenings" },
 ];
 
 interface EventSidebarProps {
