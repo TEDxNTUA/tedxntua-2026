@@ -1,4 +1,7 @@
+'use client';
 import React from 'react';
+import { useState } from 'react';
+import SpeakersPopup from './SpeakersPopup';
 
 // The Type definition
 interface Item {
@@ -17,8 +20,12 @@ const height = "h-[400px]"
 const width = "w-[250px]"
 
 export default function InfoBox({ name, name2, title, itemColor, description, imageUrl }: Item) {
+
+  const [showPopup, setShowPopup] = useState(false);
+
   return (
     <div className={`flex flex-col ${width} rounded-[40px] mb-5 ${height} items-center justify-center text-center ${separtorLine}`}
+    onClick={() => setShowPopup(true)} // Opens the popup on click
     style={{ backgroundColor: itemColor }}>
 
       <div className={`flex-2 flex items-center justify-center`}>
@@ -48,6 +55,12 @@ export default function InfoBox({ name, name2, title, itemColor, description, im
         </div>
 
       </div>
+
+      <SpeakersPopup
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+        speaker={{ name, name2, title, itemColor, description, imageUrl }} // Pass the relevant speaker data here
+      />
 
 </div>
   );

@@ -48,9 +48,6 @@ const myDataSection: InfoItem[] = [
 
 
 export default function ProgramPage() {
-
-  const [showPopup, setShowPopup] = useState(false);
-
   return (
     <div>
       <AnchorScrollHandler />
@@ -67,18 +64,10 @@ export default function ProgramPage() {
       <section id="speakers" className="min-h-[70vh] py-20 scroll-mt-24">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {myDataSection.map((item, index) => (
-              <button key={index} onClick={() => setShowPopup(true)}>
-                <SpeakersInfoBox {...item} />
-              </button>
+                <SpeakersInfoBox key={index} {...item} />
             ))}
         </div>
       </section>
-          
-      <SpeakersPopup
-        isOpen={showPopup}
-        onClose={() => setShowPopup(false)}
-        speaker={myDataSection[0]} // Pass the relevant speaker data here
-      />
 
     </div>
   );
