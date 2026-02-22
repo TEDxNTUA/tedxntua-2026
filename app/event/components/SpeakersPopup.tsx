@@ -51,9 +51,9 @@ export default function SpeakersPopup({ isOpen, onClose, speaker }: SpeakersPopu
         </button>
 
         {/* Speaker Image */}
-        {speaker.imageUrl && (
+        {speaker.posterImageUrl && (
           <img 
-            src={speaker.imageUrl} 
+            src={speaker.posterImageUrl} 
             alt={speaker.name} 
             className="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-gray-100 shadow-md" 
           />

@@ -3,58 +3,9 @@ import AnchorScrollHandler from "../components/AnchorScrollHandler";
 import InfoSpeakerBox from "../components/ProgramInfoBox1";
 import InfoWorkshopBox from "../components/ProgramInfoBox2";
 
-interface InfoSpeakerItem {
-  time: string;
-  name: string;
-  title: string;
-  itemColor: string;
-  description: string;
-}
-
-interface Room {
-  room: string;
-  name: string;
-}
-
-interface InfoWorkshopItem {
-  time: string;
-  itemInfo: Room[];
-  itemColor: string;
-}
-
-
-//DATABASE
-//Speakers
-const myDataSection1: InfoSpeakerItem[] = [
-  { time: "10:00 - 11:00", name: "Legolas", title: "They are taking the Hobbits to Isengard", itemColor: "rgba(230, 57, 70, 0.3)", 
-    description: "To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard " },
-  { time: "11:00 - 12:00", name: "Gandalf", title: "Kazad-Dum", itemColor: "rgba(60, 116, 194, 0.3)", 
-    description: "An increadible journey on how Gandalf the grey kills the Balrog and becomes Gandalf the white" }
-];
-
-const myDataSection2: InfoSpeakerItem[] = [
-  { time: "12:00 - 13:00", name: "Aragorn", title: "Mountain Peak", itemColor: "rgba(168, 218, 220, 0.3)", 
-    description: "Elevated energy" },
-  { time: "13:00 - 14:00", name: "Bilbo", title: "Forest Whisper", itemColor: "rgba(42, 157, 143, 0.3)", 
-    description: "Natural calm" },
-  { time: "14:00 - 15:00", name: "Sam and Frodo", title: "City Lights", itemColor: "rgba(244, 162, 97, 0.3)", 
-  description: "Urban rhythm" }
-];
-
-//Workshops
-const myRooms1: Room[] = [
-  {room: "Room 1", 
-  name: "Lembas baking by Galadriel" },
-  {room: "Room 2", 
-  name: "Golden hair by Legolas"},
-  {room: "Room 3", 
-  name: "Stew making by Eowyn"}
-];
-const myDataSection3: InfoWorkshopItem[] = [
-  { time: "14:00 - 15:00", 
-    itemInfo: myRooms1, 
-    itemColor: "rgba(204, 243, 128, 0.3)"}
-];
+import { mySpeakers1 } from '../infoDatabase';
+import { mySpeakers2 } from '../infoDatabase';
+import { myExperienceWorkshopsPack1 } from '../infoDatabase';
 
 
 // The Page Component
@@ -79,7 +30,7 @@ export default function ProgramPage() {
               </h1>
             </div>    
 
-            {myDataSection1.map((item, index) => (
+            {mySpeakers1.map((item, index) => (
               <InfoSpeakerBox key={index} {...item} />
             ))}
 
@@ -90,7 +41,7 @@ export default function ProgramPage() {
               </h1>
             </div> 
 
-            {myDataSection2.map((item, index) => (
+            {mySpeakers2.map((item, index) => (
               <InfoSpeakerBox key={index} {...item} />
             ))}
 
@@ -101,7 +52,7 @@ export default function ProgramPage() {
               </h1>
             </div> 
 
-            {myDataSection3.map((item, index) => (
+            {myExperienceWorkshopsPack1.map((item, index) => (
               <InfoWorkshopBox key={index} {...item} />
             ))}
           </div>
