@@ -53,7 +53,7 @@ const myRooms1: Room[] = [
 const myDataSection3: InfoWorkshopItem[] = [
   { time: "14:00 - 15:00", 
     itemInfo: myRooms1, 
-    itemColor: "rgba(244, 162, 97, 0.3)"}
+    itemColor: "rgba(204, 243, 128, 0.3)"}
 ];
 
 
