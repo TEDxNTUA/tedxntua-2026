@@ -1,31 +1,59 @@
 import { title } from "process";
 import AnchorScrollHandler from "../components/AnchorScrollHandler";
-import InfoBox from "../components/ProgramInfoBox";
+import InfoSpeakerBox from "../components/ProgramInfoBox1";
+import InfoWorkshopBox from "../components/ProgramInfoBox2";
 
-interface InfoItem {
+interface InfoSpeakerItem {
   time: string;
+  name: string;
   title: string;
   itemColor: string;
   description: string;
 }
 
-const myDataSection1: InfoItem[] = [
-  { time: "10:00 - 11:00", title: "Desert Sun", itemColor: "rgba(230, 57, 70, 0.3)", 
-    description: "'Warm vibes'" },
-  { time: "11:00 - 12:00", title: "Kazad-Dum", itemColor: "rgba(60, 116, 194, 0.3)", 
+interface Room {
+  room: string;
+  name: string;
+}
+
+interface InfoWorkshopItem {
+  time: string;
+  itemInfo: Room[];
+  itemColor: string;
+}
+
+
+//DATABASE
+//Speakers
+const myDataSection1: InfoSpeakerItem[] = [
+  { time: "10:00 - 11:00", name: "Legolas", title: "They are taking the Hobbits to Isengard", itemColor: "rgba(230, 57, 70, 0.3)", 
+    description: "To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard " },
+  { time: "11:00 - 12:00", name: "Gandalf", title: "Kazad-Dum", itemColor: "rgba(60, 116, 194, 0.3)", 
     description: "An increadible journey on how Gandalf the grey kills the Balrog and becomes Gandalf the white" }
 ];
-const myDataSection2: InfoItem[] = [
-  { time: "12:00 - 13:00", title: "Mountain Peak", itemColor: "rgba(168, 218, 220, 0.3)", 
-    description: "'Elevated energy'" },
-  { time: "13:00 - 14:00", title: "Forest Whisper", itemColor: "rgba(42, 157, 143, 0.3)", 
-    description: "'Natural calm'" }
+
+const myDataSection2: InfoSpeakerItem[] = [
+  { time: "12:00 - 13:00", name: "Aragorn", title: "Mountain Peak", itemColor: "rgba(168, 218, 220, 0.3)", 
+    description: "Elevated energy" },
+  { time: "13:00 - 14:00", name: "Bilbo", title: "Forest Whisper", itemColor: "rgba(42, 157, 143, 0.3)", 
+    description: "Natural calm" },
+  { time: "14:00 - 15:00", name: "Sam and Frodo", title: "City Lights", itemColor: "rgba(244, 162, 97, 0.3)", 
+  description: "Urban rhythm" }
 ];
-const myDataSection3: InfoItem[] = [
-  { time: "14:00 - 15:00", title: "City Lights", itemColor: "rgba(244, 162, 97, 0.3)", 
-    description: "'Urban rhythm'" },
-  { time: "15:00 - 16:00", title: "Starlit Night", itemColor: "rgba(59, 135, 165, 0.3)", 
-    description: "'Cosmic vibes'" }
+
+//Workshops
+const myRooms1: Room[] = [
+  {room: "Room 1", 
+  name: "Lembas baking by Galadriel" },
+  {room: "Room 2", 
+  name: "Golden hair by Legolas"},
+  {room: "Room 3", 
+  name: "Stew making by Eowyn"}
+];
+const myDataSection3: InfoWorkshopItem[] = [
+  { time: "14:00 - 15:00", 
+    itemInfo: myRooms1, 
+    itemColor: "rgba(244, 162, 97, 0.3)"}
 ];
 
 
@@ -52,7 +80,7 @@ export default function ProgramPage() {
             </div>    
 
             {myDataSection1.map((item, index) => (
-              <InfoBox key={index} {...item} />
+              <InfoSpeakerBox key={index} {...item} />
             ))}
 
             <div className="w-full border-b border-white pb-4 mb-8">
@@ -63,7 +91,7 @@ export default function ProgramPage() {
             </div> 
 
             {myDataSection2.map((item, index) => (
-              <InfoBox key={index} {...item} />
+              <InfoSpeakerBox key={index} {...item} />
             ))}
 
             <div className="w-full border-b border-white pb-4 mb-8">
@@ -74,7 +102,7 @@ export default function ProgramPage() {
             </div> 
 
             {myDataSection3.map((item, index) => (
-              <InfoBox key={index} {...item} />
+              <InfoWorkshopBox key={index} {...item} />
             ))}
           </div>
 

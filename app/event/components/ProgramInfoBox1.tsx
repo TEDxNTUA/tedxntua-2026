@@ -5,6 +5,7 @@ import './styles.css';
 
 interface Item {
   time: string;
+  name: string;
   title: string;
   itemColor: string;
   description: string;
@@ -12,13 +13,13 @@ interface Item {
 
 const separtorLine = "border-r border-black";
 
-export default function InfoBox({ time, title, itemColor, description }: Item) {
+export default function InfoBox({ time, name, title, itemColor, description }: Item) {
   // 1. Create the state (false = small, true = expanded)
   const [isExpanded, setIsExpanded] = useState(false);
 
   // 2. Define heights (min-h for the base, transition for smoothness)
   // We use a fixed height or max-height for the 'expanded' state
-  const heightClass = isExpanded ? "min-h-[150px]" : "min-h-[40px]";
+  const heightClass = isExpanded ? "min-h-[170px]" : "min-h-[40px]";
   const boderClass = isExpanded ? "border-black" : "border-white";
 
   return (
@@ -40,9 +41,12 @@ export default function InfoBox({ time, title, itemColor, description }: Item) {
         
       {/* Content Section */}
       <div className={`flex-1 flex flex-col items-center justify-center text-center p-2`}>
-        <p className="font-bold">{title}</p>
+        <p className="font-bold">{name}</p>
         
         {/* 4. Only show description if expanded (optional) or let it reveal */}
+        {isExpanded && (
+          <p className="text-sm mt-3 animate-fadeIn">"{title}"</p>
+        )}
         {isExpanded && (
           <p className="text-sm mt-2 animate-fadeIn">{description}</p>
         )}
