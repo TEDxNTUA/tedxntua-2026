@@ -10,16 +10,22 @@ interface InfoItem {
 }
 
 const myDataSection1: InfoItem[] = [
-  { time: "10:00 - 11:00", title: "Desert Sun", itemColor: "rgba(230, 57, 70, 0.3)", description: "'Warm vibes'" },
-  { time: "11:00 - 12:00", title: "Ocean Breeze", itemColor: "rgba(60, 116, 194, 0.3)", description: "'Cool tones'" }
+  { time: "10:00 - 11:00", title: "Desert Sun", itemColor: "rgba(230, 57, 70, 0.3)", 
+    description: "'Warm vibes'" },
+  { time: "11:00 - 12:00", title: "Kazad-Dum", itemColor: "rgba(60, 116, 194, 0.3)", 
+    description: "An increadible journey on how Gandalf the grey kills the Balrog and becomes Gandalf the white" }
 ];
 const myDataSection2: InfoItem[] = [
-  { time: "12:00 - 13:00", title: "Mountain Peak", itemColor: "rgba(168, 218, 220, 0.3)", description: "'Elevated energy'" },
-  { time: "13:00 - 14:00", title: "Forest Whisper", itemColor: "rgba(42, 157, 143, 0.3)", description: "'Natural calm'" }
+  { time: "12:00 - 13:00", title: "Mountain Peak", itemColor: "rgba(168, 218, 220, 0.3)", 
+    description: "'Elevated energy'" },
+  { time: "13:00 - 14:00", title: "Forest Whisper", itemColor: "rgba(42, 157, 143, 0.3)", 
+    description: "'Natural calm'" }
 ];
 const myDataSection3: InfoItem[] = [
-  { time: "14:00 - 15:00", title: "City Lights", itemColor: "rgba(244, 162, 97, 0.3)", description: "'Urban rhythm'" },
-  { time: "15:00 - 16:00", title: "Starlit Night", itemColor: "rgba(59, 135, 165, 0.3)", description: "'Cosmic vibes'" }
+  { time: "14:00 - 15:00", title: "City Lights", itemColor: "rgba(244, 162, 97, 0.3)", 
+    description: "'Urban rhythm'" },
+  { time: "15:00 - 16:00", title: "Starlit Night", itemColor: "rgba(59, 135, 165, 0.3)", 
+    description: "'Cosmic vibes'" }
 ];
 
 

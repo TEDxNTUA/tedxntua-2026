@@ -1,6 +1,8 @@
-import React from 'react';
+"use client";
 
-// The Type definition
+import React, { useState } from 'react';
+import './styles.css';
+
 interface Item {
   time: string;
   title: string;
@@ -8,23 +10,42 @@ interface Item {
   description: string;
 }
 
-
-// The Component Box
-const separtorLine = "border-r border-black"
-const height = "min-h-[40px]"
+const separtorLine = "border-r border-black";
 
 export default function InfoBox({ time, title, itemColor, description }: Item) {
-  return (
-    <div className={`flex w-full rounded-[40px] mb-5 ${height} items-center 
-    border border-black`} style={{ backgroundColor: itemColor }}>
+  // 1. Create the state (false = small, true = expanded)
+  const [isExpanded, setIsExpanded] = useState(false);
 
-      <div className={`flex-1 flex items-center justify-center text-center ${separtorLine}`}>
+  // 2. Define heights (min-h for the base, transition for smoothness)
+  // We use a fixed height or max-height for the 'expanded' state
+  const heightClass = isExpanded ? "min-h-[150px]" : "min-h-[40px]";
+  const boderClass = isExpanded ? "border-black" : "border-white";
+
+  return (
+    <div 
+      // 3. Add a click handler and transition classes
+      onClick={() => setIsExpanded(!isExpanded)}
+      className={`custom-card 
+        ${heightClass} border-2
+        flex w-full transition-all duration-300 ease-in-out cursor-pointer overflow-hidden border border-black rounded-[20px] mb-4`} 
+      style={{ backgroundColor: itemColor, 
+        borderColor: !isExpanded ? itemColor : 'white',
+        transition: 'all 0.3s ease'
+      }}
+    >
+      {/* Time Section */}
+      <div className={`flex-[0.3] flex items-center justify-center text-center ${separtorLine} p-2`}>
         {time}
-        </div>
+      </div>
         
-      <div className={`flex-1 flex-col items-center justify-center text-center`}>
+      {/* Content Section */}
+      <div className={`flex-1 flex flex-col items-center justify-center text-center p-2`}>
         <p className="font-bold">{title}</p>
-        <p className="text-sm">{description}</p>
+        
+        {/* 4. Only show description if expanded (optional) or let it reveal */}
+        {isExpanded && (
+          <p className="text-sm mt-2 animate-fadeIn">{description}</p>
+        )}
       </div>
     </div>
   );
