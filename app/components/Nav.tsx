@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEventNav } from "./EventNavProvider";
@@ -9,15 +10,17 @@ function Nav() {
   const pathnameRaw = usePathname();
   const pathname = pathnameRaw ?? "/";
   const { toggle: toggleEventNav } = useEventNav();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isHiddenOnScroll, setIsHiddenOnScroll] = useState(false);
+  const lastScrollYRef = useRef(0);
 
   const isEventPage = pathname.startsWith("/event");
   const isSponsorsPage = pathname === "/sponsors";
   const isTeamPage = pathname === "/team";
-  const isHomePage = pathname === "/";
 
   const navigate = (route: string): void => {
+    setIsOpen(false);
     try {
-      if (route === "/") sessionStorage.setItem("nav-target-index", "0");
       if (route === "/event") sessionStorage.setItem("nav-target-index", "1");
       if (route === "/sponsors") sessionStorage.setItem("nav-target-index", "2");
       if (route === "/team") sessionStorage.setItem("nav-target-index", "3");
@@ -29,10 +32,10 @@ function Nav() {
 
   const onAnchorClick =
     (handler: () => void) =>
-    (event: MouseEvent<HTMLAnchorElement>): void => {
-      event.preventDefault();
-      handler();
-    };
+      (event: MouseEvent<HTMLAnchorElement>): void => {
+        event.preventDefault();
+        handler();
+      };
 
   const handleEventClick = (): void => {
     if (isEventPage) {
@@ -42,52 +45,75 @@ function Nav() {
     navigate("/event");
   };
 
+  const handleCenterLogoClick = (): void => {
+    if (!isOpen) {
+      setIsOpen(true);
+      return;
+    }
+
+    setIsOpen(false);
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    lastScrollYRef.current = window.scrollY;
+
+    const handleScroll = (): void => {
+      const currentY = window.scrollY;
+      const isScrollingDown = currentY > lastScrollYRef.current;
+      const passedTop = currentY > 40;
+
+      if (isScrollingDown && passedTop) {
+        setIsHiddenOnScroll(true);
+      } else {
+        setIsHiddenOnScroll(false);
+      }
+
+      lastScrollYRef.current = currentY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className={classes.wrap}>
-      <a
-        href="/event"
-        className={`${classes.a} ${isEventPage ? classes.active : ""}`}
-        onClick={onAnchorClick(handleEventClick)}
-        aria-label="Event"
-      >
-        <div />
-      </a>
+    <div className={`${classes.menuContainer} ${isHiddenOnScroll ? classes.menuContainerHidden : ""}`}>
+      <div className={`${classes.wrap} ${isOpen ? classes.active : ""}`}>
+        <a
+          href="/team"
+          className={`${classes.slice} ${isTeamPage ? classes.active : ""}`}
+          onClick={onAnchorClick(() => navigate("/team"))}
+          aria-label="EventTeam">
 
-      <a
-        href="/sponsors"
-        className={`${classes.a} ${isSponsorsPage ? classes.active : ""}`}
-        onClick={onAnchorClick(() => navigate("/sponsors"))}
-        aria-label="Sponsors"
-      >
-        <div />
-      </a>
+          <div />
+        </a>
+        <a
+          href="/sponsors"
+          className={`${classes.slice} ${isSponsorsPage ? classes.active : ""}`}
+          onClick={onAnchorClick(() => navigate("/sponsors"))}
+          aria-label="Sponsors">
 
-      <a
-        href="#"
-        className={classes.a}
-        aria-label="None"
-        onClick={(event) => event.preventDefault()}
-      >
-        <div />
-      </a>
+          <div />
+        </a>
+        <a
+          href="/event"
+          className={`${classes.slice} ${isEventPage ? classes.active : ""}`}
+          onClick={onAnchorClick(handleEventClick)}
+          aria-label="EventTeam">
 
-      <a
-        href="/team"
-        className={`${classes.a} ${isTeamPage ? classes.active : ""}`}
-        onClick={onAnchorClick(() => navigate("/team"))}
-        aria-label="Team"
-      >
-        <div />
-      </a>
+          <div />
+        </a>
+      </div>
 
-      <a
-        href="/"
-        className={`${classes.a} ${isHomePage ? classes.active : ""}`}
-        onClick={onAnchorClick(() => navigate("/"))}
+      <div
+        className={classes.centerLogo}
+        onClick={handleCenterLogoClick}
         aria-label="Home"
       >
         <div />
-      </a>
+      </div>
     </div>
   );
 }

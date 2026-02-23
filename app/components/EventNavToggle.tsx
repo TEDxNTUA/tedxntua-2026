@@ -37,4 +37,3 @@ export default function EventNavToggle({ isOpen, onToggle, visible }: EventNavTo
     </button>
   );
 }
-

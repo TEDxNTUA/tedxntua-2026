@@ -137,4 +137,3 @@ export default function EventSidebar({ isOpen, onClose }: EventSidebarProps): JS
     </>
   );
 }
-

@@ -40,31 +40,11 @@ body {
 .site-main {
   flex: 1 0 auto;
   /* Keep page content clear of the fixed radial navbar across breakpoints. */
-  padding-top: clamp(7.5rem, 22vmin, 14rem);
+  padding-top: clamp(3.5rem, 12vmin, 7rem);
 }
 
 .site-footer {
   flex-shrink: 0;
-}
-
-/* Page enter animation for route transitions */
-/* smooth, slightly bouncy enter with de-blur */
-@keyframes page-in {
-  0% {
-    opacity: 0;
-    transform: translateY(18px) scale(.985);
-    filter: blur(6px);
-  }
-  60% {
-    opacity: 0.98;
-    transform: translateY(4px) scale(0.995);
-    filter: blur(2px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
 }
 
 .page-transition-container {
@@ -304,49 +284,12 @@ body {
 .more-section:last-child::before,
 .more-section:last-child::after { bottom: -10px; }
 
-/* Horizontal event nav (desktop and mobile compact) */
-.event-nav-horizontal {
-  display: flex;
-  flex-direction: row;
-  gap: 0.75rem;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem 0;
-}
-
-.event-nav-horizontal .nav-pill {
-  display: inline-flex;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 600;
-}
-
-.event-nav-horizontal .nav-pill--active {
-  /* keep the existing active colors but ensure contrast on horizontal bar */
-  color: #fefce8;
-}
-
 /* Program button special styling: slightly separated and different color */
 .nav-pill--program {
   border-color: rgba(220, 38, 38, 0.95); /* red */
   background: linear-gradient(120deg, rgba(239, 68, 68, 0.98), rgba(220, 38, 38, 0.95));
   color: #fff;
   font-weight: 700;
-}
-
-.event-nav-horizontal .nav-pill--program {
-  margin-right: 0.75rem;
-  padding-left: 1.1rem;
-  padding-right: 1.1rem;
-  box-shadow: 0 8px 24px rgba(220,38,38,0.14);
-}
-
-.event-nav-horizontal .nav-pill--program:hover {
-  box-shadow: 0 14px 40px rgba(220,38,38,0.18);
-  transform: translateY(-1px);
 }
 
 .event-nav-vertical .nav-pill--program {
@@ -363,47 +306,4 @@ body {
   background: linear-gradient(120deg, rgba(153, 27, 27, 0.98), rgba(220, 38, 38, 0.95));
   border-color: rgba(153,27,27,0.95);
   color: #fff;
-}
-
-/* Slide-under container and chevron animation */
-.event-nav-container {
-  /* slide under the main header when closed */
-  position: sticky;
-  top: 72px; /* aligned with header height */
-  z-index: 40; /* below main header z-50 */
-  transform: translateY(-110%); /* hide fully above */
-  opacity: 0;
-  transition: transform 320ms cubic-bezier(0.22, 0.9, 0.25, 1), opacity 260ms ease;
-  pointer-events: none;
-
-  /* navbar background: black box */
-  background: #000; /* black box for the navbar */
-  padding: 0.375rem 0; /* small vertical padding */
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-.event-nav-container.open {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Drawn chevron path animation */
-.chev-path {
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 48;
-  stroke-dashoffset: 48;
-  transition: stroke-dashoffset 420ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 200ms ease;
-}
-
-.chev-path.drawn { stroke-dashoffset: 0; }
-
-/* Make sure toggle button sits above header and is tappable */
-.event-nav-toggle {
-  z-index: 50;
-  color: #ffffff; /* always white */
-  transition: color 180ms ease;
 }

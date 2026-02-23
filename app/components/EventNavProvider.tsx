@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import EventSidebar from "./EventSidebar";
 import EventNavToggle from "./EventNavToggle";
@@ -25,15 +25,7 @@ export default function EventNavProvider({ children }: { children: ReactNode }) 
   const pathname = usePathname();
   const isEventPage = pathname?.startsWith("/event") ?? false;
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  // Auto-open sidebar when navigating to event pages
-  useEffect(() => {
-    if (isEventPage) {
-      setIsOpen(true);
-    } else {
-      setIsOpen(false);
-    }
-  }, [isEventPage]);
+  const effectiveIsOpen = isEventPage && isOpen;
 
   const toggle = () => setIsOpen((prev) => !prev);
   const close = () => setIsOpen(false);
@@ -43,9 +35,8 @@ export default function EventNavProvider({ children }: { children: ReactNode }) 
     { value: { isOpen, toggle, close } },
     React.createElement(React.Fragment, null,
       children,
-      React.createElement(EventNavToggle, { isOpen, onToggle: toggle, visible: isEventPage }),
-      React.createElement(EventSidebar, { isOpen, onClose: close })
+      React.createElement(EventNavToggle, { isOpen: effectiveIsOpen, onToggle: toggle, visible: isEventPage }),
+      React.createElement(EventSidebar, { isOpen: effectiveIsOpen, onClose: close })
     )
   );
 }
-

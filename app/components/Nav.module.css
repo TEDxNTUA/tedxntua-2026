@@ -1,180 +1,155 @@
 .wrap {
+    width: 500px;
+    height: 500px;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    transition: transform .5s;
+
+    transform: translateY(-55%) scale(0.2);
+}
+
+.menuContainer {
     position: fixed;
     top: 0;
     left: 50%;
-    width: min(80vmin, 44rem);
-    height: min(40vmin, 22rem);
+    transform: translateX(-50%);
+    width: 500px;
     margin: 0;
-    background: inherit;
-    transform: translateX(-50%) scale(0.8);
+    height: 0;
+    z-index: 60;
+    transition: transform .28s ease, opacity .28s ease;
     opacity: 1;
-    transition: transform .5s, opacity .5s;
-    border-radius: 0 0 40vmin 40vmin;
-    overflow: hidden;
-    z-index: 1000;
 }
 
+.menuContainerHidden {
+    transform: translateX(-50%) translateY(-145px);
+    opacity: 0;
+    pointer-events: none;
+}
 
-.a {
+.slice {
     position: absolute;
-    left: 50%;
-    top: 0;
-    width: 40vmin;
-    height: 40vmin;
-    overflow: hidden;
-    transform-origin: 0% 0%;
-    transform: scale(.2) translateZ(0px);
-    background: #000000;
-    clip-path: polygon(0 0, 100% 0, 0 100%);
+    width: 50%;
+    height: 50%;
+    transform-origin: 100% 100%;
+    transform: translateZ(0px);
+    clip-path: polygon(100% 100%, 100% 0%, -70% 0%);
 }
 
-.a div {
+.slice div {
+    width: 100%;
     height: 100%;
     background-size: cover;
-    opacity: .5;
-    transition: opacity .5s;
-    border-radius: inherit;
-}
-
-.a:nth-child(-n+4) div {
-    box-sizing: border-box;
-    border: 0.9vmin solid #E3DFD2;
-}
-
-.a:nth-child(1) {
-    transition: transform .4s;
-    transform: rotate(90deg) scale(.1) translateZ(0px);
-    clip-path: circle(100% at 0 0);
-}
-
-.a:nth-child(1) div {
-    background-image: url('/video-recap.png');
     background-repeat: no-repeat;
-    background-position: center 30%;
-    transform: rotate(-90deg);
+    background-position: center;
+    opacity: 0.6;
+    transition: opacity .3s;
 }
 
-.a:nth-child(2) {
-    transition: transform .4s;
-    transform: rotate(45deg) scale(.1) translateZ(0px);
-    clip-path: circle(100% at 0 0);
+.slice:nth-child(1) {
+    transition: transform .5s;
+    transform: rotate(150deg);
+    background: #ffffff;
 }
 
-.a:nth-child(2) div {
-    background-image: url('/1_.png');
-    background-repeat: no-repeat;
-    background-position: center 30%;
-    transform: rotate(-45deg);
+.slice:nth-child(2) {
+    transition: transform .5s;
+    transform: rotate(210deg);
+    background: #ffffff;
 }
 
-.a:nth-child(3) {
-    transition: transform .4s;
-    transform: rotate(0deg) scale(.1) translateZ(0px);
-    clip-path: circle(100% at 0 0);
+.slice:nth-child(3) {
+    transition: transform .5s;
+    transform: rotate(270deg);
+    background: #ffffff;
 }
 
-.a:nth-child(3) div {
-    background-image: url('/archive.png');
-    background-repeat: no-repeat;
-    background-position: center 30%;
-    background-size: contain;
-    transform: rotate(0deg);
-}
-
-.a:nth-child(4) {
-    transition: transform .4s;
-    transform: rotate(-45deg) scale(.1) translateZ(0px);
-    clip-path: circle(100% at 0 0);
-}
-
-.a:nth-child(4) div {
+.slice:nth-child(1) div {
     background-image: url('/team.jpg');
     background-repeat: no-repeat;
-    background-position: center 65%;
-    transform: rotate(45deg);
+    background-size: cover;
+    background-position: center center;
+    width: 120%;
+    height: 120%;
+    margin: -18% 0 0 0;
+    transform: rotate(-150deg);
 }
 
-.a:nth-child(5) {
-    width: 55%;
-    height: 55%;
+.slice:nth-child(2) div {
+    background-image: url('/1_.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 120%;
+    height: 120%;
+    margin: -18% 0 0 0;
+    transform: rotate(-210deg);
+}
+
+.slice:nth-child(3) div {
+    background-image: url('/video-recap.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 120%;
+    height: 120%;
+    margin: -18% 0 0 0;
+    transform: rotate(-270deg);
+}
+
+.centerLogo {
+    position: absolute;
+    width: 165px;
+    height: 165px;
     left: 50%;
     top: 0;
-    transform: translateX(-50%) scale(1);
+    transform: translateX(-50%) translateY(-55%);
     border-radius: 0 0 50vmin 50vmin;
-    box-shadow: 0 0 0 5vmin #E3DFD2;
-    clip-path: none;
+    background-color: #000000;
+    box-shadow: 0 0 0 5vmin #00000000;
     z-index: 10;
 }
 
-.a:nth-child(5) div {
+.centerLogo div {
     background-image: url('/tedxntua_logo.png');
     background-repeat: no-repeat;
-    background-position: center 40%;
-    background-size: 220px auto;
-    border: none;
-    border-radius: 0;
-    clip-path: none;
-
+    background-position: center center;
+    background-size: 110px auto;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    margin-top: 20%;
+    top: 0;
+    left: 0;
+    opacity: 0.6;
+    transition: opacity .3s;
 }
 
 
 
-.wrap:hover .a:nth-child(1) {
-    transform: rotate(90deg) scale(.93) translateZ(0px);
+.wrap.active .slice:nth-child(1) {
+    transform: rotate(150deg) scale(1.1);
 }
 
-.wrap:hover .a:nth-child(2) {
-    transform: rotate(45deg) scale(.93) translateZ(0px);
+.wrap.active .slice:nth-child(2) {
+    transform: rotate(210deg) scale(1.1);
 }
 
-.wrap:hover .a:nth-child(3) {
-    transform: rotate(0deg) scale(.93) translateZ(0px);
+.wrap.active .slice:nth-child(3) {
+    transform: rotate(270deg) scale(1.1);
 }
 
-.wrap:hover .a:nth-child(4) {
-    transform: rotate(-45deg) scale(.93) translateZ(0px);
+.wrap.active {
+    transform: translateY(-55%) scale(1);
 }
 
-.a:hover div {
+.slice:hover div {
     opacity: 1;
 }
 
-.active div {
+
+.centerLogo:hover div {
     opacity: 1;
-}
-
-.a:focus-visible {
-    outline: 2px solid #ffffff;
-    outline-offset: 4px;
-}
-
-@media (max-width: 900px) {
-    .wrap {
-        width: min(96vmin, 30rem);
-        height: min(48vmin, 15rem);
-        transform: translateX(-50%) scale(0.95);
-    }
-
-    .a:nth-child(5) div {
-        background-size: clamp(120px, 34vw, 180px) auto;
-    }
-}
-
-/* Touch devices don't have hover; keep wedges open for reliable navigation */
-@media (hover: none), (pointer: coarse) {
-    .a:nth-child(1) {
-        transform: rotate(90deg) scale(.93) translateZ(0px);
-    }
-
-    .a:nth-child(2) {
-        transform: rotate(45deg) scale(.93) translateZ(0px);
-    }
-
-    .a:nth-child(3) {
-        transform: rotate(0deg) scale(.93) translateZ(0px);
-    }
-
-    .a:nth-child(4) {
-        transform: rotate(-45deg) scale(.93) translateZ(0px);
-    }
 }
