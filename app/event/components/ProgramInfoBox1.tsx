@@ -1,19 +1,12 @@
 "use client";
-
 import React, { useState } from 'react';
 import './styles.css';
+import {SpeakerItem} from '../types'
 
-interface Item {
-  time: string;
-  name: string;
-  title: string;
-  itemColor: string;
-  description: string;
-}
 
 const separtorLine = "border-r border-black";
 
-export default function InfoBox({ time, name, title, itemColor, description }: Item) {
+export default function InfoBox({ time, name, title, itemColor, description }: SpeakerItem) {
   // 1. Create the state (false = small, true = expanded)
   const [isExpanded, setIsExpanded] = useState(false);
 

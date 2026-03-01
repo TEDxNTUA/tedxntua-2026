@@ -1,11 +1,15 @@
 export interface SpeakerItem {
     time:string;
     name: string;
+    profession: string;
     name2?: string;
+    profession2?: string;
     title: string;
     itemColor: string;
     description: string;
+    personalDescription: string;
     posterImageUrl?: string;
+
 }
 
 export interface PerformancesItem {

@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import TEDSocialButton from './SocialButton'
+
 
 interface SpeakersPopupProps {
   isOpen: boolean;
@@ -9,7 +11,7 @@ interface SpeakersPopupProps {
   speaker: any; // Ideally use your Speaker interface here
 }
 
-export default function SpeakersPopup({ isOpen, onClose, speaker }: SpeakersPopupProps) {
+export default function SpeakersPopup({ isOpen, onClose, speaker}: SpeakersPopupProps) {
   const [mounted, setMounted] = useState(false);
 
   // 1. Handle mounting state to avoid Hydration errors in Next.js
@@ -50,31 +52,76 @@ export default function SpeakersPopup({ isOpen, onClose, speaker }: SpeakersPopu
           ✕
         </button>
 
-        {/* Speaker Image */}
-        {speaker.posterImageUrl && (
-          <img 
-            src={speaker.posterImageUrl} 
-            alt={speaker.name} 
-            className="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-gray-100 shadow-md" 
-          />
-        )}
 
-        {/* Speaker Info */}
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900">
-            {speaker.name}{speaker.name2 ? ` & ${speaker.name2}` : ''}
-          </h2>
-          
-          <p className="text-red-600 font-semibold text-lg mt-1">
-            {speaker.title}
-          </p>
+      {/* Actual Part*/}
+      
+        {/* Parent: Column on mobile, Row on medium screens+ */}
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 w-full p-4">
+            
+            {/* Speaker Image */}
+            {speaker.posterImageUrl && (
+              <div className="flex-shrink-0">
+                <img
+                  src={speaker.posterImageUrl}
+                  alt={speaker.name}
+                  className="w-32 h-32 md:w-40 md:h-48 object-cover border-4 border-gray-100 shadow-md rounded-lg"
+                />
+              </div>
+            )}
 
-          <div className="mt-6 border-t border-gray-100 pt-6">
-            <p className="text-gray-700 leading-relaxed text-justify md:text-center whitespace-pre-line">
-              {speaker.description}
-            </p>
+            {/* Speaker Info */}
+            {/* min-w-0 is the "secret sauce" to prevent text overflow in flexbox */}
+            <div className="flex-1 min-w-0 text-center md:text-left">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 break-words leading-tight">
+                {speaker.name}{speaker.name2 ? ` & ${speaker.name2}` : ''}
+              </h2>
+              
+              <p className="text-red-600 font-semibold text-lg mt-1 break-words">
+                {speaker.profession}{speaker.profession2 ? ` & ${speaker.profession2}` : ''}
+              </p>
+            </div>
           </div>
-        </div>
+          
+          {/* --- SCROLLABLE SEGMENT START --- */}
+            <div className="mt-6 border-t border-gray-100 max-h-30 overflow-y-auto px-2 custom-scrollbar">
+              <h1 className="mt-6 text-black font-bold text-1xl">{speaker.title}</h1>
+              <p className="text-gray-700 leading-relaxed text-justify md:text-center whitespace-pre-line">
+                {speaker.description}
+                {speaker.description}
+                {speaker.description}
+              </p>
+            </div>
+
+            <div className="mt-6 border-t border-gray-100 max-h-30 overflow-y-auto px-2 custom-scrollbar">
+              <h1 className="mt-6 text-black font-bold text-1xl">Personal Information</h1>
+              <p className="text-gray-700 leading-relaxed text-justify md:text-center whitespace-pre-line">
+                {speaker.personalDescription}
+                {speaker.personalDescription}
+                {speaker.personalDescription}
+                {speaker.description}
+              </p>
+            </div>
+        {/* --- SCROLLABLE SEGMENT END --- */}
+                <div>
+                  <TEDSocialButton
+                    name = "youtube"
+                    size = "35px"
+                    color = "white"
+                    colorHover = "yellow"
+                  />
+                  <TEDSocialButton
+                    name = "instagram"
+                    size = "35px"
+                    color = "white"
+                    colorHover = "yellow"
+                  />
+                  <TEDSocialButton
+                    name = "youtube"
+                    size = "35px"
+                    color = "white"
+                    colorHover = "yellow"
+                  />
+                </div>
       </div>
     </div>,
     document.body
