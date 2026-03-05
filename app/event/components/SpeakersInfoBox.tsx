@@ -8,9 +8,9 @@ import TEDSocialButton from './SocialButton'
 
 
 // The Component Box
-const separtorLine = "border-b border-black"
-const height = "h-[300px]"
-const width = "w-[250px]"
+const separtorLine = "border-b border-white"
+const height = "h-[420px]"
+const width = "w-[300px]"
 
 export default function InfoBox(speaker: SpeakerItem) {
 
@@ -20,40 +20,19 @@ export default function InfoBox(speaker: SpeakerItem) {
 
   return (
     <div>
-    <div 
-    className={`flex flex-col ${width} mb-5 ${height} items-center justify-center text-center ${separtorLine} 
-    bg-gray-600
-    cursor-pointer transition-all duration-300 ease-in-out
-    hover:scale-105 active:scale-95`}
-    onClick={() => setShowPopup(true)}
-    >
+      <div
+      className={`flex flex-col ${width} mb-5 ${height} items-ceneter justify-center ${separtorLine} 
+      bg-black
+      cursor-pointer transition-all duration-300 ease-in-out
+      hover:scale-105 active:scale-95`}
+      onClick={() => setShowPopup(true)}
+      >
 
-      <div className={`flex-1 flex items-center justify-center ${width} ${height}`}>
-          <img src={speaker.posterImageUrl} alt="Speaker"/>
-      </div>
-
-      <div className="flex-1 flex flex-col items-start text-left w-full px-6"> 
-        <div>
-          <h1 className="font-large mb-1">
-            {speaker.name}{speaker.name2 ? ` & ${speaker.name2}` : ''}
-          </h1>
+        <div className={`flex-1 flex items-center justify-center ${width} ${height}`}>
+            <img src={speaker.posterImageUrl} alt="Speaker"/>
         </div>
 
-        <div>
-          <p className="font-medium mb-1">
-            {speaker.profession}{speaker.profession2 ? ` & ${speaker.profession2}` : ''}
-          </p>
-        </div>
-      </div>
-
-      <SpeakersPopup
-        isOpen={showPopup}
-        onClose={() => setShowPopup(false)}
-        speaker = {speaker}
-      />
-      </div>
-
-      <div>
+         <section className={''}>
       <TEDSocialButton
         name = "youtube"
         size = "35px"
@@ -72,8 +51,31 @@ export default function InfoBox(speaker: SpeakerItem) {
         color = "white"
         colorHover = "yellow"
       />
-      </div>
+      </section>
+
+        <div className="flex-1 flex items-center flex-col w-full px-6"> 
+          <div>
+            <h1 className="text-large mb-1 font-bold uppercase">
+              {speaker.name}{speaker.name2 ? ` & ${speaker.name2}` : ''}
+            </h1>
+          </div>
+
+          <div>
+            <p className="font-medium mb-1">
+              {speaker.profession}{speaker.profession2 ? ` & ${speaker.profession2}` : ''}
+            </p>
+          </div>
+        </div>
+
+        <div>
+        <SpeakersPopup
+          isOpen={showPopup}
+          onClose={() => setShowPopup(false)}
+          speaker = {speaker}
+        />
+        </div>
 
       </div>
+    </div>
   );
 }

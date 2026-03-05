@@ -17,7 +17,7 @@ export const mySpeakers1: SpeakerItem[] = [
     personalDescription: "Hello there"}
     ,
   { time: "11:00 - 12:00", 
-    name: "Gandalf", 
+    name: "Gandalf the Grey", 
     profession: "talker",
     title: "Kazad-Dum", 
     itemColor: "rgba(255, 255, 255, 0.43)", 
@@ -37,7 +37,7 @@ export const mySpeakers2: SpeakerItem[] = [
     personalDescription: "Hello there"}
     ,
   { time: "14:00 - 15:00", 
-    name: "Galadriel", 
+    name: "Galadriel of Lothlórien", 
     profession: "talker",
     title: "Why i gave my hair to a dwarf", 
     itemColor: "rgba(121, 147, 183, 0.3)", 
@@ -69,19 +69,28 @@ export const myExperienceWorkshops1: ExperienceWorkshopItem[] = [
     room: "Room 1", 
     title: "Lembas baking by Galadriel",
     name: "Galadriel" , 
-    itemColor: "rgba(204, 243, 128, 0.3)"}
+    profession: "Elf Warrior",
+    itemColor: "rgba(204, 243, 128, 0.3)",
+    posterImageUrl: "/eventimages/workshops/grogu1.jpg"
+  }
     ,
     { time: timeE1, 
     room: "Room 2", 
     title: "Golden hair by Legolas",
     name: "Legolas", 
-    itemColor: "rgba(204, 243, 128, 0.3)"}
+    profession: "Elf archer",
+    name2: "Gimly",
+    profession2: "Dwarf Warrior",
+    itemColor: "rgba(204, 243, 128, 0.3)",
+    posterImageUrl: "/eventimages/workshops/grogu1.jpg"}
     ,
     { time: timeE1, 
     room: "Room 3", 
     title: "Stew making by Eowyn",
     name: "Eowyn", 
-    itemColor: "rgba(204, 243, 128, 0.3)"}
+    profession: "Aragorn",
+    itemColor: "rgba(204, 243, 128, 0.3)",
+    posterImageUrl: "/eventimages/workshops/grogu1.jpg"}
 ];
 
 export const myExperienceWorkshopsPack1: ExperienceWorkshopItemPack[] = [
@@ -93,23 +102,32 @@ export const myExperienceWorkshopsPack1: ExperienceWorkshopItemPack[] = [
 //ProfessionalWorkShops
 const timeP1 = "17:00 - 18:00"
 export const myProfessionalWorkshops1: ExperienceWorkshopItem[] = [
-  { time: timeP1, 
+  { time: timeE1, 
     room: "Room 1", 
     title: "Lembas baking by Galadriel",
     name: "Galadriel" , 
-    itemColor: "rgba(204, 243, 128, 0.3)"}
+    profession: "Elf Warrior",
+    itemColor: "rgba(204, 243, 128, 0.3)",
+    posterImageUrl: "/eventimages/speakers/grogu1.jpg"
+  }
     ,
-    { time: timeP1, 
+    { time: timeE1, 
     room: "Room 2", 
     title: "Golden hair by Legolas",
     name: "Legolas", 
-    itemColor: "rgba(204, 243, 128, 0.3)"}
+    profession: "Elf archer",
+    name2: "Gimly",
+    profession2: "Dwarf Warrior",
+    itemColor: "rgba(204, 243, 128, 0.3)",
+    posterImageUrl: "/eventimages/speakers/grogu1.jpg"}
     ,
-    { time: timeP1, 
+    { time: timeE1, 
     room: "Room 3", 
     title: "Stew making by Eowyn",
     name: "Eowyn", 
-    itemColor: "rgba(204, 243, 128, 0.3)"}
+    profession: "Aragorn",
+    itemColor: "rgba(204, 243, 128, 0.3)",
+    posterImageUrl: "/eventimages/speakers/grogu1.jpg"}
 ];
 
 export const myProfessionalWorkshopsPack1: ExperienceWorkshopItemPack[] = [

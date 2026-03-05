@@ -28,6 +28,9 @@ export interface ExperienceWorkshopItem {
     room: string;
     title:string;
     name: string;
+    profession: string;
+    name2?: string;
+    profession2?: string;
     itemColor: string;
     posterImageUrl?: string;
 }
@@ -43,6 +46,9 @@ export interface ProfecionnalWorkshopItem {
     room: string;
     title:string;
     name: string;
+    profession: string;
+    name2?: string;
+    profession2?: string;
     itemColor: string;
     posterImageUrl?: string;
     logoImageUrl?: string;
