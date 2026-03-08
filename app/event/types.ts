@@ -15,10 +15,13 @@ export interface SpeakerItem {
 export interface PerformancesItem {
     time:string;
     name: string;
+    profession: string;
     name2?: string;
+    profession2?: string;
     title: string;
     itemColor: string;
     description: string;
+    personalDescription: string;
     posterImageUrl?: string;
 }
 
@@ -41,7 +44,7 @@ export interface ExperienceWorkshopItemPack {
 }
 
 
-export interface ProfecionnalWorkshopItem {
+export interface ProfessionalWorkshopItem {
     time: string;
     room: string;
     title:string;
@@ -54,18 +57,20 @@ export interface ProfecionnalWorkshopItem {
     logoImageUrl?: string;
 }
 
-export interface ProfecionnalWorkshopItemPack {
+export interface ProfessionalWorkshopItemPack {
     time: string;
-    workshop: ProfecionnalWorkshopItem[];
+    workshop: ProfessionalWorkshopItem[];
 }
 
 export interface SideHappeningsItem {
     time:string;
     name: string;
+    profession: string;
     name2?: string;
+    profession2?: string;
     title: string;
     itemColor: string;
     description: string;
+    personalDescription: string;
     posterImageUrl?: string;
-    logoImageUrl?: string;
 }

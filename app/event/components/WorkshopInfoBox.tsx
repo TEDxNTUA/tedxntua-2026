@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import WorkshopPopup from './WorkshopPopup';
 import { ExperienceWorkshopItem } from '../types'
-import { ProfecionnalWorkshopItem } from '../types'
+import { ProfessionalWorkshopItem } from '../types'
 import {SocialButton} from './SocialButton'
 import TEDSocialButton from './SocialButton'
 
@@ -10,8 +10,10 @@ import TEDSocialButton from './SocialButton'
 
 // The Component Box
 const separtorLine = "border-b border-white"
-const height = "h-[420px]"
-const width = "w-[300px]"
+const height = "530"
+const width = "320"
+const imgWidh = "280"
+const imgHeight = "380"
 
 export default function ExperienceInfoBox(workshop: ExperienceWorkshopItem) {
 
@@ -22,15 +24,18 @@ export default function ExperienceInfoBox(workshop: ExperienceWorkshopItem) {
   return (
     <div>
       <div
-      className={`flex flex-col ${width} mb-5 ${height} items-center ${separtorLine} 
+      className={`flex flex-col mb-5 items-center ${separtorLine} 
       bg-black
       cursor-pointer transition-all duration-300 ease-in-out
       hover:scale-105 active:scale-95`}
+      style={{width: `${width}px`, height: `${height}px` }}
       onClick={() => setShowPopup(true)}
       >
    
-        <div className={`flex-1 flex items-center justify-center mt-4 ${width} ${height}`}>
-            <img src={workshop.posterImageUrl} alt="Speaker"/>
+        <div className={`flex-1 flex items-center justify-center mt-4`}
+              style={{width: `${imgWidh}px`, height: `${imgHeight}px` }}
+        >
+            <img src={workshop.posterImageUrl} alt="Workshop"/>
         </div>
 
          <section className={'mt-4'}>
@@ -81,11 +86,7 @@ export default function ExperienceInfoBox(workshop: ExperienceWorkshopItem) {
   );
 }
 
-
-
-
-
-export function ProfecionnalInfoBox(workshop: ProfecionnalWorkshopItem) {
+export function ProfessionalInfoBox(workshop: ProfessionalWorkshopItem) {
 
   const [showPopup, setShowPopup] = useState(false);
   
@@ -94,15 +95,18 @@ export function ProfecionnalInfoBox(workshop: ProfecionnalWorkshopItem) {
   return (
     <div>
       <div
-      className={`flex flex-col ${width} mb-5 ${height} items-center ${separtorLine} 
+      className={`flex flex-col mb-5 items-center ${separtorLine} 
       bg-black
       cursor-pointer transition-all duration-300 ease-in-out
       hover:scale-105 active:scale-95`}
+      style={{width: `${width}px`, height: `${height}px` }}
       onClick={() => setShowPopup(true)}
       >
-
-        <div className={`flex-1 flex items-center justify-center ${width} ${height}`}>
-            <img src={workshop.posterImageUrl} alt="Speaker"/>
+   
+        <div className={`flex-1 flex items-center justify-center mt-4`}
+              style={{width: `${imgWidh}px`, height: `${imgHeight}px` }}
+        >
+            <img src={workshop.posterImageUrl} alt="Workshop"/>
         </div>
 
          <section>

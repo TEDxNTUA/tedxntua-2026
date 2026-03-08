@@ -8,10 +8,11 @@ import TEDSocialButton from './SocialButton'
 interface SpeakersPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  speaker: any; // Ideally use your Speaker interface here
+  infoBase: any; // Ideally use your Speaker interface here
 }
 
-export default function SpeakersPopup({ isOpen, onClose, speaker}: SpeakersPopupProps) {
+
+export default function Popup({ isOpen, onClose, infoBase}: SpeakersPopupProps) {
   const [mounted, setMounted] = useState(false);
 
   // 1. Handle mounting state to avoid Hydration errors in Next.js
@@ -32,7 +33,7 @@ export default function SpeakersPopup({ isOpen, onClose, speaker}: SpeakersPopup
   }, [isOpen]);
 
   // Don't render anything if not open, no speaker, or not yet mounted on client
-  if (!isOpen || !speaker || !mounted) return null;
+  if (!isOpen || !infoBase || !mounted) return null;
 
   // 3. Use createPortal to move the HTML to document.body
   return createPortal(
@@ -59,11 +60,11 @@ export default function SpeakersPopup({ isOpen, onClose, speaker}: SpeakersPopup
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6 w-full p-4">
             
             {/* Speaker Image */}
-            {speaker.posterImageUrl && (
+            {infoBase.posterImageUrl && (
               <div className="flex-shrink-0">
                 <img
-                  src={speaker.posterImageUrl}
-                  alt={speaker.name}
+                  src={infoBase.posterImageUrl}
+                  alt={infoBase.name}
                   className="w-32 h-32 md:w-40 md:h-48 object-cover border-4 border-gray-100 shadow-md rounded-lg"
                 />
               </div>
@@ -73,32 +74,32 @@ export default function SpeakersPopup({ isOpen, onClose, speaker}: SpeakersPopup
             {/* min-w-0 is the "secret sauce" to prevent text overflow in flexbox */}
             <div className="flex-1 min-w-0 text-center md:text-left">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 break-words leading-tight">
-                {speaker.name}{speaker.name2 ? ` & ${speaker.name2}` : ''}
+                {infoBase.name}{infoBase.name2 ? ` & ${infoBase.name2}` : ''}
               </h2>
               
               <p className="text-red-600 font-semibold text-lg mt-1 break-words">
-                {speaker.profession}{speaker.profession2 ? ` & ${speaker.profession2}` : ''}
+                {infoBase.profession}{infoBase.profession2 ? ` & ${infoBase.profession2}` : ''}
               </p>
             </div>
           </div>
           
           {/* --- SCROLLABLE SEGMENT START --- */}
             <div className="mt-6 border-t border-gray-100 max-h-30 overflow-y-auto px-2 custom-scrollbar">
-              <h1 className="mt-6 text-black font-bold text-1xl">{speaker.title}</h1>
+              <h1 className="mt-6 text-black font-bold text-1xl">{infoBase.title}</h1>
               <p className="text-gray-700 leading-relaxed text-justify md:text-center whitespace-pre-line">
-                {speaker.description}
-                {speaker.description}
-                {speaker.description}
+                {infoBase.description}
+                {infoBase.description}
+                {infoBase.description}
               </p>
             </div>
 
             <div className="mt-6 border-t border-gray-100 max-h-30 overflow-y-auto px-2 custom-scrollbar">
               <h1 className="mt-6 text-black font-bold text-1xl">Personal Information</h1>
               <p className="text-gray-700 leading-relaxed text-justify md:text-center whitespace-pre-line">
-                {speaker.personalDescription}
-                {speaker.personalDescription}
-                {speaker.personalDescription}
-                {speaker.description}
+                {infoBase.personalDescription}
+                {infoBase.personalDescription}
+                {infoBase.personalDescription}
+                {infoBase.description}
               </p>
             </div>
         {/* --- SCROLLABLE SEGMENT END --- */}

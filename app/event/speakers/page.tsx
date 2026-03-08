@@ -1,6 +1,6 @@
 'use client';
 import AnchorScrollHandler from "../components/AnchorScrollHandler";
-import SpeakersInfoBox from "../components/SpeakersInfoBox";
+import SpeakersInfoBox from "../components/GeneralInfoBox";
 
 import { mySpeakers1 } from '../infoDatabase';
 import { mySpeakers2 } from '../infoDatabase';

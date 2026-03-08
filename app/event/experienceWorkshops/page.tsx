@@ -16,7 +16,7 @@ export default function ProgramPage() {
       <section id="speakers">
 
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-6">Speakers</h1>          
+          <h1 className="text-4xl font-bold mb-6">Experience Workshops</h1>          
         </div>
 
       </section>

@@ -6,6 +6,7 @@ import InfoWorkshopBox from "../components/ProgramInfoBox2";
 import { mySpeakers1 } from '../infoDatabase';
 import { mySpeakers2 } from '../infoDatabase';
 import { myExperienceWorkshopsPack1 } from '../infoDatabase';
+import { myProfessionalWorkshopsPack1 } from '../infoDatabase';
 
 
 // The Page Component
@@ -36,6 +37,8 @@ export default function ProgramPage() {
 
             <div className="w-full border-b border-white pb-4 mb-8">
 
+
+
               <h1 className="text-1xl font-bold text-white">
                 Phase 1 - Start Time
               </h1>
@@ -45,6 +48,8 @@ export default function ProgramPage() {
               <InfoSpeakerBox key={index} {...item} />
             ))}
 
+
+
             <div className="w-full border-b border-white pb-4 mb-8">
 
               <h1 className="text-1xl font-bold text-white">
@@ -53,6 +58,19 @@ export default function ProgramPage() {
             </div> 
 
             {myExperienceWorkshopsPack1.map((item, index) => (
+              <InfoWorkshopBox key={index} {...item} />
+            ))}
+
+
+
+            <div className="w-full border-b border-white pb-4 mb-8">
+
+              <h1 className="text-1xl font-bold text-white">
+                Phase 3 - Start Time
+              </h1>
+            </div> 
+
+            {myProfessionalWorkshopsPack1.map((item, index) => (
               <InfoWorkshopBox key={index} {...item} />
             ))}
           </div>
