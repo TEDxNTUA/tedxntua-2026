@@ -9,7 +9,7 @@ export interface SpeakerItem {
     description: string;
     personalDescription: string;
     posterImageUrl?: string;
-
+    socials: socialLists;
 }
 
 export interface PerformancesItem {
@@ -23,6 +23,7 @@ export interface PerformancesItem {
     description: string;
     personalDescription: string;
     posterImageUrl?: string;
+    socials: socialLists;
 }
 
 
@@ -36,6 +37,7 @@ export interface ExperienceWorkshopItem {
     profession2?: string;
     itemColor: string;
     posterImageUrl?: string;
+    socials: socialLists;
 }
 
 export interface ExperienceWorkshopItemPack {
@@ -55,6 +57,7 @@ export interface ProfessionalWorkshopItem {
     itemColor: string;
     posterImageUrl?: string;
     logoImageUrl?: string;
+    socials: socialLists;
 }
 
 export interface ProfessionalWorkshopItemPack {
@@ -73,4 +76,14 @@ export interface SideHappeningsItem {
     description: string;
     personalDescription: string;
     posterImageUrl?: string;
+    socials: socialLists;
+}
+
+export interface socialLists {
+    youtube?: string;
+    instagram?: string;
+    tiktok?: string;
+    linkedin?: string;
+    mail?: string;
+    facebook?: string;
 }

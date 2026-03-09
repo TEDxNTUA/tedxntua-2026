@@ -4,7 +4,7 @@ import WorkshopPopup from './WorkshopPopup';
 import { ExperienceWorkshopItem } from '../types'
 import { ProfessionalWorkshopItem } from '../types'
 import {SocialButton} from './SocialButton'
-import TEDSocialButton from './SocialButton'
+import {socialLists} from '../types'
 
 
 
@@ -38,25 +38,8 @@ export default function ExperienceInfoBox(workshop: ExperienceWorkshopItem) {
             <img src={workshop.posterImageUrl} alt="Workshop"/>
         </div>
 
-         <section className={'mt-4'}>
-      <TEDSocialButton
-        name = "youtube"
-        size = "35px"
-        color = "white"
-        colorHover = "yellow"
-      />
-      <TEDSocialButton
-        name = "instagram"
-        size = "35px"
-        color = "white"
-        colorHover = "yellow"
-      />
-      <TEDSocialButton
-        name = "youtube"
-        size = "35px"
-        color = "white"
-        colorHover = "yellow"
-      />
+          <section className={'mt-4'}>
+      <SocialConnection {...workshop.socials}/>
       </section>
 
         <div className="flex-1 flex items-center flex-col w-full px-6"> 
@@ -109,25 +92,8 @@ export function ProfessionalInfoBox(workshop: ProfessionalWorkshopItem) {
             <img src={workshop.posterImageUrl} alt="Workshop"/>
         </div>
 
-         <section>
-      <TEDSocialButton
-        name = "youtube"
-        size = "35px"
-        color = "white"
-        colorHover = "yellow"
-      />
-      <TEDSocialButton
-        name = "instagram"
-        size = "35px"
-        color = "white"
-        colorHover = "yellow"
-      />
-      <TEDSocialButton
-        name = "youtube"
-        size = "35px"
-        color = "white"
-        colorHover = "yellow"
-      />
+          <section className={'mt-4'}>
+      <SocialConnection {...workshop.socials}/>
       </section>
 
         <div className="flex-1 flex items-center flex-col w-full px-6"> 
@@ -154,5 +120,30 @@ export function ProfessionalInfoBox(workshop: ProfessionalWorkshopItem) {
 
       </div>
     </div>
+  );
+}
+
+
+function SocialConnection(socials: socialLists) {
+  // 1. Convert the Object into an Array of [name, value] pairs
+  // We filter out any keys that don't have a value (string) assigned
+  const entries = Object.entries(socials) as [keyof socialLists, string][];
+
+  return (
+    <>
+      {entries.map(([platformName, url]) => {
+        // Skip rendering if the value is undefined or empty
+        if (!url) return null;
+
+        return (
+          <SocialButton 
+            key={platformName} // Use the platform name as a unique key
+            name={platformName} 
+            urlLink={url} 
+            size="35px" 
+          />
+        );
+      })}
+    </>
   );
 }

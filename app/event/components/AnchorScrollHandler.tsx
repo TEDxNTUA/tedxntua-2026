@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect } from "react";
 
 export default function AnchorScrollHandler(): null {
@@ -12,7 +11,7 @@ export default function AnchorScrollHandler(): null {
         // Delay slightly to allow layout/sticky header to settle
         setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
       }
-    };
+};
 
     // Scroll on first mount
     scrollToHash();

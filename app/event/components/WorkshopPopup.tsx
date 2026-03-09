@@ -2,13 +2,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import TEDSocialButton from './SocialButton'
+import {socialLists} from '../types'
+import {SocialButton} from './SocialButton'
+
 
 
 interface WorkshopsPopup {
-  isOpen: boolean;
-  onClose: () => void;
-  workshop: any; // Ideally use your Speaker interface here
+isOpen: boolean;
+onClose: () => void;
+workshop: any; // Ideally use your Speaker interface here
 }
 
 export default function WorkshopsPopup({ isOpen, onClose, workshop}: WorkshopsPopup) {
@@ -102,28 +104,36 @@ export default function WorkshopsPopup({ isOpen, onClose, workshop}: WorkshopsPo
               </p>
             </div>
         {/* --- SCROLLABLE SEGMENT END --- */}
-                <div>
-                  <TEDSocialButton
-                    name = "youtube"
-                    size = "35px"
-                    color = "white"
-                    colorHover = "yellow"
-                  />
-                  <TEDSocialButton
-                    name = "instagram"
-                    size = "35px"
-                    color = "white"
-                    colorHover = "yellow"
-                  />
-                  <TEDSocialButton
-                    name = "youtube"
-                    size = "35px"
-                    color = "white"
-                    colorHover = "yellow"
-                  />
-                </div>
+                <section className={'mt-4'}>
+      <SocialConnection {...workshop.socials}/>
+      </section>
       </div>
     </div>,
     document.body
+  );
+}
+
+
+function SocialConnection(socials: socialLists) {
+  // 1. Convert the Object into an Array of [name, value] pairs
+  // We filter out any keys that don't have a value (string) assigned
+  const entries = Object.entries(socials) as [keyof socialLists, string][];
+
+  return (
+    <>
+      {entries.map(([platformName, url]) => {
+        // Skip rendering if the value is undefined or empty
+        if (!url) return null;
+
+        return (
+          <SocialButton 
+            key={platformName} // Use the platform name as a unique key
+            name={platformName} 
+            urlLink={url} 
+            size="35px" 
+          />
+        );
+      })}
+    </>
   );
 }

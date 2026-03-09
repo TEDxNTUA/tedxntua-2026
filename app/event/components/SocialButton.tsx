@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { useState } from 'react';
 
 export default function TEDSocialButton({ name, size, color, colorHover }: { name: string; size: string, color: string, colorHover:string  }) {
@@ -55,7 +55,7 @@ export default function TEDSocialButton({ name, size, color, colorHover }: { nam
 export function SocialButton({ name, urlLink, size }: { name: string, urlLink: string, size: string }) {
     const [style, setStyle] = useState("green");
 
-    const basePath = "../images";
+    const basePath = "../eventimages";
     const extension = "png";
     const lowerName = name.toLowerCase();
 

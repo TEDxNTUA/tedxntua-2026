@@ -6,10 +6,6 @@ import { ProfessionalWorkshopItemPack } from './types';
 import { PerformancesItem } from './types';
 import { SideHappeningsItem } from './types';
 
-
-
-//import speaker1 from '/images/speakers/gimly1.jpg';
-
 //Speakers
 export const mySpeakers1: SpeakerItem[] = [
   { time: "10:00 - 11:00", 
@@ -19,7 +15,10 @@ export const mySpeakers1: SpeakerItem[] = [
     itemColor: "rgba(189, 149, 74, 0.3)", 
     description: "To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard " ,
     posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-    personalDescription: "Hello there"}
+    personalDescription: "Hello there",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
     ,
   { time: "11:00 - 12:00", 
     name: "Gandalf the Grey", 
@@ -28,7 +27,10 @@ export const mySpeakers1: SpeakerItem[] = [
     itemColor: "rgba(255, 255, 255, 0.43)", 
     description: "An increadible journey on how Gandalf the grey kills the Balrog and becomes Gandalf the white", 
     posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-    personalDescription: "Hello there"}
+    personalDescription: "Hello there",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
 ];
 
 export const mySpeakers2: SpeakerItem[] = [
@@ -39,7 +41,10 @@ export const mySpeakers2: SpeakerItem[] = [
     itemColor: "rgba(230, 57, 70, 0.3)", 
     description: "The story of a mighty burgler who happend to acquire a cerain ring" ,
     posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-    personalDescription: "Hello there"}
+    personalDescription: "Hello there",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
     ,
   { time: "14:00 - 15:00", 
     name: "Galadriel of Lothlórien", 
@@ -48,7 +53,10 @@ export const mySpeakers2: SpeakerItem[] = [
     itemColor: "rgba(121, 147, 183, 0.3)", 
     description: "He was a really kind dwarf", 
     posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-    personalDescription: "Hello there"}
+    personalDescription: "Hello there",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
     ,
     { time: "16:00 - 17:00", 
     name: "Pepegrin Took", 
@@ -59,7 +67,10 @@ export const mySpeakers2: SpeakerItem[] = [
     itemColor: "rgba(109, 222, 139, 0.3)", 
     description: "Its just mandatory", 
     posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-    personalDescription: "Hello there"}
+    personalDescription: "Hello there",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
 ];
 
 
@@ -71,8 +82,11 @@ export const myPerformances: PerformancesItem[] = [
     title: "Mountains Gandals", 
     itemColor: "rgba(230, 57, 70, 0.3)", 
     description: "The story of a mighty burgler who happend to acquire a cerain ring" ,
-    posterImageUrl: "/eventimages/speakers/gimly1.jpg",
-    personalDescription: "Hello there"}
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    personalDescription: "Hello there",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
     ,
   { time: "14:00 - 15:00", 
     name: "Galadriel of Lothlórien", 
@@ -80,8 +94,12 @@ export const myPerformances: PerformancesItem[] = [
     title: "Why i gave my hair to a dwarf", 
     itemColor: "rgba(121, 147, 183, 0.3)", 
     description: "He was a really kind dwarf", 
-    posterImageUrl: "/eventimages/speakers/gimly1.jpg",
-    personalDescription: "Hello there"}
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    personalDescription: "Hello there",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS',
+      instagram:'https://www.instagram.com/tedxntua/'
+    }}
     ,
     { time: "16:00 - 17:00", 
     name: "Pepegrin Took", 
@@ -91,8 +109,11 @@ export const myPerformances: PerformancesItem[] = [
     title: "The importance of second breakfast", 
     itemColor: "rgba(109, 222, 139, 0.3)", 
     description: "Its just mandatory", 
-    posterImageUrl: "/eventimages/speakers/gimly1.jpg",
-    personalDescription: "Hello there"}
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    personalDescription: "Hello there",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
 ];
 
 
@@ -105,7 +126,10 @@ export const myExperienceWorkshops1: ExperienceWorkshopItem[] = [
     name: "Galadriel" , 
     profession: "Elf Warrior",
     itemColor: "rgba(204, 243, 128, 0.3)",
-    posterImageUrl: "/eventimages/workshops/grogu1.jpg"
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }
   }
     ,
     { time: timeE1, 
@@ -116,7 +140,10 @@ export const myExperienceWorkshops1: ExperienceWorkshopItem[] = [
     name2: "Gimly",
     profession2: "Dwarf Warrior",
     itemColor: "rgba(204, 243, 128, 0.3)",
-    posterImageUrl: "/eventimages/workshops/grogu1.jpg"}
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
     ,
     { time: timeE1, 
     room: "Room 3", 
@@ -124,7 +151,10 @@ export const myExperienceWorkshops1: ExperienceWorkshopItem[] = [
     name: "Eowyn", 
     profession: "Aragorn",
     itemColor: "rgba(204, 243, 128, 0.3)",
-    posterImageUrl: "/eventimages/workshops/grogu1.jpg"}
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
 ];
 
 export const myExperienceWorkshopsPack1: ExperienceWorkshopItemPack[] = [
@@ -142,7 +172,10 @@ export const myProfessionalWorkshops1: ProfessionalWorkshopItem[] = [
     name: "Fernando Alonso" , 
     profession: "Utter goat of rookies",
     itemColor: "rgba(204, 243, 128, 0.3)",
-    posterImageUrl: "/eventimages/workshops/grogu1.jpg"
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }
   }
     ,
     { time: timeP1, 
@@ -153,7 +186,10 @@ export const myProfessionalWorkshops1: ProfessionalWorkshopItem[] = [
     name2: "Carlos Sainz",
     profession2: "Smooth operator",
     itemColor: "rgba(204, 243, 128, 0.3)",
-    posterImageUrl: "/eventimages/workshops/grogu1.jpg"}
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
     ,
     { time: timeP1, 
     room: "Room 3", 
@@ -161,7 +197,10 @@ export const myProfessionalWorkshops1: ProfessionalWorkshopItem[] = [
     name: "Lando Norris", 
     profession: "2025 WDC",
     itemColor: "rgba(204, 243, 128, 0.3)",
-    posterImageUrl: "/eventimages/workshops/grogu1.jpg"}
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
 ];
 
 export const myProfessionalWorkshopsPack1: ProfessionalWorkshopItemPack[] = [
@@ -178,8 +217,11 @@ export const mySideHappenings: SideHappeningsItem[] = [
     title: "Mountains Gandals", 
     itemColor: "rgba(230, 57, 70, 0.3)", 
     description: "The story of a mighty burgler who happend to acquire a cerain ring" ,
-    posterImageUrl: "/eventimages/speakers/gimly1.jpg",
-    personalDescription: "Hello there"}
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    personalDescription: "Hello there",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
     ,
   { time: "14:00 - 15:00", 
     name: "Galadriel of Lothlórien", 
@@ -187,8 +229,11 @@ export const mySideHappenings: SideHappeningsItem[] = [
     title: "Why i gave my hair to a dwarf", 
     itemColor: "rgba(121, 147, 183, 0.3)", 
     description: "He was a really kind dwarf", 
-    posterImageUrl: "/eventimages/speakers/gimly1.jpg",
-    personalDescription: "Hello there"}
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    personalDescription: "Hello there",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
     ,
     { time: "16:00 - 17:00", 
     name: "Pepegrin Took", 
@@ -198,6 +243,9 @@ export const mySideHappenings: SideHappeningsItem[] = [
     title: "The importance of second breakfast", 
     itemColor: "rgba(109, 222, 139, 0.3)", 
     description: "Its just mandatory", 
-    posterImageUrl: "/eventimages/speakers/gimly1.jpg",
-    personalDescription: "Hello there"}
+    posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+    personalDescription: "Hello there",
+    socials:{
+      youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+    }}
 ];
