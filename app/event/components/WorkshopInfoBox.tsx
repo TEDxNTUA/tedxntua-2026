@@ -31,7 +31,7 @@ export default function ExperienceInfoBox(workshop: ExperienceWorkshopItem) {
       style={{width: `${width}px`, height: `${height}px` }}
       onClick={() => setShowPopup(true)}
       >
-   
+
         <div className={`flex-1 flex items-center justify-center mt-4`}
               style={{width: `${imgWidh}px`, height: `${imgHeight}px` }}
         >
@@ -85,7 +85,7 @@ export function ProfessionalInfoBox(workshop: ProfessionalWorkshopItem) {
       style={{width: `${width}px`, height: `${height}px` }}
       onClick={() => setShowPopup(true)}
       >
-   
+
         <div className={`flex-1 flex items-center justify-center mt-4`}
               style={{width: `${imgWidh}px`, height: `${imgHeight}px` }}
         >

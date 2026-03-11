@@ -6,7 +6,6 @@ import { PerformancesItem } from '../types'
 import { SideHappeningsItem } from '../types'
 import {socialLists} from '../types'
 import {SocialButton} from './SocialButton'
-import TEDSocialButton from './SocialButton'
 
 
 
@@ -131,25 +130,8 @@ export function SideHappeningsInfoBox(sideHappening: SideHappeningsItem) {
             <img src={sideHappening.posterImageUrl} alt="Speaker"/>
         </div>
 
-         <section className={'mt-4'}>
-      <TEDSocialButton
-        name = "youtube"
-        size = "35px"
-        color = "white"
-        colorHover = "yellow"
-      />
-      <TEDSocialButton
-        name = "instagram"
-        size = "35px"
-        color = "white"
-        colorHover = "yellow"
-      />
-      <TEDSocialButton
-        name = "youtube"
-        size = "35px"
-        color = "white"
-        colorHover = "yellow"
-      />
+        <section className={'mt-4'}>
+        <SocialConnection {...sideHappening.socials}/>
       </section>
 
         <div className="flex-1 flex items-center flex-col w-full px-6"> 
