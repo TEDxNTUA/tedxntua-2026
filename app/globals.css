@@ -385,3 +385,18 @@ body {
   color: #ffffff; /* always white */
   transition: color 180ms ease;
 }
+
+/* CV Space sponsor link glow animation */
+@keyframes goldGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(234, 179, 8, 0.8);
+  }
+}
+
+.sponsors-glow {
+  animation: goldGlow 2s ease-in-out infinite;
+}

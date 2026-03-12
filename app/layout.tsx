@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 // Define the layout component
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="bg-blue-100 text-gray-900">
         <EventNavProvider>
 
