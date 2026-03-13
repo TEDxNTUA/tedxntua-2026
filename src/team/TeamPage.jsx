@@ -7,7 +7,6 @@ export default function TeamPage() {
 
   return (
     <section className="min-h-screen bg-white">
-      {/* Hero Section */}
       <div className="bg-black text-white py-16 px-8">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-4">
@@ -19,12 +18,10 @@ export default function TeamPage() {
         </div>
       </div>
 
-      {/* Hero carousel */}
       <div className="max-w-5xl mx-auto px-8 -mt-8">
         <TeamHero images={heroImages} alt="team carousel" />
       </div>
 
-      {/* Timeline Section */}
       <div className="py-16 px-8">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-4">

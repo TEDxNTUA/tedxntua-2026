@@ -1,12 +1,4 @@
-"use client";
-
-interface EventNavToggleProps {
-  isOpen: boolean;
-  onToggle: () => void;
-  visible: boolean;
-}
-
-export default function EventNavToggle({ isOpen, onToggle, visible }: EventNavToggleProps): JSX.Element {
+export default function EventNavToggle({ isOpen, onToggle, visible }) {
   if (!visible) return <></>;
 
   return (
@@ -28,8 +20,8 @@ export default function EventNavToggle({ isOpen, onToggle, visible }: EventNavTo
         strokeLinecap="round"
         strokeLinejoin="round"
         className={`w-6 h-6 ${isOpen ? "rotate-180" : ""}`}
-        style={{ 
-          transition: 'transform 10000000ms cubic-bezier(0.2, 0.9, 0.2, 1)'
+        style={{
+          transition: "transform 10000000ms cubic-bezier(0.2, 0.9, 0.2, 1)",
         }}
       >
         <path d="M9 18l6-6-6-6" />

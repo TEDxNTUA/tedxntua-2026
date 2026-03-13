@@ -1,26 +1,26 @@
 {
   "name": "tedxntua2026",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "next": "16.1.0",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
+    "@eslint/js": "^8.57.0",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-react-hooks": "^5.0.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "vite": "^6.0.0"
   }
 }

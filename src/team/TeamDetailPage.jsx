@@ -1,10 +1,10 @@
-import TeamHero from "../components/TeamHero";
-import teams from "../teamsData";
+import { useParams, Link } from "react-router-dom";
+import TeamHero from "./components/TeamHero";
+import teams from "./teamsData";
 
-type Props = { params: { slug: string } };
-
-export default function TeamDetailPage({ params }: Props) {
-  const { slug } = params;
+export default function TeamDetailPage() {
+  const params = useParams();
+  const slug = params.slug ?? "";
   const team = teams.find((t) => t.slug === slug);
 
   if (!team) {
@@ -12,8 +12,8 @@ export default function TeamDetailPage({ params }: Props) {
       <section className="min-h-screen p-8">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-semibold">Team not found</h2>
-          <p className="text-gray-600">No team matches &quot;{slug}&quot;.</p>
-          <a href="/team" className="text-blue-600 mt-4 block">Back to teams</a>
+          <p className="text-gray-600">No team matches "{slug}".</p>
+          <Link to="/team" className="text-blue-600 mt-4 block">Back to teams</Link>
         </div>
       </section>
     );
@@ -45,7 +45,7 @@ export default function TeamDetailPage({ params }: Props) {
                 </div>
                 <h3 className="font-medium">{m.name}</h3>
                 {m.role && <p className="text-sm text-gray-500">{m.role}</p>}
-                <a href={`/team/${team.slug}/members/${m.id}`} className="mt-3 text-blue-600">View profile</a>
+                <Link to={`/team/${team.slug}/members/${m.id}`} className="mt-3 text-blue-600">View profile</Link>
               </div>
             ))}
           </div>

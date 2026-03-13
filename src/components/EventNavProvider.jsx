@@ -1,17 +1,9 @@
-"use client";
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import React, { createContext, useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
 import EventSidebar from "./EventSidebar";
 import EventNavToggle from "./EventNavToggle";
 
-interface EventNavContextType {
-  isOpen: boolean;
-  toggle: () => void;
-  close: () => void;
-}
-
-// Use null as the default; `useEventNav` will throw outside provider
-const EventNavContext: import("react").Context<EventNavContextType | null> = createContext<EventNavContextType | null>(null);
+const EventNavContext = createContext(null);
 
 export function useEventNav() {
   const context = useContext(EventNavContext);
@@ -21,10 +13,10 @@ export function useEventNav() {
   return context;
 }
 
-export default function EventNavProvider({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-  const isEventPage = pathname?.startsWith("/event") ?? false;
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+export default function EventNavProvider({ children }) {
+  const { pathname = "/" } = useLocation();
+  const isEventPage = pathname.startsWith("/event");
+  const [isOpen, setIsOpen] = useState(false);
   const effectiveIsOpen = isEventPage && isOpen;
 
   const toggle = () => setIsOpen((prev) => !prev);

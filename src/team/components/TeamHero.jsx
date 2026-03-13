@@ -1,12 +1,6 @@
-"use client";
 import { useEffect, useState } from "react";
 
-type Props = {
-  images: string[];
-  alt?: string;
-};
-
-export default function TeamHero({ images, alt = "team photo" }: Props) {
+export default function TeamHero({ images, alt = "team photo" }) {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {

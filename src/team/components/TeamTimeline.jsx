@@ -1,21 +1,12 @@
-"use client";
-
 import React, { useEffect, useRef, useState } from "react";
-import { Team } from "../teamsData";
 
-// ========== MEMBER PHOTO SIZE (edit these to change dimensions) ==========
-const MEMBER_PHOTO_WIDTH = 80;  // px
-const MEMBER_PHOTO_HEIGHT = 100; // px
-// =========================================================================
+const MEMBER_PHOTO_WIDTH = 80;
+const MEMBER_PHOTO_HEIGHT = 100;
 
-type Props = {
-  teams: Team[];
-};
-
-export default function TeamTimeline({ teams }: Props) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+export default function TeamTimeline({ teams }) {
+  const containerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [minHeight, setMinHeight] = useState<string | undefined>(undefined);
+  const [minHeight, setMinHeight] = useState(undefined);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,21 +14,17 @@ export default function TeamTimeline({ teams }: Props) {
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const windowH = window.innerHeight;
-      const elTop = rect.top;
       const elHeight = rect.height;
 
-      // Use document-scroll based mapping for more stable progress:
-      // progress = (scrollY + windowHeight - elementDocumentTop) / (elementHeight + windowHeight)
       const docTop = rect.top + window.pageYOffset;
       const scrollY = window.pageYOffset || window.scrollY || 0;
-      // Account for any fixed header that reduces visible viewport height
       let headerHeight = 0;
       try {
         const headerEl = document.querySelector("header, nav, .navbar, .topbar, .site-header");
         if (headerEl) {
-          const cs = getComputedStyle(headerEl as Element);
+          const cs = getComputedStyle(headerEl);
           if (cs.position === "fixed" || cs.position === "sticky") {
-            headerHeight = (headerEl as HTMLElement).offsetHeight || 0;
+            headerHeight = headerEl.offsetHeight || 0;
           }
         }
       } catch (e) {
@@ -45,11 +32,6 @@ export default function TeamTimeline({ teams }: Props) {
       }
 
       const effectiveWindowH = Math.max(0, windowH - headerHeight);
-
-      // Map progress so 0 = bottom of viewport at element top,
-      // 1 = bottom of viewport at element bottom. Use elHeight
-      // as denominator so the ball reaches the bottom when the
-      // element is fully visible in the viewport.
       const progress = Math.max(
         0,
         Math.min(1, (scrollY + effectiveWindowH - docTop) / Math.max(elHeight, 1))
@@ -62,24 +44,18 @@ export default function TeamTimeline({ teams }: Props) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Measure actual content height and use that for minHeight so the bar
-  // truly spans the entire content and the ball can reach the bottom.
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
     const measure = () => {
-      // el.scrollHeight includes children and gaps
       const scrollH = el.scrollHeight || el.offsetHeight || 0;
-      const target = Math.max(scrollH, typeof window !== 'undefined' ? window.innerHeight : 800);
+      const target = Math.max(scrollH, typeof window !== "undefined" ? window.innerHeight : 800);
       setMinHeight(`${target}px`);
     };
 
-    // initial measure
-    // use rAF to ensure layout settled
     requestAnimationFrame(measure);
 
-    // watch for resizes and content changes
     window.addEventListener("resize", measure, { passive: true });
     const ro = new ResizeObserver(measure);
     ro.observe(el);
@@ -92,21 +68,17 @@ export default function TeamTimeline({ teams }: Props) {
 
   return (
     <div ref={containerRef} className="relative" style={minHeight ? { minHeight } : undefined}>
-      {/* Vertical progress bar (background always full height) */}
       <div className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-gray-200 rounded-full">
-        {/* Progress fill (moves with scroll) */}
         <div
           className="absolute top-0 left-0 w-full bg-gradient-to-b from-red-600 to-red-500 rounded-full transition-all duration-100"
           style={{ height: `${scrollProgress * 100}%` }}
         />
-        {/* Moving ball (moves with scroll) */}
           <div
             className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-red-600 border-4 border-black rounded-full shadow-lg transition-all duration-100 z-10"
             style={{ top: `${scrollProgress * 100}%` }}
           />
       </div>
 
-      {/* Teams */}
       <div className="flex flex-col gap-32 py-16">
         {teams.map((team, i) => (
           <TeamRow key={team.slug} team={team} index={i} />
@@ -116,13 +88,8 @@ export default function TeamTimeline({ teams }: Props) {
   );
 }
 
-type TeamRowProps = {
-  team: Team;
-  index: number;
-};
-
-function TeamRow({ team, index }: TeamRowProps) {
-  const ref = useRef<HTMLDivElement | null>(null);
+function TeamRow({ team, index }) {
+  const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -145,7 +112,6 @@ function TeamRow({ team, index }: TeamRowProps) {
       ref={ref}
       className="grid grid-cols-[1fr_60px_1fr] items-center gap-4 min-h-[200px]"
     >
-      {/* Left: Name + Description */}
       <div
         className={`text-right pr-6 transition-all duration-700 ${
           visible
@@ -160,7 +126,6 @@ function TeamRow({ team, index }: TeamRowProps) {
         )}
       </div>
 
-      {/* Center: Connector dot on bar */}
       <div className="flex justify-center">
         <div
           className={`w-4 h-4 rounded-full border-4 border-red-600 bg-white transition-all duration-500 ${
@@ -170,7 +135,6 @@ function TeamRow({ team, index }: TeamRowProps) {
         />
       </div>
 
-      {/* Right: Member photos */}
       <div
         className={`flex flex-wrap gap-4 pl-6 transition-all duration-700 ${
           visible

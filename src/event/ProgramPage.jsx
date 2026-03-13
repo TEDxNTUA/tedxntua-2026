@@ -1,4 +1,4 @@
-import AnchorScrollHandler from "../components/AnchorScrollHandler";
+import AnchorScrollHandler from "./AnchorScrollHandler";
 
 export default function ProgramPage() {
   return (

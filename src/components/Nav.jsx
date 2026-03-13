@@ -1,14 +1,11 @@
-"use client";
 import { useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEventNav } from "./EventNavProvider";
 import classes from "./Nav.module.css";
 
 function Nav() {
-  const router = useRouter();
-  const pathnameRaw = usePathname();
-  const pathname = pathnameRaw ?? "/";
+  const navigateRouter = useNavigate();
+  const { pathname = "/" } = useLocation();
   const { toggle: toggleEventNav } = useEventNav();
   const [isOpen, setIsOpen] = useState(false);
   const [isHiddenOnScroll, setIsHiddenOnScroll] = useState(false);
@@ -16,9 +13,9 @@ function Nav() {
 
   const isEventPage = pathname.startsWith("/event");
   const isSponsorsPage = pathname === "/sponsors";
-  const isTeamPage = pathname === "/team";
+  const isTeamPage = pathname === "/team" || pathname.startsWith("/team/");
 
-  const navigate = (route: string): void => {
+  const navigate = (route) => {
     setIsOpen(false);
     try {
       if (route === "/event") sessionStorage.setItem("nav-target-index", "1");
@@ -27,17 +24,17 @@ function Nav() {
     } catch {
       // ignore
     }
-    router.push(route);
+    navigateRouter(route);
   };
 
   const onAnchorClick =
-    (handler: () => void) =>
-      (event: MouseEvent<HTMLAnchorElement>): void => {
+    (handler) =>
+      (event) => {
         event.preventDefault();
         handler();
       };
 
-  const handleEventClick = (): void => {
+  const handleEventClick = () => {
     if (isEventPage) {
       toggleEventNav();
       return;
@@ -45,7 +42,7 @@ function Nav() {
     navigate("/event");
   };
 
-  const handleCenterLogoClick = (): void => {
+  const handleCenterLogoClick = () => {
     if (!isOpen) {
       setIsOpen(true);
       return;
@@ -60,7 +57,7 @@ function Nav() {
 
     lastScrollYRef.current = window.scrollY;
 
-    const handleScroll = (): void => {
+    const handleScroll = () => {
       const currentY = window.scrollY;
       const isScrollingDown = currentY > lastScrollYRef.current;
       const passedTop = currentY > 40;

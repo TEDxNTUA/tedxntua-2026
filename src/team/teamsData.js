@@ -1,21 +1,4 @@
-export type Member = {
-  id: string;
-  name: string;
-  role?: string;
-  photo?: string;
-  bio?: string;
-};
-
-export type Team = {
-  slug: string;
-  title: string;
-  description?: string;
-  heroImages?: string[];
-  members?: Member[];
-};
-
-// Edit this file to add/remove teams and members. Use reachable image URLs or local paths.
-export const teams: Team[] = [
+const teams = [
   {
     slug: "curator",
     title: "Curator",

@@ -40,7 +40,7 @@ body {
 .site-main {
   flex: 1 0 auto;
   /* Keep page content clear of the fixed radial navbar across breakpoints. */
-  padding-top: clamp(3.5rem, 12vmin, 7rem);
+  padding-top: 0;
 }
 
 .site-footer {
