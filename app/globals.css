@@ -490,6 +490,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.45rem;
+  align-items: center;
 }
 
 .sponsor-tier-section {
@@ -499,6 +500,7 @@ body {
   background: transparent;
   box-shadow: none;
   padding: 1.2rem 0;
+  width: 100%;
 }
 
 .tier-heading h2 {
@@ -518,16 +520,26 @@ body {
   max-width: 680px;
 }
 
-.sponsor-grid {
+.sponsor-companies {
   margin-top: 1.2rem;
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.sponsor-companies__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
   gap: 0.9rem;
-  justify-items: center;
+  width: min(980px, 100%);
 }
 
 .sponsor-card {
-  width: min(360px, 100%);
+  flex: 0 1 300px;
+  width: 100%;
+  max-width: 320px;
   border-radius: 0;
   border: none;
   background: transparent;
@@ -538,6 +550,7 @@ body {
   justify-content: space-between;
   align-items: center;
   gap: 0.7rem;
+  text-align: center;
   transition: transform 260ms ease;
 }
 
@@ -551,6 +564,7 @@ body {
   align-items: center;
   text-align: center;
   gap: 0.6rem;
+  width: 100%;
 }
 
 .sponsor-logo-wrap {
@@ -563,6 +577,7 @@ body {
   background: transparent;
   display: grid;
   place-items: center;
+  margin-inline: auto;
 }
 
 .sponsor-logo {
@@ -587,12 +602,14 @@ body {
   margin: 0;
   font-size: 1.08rem;
   color: color-mix(in oklab, var(--tier-accent) 62%, #f2f8ff);
+  text-align: center;
 }
 
 .sponsor-description {
   margin: 0.35rem 0 0;
   font-size: 0.9rem;
   color: rgba(193, 218, 239, 0.83);
+  text-align: center;
 }
 
 .sponsor-card__footer {
@@ -601,6 +618,7 @@ body {
   align-items: center;
   gap: 0.6rem;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .sponsor-link {
@@ -612,6 +630,7 @@ body {
   border-bottom: 1px solid rgba(168, 223, 255, 0.45);
   text-decoration: none;
   transition: color 180ms ease, border-color 180ms ease;
+  margin-inline: auto;
 }
 
 .sponsor-link:hover {
@@ -652,17 +671,7 @@ body {
 
 @media (min-width: 768px) {
   .sponsor-tier-section {
-    padding: 1.4rem;
-  }
-
-  .sponsor-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1200px) {
-  .sponsor-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 1.4rem 0;
   }
 }
 

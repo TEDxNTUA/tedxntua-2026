@@ -118,6 +118,7 @@ function SponsorCard({
 }
 
 export default function SponsorsPage() {
+  const diamondRef = useRef<HTMLElement | null>(null);
   const sponsorsByTier = useMemo(() => {
     return tierOrder.reduce<Record<SponsorTierId, (typeof sponsors)[number][]>>(
       (acc, tier) => {
@@ -132,6 +133,59 @@ export default function SponsorsPage() {
         supporters: [],
       }
     );
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) return;
+
+    const targetY = 0;
+
+    const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    const start = performance.now();
+    // Auto-scroll timing (ms): tweak these to change pace, slow start, and bottom pause.
+    const totalDuration = 7000;
+    const slowStartDuration = 1000;
+    const bottomHold = 300;
+    const mainDuration = Math.max(0, totalDuration - slowStartDuration - bottomHold);
+    const phaseDuration = mainDuration / 2;
+
+    const easeInCubic = (t: number) => t * t * t;
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const step = (now: number) => {
+      const elapsed = now - start;
+      if (elapsed >= totalDuration) {
+        window.scrollTo({ top: Math.max(0, targetY), behavior: "auto" });
+        return;
+      }
+
+      if (elapsed <= slowStartDuration) {
+        const slowProgress = easeInCubic(elapsed / slowStartDuration);
+        window.scrollTo({ top: maxScroll * 0.12 * slowProgress, behavior: "auto" });
+        requestAnimationFrame(step);
+        return;
+      }
+
+      const activeElapsed = elapsed - slowStartDuration;
+
+      if (activeElapsed <= phaseDuration) {
+        const progress = easeOutCubic(activeElapsed / phaseDuration);
+        const offset = maxScroll * 0.12;
+        window.scrollTo({ top: offset + (maxScroll - offset) * progress, behavior: "auto" });
+      } else if (activeElapsed <= phaseDuration + bottomHold) {
+        window.scrollTo({ top: maxScroll, behavior: "auto" });
+      } else {
+        const upElapsed = activeElapsed - phaseDuration - bottomHold;
+        const progress = easeInCubic(upElapsed / phaseDuration);
+        const current = maxScroll * (1 - progress) + targetY * progress;
+        window.scrollTo({ top: Math.max(0, current), behavior: "auto" });
+      }
+
+      requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
   }, []);
 
   return (
@@ -176,6 +230,7 @@ export default function SponsorsPage() {
               key={tier}
               className="sponsor-tier-section"
               style={{ "--tier-accent": tierInfo.accent } as CSSProperties}
+              ref={tier === "diamond" ? diamondRef : undefined}
             >
               <Reveal delayMs={tierIndex * 90}>
                 <div className="tier-heading">
@@ -184,10 +239,12 @@ export default function SponsorsPage() {
                 </div>
               </Reveal>
 
-              <div className="sponsor-grid">
-                {tierSponsors.map((sponsor, index) => (
-                  <SponsorCard sponsor={sponsor} index={index} key={sponsor.id} />
-                ))}
+              <div className="sponsor-companies">
+                <div className="sponsor-companies__inner">
+                  {tierSponsors.map((sponsor, index) => (
+                    <SponsorCard sponsor={sponsor} index={index} key={sponsor.id} />
+                  ))}
+                </div>
               </div>
             </section>
           );
