@@ -385,3 +385,298 @@ body {
   color: #ffffff; /* always white */
   transition: color 180ms ease;
 }
+
+/* Sponsors page: futuristic glass style with subtle motion */
+.sponsors-page {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  color: #e5f3ff;
+  background:
+    radial-gradient(1200px 500px at 12% 8%, rgba(56, 189, 248, 0.13), transparent 60%),
+    radial-gradient(1000px 600px at 88% 0%, rgba(124, 58, 237, 0.1), transparent 62%),
+    linear-gradient(180deg, #05080f 0%, #020308 100%);
+  padding: clamp(4rem, 8vw, 6rem) 1.25rem 4rem;
+}
+
+.sponsors-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(120, 160, 210, 0.045),
+      rgba(120, 160, 210, 0.045) 1px,
+      transparent 1px,
+      transparent 36px
+    );
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), transparent 85%);
+  animation: sponsors-ambient-drift 24s linear infinite;
+}
+
+.sponsors-hero,
+.sponsors-sections,
+.sponsor-tier-strip {
+  width: min(1180px, 100%);
+  margin-inline: auto;
+}
+
+.sponsors-hero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.sponsors-kicker {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(125, 211, 252, 0.4);
+  background: rgba(3, 15, 29, 0.75);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.sponsors-title {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 4.3rem);
+  line-height: 1.04;
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+  color: #f2f8ff;
+}
+
+.sponsors-subtitle {
+  margin: 1.1rem auto 0;
+  max-width: 760px;
+  font-size: clamp(1rem, 2.3vw, 1.2rem);
+  color: rgba(214, 230, 245, 0.84);
+}
+
+.sponsor-tier-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+  margin-bottom: 2.3rem;
+}
+
+.tier-pill {
+  --tier-accent: #7dd3fc;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.46rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklab, var(--tier-accent) 55%, rgba(255, 255, 255, 0.16));
+  background: rgba(5, 15, 28, 0.84);
+  color: #d9ecff;
+}
+
+.tier-pill__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--tier-accent);
+  box-shadow: 0 0 12px color-mix(in oklab, var(--tier-accent) 70%, transparent);
+}
+
+.sponsors-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.45rem;
+}
+
+.sponsor-tier-section {
+  --tier-accent: #7dd3fc;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 1.2rem 0;
+}
+
+.tier-heading h2 {
+  margin: 0;
+  font-size: clamp(1.22rem, 2.5vw, 1.7rem);
+  text-align: center;
+  letter-spacing: 0.01em;
+  color: var(--tier-accent);
+  text-shadow: 0 0 16px color-mix(in oklab, var(--tier-accent) 36%, transparent);
+}
+
+.tier-heading p {
+  margin: 0.45rem auto 0;
+  color: rgba(190, 218, 240, 0.83);
+  font-size: 0.95rem;
+  text-align: center;
+  max-width: 680px;
+}
+
+.sponsor-grid {
+  margin-top: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.9rem;
+  justify-items: center;
+}
+
+.sponsor-card {
+  width: min(360px, 100%);
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.7rem;
+  transition: transform 260ms ease;
+}
+
+.sponsor-card:hover {
+  transform: translateY(-2px);
+}
+
+.sponsor-card__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+}
+
+.sponsor-logo-wrap {
+  width: 156px;
+  height: 86px;
+  border-radius: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  display: grid;
+  place-items: center;
+}
+
+.sponsor-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.55rem;
+}
+
+.sponsor-logo-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #8fd6ff;
+  letter-spacing: 0.06em;
+}
+
+.sponsor-name {
+  margin: 0;
+  font-size: 1.08rem;
+  color: color-mix(in oklab, var(--tier-accent) 62%, #f2f8ff);
+}
+
+.sponsor-description {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: rgba(193, 218, 239, 0.83);
+}
+
+.sponsor-card__footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.sponsor-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #ccedff;
+  border-bottom: 1px solid rgba(168, 223, 255, 0.45);
+  text-decoration: none;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.sponsor-link:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.74);
+}
+
+.sponsor-link--disabled {
+  opacity: 0.66;
+  border-bottom-style: dashed;
+}
+
+.sponsors-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+.sponsors-reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes sponsors-ambient-drift {
+  0% {
+    transform: translateY(-6px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(-6px);
+    opacity: 0.7;
+  }
+}
+
+@media (min-width: 768px) {
+  .sponsor-tier-section {
+    padding: 1.4rem;
+  }
+
+  .sponsor-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .sponsor-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sponsors-ambient {
+    animation: none;
+  }
+
+  .sponsors-reveal,
+  .sponsors-reveal--visible,
+  .sponsor-card,
+  .sponsor-card:hover {
+    transition-duration: 0ms !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
