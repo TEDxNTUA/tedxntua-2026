@@ -1,4 +1,5 @@
 import TeamHero from "../components/TeamHero";
+import MemberPhoto from "../components/MemberPhoto";
 import teams from "../teamsData";
 
 type Props = { params: { slug: string } };
@@ -36,15 +37,11 @@ export default function TeamDetailPage({ params }: Props) {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {(team.members || []).map((m) => (
               <div key={m.id} className="border rounded p-3 flex flex-col items-center text-center">
-                <div className="w-28 h-28 rounded-full overflow-hidden mb-3">
-                  {m.photo ? (
-                    <img src={m.photo} alt={m.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full bg-gray-100 flex items-center justify-center">No photo</div>
-                  )}
-                </div>
+                <MemberPhoto
+                  member={m}
+                  containerClassName="w-44 h-44 rounded-full mb-3"
+                />
                 <h3 className="font-medium">{m.name}</h3>
-                {m.role && <p className="text-sm text-gray-500">{m.role}</p>}
                 <a href={`/team/${team.slug}/members/${m.id}`} className="mt-3 text-blue-600">View profile</a>
               </div>
             ))}

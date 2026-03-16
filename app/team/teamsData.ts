@@ -1,9 +1,14 @@
 export type Member = {
   id: string;
   name: string;
-  role?: string;
   photo?: string;
-  bio?: string;
+  social?: {
+    instagram?: string;
+    linkedin?: string;
+    twitter?: string;
+    facebook?: string;
+    website?: string;
+  };
 };
 
 export type Team = {
@@ -14,21 +19,29 @@ export type Team = {
   members?: Member[];
 };
 
-// Edit this file to add/remove teams and members. Use reachable image URLs or local paths.
+const assetPath = (path: string) => encodeURI(path);
+
 export const teams: Team[] = [
   {
     slug: "curator",
     title: "Curator",
     description: "The people curating the talks and program.",
     heroImages: [
-      "https://via.placeholder.com/1000x400?text=Curator+1",
-      "https://via.placeholder.com/1000x400?text=Curator+2",
-      "https://via.placeholder.com/1000x400?text=Curator+3"
+      assetPath("/MTT/Curators _ MTT/Άγγελος/mtt-255.jpg"),
+      assetPath("/MTT/Curators _ MTT/Νάρια/mtt-63.jpg"),
+      assetPath("/MTT/Curators _ MTT/Άγγελος/mtt-256.jpg")
     ],
     members: [
-      { id: "alex", name: "Alex Pap", role: "Head Curator", photo: "https://via.placeholder.com/300?text=Alex" },
-      { id: "marie", name: "Marie Io", role: "Curator", photo: "https://via.placeholder.com/300?text=Marie" },
-      { id: "sam", name: "Sam T.", role: "Curator", photo: "https://via.placeholder.com/300?text=Sam" }
+      {
+        id: "aggelos",
+        name: "Άγγελος",
+        photo: assetPath("/MTT/Curators _ MTT/Άγγελος/mtt-254.jpg")
+      },
+      {
+        id: "naria",
+        name: "Νάρια",
+        photo: assetPath("/MTT/Curators _ MTT/Νάρια/mtt-62.jpg")
+      }
     ]
   },
   {
@@ -36,27 +49,30 @@ export const teams: Team[] = [
     title: "IT",
     description: "Technology, infrastructure and stage management.",
     heroImages: [
-      "https://via.placeholder.com/1000x400?text=IT+1",
-      "https://via.placeholder.com/1000x400?text=IT+2",
-      "https://via.placeholder.com/1000x400?text=IT+3"
+      assetPath("/MTT/IT _ MTT/Νίκος/mtt-306.jpg"),
+      assetPath("/MTT/IT _ MTT/Αντώνης/mtt-528.jpg"),
+      assetPath("/MTT/IT _ MTT/Μίσα/mtt-15.jpg")
     ],
     members: [
-      { id: "niko", name: "Niko S.", role: "Lead Engineer", photo: "https://via.placeholder.com/300?text=Niko" },
-      { id: "leo", name: "Leon", role: "AV", photo: "https://via.placeholder.com/300?text=Leon" }
-    ]
-  },
-  {
-    slug: "fundraising",
-    title: "Fundraising",
-    description: "Sponsorships, donations and budget planning.",
-    heroImages: [
-      "https://via.placeholder.com/1000x400?text=Fundraising+1",
-      "https://via.placeholder.com/1000x400?text=Fundraising+2",
-      "https://via.placeholder.com/1000x400?text=Fundraising+3"
-    ],
-    members: [
-      { id: "f1", name: "Maria", role: "Head of Fundraising", photo: "https://via.placeholder.com/300?text=Maria" },
-      { id: "f2", name: "Ilias", role: "Sponsorships", photo: "https://via.placeholder.com/300?text=Ilias" }
+      {
+        id: "nikos",
+        name: "Νίκος",
+        photo: assetPath("/MTT/IT _ MTT/Νίκος/mtt-44.jpg"),
+        social: {
+          instagram: "https://www.instagram.com/",
+          linkedin: "https://www.linkedin.com/",
+        }
+      },
+      {
+        id: "antonis",
+        name: "Αντώνης",
+        photo: assetPath("/MTT/IT _ MTT/Αντώνης/mtt-527.jpg")
+      },
+      {
+        id: "misa",
+        name: "Μίσα",
+        photo: assetPath("/MTT/IT _ MTT/Μίσα/mtt-14.jpg")
+      }
     ]
   },
   {
@@ -64,13 +80,77 @@ export const teams: Team[] = [
     title: "Design",
     description: "Visual identity, stage visuals and branding.",
     heroImages: [
-      "https://via.placeholder.com/1000x400?text=Design+1",
-      "https://via.placeholder.com/1000x400?text=Design+2",
-      "https://via.placeholder.com/1000x400?text=Design+3"
+      assetPath("/MTT/Design _ MTT/Αργυρώ/mtt-172.jpg"),
+      assetPath("/MTT/Design _ MTT/Ευηλία/mtt-182.jpg"),
+      assetPath("/MTT/Design _ MTT/Κώστας Π./mtt-289.jpg")
     ],
     members: [
-      { id: "d1", name: "Dana", role: "Lead Designer", photo: "https://via.placeholder.com/300?text=Dana" },
-      { id: "d2", name: "Iris", role: "Graphic Designer", photo: "https://via.placeholder.com/300?text=Iris" }
+      {
+        id: "argyro",
+        name: "Αργυρώ",
+        photo: assetPath("/MTT/Design _ MTT/Αργυρώ/mtt-171.jpg"),
+        social: {
+          instagram: "https://www.instagram.com/",
+          website: "https://example.com",
+        }
+      },
+      {
+        id: "evilia",
+        name: "Ευηλία",
+        photo: assetPath("/MTT/Design _ MTT/Ευηλία/mtt-181.jpg")
+      },
+      {
+        id: "kostas-p",
+        name: "Κώστας Π.",
+        photo: assetPath("/MTT/Design _ MTT/Κώστας Π./mtt-288.jpg")
+      },
+      {
+        id: "maria",
+        name: "Μαρία",
+        photo: assetPath("/MTT/Design _ MTT/Μαρία/mtt-157.jpg")
+      }
+    ]
+  },
+  {
+    slug: "fundraising",
+    title: "Fundraising",
+    description: "Sponsorships, donations and budget planning.",
+    heroImages: [
+      assetPath("/MTT/FR _ MTT/Αριστοτέλης/mtt-101.jpg"),
+      assetPath("/MTT/FR _ MTT/Άρτεμις/mtt-126.jpg"),
+      assetPath("/MTT/FR _ MTT/Γιώργος/mtt-304.jpg")
+    ],
+    members: [
+      {
+        id: "aristotelis",
+        name: "Αριστοτέλης",
+        photo: assetPath("/MTT/FR _ MTT/Αριστοτέλης/mtt-100.jpg")
+      },
+      {
+        id: "artemis",
+        name: "Άρτεμις",
+        photo: assetPath("/MTT/FR _ MTT/Άρτεμις/mtt-125.jpg")
+      },
+      {
+        id: "giorgos",
+        name: "Γιώργος",
+        photo: assetPath("/MTT/FR _ MTT/Γιώργος/mtt-303.jpg")
+      },
+      {
+        id: "eirini",
+        name: "Ειρήνη",
+        photo: assetPath("/MTT/FR _ MTT/Ειρήνη/mtt-26.jpg")
+      },
+      {
+        id: "eleni",
+        name: "Ελένη",
+        photo: assetPath("/MTT/FR _ MTT/Ελένη/mtt-104.jpg")
+      },
+      {
+        id: "martina",
+        name: "Μαρτίνα",
+        photo: assetPath("/MTT/FR _ MTT/Μαρτίνα/mtt-118.jpg")
+      }
     ]
   },
   {
@@ -78,13 +158,26 @@ export const teams: Team[] = [
     title: "Speakers",
     description: "Speaker curation and liaison.",
     heroImages: [
-      "https://via.placeholder.com/1000x400?text=Speakers+1",
-      "https://via.placeholder.com/1000x400?text=Speakers+2",
-      "https://via.placeholder.com/1000x400?text=Speakers+3"
+      assetPath("/MTT/Speakers _ MTT/Έλενα Κ./mtt-386.jpg"),
+      assetPath("/MTT/Speakers _ MTT/Ελευθερία/mtt-435.jpg"),
+      assetPath("/MTT/Speakers _ MTT/Κωνσταντίνος/mtt-402.jpg")
     ],
     members: [
-      { id: "s1", name: "Elena", role: "Speakers Lead", photo: "https://via.placeholder.com/300?text=Elena" },
-      { id: "s2", name: "Tom", role: "Speakers Coord.", photo: "https://via.placeholder.com/300?text=Tom" }
+      {
+        id: "elena-k",
+        name: "Έλενα Κ.",
+        photo: assetPath("/MTT/Speakers _ MTT/Έλενα Κ./mtt-385.jpg")
+      },
+      {
+        id: "eleftheria",
+        name: "Ελευθερία",
+        photo: assetPath("/MTT/Speakers _ MTT/Ελευθερία/mtt-434.jpg")
+      },
+      {
+        id: "konstantinos",
+        name: "Κωνσταντίνος",
+        photo: assetPath("/MTT/Speakers _ MTT/Κωνσταντίνος/mtt-401.jpg")
+      }
     ]
   },
   {
@@ -92,14 +185,31 @@ export const teams: Team[] = [
     title: "Experience",
     description: "Designing attendee and speaker experience.",
     heroImages: [
-      "https://via.placeholder.com/1000x400?text=Experience+1",
-      "https://via.placeholder.com/1000x400?text=Experience+2",
-      "https://via.placeholder.com/1000x400?text=Experience+3"
+      assetPath("/MTT/Experience _ MTT/Αρετή/mtt-235.jpg"),
+      assetPath("/MTT/Experience _ MTT/Ελπίδα/mtt-282.jpg"),
+      assetPath("/MTT/Experience _ MTT/Φανή/mtt-329.jpg")
     ],
     members: [
-      { id: "eva", name: "Eva R.", role: "Experience Lead", photo: "https://via.placeholder.com/300?text=Eva" },
-      { id: "mina", name: "Mina", role: "Volunteer Coordinator", photo: "https://via.placeholder.com/300?text=Mina" },
-      { id: "dave", name: "Dave", role: "Designer", photo: "https://via.placeholder.com/300?text=Dave" }
+      {
+        id: "areti",
+        name: "Αρετή",
+        photo: assetPath("/MTT/Experience _ MTT/Αρετή/mtt-234.jpg")
+      },
+      {
+        id: "elpida",
+        name: "Ελπίδα",
+        photo: assetPath("/MTT/Experience _ MTT/Ελπίδα/mtt-230.jpg")
+      },
+      {
+        id: "nancy",
+        name: "Νάνσυ",
+        photo: assetPath("/MTT/Experience _ MTT/Νάνσυ/mtt-215.jpg")
+      },
+      {
+        id: "fani",
+        name: "Φανή",
+        photo: assetPath("/MTT/Experience _ MTT/Φανή/mtt-328.jpg")
+      }
     ]
   },
   {
@@ -107,13 +217,21 @@ export const teams: Team[] = [
     title: "Venue",
     description: "Venue logistics and on-site operations.",
     heroImages: [
-      "https://via.placeholder.com/1000x400?text=Venue+1",
-      "https://via.placeholder.com/1000x400?text=Venue+2",
-      "https://via.placeholder.com/1000x400?text=Venue+3"
+      assetPath("/MTT/Venue _ MTT/Θοδωρής/mtt-540.jpg"),
+      assetPath("/MTT/Venue _ MTT/Φένια/mtt-138.jpg"),
+      assetPath("/MTT/Venue _ MTT/Φένια/mtt-139.jpg")
     ],
     members: [
-      { id: "v1", name: "George", role: "Venue Manager", photo: "https://via.placeholder.com/300?text=George" },
-      { id: "v2", name: "Sofia", role: "Logistics", photo: "https://via.placeholder.com/300?text=Sofia" }
+      {
+        id: "thodoris",
+        name: "Θοδωρής",
+        photo: assetPath("/MTT/Venue _ MTT/Θοδωρής/mtt-539.jpg")
+      },
+      {
+        id: "fenia",
+        name: "Φένια",
+        photo: assetPath("/MTT/Venue _ MTT/Φένια/mtt-137.jpg")
+      }
     ]
   },
   {
@@ -121,14 +239,26 @@ export const teams: Team[] = [
     title: "Social Media",
     description: "Communications, socials and outreach.",
     heroImages: [
-      "https://via.placeholder.com/1000x400?text=Social+1",
-      "https://via.placeholder.com/1000x400?text=Social+2",
-      "https://via.placeholder.com/1000x400?text=Social+3"
+      assetPath("/MTT/Media _ MTT/Έλενα Ξ./mtt-22.jpg"),
+      assetPath("/MTT/Media _ MTT/Μαλβίνα/mtt-2.jpg"),
+      assetPath("/MTT/Media _ MTT/Μυρτώ/mtt-206.jpg")
     ],
     members: [
-      { id: "sm1", name: "Lena", role: "Social Lead", photo: "https://via.placeholder.com/300?text=Lena" },
-      { id: "sm2", name: "Omar", role: "Content", photo: "https://via.placeholder.com/300?text=Omar" },
-      { id: "sm3", name: "Rita", role: "Community", photo: "https://via.placeholder.com/300?text=Rita" }
+      {
+        id: "elena-x",
+        name: "Έλενα Ξ.",
+        photo: assetPath("/MTT/Media _ MTT/Έλενα Ξ./mtt-21.jpg")
+      },
+      {
+        id: "malvina",
+        name: "Μαλβίνα",
+        photo: assetPath("/MTT/Media _ MTT/Μαλβίνα/mtt-1.jpg")
+      },
+      {
+        id: "myrto",
+        name: "Μυρτώ",
+        photo: assetPath("/MTT/Media _ MTT/Μυρτώ/mtt-205.jpg")
+      }
     ]
   }
 ];

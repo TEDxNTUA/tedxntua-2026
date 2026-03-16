@@ -2,10 +2,11 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Team } from "../teamsData";
+import MemberPhoto from "./MemberPhoto";
 
 // ========== MEMBER PHOTO SIZE (edit these to change dimensions) ==========
-const MEMBER_PHOTO_WIDTH = 80;  // px
-const MEMBER_PHOTO_HEIGHT = 100; // px
+const MEMBER_PHOTO_WIDTH = 128;  // px
+const MEMBER_PHOTO_HEIGHT = 160; // px
 // =========================================================================
 
 type Props = {
@@ -143,7 +144,7 @@ function TeamRow({ team, index }: TeamRowProps) {
   return (
     <div
       ref={ref}
-      className="grid grid-cols-[1fr_60px_1fr] items-center gap-4 min-h-[200px]"
+      className="grid grid-cols-[1fr_60px_1fr] items-center gap-4 min-h-[280px]"
     >
       {/* Left: Name + Description */}
       <div
@@ -187,36 +188,17 @@ function TeamRow({ team, index }: TeamRowProps) {
             }`}
             style={{ transitionDelay: `${index * 50 + 200 + mi * 80}ms` }}
           >
-            <div
-              className="rounded-md overflow-hidden border-2 border-red-600 bg-gray-100 shadow-md"
-              style={{ width: MEMBER_PHOTO_WIDTH, height: MEMBER_PHOTO_HEIGHT }}
-            >
-              {m.photo ? (
-                <img
-                  src={m.photo}
-                  alt={m.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                  No
-                </div>
-              )}
-            </div>
+            <MemberPhoto
+              member={m}
+              containerClassName="rounded-md border-2 border-red-600 bg-gray-100 shadow-md"
+              containerStyle={{ width: MEMBER_PHOTO_WIDTH, height: MEMBER_PHOTO_HEIGHT }}
+            />
             <span
-              className="mt-1 text-xs font-medium text-black text-center truncate"
+              className="mt-2 text-sm font-medium text-black text-center truncate"
               style={{ maxWidth: MEMBER_PHOTO_WIDTH }}
             >
               {m.name}
             </span>
-            {m.role && (
-              <span
-                className="text-[10px] text-gray-500 text-center truncate"
-                style={{ maxWidth: MEMBER_PHOTO_WIDTH }}
-              >
-                {m.role}
-              </span>
-            )}
           </div>
         ))}
       </div>

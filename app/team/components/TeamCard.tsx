@@ -2,6 +2,9 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Team } from "../teamsData";
+import SmoothImage from "./SmoothImage";
+import collectiveImages from "../collectiveImages";
+import MemberPhoto from "./MemberPhoto";
 
 type Props = {
   team: Team;
@@ -34,7 +37,7 @@ export default function TeamCard({ team, index = 0 }: Props) {
     return () => obs.disconnect();
   }, []);
 
-  const images = team.heroImages || [];
+  const images = team.heroImages && team.heroImages.length > 0 ? team.heroImages : collectiveImages;
   const members = team.members || [];
 
   return (
@@ -47,21 +50,21 @@ export default function TeamCard({ team, index = 0 }: Props) {
     >
       <div className="w-full sm:w-40 h-28 rounded overflow-hidden flex-shrink-0 bg-gray-50">
         <div className="flex w-full h-full">
-          {images.length > 0 ? (
-            images.slice(0, 3).map((src, i) => (
-              <img
-                key={src + i}
-                src={src}
-                alt={`${team.title} ${i + 1}`}
-                className={`object-cover h-full ${i === 0 ? "flex-1" : "w-1/3"} transition-transform transition-opacity duration-600 ${
-                  visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-                }`}
-                style={{ transitionDelay: reducedMotion ? "0ms" : `${index * 80 + i * 60}ms` }}
-              />
-            ))
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-400">No photos</div>
-          )}
+          {images.slice(0, 3).map((src, i) => (
+            <SmoothImage
+              key={src + i}
+              src={src}
+              alt={`${team.title} ${i + 1}`}
+              loading="eager"
+              className={`object-cover h-full ${i === 0 ? "flex-1" : "w-1/3"} transition-transform transition-opacity duration-600 ${
+                visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+              }`}
+              style={{
+                objectPosition: "50% 12%",
+                transitionDelay: reducedMotion ? "0ms" : `${index * 80 + i * 60}ms`
+              }}
+            />
+          ))}
         </div>
       </div>
 
@@ -81,16 +84,12 @@ export default function TeamCard({ team, index = 0 }: Props) {
                 }`}
                 style={{ transitionDelay: reducedMotion ? "0ms" : `${index * 80 + i * 60}ms` }}
               >
-                <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex-shrink-0">
-                  {m.photo ? (
-                    <img src={m.photo} alt={m.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-400">No</div>
-                  )}
-                </div>
+                <MemberPhoto
+                  member={m}
+                  containerClassName="w-[72px] h-[72px] sm:w-20 sm:h-20 rounded-full bg-gray-100 flex-shrink-0"
+                />
                 <div className="text-left">
-                  <div className="font-medium text-sm">{m.name}</div>
-                  {m.role && <div className="text-xs text-gray-500">{m.role}</div>}
+                  <div className="font-medium text-base">{m.name}</div>
                 </div>
               </div>
             ))}
