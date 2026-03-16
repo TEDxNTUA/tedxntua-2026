@@ -1,4 +1,5 @@
 import teams from "../../../teamsData";
+import MemberPhoto from "../../../components/MemberPhoto";
 
 type Props = { params: { slug: string; memberId: string } };
 
@@ -24,17 +25,12 @@ export default function MemberPage({ params }: Props) {
       <div className="max-w-3xl mx-auto">
         <a href={`/team/${slug}`} className="text-blue-600 mb-4 inline-block">← Back to team</a>
         <div className="flex gap-6 items-start">
-          <div className="w-40 h-40 rounded overflow-hidden bg-gray-100">
-            {member.photo ? (
-              <img src={member.photo} alt={member.name} className="w-full h-full object-cover" />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-400">No photo</div>
-            )}
-          </div>
+          <MemberPhoto
+            member={member}
+            containerClassName="w-48 h-48 rounded bg-gray-100"
+          />
           <div>
             <h1 className="text-2xl font-bold">{member.name}</h1>
-            {member.role && <p className="text-gray-600">{member.role}</p>}
-            {member.bio && <p className="mt-3 text-gray-700">{member.bio}</p>}
           </div>
         </div>
       </div>

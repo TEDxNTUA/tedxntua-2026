@@ -6,7 +6,10 @@ export default function TeamPage() {
   const heroImages = teams.flatMap((t) => t.heroImages || []).slice(0, 8);
 
   return (
-    <section className="min-h-screen bg-white">
+    <section
+      className="min-h-screen bg-center bg-fixed bg-repeat"
+      // style={{ backgroundImage: "url('/team_page_background.png')", backgroundSize: "auto" }}
+    >
       {/* Hero Section */}
       <div className="bg-black text-white py-16 px-8">
         <div className="max-w-5xl mx-auto text-center">
