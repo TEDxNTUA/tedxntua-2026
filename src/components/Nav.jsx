@@ -6,9 +6,11 @@ import classes from "./Nav.module.css";
 function Nav() {
   const navigateRouter = useNavigate();
   const { pathname = "/" } = useLocation();
-  const { toggle: toggleEventNav } = useEventNav();
+  const { isOpen: isEventNavOpen, toggle: toggleEventNav } = useEventNav();
   const [isOpen, setIsOpen] = useState(false);
   const [isHiddenOnScroll, setIsHiddenOnScroll] = useState(false);
+  const menuRef = useRef(null);
+  const centerLogoRef = useRef(null);
   const lastScrollYRef = useRef(0);
 
   const isEventPage = pathname.startsWith("/event");
@@ -75,9 +77,32 @@ function Nav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!isOpen || typeof document === "undefined") return;
+
+    const handlePointerDown = (event) => {
+      const target = event.target;
+
+      if (menuRef.current?.contains(target) || centerLogoRef.current?.contains(target)) {
+        return;
+      }
+
+      setIsOpen(false);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isEventPage && isEventNavOpen) {
+      setIsOpen(false);
+    }
+  }, [isEventNavOpen, isEventPage]);
+
   return (
     <div className={`${classes.menuContainer} ${isHiddenOnScroll ? classes.menuContainerHidden : ""}`}>
-      <div className={`${classes.wrap} ${isOpen ? classes.active : ""}`}>
+      <div ref={menuRef} className={`${classes.wrap} ${isOpen ? classes.active : ""}`}>
         <a
           href="/team"
           className={`${classes.slice} ${isTeamPage ? classes.active : ""}`}
@@ -105,10 +130,12 @@ function Nav() {
       </div>
 
       <div
+        ref={centerLogoRef}
         className={classes.centerLogo}
         onClick={handleCenterLogoClick}
         aria-label="Home"
       >
+        
         <div />
       </div>
     </div>

@@ -110,23 +110,23 @@ function TeamRow({ team, index }) {
   return (
     <div
       ref={ref}
-      className="grid grid-cols-[1fr_60px_1fr] items-center gap-4 min-h-[200px]"
+      className="grid grid-cols-1 gap-5 min-h-[200px] md:grid-cols-[1fr_60px_1fr] md:items-center md:gap-4"
     >
       <div
-        className={`text-right pr-6 transition-all duration-700 ${
+        className={`order-1 text-left transition-all duration-700 md:pr-6 md:text-right ${
           visible
             ? "opacity-100 translate-x-0"
             : "opacity-0 -translate-x-12"
         }`}
         style={{ transitionDelay: `${index * 50}ms` }}
       >
-        <h3 className="text-3xl font-bold text-black mb-2">{team.title}</h3>
+        <h3 className="text-2xl font-bold text-black mb-2 sm:text-3xl">{team.title}</h3>
         {team.description && (
           <p className="text-gray-600 text-sm">{team.description}</p>
         )}
       </div>
 
-      <div className="flex justify-center">
+      <div className="order-2 hidden md:flex justify-center">
         <div
           className={`w-4 h-4 rounded-full border-4 border-red-600 bg-white transition-all duration-500 ${
             visible ? "scale-100" : "scale-0"
@@ -136,7 +136,7 @@ function TeamRow({ team, index }) {
       </div>
 
       <div
-        className={`flex flex-wrap gap-4 pl-6 transition-all duration-700 ${
+        className={`order-3 flex flex-wrap gap-3 transition-all duration-700 md:pl-6 md:gap-4 ${
           visible
             ? "opacity-100 translate-x-0"
             : "opacity-0 translate-x-12"

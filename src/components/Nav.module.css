@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
 .wrap {
-    width: 500px;
-    height: 500px;
+    width: min(500px, calc(100vw - 16px));
+    height: min(500px, calc(100vw - 16px));
     position: relative;
     border-radius: 50%;
     overflow: hidden;
@@ -15,7 +17,7 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 500px;
+    width: min(500px, calc(100vw - 16px));
     margin: 0;
     height: 0;
     z-index: 60;
@@ -101,8 +103,8 @@
 
 .centerLogo {
     position: absolute;
-    width: 165px;
-    height: 165px;
+    width: clamp(108px, 33vw, 165px);
+    height: clamp(108px, 33vw, 165px);
     left: 50%;
     top: 0;
     transform: translateX(-50%) translateY(-55%);
@@ -110,6 +112,7 @@
     background-color: #000000;
     box-shadow: 0 0 0 5vmin #00000000;
     z-index: 10;
+    overflow: hidden;
 }
 
 .centerLogo div {
@@ -125,8 +128,24 @@
     left: 0;
     opacity: 0.6;
     transition: opacity .3s;
+    z-index: 1;
+    pointer-events: none;
 }
 
+.centerLogo span {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: clamp(36px, 13vw, 65px);
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.1rem, 5vw, 2rem);
+    font-weight: 700;
+    color: white;
+    z-index: 2;
+    pointer-events: none;
+}
 
 
 .wrap.active .slice:nth-child(1) {
@@ -149,7 +168,24 @@
     opacity: 1;
 }
 
+.sliceActive div {
+    opacity: 1;
+}
 
 .centerLogo:hover div {
     opacity: 1;
+}
+
+@media (max-width: 640px) {
+    .menuContainerHidden {
+        transform: translateX(-50%) translateY(-110px);
+    }
+
+    .wrap {
+        transform: translateY(-52%) scale(0.18);
+    }
+
+    .wrap.active {
+        transform: translateY(-52%) scale(1);
+    }
 }

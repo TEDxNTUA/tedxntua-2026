@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import EventSidebar from "./EventSidebar";
 import EventNavToggle from "./EventNavToggle";
@@ -21,6 +21,10 @@ export default function EventNavProvider({ children }) {
 
   const toggle = () => setIsOpen((prev) => !prev);
   const close = () => setIsOpen(false);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   return React.createElement(
     EventNavContext.Provider,
