@@ -101,7 +101,13 @@ function Nav() {
   }, [isEventNavOpen, isEventPage]);
 
   return (
-    <div className={`${classes.menuContainer} ${isHiddenOnScroll ? classes.menuContainerHidden : ""}`}>
+    <div
+      className={[
+        classes.menuContainer,
+        isEventNavOpen ? classes.menuContainerRaised : "",
+        isHiddenOnScroll ? classes.menuContainerHidden : "",
+      ].join(" ").trim()}
+    >
       <div ref={menuRef} className={`${classes.wrap} ${isOpen ? classes.active : ""}`}>
         <a
           href="/team"

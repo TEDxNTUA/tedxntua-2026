@@ -25,6 +25,10 @@
     opacity: 1;
 }
 
+.menuContainerRaised {
+    transform: translateX(-50%) translateY(-72px);
+}
+
 .menuContainerHidden {
     transform: translateX(-50%) translateY(-145px);
     opacity: 0;
@@ -69,21 +73,21 @@
 }
 
 .slice:nth-child(1) div {
-    background-image: url('/team.jpg');
+    background-image: url('/team.png');
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    width: 120%;
-    height: 120%;
+    background-size: 80%;
+    background-position: 20% 70%;
+    width: 125%;
+    height: 125%;
     margin: -18% 0 0 0;
     transform: rotate(-150deg);
 }
 
 .slice:nth-child(2) div {
-    background-image: url('/1_.png');
+    background-image: url('/sponsors.png');
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+    background-size: 75%;
+    background-position: 30% 30%;
     width: 120%;
     height: 120%;
     margin: -18% 0 0 0;
@@ -91,10 +95,10 @@
 }
 
 .slice:nth-child(3) div {
-    background-image: url('/video-recap.png');
+    background-image: url('/event.png');
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+    background-size: 85%;
+    background-position: 80% 40%;
     width: 120%;
     height: 120%;
     margin: -18% 0 0 0;
@@ -116,17 +120,17 @@
 }
 
 .centerLogo div {
-    background-image: url('/tedxntua_logo.png');
+    background-image: url('/home.png');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 110px auto;
+    background-size: 230px auto;
     width: 100%;
     height: 100%;
     position: absolute;
     margin-top: 20%;
     top: 0;
     left: 0;
-    opacity: 0.6;
+    opacity: 0.9;
     transition: opacity .3s;
     z-index: 1;
     pointer-events: none;
@@ -177,6 +181,10 @@
 }
 
 @media (max-width: 640px) {
+    .menuContainerRaised {
+        transform: translateX(-50%) translateY(-56px);
+    }
+
     .menuContainerHidden {
         transform: translateX(-50%) translateY(-110px);
     }
