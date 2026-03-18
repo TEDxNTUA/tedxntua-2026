@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import SponsorsPage from "./pages/SponsorsPage";
 import TeamPage from "./team/TeamPage";
 import TeamDetailPage from "./team/TeamDetailPage";
+import TeamMemberPage from "./team/TeamMemberPage";
 import EventLayout from "./event/EventLayout";
 import ProgramPage from "./event/ProgramPage";
 import MorePage from "./event/MorePage";
@@ -23,6 +24,7 @@ function Shell() {
             <Route path="/sponsors" element={<SponsorsPage />} />
             <Route path="/team" element={<TeamPage />} />
             <Route path="/team/:slug" element={<TeamDetailPage />} />
+            <Route path="/team/:slug/members/:memberId" element={<TeamMemberPage />} />
 
             <Route path="/event" element={<EventLayout />}>
               <Route index element={<Navigate to="/event/program" replace />} />
