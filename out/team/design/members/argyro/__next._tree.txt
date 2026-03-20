@@ -1,3 +1,0 @@
-:HL["/_next/static/chunks/00cmy0q1soc.s.css","style"]
-:HL["/tedxntua_logo.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"team","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"design","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"members","param":null,"prefetchHints":0,"slots":{"children":{"name":"memberId","param":{"type":"d","key":"argyro","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}}}}}},"staleTime":300,"buildId":"FNDQ-DYWoQYGbU1rBAGRk"}
