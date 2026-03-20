@@ -4,6 +4,12 @@ import teams from "../teamsData";
 
 type Props = { params: { slug: string } };
 
+export function generateStaticParams() {
+  return teams.map((team) => ({ slug: team.slug }));
+}
+
+export const dynamicParams = false;
+
 export default function TeamDetailPage({ params }: Props) {
   const { slug } = params;
   const team = teams.find((t) => t.slug === slug);

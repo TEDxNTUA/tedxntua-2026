@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[97367,["/_next/static/chunks/08j2_9yuac3gx.js","/_next/static/chunks/0hiiwljd8f446.js"],"OutletBoundary"]
+3:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","section",null,{"className":"min-h-screen p-8","children":["$","div",null,{"className":"max-w-3xl mx-auto text-center","children":[["$","h2",null,{"className":"text-2xl font-semibold","children":"Team not found"}],["$","p",null,{"className":"text-gray-600","children":["No team matches \"","$undefined","\"."]}],["$","a",null,{"href":"/team","className":"text-blue-600 mt-4 block","children":"Back to teams"}]]}]}],[["$","script","script-0",{"src":"/_next/static/chunks/0y34_xswgm9nf.js","async":true}]],["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"FNDQ-DYWoQYGbU1rBAGRk"}
+4:null

@@ -3,6 +3,17 @@ import MemberPhoto from "../../../components/MemberPhoto";
 
 type Props = { params: { slug: string; memberId: string } };
 
+export function generateStaticParams() {
+  return teams.flatMap((team) =>
+    (team.members || []).map((member) => ({
+      slug: team.slug,
+      memberId: member.id,
+    }))
+  );
+}
+
+export const dynamicParams = false;
+
 export default function MemberPage({ params }: Props) {
   const { slug, memberId } = params;
   const team = teams.find((t) => t.slug === slug);
