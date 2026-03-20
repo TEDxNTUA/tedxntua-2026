@@ -5,6 +5,7 @@ const basePath = isGithubActions && repositoryName ? `/${repositoryName}` : "";
 
 const nextConfig = {
   output: "export",
+  allowedDevOrigins: ["10.255.220.70"],
   basePath,
   assetPrefix: basePath ? `${basePath}/` : undefined,
   images: {
