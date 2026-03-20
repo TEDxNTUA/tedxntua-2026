@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import EventNavProvider from "./components/EventNavProvider";
 import Nav from "./components/Nav";
 import PageTransition from "./components/PageTransition";
@@ -47,10 +47,10 @@ function Shell() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <EventNavProvider>
         <Shell />
       </EventNavProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
