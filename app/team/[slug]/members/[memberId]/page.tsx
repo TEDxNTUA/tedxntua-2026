@@ -10,7 +10,7 @@ export default function MemberPage({ params }: Props) {
 
   if (!team || !member) {
     return (
-      <section className="min-h-screen p-8">
+      <section className="min-h-screen p-8 bg-white">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-semibold">Not found</h2>
           <p className="text-gray-600">No member matches &quot;{memberId}&quot; in team &quot;{slug}&quot;.</p>
@@ -21,7 +21,7 @@ export default function MemberPage({ params }: Props) {
   }
 
   return (
-    <section className="min-h-screen p-8">
+    <section className="min-h-screen p-8 bg-white">
       <div className="max-w-3xl mx-auto">
         <a href={`/team/${slug}`} className="text-blue-600 mb-4 inline-block">← Back to team</a>
         <div className="flex gap-6 items-start">
