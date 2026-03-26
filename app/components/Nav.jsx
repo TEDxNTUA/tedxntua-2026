@@ -1,138 +1,166 @@
 "use client";
-import { useState } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEventNav } from "./EventNavProvider";
+import classes from "./Nav.module.css";
 
-const ROUTES = ["/", "/event", "/sponsors", "/team"];
+const ROUTE_TO_INDEX = {
+  "/": 0,
+  "/event": 1,
+  "/sponsors": 2,
+  "/team": 3,
+};
 
 export default function Nav() {
   const router = useRouter();
-  const pathnameRaw = usePathname();
-  const pathname = pathnameRaw ?? "/";
+  const pathname = usePathname() ?? "/";
+  const { isOpen: isEventNavOpen, toggle: toggleEventNav } = useEventNav();
   const [isOpen, setIsOpen] = useState(false);
-  const { toggle: toggleEventNav } = useEventNav();
+  const [isHiddenOnScroll, setIsHiddenOnScroll] = useState(false);
+  const menuRef = useRef(null);
+  const centerLogoRef = useRef(null);
+  const lastScrollYRef = useRef(0);
 
-  // Check if we're on an event page
   const isEventPage = pathname.startsWith("/event");
+  const isSponsorsPage = pathname === "/sponsors";
+  const isTeamPage = pathname === "/team" || pathname.startsWith("/team/");
 
-  const baseClass = "nav-pill";
-
-  const homeClass = pathname === "/" ? `${baseClass} nav-pill--active` : baseClass;
-  const sponsorsClass = pathname === "/sponsors" ? `${baseClass} nav-pill--active` : baseClass;
-  const teamClass = pathname === "/team" ? `${baseClass} nav-pill--active` : baseClass;
-  const eventClass = isEventPage ? `${baseClass} nav-pill--active` : baseClass;
-
-  const navigate = (index) => {
-    try {
-      sessionStorage.setItem("nav-target-index", String(index));
-    } catch {
-
-      // ignore
-    }router.push(ROUTES[index]);
-  };
-
-  const handleNavClick = (index) => {
+  const navigate = (route) => {
     setIsOpen(false);
-    navigate(index);
+    try {
+      const targetIndex = ROUTE_TO_INDEX[route];
+      if (targetIndex !== undefined) {
+        sessionStorage.setItem("nav-target-index", String(targetIndex));
+      }
+    } catch {
+      // ignore
+    }
+
+    router.push(route);
   };
 
   const handleEventClick = () => {
     if (isEventPage) {
-      // If already on event page, toggle the sidebar
+      setIsOpen(false);
       toggleEventNav();
-    } else {
-      // Navigate to event page
-      navigate(1);
+      return;
     }
+
+    navigate("/event");
   };
 
+  const handleCenterLogoClick = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+      return;
+    }
+
+    navigate("/");
+  };
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    lastScrollYRef.current = window.scrollY;
+
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      const isScrollingDown = currentY > lastScrollYRef.current;
+      const passedTop = currentY > 40;
+
+      setIsHiddenOnScroll(isScrollingDown && passedTop);
+      lastScrollYRef.current = currentY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen || typeof document === "undefined") {
+      return;
+    }
+
+    const handlePointerDown = (event) => {
+      const target = event.target;
+
+      if (
+        menuRef.current?.contains(target) ||
+        centerLogoRef.current?.contains(target)
+      ) {
+        return;
+      }
+
+      setIsOpen(false);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isEventNavOpen) {
+      setIsOpen(false);
+    }
+  }, [isEventNavOpen]);
+
   return (
-    <>
-      {/* Mobile hamburger button */}
-      <button
-        className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 z-50"
-        onClick={() => setIsOpen((s) => !s)}
-        aria-label="Toggle navigation menu"
-        aria-expanded={isOpen}
-        type="button">
-        
-        <span
-          className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
-          isOpen ? "rotate-45 translate-y-2" : ""}`
-          } />
-        
-        <span
-          className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
-          isOpen ? "opacity-0" : ""}`
-          } />
-        
-        <span
-          className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
-          isOpen ? "-rotate-45 -translate-y-2" : ""}`
-          } />
-        
-      </button>
-
-      {/* Desktop navigation */}
-      <nav className="hidden md:flex items-center gap-3">
-        <button type="button" onClick={() => navigate(0)} className={homeClass}>
-          Home
-        </button>
-
-        <button type="button" onClick={handleEventClick} className={eventClass}>
-          Event
-        </button>
-        
-        <button type="button" onClick={() => navigate(2)} className={sponsorsClass}>
-          Sponsors
-        </button>
-        <button type="button" onClick={() => navigate(3)} className={teamClass}>
-          The Team
-        </button>
-      </nav>
-
-      {/* Mobile navigation overlay */}
+    <div
+      className={[
+        classes.menuContainer,
+        isEventNavOpen ? classes.menuContainerRaised : "",
+        isHiddenOnScroll ? classes.menuContainerHidden : "",
+      ].join(" ").trim()}
+    >
       <div
-        className={`md:hidden fixed inset-0 bg-black/95 z-40 transition-all duration-300 ${
-        isOpen ? "opacity-100 visible" : "opacity-0 invisible"}`
-        }
-        onClick={() => setIsOpen(false)}>
-        
-        <nav
-          className={`flex flex-col items-center justify-center h-full gap-6 transition-all duration-300 ${
-          isOpen ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"}`
-          }
-          onClick={(e) => e.stopPropagation()}>
-          
-          <button type="button" onClick={() => handleNavClick(0)} className={`${homeClass} text-lg`}>
-            Home
-          </button>
+        ref={menuRef}
+        className={[classes.wrap, isOpen ? classes.menuOpen : ""].join(" ").trim()}
+      >
+        <button
+          type="button"
+          className={[classes.slice, isTeamPage ? classes.sliceActive : ""].join(" ").trim()}
+          onClick={() => navigate("/team")}
+          aria-label="Team"
+        >
+          <span className={classes.sliceInner} />
+        </button>
 
-          <button
-            type="button"
-            onClick={() => {
-              handleEventClick();
-              setIsOpen(false);
-            }}
-            className={`${eventClass} text-lg`}>
-            
-            Event
-          </button>
+        <button
+          type="button"
+          className={[classes.slice, isSponsorsPage ? classes.sliceActive : ""].join(" ").trim()}
+          onClick={() => navigate("/sponsors")}
+          aria-label="Sponsors"
+        >
+          <span className={classes.sliceInner} />
+        </button>
 
-          <button
-            type="button"
-            onClick={() => handleNavClick(2)}
-            className={`${sponsorsClass} text-lg`}>
-            
-            Sponsors
-          </button>
-
-          <button type="button" onClick={() => handleNavClick(3)} className={`${teamClass} text-lg`}>
-            The Team
-          </button>
-
-        </nav>
+        <button
+          type="button"
+          className={[classes.slice, isEventPage ? classes.sliceActive : ""].join(" ").trim()}
+          onClick={handleEventClick}
+          aria-label="Event"
+        >
+          <span className={classes.sliceInner} />
+        </button>
       </div>
-    </>);
 
+      <button
+        ref={centerLogoRef}
+        type="button"
+        className={classes.centerLogo}
+        onClick={handleCenterLogoClick}
+        aria-label={isOpen ? "Go home" : "Open navigation"}
+        aria-expanded={isOpen}
+      >
+        <span className={classes.centerLogoInner} />
+      </button>
+    </div>
+  );
 }
