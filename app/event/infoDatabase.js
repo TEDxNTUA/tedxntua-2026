@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 //Speakers
 export const mySpeakers1 = [
 { time: "10:00 - 11:00",
@@ -166,7 +158,7 @@ export const myExperienceWorkshopsPack1 = [
 //ProfessionalWorkShops
 const timeP1 = "17:00 - 18:00";
 export const myProfessionalWorkshops1 = [
-{ time: timeE1,
+{ time: timeP1,
   room: "Room 1",
   title: "Total domination",
   name: "Fernando Alonso",

@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap");
 
 .menuContainer {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 50%;
   width: min(500px, calc(100vw - 16px));
@@ -160,6 +160,10 @@
 }
 
 @media (max-width: 640px) {
+  .menuContainer {
+    width: min(360px, calc(100vw - 24px));
+  }
+
   .menuContainerRaised {
     transform: translateX(-50%) translateY(-56px);
   }

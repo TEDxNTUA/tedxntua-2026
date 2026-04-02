@@ -1,27 +1,21 @@
 'use client';
 import AnchorScrollHandler from "../components/AnchorScrollHandler";
 import ExperienceInfoBox from "../components/WorkshopInfoBox";
+import EventPageShell from "../components/EventPageShell";
 
-import { myExperienceWorkshops1 } from '../infoDatabase';
-//import {  } from '../infoDatabase';
+import { myExperienceWorkshops1 } from "../infoDatabase";
 
 const allWorkshops = [...myExperienceWorkshops1];
 
-
 export default function ProgramPage() {
   return (
-    <div>
+    <EventPageShell title="Experience Workshops">
       <AnchorScrollHandler />
-
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-6">Experience Workshops</h1>          
-        </div>
-
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {allWorkshops.map((item, index) =>
-        <ExperienceInfoBox key={index} {...item} />
-        )}
-        </div>
-    </div>);
-
+      <div className="grid grid-cols-1 justify-items-center gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {allWorkshops.map((item, index) => (
+          <ExperienceInfoBox key={index} {...item} />
+        ))}
+      </div>
+    </EventPageShell>
+  );
 }

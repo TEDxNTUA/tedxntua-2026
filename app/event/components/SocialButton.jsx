@@ -4,7 +4,7 @@ import { useState } from 'react';
 export function SocialButton({ name, urlLink, size }) {
   const [style, setStyle] = useState("green");
 
-  const basePath = "../eventimages";
+  const basePath = "/eventimages";
   const extension = "png";
   const lowerName = name.toLowerCase();
 

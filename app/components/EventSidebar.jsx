@@ -17,7 +17,7 @@ const eventTabs = [
 
 
 
-export default function EventSidebar({ isOpen, onClose }) {
+export default function EventSidebar({ isOpen, isPeeking, onClose }) {
   const router = useRouter();
   const pathname = usePathname();
   const [activeEventKey, setActiveEventKey] = useState("/event/program#program");
@@ -94,9 +94,9 @@ export default function EventSidebar({ isOpen, onClose }) {
       {/* Sidebar */}
       <aside
         className={`fixed top-0 right-0 h-full w-56 bg-black text-white z-50 transform transition-transform duration-300 ease-in-out ${
-        isOpen ? "translate-x-0" : "translate-x-full"}`
+        isOpen ? "translate-x-0" : isPeeking ? "translate-x-44" : "translate-x-full"}`
         }
-        aria-hidden={!isOpen}>
+        aria-hidden={!isOpen && !isPeeking}>
         
         <div className="flex flex-col h-full">
           {/* Header */}
