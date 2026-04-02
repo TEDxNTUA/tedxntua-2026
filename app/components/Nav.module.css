@@ -1,0 +1,178 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap");
+
+.menuContainer {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: min(500px, calc(100vw - 16px));
+  height: 0;
+  margin: 0;
+  z-index: 60;
+  opacity: 1;
+  transform: translateX(-50%);
+  transition: transform 280ms ease, opacity 280ms ease;
+}
+
+.menuContainerRaised {
+  transform: translateX(-50%) translateY(-72px);
+}
+
+.menuContainerHidden {
+  transform: translateX(-50%) translateY(-145px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wrap {
+  position: relative;
+  width: min(500px, calc(100vw - 16px));
+  height: min(500px, calc(100vw - 16px));
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 50%;
+  transform: translateY(-55%) scale(0.2);
+  transition: transform 500ms;
+}
+
+.menuOpen {
+  transform: translateY(-55%) scale(1);
+}
+
+.slice {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  padding: 0;
+  border: none;
+  background: #ffffff;
+  cursor: pointer;
+  clip-path: polygon(100% 100%, 100% 0%, -70% 0%);
+  transform-origin: 100% 100%;
+  transform: translateZ(0);
+}
+
+.slice:nth-child(1) {
+  transform: rotate(150deg);
+}
+
+.slice:nth-child(2) {
+  transform: rotate(210deg);
+}
+
+.slice:nth-child(3) {
+  transform: rotate(270deg);
+}
+
+.menuOpen .slice:nth-child(1) {
+  transform: rotate(150deg) scale(1.1);
+}
+
+.menuOpen .slice:nth-child(2) {
+  transform: rotate(210deg) scale(1.1);
+}
+
+.menuOpen .slice:nth-child(3) {
+  transform: rotate(270deg) scale(1.1);
+}
+
+.sliceInner {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.6;
+  transition: opacity 300ms;
+}
+
+.slice:nth-child(1) .sliceInner {
+  width: 125%;
+  height: 125%;
+  margin: -18% 0 0;
+  background-image: url("/team.png");
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: 20% 70%;
+  transform: rotate(-150deg);
+}
+
+.slice:nth-child(2) .sliceInner {
+  width: 120%;
+  height: 120%;
+  margin: -18% 0 0;
+  background-image: url("/sponsors.png");
+  background-repeat: no-repeat;
+  background-size: 75%;
+  background-position: 30% 30%;
+  transform: rotate(-210deg);
+}
+
+.slice:nth-child(3) .sliceInner {
+  width: 120%;
+  height: 120%;
+  margin: -18% 0 0;
+  background-image: url("/event.png");
+  background-repeat: no-repeat;
+  background-size: 85%;
+  background-position: 80% 40%;
+  transform: rotate(-270deg);
+}
+
+.slice:hover .sliceInner,
+.sliceActive .sliceInner {
+  opacity: 1;
+}
+
+.centerLogo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: clamp(108px, 33vw, 165px);
+  height: clamp(108px, 33vw, 165px);
+  padding: 0;
+  border: none;
+  border-radius: 0 0 50vmin 50vmin;
+  background-color: #000000;
+  box-shadow: 0 0 0 5vmin #00000000;
+  cursor: pointer;
+  overflow: hidden;
+  transform: translateX(-50%) translateY(-55%);
+  z-index: 10;
+}
+
+.centerLogoInner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin-top: 20%;
+  background-image: url("/home.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 230px auto;
+  opacity: 0.9;
+  pointer-events: none;
+  transition: opacity 300ms;
+}
+
+.centerLogo:hover .centerLogoInner {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .menuContainerRaised {
+    transform: translateX(-50%) translateY(-56px);
+  }
+
+  .menuContainerHidden {
+    transform: translateX(-50%) translateY(-110px);
+  }
+
+  .wrap {
+    transform: translateY(-52%) scale(0.18);
+  }
+
+  .menuOpen {
+    transform: translateY(-52%) scale(1);
+  }
+}
