@@ -21,16 +21,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="site-shell bg-blue-100 text-gray-900">
         <EventNavProvider>
-          <header className="bg-black text-white sticky top-0 z-40">
-            <div className="container mx-auto flex items-center px-4 sm:px-6 py-3 sm:py-4">
-              <a href="https://www.tedxntua.com/" aria-label="TEDxNTUA home">
-                <img
-                  src="/tedxntua_logo.png"
-                  alt="TEDxNTUA official logo"
-                  className="w-32 sm:w-40 md:w-48 h-auto transition-transform duration-300 hover:scale-110" />
-              </a>
-            </div>
-          </header>
           <Nav />
 
           <main className="site-main">
