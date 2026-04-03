@@ -136,7 +136,7 @@
   box-shadow: 0 0 0 5vmin #00000000;
   cursor: pointer;
   overflow: hidden;
-  transform: translateX(-50%) translateY(-55%);
+  transform: translateX(-50%) translateY(-56%);
   z-index: 10;
 }
 
@@ -161,22 +161,38 @@
 
 @media (max-width: 640px) {
   .menuContainer {
+    position: relative;
+    top: 0;
+    left: auto;
     width: min(360px, calc(100vw - 24px));
+    height: 34px;
+    transform: none;
   }
 
   .menuContainerRaised {
-    transform: translateX(-50%) translateY(-56px);
+    transform: translateY(-24px);
   }
 
   .menuContainerHidden {
-    transform: translateX(-50%) translateY(-110px);
+    transform: translateY(-72px);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .wrap {
-    transform: translateY(-52%) scale(0.18);
+    width: min(360px, calc(100vw - 24px));
+    height: min(360px, calc(100vw - 24px));
+    transform: translateY(-80%) scale(0.18);
   }
 
   .menuOpen {
-    transform: translateY(-52%) scale(1);
+    transform: translateY(-80%) scale(1);
+  }
+
+  .centerLogo {
+    top: -22px;
+    width: clamp(108px, 30vw, 138px);
+    height: clamp(108px, 30vw, 138px);
+    transform: translateX(-50%) translateY(-80%);
   }
 }
