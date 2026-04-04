@@ -18,6 +18,7 @@ export default function Nav() {
   const { isOpen: isEventNavOpen, toggle: toggleEventNav } = useEventNav();
   const [isOpen, setIsOpen] = useState(false);
   const [isHiddenOnScroll, setIsHiddenOnScroll] = useState(false);
+  const containerRef = useRef(null);
   const menuRef = useRef(null);
   const centerLogoRef = useRef(null);
   const lastScrollYRef = useRef(0);
@@ -111,8 +112,47 @@ export default function Nav() {
     }
   }, [isEventNavOpen]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+    if (!mediaQuery.matches) {
+      return;
+    }
+
+    const ACTIVATION_DISTANCE = 140;
+
+    const handlePointerMove = (event) => {
+      if (isEventNavOpen || isHiddenOnScroll || !containerRef.current) {
+        return;
+      }
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + Math.max(rect.width * 0.12, 36);
+      const distance = Math.hypot(event.clientX - centerX, event.clientY - centerY);
+
+      setIsOpen(distance <= ACTIVATION_DISTANCE);
+    };
+
+    const handlePointerLeaveWindow = () => {
+      setIsOpen(false);
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("blur", handlePointerLeaveWindow);
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("blur", handlePointerLeaveWindow);
+    };
+  }, [isEventNavOpen, isHiddenOnScroll]);
+
   return (
     <div
+      ref={containerRef}
       className={[
         classes.menuContainer,
         isEventNavOpen ? classes.menuContainerRaised : "",
