@@ -135,11 +135,11 @@ export default function RootLayout({ children }) {
 
 
           <footer className="site-footer border-t border-white/20 bg-black text-white">
-            <div className="mx-auto w-full max-w-7xl px-6 py-10 sm:px-8 lg:px-10">
+            <div className="footer-content mx-auto w-full max-w-7xl px-6 py-10 sm:px-8 lg:px-10">
               <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
 
 
-                <section className="relative flex flex-col items-start gap-5 border-b border-white/15 lg:pr-8">
+                <section className="relative flex flex-col items-start gap-5 border-white/15 lg:pr-8">
                   <div className="pointer-events-none absolute right-0 top-3 hidden h-44 w-px bg-white/15 lg:block" />
                   <div className="flex flex-wrap items-end gap-x-2 gap-y-2 leading-none sm:gap-x-3">
                     <span className="shrink-0">

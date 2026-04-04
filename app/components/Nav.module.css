@@ -38,12 +38,12 @@
   box-shadow:
     0 26px 70px rgba(7, 20, 12, 0.45),
     inset 0 0 0 1px rgba(134, 239, 172, 0.2);
-  transform: translateY(-55%) scale(0.2) scale(2.8);
+  transform: translateY(-55%) scale(0.5);
   transition: transform 500ms;
 }
 
 .menuOpen {
-  transform: translateY(-55%) scale(1);
+  transform: translateY(-55%);
 }
 
 .slice {

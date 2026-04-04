@@ -1,8 +1,18 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export function SocialButton({ name, urlLink, size }) {
-  const [style, setStyle] = useState("green");
+const MODES = {
+  greenyellow: { defaultStyle: "green", hoverStyle: "yellow" },
+  blackred: { defaultStyle: "black", hoverStyle: "red" },
+};
+
+export function SocialButton({ name, urlLink, size, mode = "greenyellow" }) {
+  const activeMode = MODES[mode] ?? MODES.greenyellow;
+  const [style, setStyle] = useState(activeMode.defaultStyle);
+
+  useEffect(() => {
+    setStyle(activeMode.defaultStyle);
+  }, [activeMode.defaultStyle]);
 
   const basePath = "/eventimages";
   const extension = "png";
@@ -17,13 +27,13 @@ export function SocialButton({ name, urlLink, size }) {
         target="_blank"
         rel="noopener noreferrer"
         // 4. Trigger the style change on hover
-        onMouseEnter={() => setStyle("yellow")}
-        onMouseLeave={() => setStyle("green")}>
+        onMouseEnter={() => setStyle(activeMode.hoverStyle)}
+        onMouseLeave={() => setStyle(activeMode.defaultStyle)}>
         
                 <img
           src={image}
           alt={name}
-          style={{ height: size, width: size }}
+          style={{ height: size , width: size }}
           className="object-contain transition-all duration-300" />
         
             </a>

@@ -37,8 +37,8 @@ export default function SpeakerInfoBox(speaker) {
         <img src={speaker.posterImageUrl} alt="Speaker" />
       </div>
 
-      <section className={'mt-4'}>
-        <SocialConnection {...speaker.socials} />
+      <section className={'mt-4 flex items-center gap-2'}>
+        <SocialConnection socials={speaker.socials} size="25px" mode="greenyellow" />
       </section>
 
       <div className="flex-1 flex items-center flex-col w-full px-6"> 
@@ -83,8 +83,8 @@ export function PerformancesInfoBox(performance) {
           <img src={performance.posterImageUrl} alt="Speaker" />
       </div>
 
-      <section className={'mt-4'}>
-        <SocialConnection {...performance.socials} />
+      <section className={'mt-4 flex items-center gap-2'}>
+        <SocialConnection socials={performance.socials} size="25px" mode="greenyellow" />
       </section>
 
       <div className="flex-1 flex items-center flex-col w-full px-6"> 
@@ -130,9 +130,9 @@ export function SideHappeningsInfoBox(sideHappening) {
             <img src={sideHappening.posterImageUrl} alt="Speaker" />
         </div>
 
-        <section className={'mt-4'}>
-        <SocialConnection {...sideHappening.socials} />
-      </section>
+        <section className={'mt-4 flex items-center gap-2'}>
+          <SocialConnection socials={sideHappening.socials} size="25px" mode="greenyellow" />
+        </section>
 
         <div className="flex-1 flex items-center flex-col w-full px-6"> 
           <div>
@@ -162,7 +162,7 @@ export function SideHappeningsInfoBox(sideHappening) {
 }
 
 
-function SocialConnection(socials) {
+function SocialConnection({ socials = {}, size = "35px", mode = "greenyellow" }) {
   // 1. Convert the Object into an Array of [name, value] pairs
   // We filter out any keys that don't have a value (string) assigned
   const entries = Object.entries(socials);
@@ -178,7 +178,8 @@ function SocialConnection(socials) {
             key={platformName} // Use the platform name as a unique key
             name={platformName}
             urlLink={url}
-            size="35px" />);
+            size={size}
+            mode={mode} />);
 
       })}
     </>);
