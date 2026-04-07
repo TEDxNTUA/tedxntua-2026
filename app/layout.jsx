@@ -139,10 +139,10 @@ export default function RootLayout({ children }) {
 
           <footer className="site-footer border-t border-white/20 bg-black text-white">
             <div className="footer-content mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 xl:px-10">
-              <div className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+              <div className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 place-items-center text-center">
 
 
-                <section className="relative flex flex-col items-start gap-5 border-white/15 lg:pr-8">
+                <section className="relative flex flex-col items-center gap-5 border-white/15 lg:pr-8">
                   <div className="pointer-events-none absolute right-0 top-3 hidden h-44 w-px bg-white/15 lg:block" />
                   <div className="flex flex-wrap items-end gap-x-2 gap-y-2 leading-none sm:gap-x-3">
                     <span className="shrink-0">
@@ -167,7 +167,7 @@ export default function RootLayout({ children }) {
                 </section>
 
 
-                <section className="flex flex-col items-start gap-4 sm:gap-5 lg:pl-2">
+                <section className="relative flex flex-col items-center gap-4 sm:gap-5 lg:pl-2">
                   <div className="text-base font-medium tracking-wide text-white/90 sm:text-lg">
                     Stay tuned:
                   </div>

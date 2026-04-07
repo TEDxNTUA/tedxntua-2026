@@ -23,16 +23,16 @@ export default function FooterContactPanel() {
   }
 
   return (
-    <section className="flex flex-col items-start gap-3 sm:gap-4">
+    <section className="flex w-full flex-col items-center gap-3 sm:gap-4 text-center">
       <div className="text-base font-medium tracking-wide text-white/90 sm:text-lg">
         Contact us:
       </div>
 
-      <div className="flex w-full flex-col gap-2">
+      <div className="flex w-full max-w-sm flex-col gap-2">
         {EMAILS.map((email) => (
           <div
             key={email}
-            className="flex w-full min-h-9 items-center justify-between gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 sm:gap-3 sm:rounded-2xl sm:px-4 sm:py-3"
+            className="flex w-full min-h-9 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 sm:gap-3 sm:rounded-2xl sm:px-4 sm:py-3"
           >
             <div className="min-w-0 text-xs text-white/70 break-all sm:text-sm">
               {email}
@@ -48,7 +48,7 @@ export default function FooterContactPanel() {
         ))}
       </div>
 
-      <div className="flex w-full flex-wrap items-center gap-2 sm:gap-3">
+      <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:gap-3">
         <a
           href={mailtoHref}
           className="inline-flex min-h-10 items-center justify-center rounded-full bg-red-600 px-4 text-xs font-semibold text-white transition-colors hover:bg-red-500 sm:min-h-11 sm:px-5 sm:text-sm"
