@@ -84,7 +84,7 @@ export default function RootLayout({ children }) {
                 
                 <div className="flex justify-start">
                   <a
-                    href="https://www.tedxntua.com/"
+                    href="/"
                     aria-label="TEDxNTUA home"
                     className="header-side-button header-side-button--archive group relative inline-flex min-h-[64px] min-w-[100px] items-center justify-center rounded-[1.5rem] border border-white/10 bg-white/[0.03] px-3 py-2 backdrop-blur-sm transition-colors hover:bg-white/[0.05] sm:min-h-[76px] sm:min-w-[112px] sm:rounded-[1.75rem] sm:px-4 sm:py-3"
                   >
@@ -97,8 +97,8 @@ export default function RootLayout({ children }) {
                       </span>
                     </div>
                     <img
-                      src={withBasePath("/archive.png")}
-                      alt="Archive"
+                      src={withBasePath("/tedxntua_logo.png")}
+                      alt="TEDxNTUA Logo"
                       className="relative h-10 max-w-28 rounded-full border border-white/12 bg-black/30 p-1 transition-transform duration-300 group-hover:scale-105 sm:h-12 md:h-14 lg:h-16" />
                   </a>
                 </div>
