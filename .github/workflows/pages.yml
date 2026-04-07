@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, sponsors_page]
   workflow_dispatch:
 
 permissions:
@@ -32,6 +32,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /tedxntua-2026
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
