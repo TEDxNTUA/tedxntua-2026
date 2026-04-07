@@ -1,7 +1,6 @@
 // Import global CSS styles
 import "./globals.css";
 
-import PageTransition from "./components/PageTransition";
 import SiteHeader from "./components/SiteHeader";
 import EventNavProvider from "./components/EventNavProvider";
 import { TEDSocialButton } from "./components/TedxNTUAsocials";
@@ -132,7 +131,7 @@ export default function RootLayout({ children }) {
 
 
           <main className="site-main">
-            <PageTransition>{children}</PageTransition>
+            {children}
           </main>
 
 

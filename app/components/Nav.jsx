@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEventNav } from "./EventNavProvider";
 import classes from "./Nav.module.css";
 import { withBasePath } from "../lib/basePath";
@@ -14,7 +14,6 @@ const ROUTE_TO_INDEX = {
 };
 
 export default function Nav() {
-  const router = useRouter();
   const pathname = usePathname() ?? "/";
   const { isOpen: isEventNavOpen, toggle: toggleEventNav } = useEventNav();
   const [isOpen, setIsOpen] = useState(false);
@@ -28,20 +27,6 @@ export default function Nav() {
   const isSponsorsPage = pathname === "/sponsors";
   const isTeamPage = pathname === "/team" || pathname.startsWith("/team/");
 
-  const navigate = (route) => {
-    setIsOpen(false);
-    try {
-      const targetIndex = ROUTE_TO_INDEX[route];
-      if (targetIndex !== undefined) {
-        sessionStorage.setItem("nav-target-index", String(targetIndex));
-      }
-    } catch {
-      // ignore
-    }
-
-    router.push(route);
-  };
-
   const handleEventClick = () => {
     if (isEventPage) {
       setIsOpen(false);
@@ -49,7 +34,7 @@ export default function Nav() {
       return;
     }
 
-    navigate("/event");
+    window.location.href = withBasePath("/event");
   };
 
   const handleCenterLogoClick = () => {
@@ -58,7 +43,7 @@ export default function Nav() {
       return;
     }
 
-    navigate("/");
+    window.location.href = withBasePath("/");
   };
 
   useEffect(() => {
@@ -135,23 +120,21 @@ export default function Nav() {
         ref={menuRef}
         className={[classes.wrap, isOpen ? classes.menuOpen : ""].join(" ").trim()}
       >
-        <button
-          type="button"
+        <a
+          href={withBasePath("/team")}
           className={[classes.slice, isTeamPage ? classes.sliceActive : ""].join(" ").trim()}
-          onClick={() => navigate("/team")}
           aria-label="Team"
         >
           <span className={classes.sliceInner} />
-        </button>
+        </a>
 
-        <button
-          type="button"
+        <a
+          href={withBasePath("/sponsors")}
           className={[classes.slice, isSponsorsPage ? classes.sliceActive : ""].join(" ").trim()}
-          onClick={() => navigate("/sponsors")}
           aria-label="Sponsors"
         >
           <span className={classes.sliceInner} />
-        </button>
+        </a>
 
         <button
           type="button"
