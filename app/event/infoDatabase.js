@@ -1,9 +1,17 @@
+import { withBasePath } from "../lib/basePath";
+
+const applyPosterBasePath = (items) =>
+  items.map((item) => ({
+    ...item,
+    posterImageUrl: withBasePath(item.posterImageUrl),
+  }));
+
 export const myEventInfo = {
   title: "TEDxNTUA 2026",
   date: "May 3, 2026",
 }
 
-export const allSpeakers = [
+export const allSpeakers = applyPosterBasePath([
 { time: "10:00 - 11:00",
   name: "Ελένη Καββάδα",
   profession: "Ιδρύτρια του brand υψηλής ραπτικής και installation 240791",
@@ -77,11 +85,11 @@ export const allSpeakers = [
   socials: {
     instagram: 'https://www.instagram.com/papadelena/?hl=en%5C',
     linkedin: 'https://gr.linkedin.com/in/elena-papadimitriou-1b61831a1',
-  }}];
+  }}]);
 
 const timeE1 = "14:00 - 15:00";
 const timeP1 = "17:00 - 18:00";
-export const allExpWorkshops = [
+export const allExpWorkshops = applyPosterBasePath([
 { time: "10:00 - 11:00",
   name: "Legolas",
   room: "Room 1",
@@ -146,8 +154,8 @@ export const allExpWorkshops = [
   personalDescription: "Hello there",
   socials: {
     youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } }];
-export const allProfWorkshops = [{ time: timeP1,
+  } }]);
+export const allProfWorkshops = applyPosterBasePath([{ time: timeP1,
   room: "Room 1",
   title: "Total domination",
   name: "Fernando Alonso",
@@ -181,10 +189,10 @@ export const allProfWorkshops = [{ time: timeP1,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   socials: {
     youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } }];
+  } }]);
 
 
-export const allSideHappenings = [{ time: "13:00 - 14:00",
+export const allSideHappenings = applyPosterBasePath([{ time: "13:00 - 14:00",
   name: "Bilbo Bagins",
   profession: "talker",
   title: "Mountains Gandals",
@@ -221,10 +229,10 @@ export const allSideHappenings = [{ time: "13:00 - 14:00",
   personalDescription: "Hello there",
   socials: {
     youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } }];
+  } }]);
 
 
-  export const allPerformances = [{ time: "13:00 - 14:00",
+  export const allPerformances = applyPosterBasePath([{ time: "13:00 - 14:00",
   name: "Bilbo Bagins",
   profession: "talker",
   title: "Mountains Gandals",
@@ -261,7 +269,7 @@ export const allSideHappenings = [{ time: "13:00 - 14:00",
   personalDescription: "Hello there",
   socials: {
     youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } }];
+  } }]);
 
 
 

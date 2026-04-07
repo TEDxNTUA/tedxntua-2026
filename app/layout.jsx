@@ -8,6 +8,7 @@ import { TEDSocialButton } from "./components/TedxNTUAsocials";
 import FooterContactPanel from "./components/FooterContactPanel";
 import CycleZeroMark from "./components/CycleZeroMark";
 import Nav from "./components/Nav";
+import { withBasePath } from "./lib/basePath";
 
 
 // Page metadata for SEO and browser tab display
@@ -95,7 +96,7 @@ export default function RootLayout({ children }) {
                       </span>
                     </div>
                     <img
-                      src="/archive.png"
+                      src={withBasePath("/archive.png")}
                       alt="Archive"
                       className="relative h-12 max-w-30 rounded-full border border-white/12 bg-black/30 p-1.5 transition-transform duration-300 group-hover:scale-105 sm:h-14 md:h-16" />
                   </a>
@@ -111,7 +112,7 @@ export default function RootLayout({ children }) {
                       Tickets
                     </span>
                     <img
-                      src="/ticket.png"
+                      src={withBasePath("/ticket.png")}
                       alt="Ticket"
                       className="relative h-12 w-auto rounded-full border border-white/12 bg-black/30 p-1.5 transition-transform duration-300 group-hover:scale-105 sm:h-14 md:h-16"
                     />

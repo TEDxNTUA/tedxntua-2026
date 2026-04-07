@@ -1,4 +1,6 @@
-const assetPath = (path) => encodeURI(path);
+import { withBasePath } from "../lib/basePath";
+
+const assetPath = (path) => encodeURI(withBasePath(path));
 
 export const teams = [
   {

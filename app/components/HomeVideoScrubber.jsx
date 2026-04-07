@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./HomeVideoScrubber.module.css";
+import { withBasePath } from "../lib/basePath";
 
 const storyBeats = [
   "A quiet opening before the motion begins.",
@@ -203,7 +204,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
           <video
             ref={videoRef}
             className={styles.scrubberSectionVideo}
-            src="/output.mp4"
+            src={withBasePath("/output.mp4")}
             muted
             playsInline
             preload="auto"

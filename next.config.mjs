@@ -8,6 +8,9 @@ const nextConfig = {
   allowedDevOrigins: ["10.255.220.70"],
   basePath,
   assetPrefix: basePath ? `${basePath}/` : undefined,
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   images: {
     unoptimized: true,
   },
