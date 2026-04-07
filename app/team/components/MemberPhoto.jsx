@@ -82,16 +82,16 @@ export default function MemberPhoto({ member, containerClassName = "", container
         
       </div>
 
-      {/* Social overlay — slides up from the bottom on hover */}
+      {/* Social overlay — subtle visibility by default, enhanced on hover */}
       {hasSocial &&
-      <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center gap-3 py-2 px-1 bg-black/60 backdrop-blur-sm translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center gap-3 py-3 px-2 bg-black/40 backdrop-blur-sm opacity-40 group-hover:opacity-100 group-hover:bg-black/60 transition-all duration-300 ease-out">
           {social?.instagram &&
         <a
           href={social.instagram}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Instagram"
-          className="text-white hover:text-pink-400 transition-colors duration-150"
+          className="text-white/80 hover:text-pink-400 group-hover:text-white/100 transition-colors duration-150 hover:scale-125 transition-transform"
           onClick={(e) => e.stopPropagation()}>
           
               <InstagramIcon />
@@ -103,7 +103,7 @@ export default function MemberPhoto({ member, containerClassName = "", container
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
-          className="text-white hover:text-blue-400 transition-colors duration-150"
+          className="text-white/80 hover:text-blue-400 group-hover:text-white/100 transition-colors duration-150 hover:scale-125 transition-transform"
           onClick={(e) => e.stopPropagation()}>
           
               <LinkedInIcon />
@@ -115,7 +115,7 @@ export default function MemberPhoto({ member, containerClassName = "", container
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Twitter / X"
-          className="text-white hover:text-sky-400 transition-colors duration-150"
+          className="text-white/80 hover:text-sky-400 group-hover:text-white/100 transition-colors duration-150 hover:scale-125 transition-transform"
           onClick={(e) => e.stopPropagation()}>
           
               <TwitterIcon />
@@ -127,7 +127,7 @@ export default function MemberPhoto({ member, containerClassName = "", container
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Facebook"
-          className="text-white hover:text-blue-500 transition-colors duration-150"
+          className="text-white/80 hover:text-blue-500 group-hover:text-white/100 transition-colors duration-150 hover:scale-125 transition-transform"
           onClick={(e) => e.stopPropagation()}>
           
               <FacebookIcon />
@@ -139,7 +139,7 @@ export default function MemberPhoto({ member, containerClassName = "", container
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Website"
-          className="text-white hover:text-gray-300 transition-colors duration-150"
+          className="text-white/80 hover:text-gray-300 group-hover:text-white/100 transition-colors duration-150 hover:scale-125 transition-transform"
           onClick={(e) => e.stopPropagation()}>
           
               <GlobeIcon />
