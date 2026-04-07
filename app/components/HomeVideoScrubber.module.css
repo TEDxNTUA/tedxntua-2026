@@ -17,7 +17,7 @@
 }
 
 .introPanel {
-  background: url("/gradient.png") center / cover no-repeat;
+  background: var(--scrubber-gradient) center / cover no-repeat;
 }
 
 .introPanelContent,

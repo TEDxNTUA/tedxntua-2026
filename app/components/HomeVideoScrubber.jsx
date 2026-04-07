@@ -177,7 +177,10 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
   return (
     <main className={styles.pageShell}>
-      <section className={styles.introPanel}>
+      <section
+        className={styles.introPanel}
+        style={{ "--scrubber-gradient": `url(${withBasePath("/gradient.png")})` }}
+      >
         <div className={styles.introPanelContent}>
           <h1 className={heroTitleClassName}>we were here before</h1>
           <p className={styles.introCopy}>

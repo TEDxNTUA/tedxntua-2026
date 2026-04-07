@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEventNav } from "./EventNavProvider";
 import classes from "./Nav.module.css";
+import { withBasePath } from "../lib/basePath";
 
 const ROUTE_TO_INDEX = {
   "/": 0,
@@ -118,6 +119,12 @@ export default function Nav() {
   return (
     <div
       ref={containerRef}
+      style={{
+        "--nav-team-icon": `url(${withBasePath("/team.png")})`,
+        "--nav-sponsors-icon": `url(${withBasePath("/sponsors.png")})`,
+        "--nav-event-icon": `url(${withBasePath("/event.png")})`,
+        "--nav-home-icon": `url(${withBasePath("/home.png")})`,
+      }}
       className={[
         classes.menuContainer,
         isEventNavOpen ? classes.menuContainerRaised : "",
