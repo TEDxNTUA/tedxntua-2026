@@ -9,9 +9,10 @@
   margin: 0;
   z-index: 60;
   opacity: 1;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(1);
   transition: transform 280ms ease, opacity 280ms ease;
 }
+
 
 .menuContainerRaised {
   transform: translateX(-50%) translateY(-72px);
@@ -30,12 +31,19 @@
   margin: 0 auto;
   overflow: hidden;
   border-radius: 50%;
-  transform: translateY(-55%) scale(0.2);
+  background:
+    radial-gradient(circle at 50% 72%, rgba(34, 197, 94, 0.3), transparent 34%),
+    radial-gradient(circle at 50% 28%, rgba(74, 222, 128, 0.22), transparent 46%),
+    linear-gradient(180deg, rgba(12, 54, 30, 0.95), rgba(4, 18, 10, 0.98));
+  box-shadow:
+    0 26px 70px rgba(7, 20, 12, 0.45),
+    inset 0 0 0 1px rgba(134, 239, 172, 0.2);
+  transform: translateY(-55%) scale(0.5);
   transition: transform 500ms;
 }
 
 .menuOpen {
-  transform: translateY(-55%) scale(1);
+  transform: translateY(-55%);
 }
 
 .slice {
@@ -44,7 +52,8 @@
   height: 50%;
   padding: 0;
   border: none;
-  background: #ffffff;
+  background:
+    linear-gradient(180deg, rgba(241, 255, 244, 0.94), rgba(178, 245, 198, 0.86));
   cursor: pointer;
   clip-path: polygon(100% 100%, 100% 0%, -70% 0%);
   transform-origin: 100% 100%;
@@ -76,13 +85,42 @@
 }
 
 .sliceInner {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.6;
-  transition: opacity 300ms;
+  opacity: 0.68;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.sliceLabel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(0.75rem, 1.3vw, 1rem);
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: #04210f;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.slice:nth-child(1) .sliceLabel {
+  transform: translate(-74%, 18%) rotate(-150deg);
+}
+
+.slice:nth-child(2) .sliceLabel {
+  transform: translate(-40%, -8%) rotate(-210deg);
+}
+
+.slice:nth-child(3) .sliceLabel {
+  transform: translate(-8%, -2%) rotate(-270deg);
 }
 
 .slice:nth-child(1) .sliceInner {
@@ -123,6 +161,11 @@
   opacity: 1;
 }
 
+.slice:hover .sliceLabel,
+.sliceActive .sliceLabel {
+  color: #02150a;
+}
+
 .centerLogo {
   position: absolute;
   top: 0;
@@ -136,7 +179,7 @@
   box-shadow: 0 0 0 5vmin #00000000;
   cursor: pointer;
   overflow: hidden;
-  transform: translateX(-50%) translateY(-55%);
+  transform: translateX(-50%) translateY(-56%);
   z-index: 10;
 }
 
@@ -161,22 +204,44 @@
 
 @media (max-width: 640px) {
   .menuContainer {
+    position: relative;
+    top: 0;
+    left: auto;
     width: min(360px, calc(100vw - 24px));
+    height: 34px;
+    transform: none;
   }
 
+
   .menuContainerRaised {
-    transform: translateX(-50%) translateY(-56px);
+    transform: translateY(-24px);
   }
 
   .menuContainerHidden {
-    transform: translateX(-50%) translateY(-110px);
+    transform: translateY(-72px);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .wrap {
-    transform: translateY(-52%) scale(0.18);
+    width: min(360px, calc(100vw - 24px));
+    height: min(360px, calc(100vw - 24px));
+    transform: translateY(-80%) scale(0.18);
+  }
+
+  .sliceLabel {
+    font-size: clamp(0.66rem, 2vw, 0.82rem);
+    letter-spacing: 0.16em;
   }
 
   .menuOpen {
-    transform: translateY(-52%) scale(1);
+    transform: translateY(-80%) scale(1);
+  }
+
+  .centerLogo {
+    top: -22px;
+    width: clamp(108px, 30vw, 138px);
+    height: clamp(108px, 30vw, 138px);
+    transform: translateX(-50%) translateY(-80%);
   }
 }

@@ -18,6 +18,7 @@ export default function Nav() {
   const { isOpen: isEventNavOpen, toggle: toggleEventNav } = useEventNav();
   const [isOpen, setIsOpen] = useState(false);
   const [isHiddenOnScroll, setIsHiddenOnScroll] = useState(false);
+  const containerRef = useRef(null);
   const menuRef = useRef(null);
   const centerLogoRef = useRef(null);
   const lastScrollYRef = useRef(0);
@@ -111,8 +112,12 @@ export default function Nav() {
     }
   }, [isEventNavOpen]);
 
+  // Remove hover/nearby pointer auto-open behavior.
+  // The semicircle nav should only open via explicit user interaction.
+
   return (
     <div
+      ref={containerRef}
       className={[
         classes.menuContainer,
         isEventNavOpen ? classes.menuContainerRaised : "",

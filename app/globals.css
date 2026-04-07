@@ -73,11 +73,36 @@ html.lenis body {
   flex: 1 0 auto;
 }
 
+
 .site-footer {
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
   background: #000;
+}
+
+.site-footer > .footer-video-shell {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.site-footer > .footer-video-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.82)),
+    radial-gradient(circle at center, rgba(34, 197, 94, 0.12), transparent 58%);
+}
+
+.footer-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.42;
 }
 
 .site-footer::before {
@@ -90,6 +115,15 @@ html.lenis body {
 }
 
 .site-footer > * {
+  position: relative;
+  z-index: 1;
+}
+
+.site-footer > .footer-video-shell {
+  z-index: 0;
+}
+
+.footer-content {
   position: relative;
   z-index: 1;
 }

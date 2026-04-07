@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "localserver": "npm run build && npm run dev",
+    "localserver": "npm run build && npx serve@latest out",
     "start": "next start",
     "lint": "eslint"
   },

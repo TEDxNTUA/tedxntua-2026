@@ -6,13 +6,6 @@ import { createPortal } from 'react-dom';
 import { SocialButton } from './SocialButton';
 
 
-
-
-
-
-
-
-
 export default function Popup({ isOpen, onClose, infoBase }) {
   const [mounted, setMounted] = useState(false);
 
@@ -81,6 +74,16 @@ export default function Popup({ isOpen, onClose, infoBase }) {
             <p className="text-red-600 font-semibold text-lg mt-1 break-words">
               {infoBase.profession}{infoBase.profession2 ? ` & ${infoBase.profession2}` : ''}
             </p>
+
+          <section className={'pt-4 flex justify-center md:justify-start gap-4'}>
+            <SocialConnection socials={infoBase.socials} size="25px" mode="blackred" />
+          </section>
+          {infoBase.personalDescription2 && (
+          <section className={'border-u border-gray-200 pt-4 flex justify-center md:justify-start gap-4'}>
+            <SocialConnection socials={infoBase.socials2} size="25px" mode="blackred" />
+          </section>
+          )}
+
           </div>
           
         </div>
@@ -91,25 +94,26 @@ export default function Popup({ isOpen, onClose, infoBase }) {
           <h1 className="mt-6 text-black font-bold text-1xl">{infoBase.title}</h1>
           <p className="text-gray-700 leading-relaxed text-justify md:text-center whitespace-pre-line">
             {infoBase.description}
-            {infoBase.description}
-            {infoBase.description}
           </p>
         </div>
 
-        <div className="mt-6 border-t border-gray-100 max-h-30 overflow-y-auto px-2 custom-scrollbar">
-          <h1 className="mt-6 text-black font-bold text-1xl">Personal Information</h1>
+        <div className="mt-6 border-t border-gray-500 max-h-30 overflow-y-auto px-2 custom-scrollbar">
+          <h1 className="mt-6 text-black font-bold text-1xl">Personal Information, {infoBase.name}</h1>
           <p className="text-gray-700 leading-relaxed text-justify md:text-center whitespace-pre-line">
             {infoBase.personalDescription}
-            {infoBase.personalDescription}
-            {infoBase.personalDescription}
-            {infoBase.description}
           </p>
         </div>
 
+        {infoBase.personalDescription2 && (
+          <div className="mt-6 border-t border-gray-500 max-h-30 overflow-y-auto px-2 custom-scrollbar">
+            <h1 className="mt-6 text-black font-bold text-1xl">Personal Information, {infoBase.name2}</h1>
+            <p className="text-gray-700 leading-relaxed text-justify md:text-center whitespace-pre-line">
+              {infoBase.personalDescription2}
+            </p>
+          </div>
+        )}
+
         {/* --- SCROLLABLE SEGMENT END --- */}
-        <section className={'mt-4'}>
-          <SocialConnection {...infoBase.socials} />
-        </section>
       </div>
     </div>,
     document.body
@@ -117,7 +121,7 @@ export default function Popup({ isOpen, onClose, infoBase }) {
 }
 
 
-function SocialConnection(socials) {
+function SocialConnection({ socials = {}, size = "25px", mode = "greenyellow" }) {
   // 1. Convert the Object into an Array of [name, value] pairs
   // We filter out any keys that don't have a value (string) assigned
   const entries = Object.entries(socials);
@@ -133,9 +137,9 @@ function SocialConnection(socials) {
             key={platformName} // Use the platform name as a unique key
             name={platformName}
             urlLink={url}
-            size="35px" />);
-
-
+            size={size}
+            mode={mode} />
+          );
       })}
     </>);
 
