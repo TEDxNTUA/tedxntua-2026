@@ -1,6 +1,7 @@
 import TeamHero from "../components/TeamHero";
 import MemberPhoto from "../components/MemberPhoto";
 import teams from "../teamsData";
+import { withBasePath } from "../../lib/basePath";
 export function generateStaticParams() {
   return teams.map((team) => ({ slug: team.slug }));
 }
@@ -17,7 +18,7 @@ export default function TeamDetailPage({ params }) {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-semibold">Team not found</h2>
           <p className="text-gray-600">No team matches &quot;{slug}&quot;.</p>
-          <a href="/team" className="text-blue-600 mt-4 block">Back to teams</a>
+          <a href={withBasePath("/team")} className="text-blue-600 mt-4 block">Back to teams</a>
         </div>
       </section>
     );
@@ -45,7 +46,7 @@ export default function TeamDetailPage({ params }) {
                   containerClassName="w-44 h-44 rounded-full mb-3"
                 />
                 <h3 className="font-medium">{m.name}</h3>
-                <a href={`/team/${team.slug}/members/${m.id}`} className="mt-3 text-blue-600">View profile</a>
+                <a href={withBasePath(`/team/${team.slug}/members/${m.id}`)} className="mt-3 text-blue-600">View profile</a>
               </div>
             ))}
           </div>

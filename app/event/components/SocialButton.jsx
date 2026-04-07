@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { withBasePath } from '../../lib/basePath';
 
 const MODES = {
   greenyellow: { defaultStyle: "green", hoverStyle: "yellow" },
@@ -14,7 +15,7 @@ export function SocialButton({ name, urlLink, size, mode = "greenyellow" }) {
     setStyle(activeMode.defaultStyle);
   }, [activeMode.defaultStyle]);
 
-  const basePath = "/eventimages";
+  const basePath = withBasePath("/eventimages");
   const extension = "png";
   const lowerName = name.toLowerCase();
 
