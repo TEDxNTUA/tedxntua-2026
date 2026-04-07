@@ -4,7 +4,7 @@
 // It appears as an extension when the Event button is active
 export default function EventLayout({ children }) {
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="w-full overflow-hidden bg-[#07110d] text-white">
       <div>{children}</div>
     </div>);
 

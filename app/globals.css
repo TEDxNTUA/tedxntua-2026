@@ -3,6 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @theme inline {
@@ -27,8 +31,36 @@ body {
 
 html,
 body {
+  margin: 0;
+  min-height: 100vh;
   max-width: 100%;
   overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: auto;
+  scrollbar-gutter: stable;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth body {
+  overflow: visible;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
 .site-shell {
@@ -41,8 +73,98 @@ body {
   flex: 1 0 auto;
 }
 
+
 .site-footer {
   flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+.site-footer > .footer-video-shell {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.site-footer > .footer-video-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.82)),
+    radial-gradient(circle at center, rgba(34, 197, 94, 0.12), transparent 58%);
+}
+
+.footer-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.42;
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 110px;
+  background: none;
+  pointer-events: none;
+}
+
+.site-footer > * {
+  position: relative;
+  z-index: 1;
+}
+
+.site-footer > .footer-video-shell {
+  z-index: 0;
+}
+
+.footer-content {
+  position: relative;
+  z-index: 1;
+}
+
+.footer-social-loop {
+  opacity: 0.72;
+  filter: drop-shadow(0 8px 14px rgba(34, 197, 94, 0.08));
+  animation: footer-loop-float 6s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+.event-toggle-label {
+  animation: event-toggle-jump 8.5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes event-toggle-jump {
+  0%,
+  88%,
+  100% {
+    transform: rotate(180deg) translateY(0);
+  }
+  91% {
+    transform: rotate(180deg) translateY(-4px);
+  }
+  94% {
+    transform: rotate(180deg) translateY(0);
+  }
+  97% {
+    transform: rotate(180deg) translateY(-2px);
+  }
+}
+
+@keyframes footer-loop-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
 }
 
 /* Page enter animation for route transitions */
@@ -126,6 +248,14 @@ body {
     transform: none !important;
     filter: none !important;
     opacity: 1 !important;
+  }
+
+  .footer-social-loop {
+    animation: none;
+  }
+
+  .event-toggle-label {
+    animation: none;
   }
 }
 

@@ -1,11 +1,16 @@
+import localFont from "next/font/local";
+import ClientScrollProvider from "./components/ClientScrollProvider";
+import HomeVideoScrubber from "./components/HomeVideoScrubber";
+
+const copixelDisplay = localFont({
+  src: "../Copixel-Futuristic-Font/Fonts/Copixel-Display.otf",
+  display: "swap",
+});
+
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-red-600 via-red-500 to-red-700">
-      <main className="flex flex-col items-center justify-center text-center px-8">
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tight mb-4">
-          TEDxNTUA
-        </h1>        
-      </main>
-    </div>);
-
+    <ClientScrollProvider>
+      <HomeVideoScrubber heroTitleClassName={copixelDisplay.className} />
+    </ClientScrollProvider>
+  );
 }
