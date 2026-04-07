@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 
 const READY_STATE_HAVE_CURRENT_DATA = 2;
+const MAX_LOADER_WAIT_MS = 2200;
+const VIEWPORT_MULTIPLIER = 1.2;
 
 const waitForImage = (img) =>
   new Promise((resolve) => {
@@ -28,14 +30,37 @@ const waitForVideo = (video) =>
     video.addEventListener("error", done, { once: true });
   });
 
-const waitForAllAssets = async () => {
-  const images = Array.from(document.images || []);
-  const videos = Array.from(document.querySelectorAll("video"));
+const isNearViewport = (el) => {
+  const rect = el.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || 0;
+
+  return rect.top <= viewportHeight * VIEWPORT_MULTIPLIER && rect.bottom >= 0;
+};
+
+const waitForCriticalAssets = async () => {
+  const pageRoot = document.querySelector(".site-main") ?? document.body;
+
+  const images = Array.from(pageRoot.querySelectorAll("img")).filter((img) => {
+    const isLazy = img.loading === "lazy";
+    return !isLazy && isNearViewport(img);
+  });
+
+  const videos = Array.from(pageRoot.querySelectorAll("video")).filter((video) => {
+    const shouldPreload = video.preload !== "none";
+    return shouldPreload && isNearViewport(video);
+  });
+
   const imagePromises = images.map(waitForImage);
   const videoPromises = videos.map(waitForVideo);
   const fontPromise = document.fonts?.ready ?? Promise.resolve();
+  const timeoutPromise = new Promise((resolve) => {
+    window.setTimeout(resolve, MAX_LOADER_WAIT_MS);
+  });
 
-  await Promise.all([...imagePromises, ...videoPromises, fontPromise]);
+  await Promise.race([
+    Promise.all([...imagePromises, ...videoPromises, fontPromise]),
+    timeoutPromise,
+  ]);
 };
 
 export default function AssetLoader() {
@@ -50,13 +75,13 @@ export default function AssetLoader() {
     };
 
     const run = async () => {
-      if (document.readyState !== "complete") {
+      if (document.readyState === "loading") {
         await new Promise((resolve) => {
-          window.addEventListener("load", resolve, { once: true });
+          document.addEventListener("DOMContentLoaded", resolve, { once: true });
         });
       }
 
-      await waitForAllAssets();
+      await waitForCriticalAssets();
       requestAnimationFrame(finalize);
     };
 
