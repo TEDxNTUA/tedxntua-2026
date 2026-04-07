@@ -63,6 +63,18 @@
   flex-shrink: 0;
 }
 
+.scrubberSection::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(180deg, transparent 0%, #000 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
 .scrubberSection[style*="--scrub-height"] {
   height: var(--scrub-height);
 }
@@ -82,6 +94,8 @@
   align-items: center;
   justify-content: center;
   padding: 0;
+  transition: opacity 0.6s ease-out;
+  opacity: 1;
 }
 
 .scrubberSectionStickyPinned {
@@ -91,8 +105,10 @@
 }
 
 .scrubberSectionStickyAfter {
-  top: auto;
-  bottom: 0;
+  position: sticky;
+  opacity: 0;
+  pointer-events: none;
+  top: 0;
 }
 
 .scrubberSectionVideo,
@@ -110,6 +126,7 @@
   object-fit: cover;
   object-position: center;
   background: #000;
+  transition: opacity 0.6s ease-out;
 }
 
 @media (max-width: 1024px) {
