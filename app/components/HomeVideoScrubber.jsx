@@ -149,15 +149,31 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       });
     };
 
+    const handleLoadedMetadata = () => {
+      // Try to trigger layout on metadata load (more reliable on mobile)
+      if (video.duration > 0) {
+        handleLoadedData();
+      }
+    };
+
     video.addEventListener("loadeddata", handleLoadedData);
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
     if (video.readyState >= 2) {
       handleLoadedData();
     }
+
+    // Trigger initial layout calculation after a short delay
+    const timeoutId = setTimeout(() => {
+      if (video.duration > 0) {
+        handleLoadedData();
+      }
+    }, 500);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
 
     return () => {
+      clearTimeout(timeoutId);
       if (frameIdRef.current) {
         cancelAnimationFrame(frameIdRef.current);
         frameIdRef.current = 0;
@@ -165,6 +181,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
       video.removeEventListener("loadeddata", handleLoadedData);
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
     };
   }, [requestSync, updateLayout, updateLayoutCache]);
 
@@ -213,9 +230,10 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
             src={withBasePath("/output.mp4")}
             muted
             playsInline
-            preload="auto"
+            preload="metadata"
             disableRemotePlayback
             disablePictureInPicture
+            crossOrigin="anonymous"
           />
           <div className={styles.scrubberSectionVeil} />
           <div className={styles.scrubberSectionHud}>
