@@ -1,12 +1,10 @@
-import { withBasePath } from "../lib/basePath";
-
 const collectiveImages = [
 "/MTT/collective/collective-01.jpg",
 "/MTT/collective/collective-02.jpg",
 "/MTT/collective/collective-03.jpg",
 "/MTT/collective/collective-04.jpg",
 "/MTT/collective/collective-05.jpg",
-"/MTT/collective/collective-06.jpg"].map(withBasePath);
+"/MTT/collective/collective-06.jpg"];
 
 
 export function pickCollectiveImage(seed = 0) {

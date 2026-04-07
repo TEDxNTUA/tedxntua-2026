@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import Nav from "./Nav";
-import { withBasePath } from "../lib/basePath";
 
 export default function SiteHeader() {
   const pathname = usePathname() ?? "/";
@@ -45,7 +44,7 @@ export default function SiteHeader() {
                 </span>
               </div>
               <img
-                src={withBasePath("/archive.png")}
+                src="/archive.png"
                 alt="Archive"
                 className="relative h-10 w-auto rounded-full border border-white/12 bg-black/30 p-1.5 transition-transform duration-300 group-hover:scale-105 sm:h-12 md:h-14"
               />
@@ -66,7 +65,7 @@ export default function SiteHeader() {
                 Tickets
               </span>
               <img
-                src={withBasePath("/ticket.png")}
+                src="/ticket.png"
                 alt="Ticket"
                 className="relative h-10 w-auto rounded-full border border-white/12 bg-black/30 p-1.5 transition-transform duration-300 group-hover:scale-105 sm:h-12 md:h-14"
               />

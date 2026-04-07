@@ -1,11 +1,12 @@
 'use client';
 import { useState } from 'react';
-import { withBasePath } from '../lib/basePath';
 
 export function TEDSocialButton({ name, size, color, colorHover }) {
   const [style, setStyle] = useState("green");
 
-  const basePath = withBasePath("/eventimages");
+  // CHANGE: Remove the dots. Use a leading slash.
+  // This assumes your folder is at: public/images/youtube/youtube-black.png
+  const basePath = "/eventimages";
   const extension = "png";
 
   let link = "";
