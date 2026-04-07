@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const READY_STATE_HAVE_CURRENT_DATA = 2;
-const MAX_LOADER_WAIT_MS = 2200;
+const MAX_LOADER_WAIT_MS = 5000;
 const VIEWPORT_MULTIPLIER = 1.2;
 
 const waitForImage = (img) =>

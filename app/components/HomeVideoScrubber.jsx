@@ -13,7 +13,7 @@ const storyBeats = [
 ];
 
 const PIXELS_PER_SECOND = 1600;
-const MOBILE_PIXELS_PER_SECOND = 1100;
+const MOBILE_PIXELS_PER_SECOND = 900;
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const getViewportHeight = () => window.visualViewport?.height ?? window.innerHeight;
@@ -49,11 +49,13 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const video = videoRef.current;
 
     if (!section || !video || !Number.isFinite(video.duration) || video.duration <= 0) {
+      console.warn('Video not ready yet - duration:', video?.duration);
       return;
     }
 
     const viewportHeight = getViewportHeight();
-    const pixelsPerSecond = isCoarsePointer()
+    const isMobile = window.innerWidth < 768;
+    const pixelsPerSecond = (isCoarsePointer() || isMobile)
       ? MOBILE_PIXELS_PER_SECOND
       : PIXELS_PER_SECOND;
     const minHeight = viewportHeight * storyBeats.length;
@@ -62,6 +64,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       video.duration * pixelsPerSecond + viewportHeight,
     );
 
+    console.log('Scrub Height calculated:', {desiredHeight, duration: video.duration, pixelsPerSecond});
     setScrubHeight(`${Math.ceil(desiredHeight)}px`);
   }, []);
 

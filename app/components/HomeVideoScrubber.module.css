@@ -1,6 +1,7 @@
 .pageShell {
-  min-height: 100vh;
-  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   background:
     radial-gradient(circle at top, rgba(146, 181, 118, 0.22), transparent 32%),
     linear-gradient(180deg, #08100f 0%, #0d1d1b 36%, #050707 100%);
@@ -14,6 +15,7 @@
   padding: clamp(1.5rem, 4vw, 3rem);
   display: grid;
   place-items: center;
+  width: 100%;
 }
 
 .introPanel {
@@ -54,9 +56,12 @@
 
 .scrubberSection {
   position: relative;
-  height: var(--scrub-height, calc(var(--beats) * 100vh));
+  width: 100%;
+  height: var(--scrub-height, auto);
+  min-height: calc(var(--beats) * 100vh);
   background: #000;
   isolation: isolate;
+  flex-shrink: 0;
 }
 
 .scrubberSectionSticky {
@@ -67,7 +72,7 @@
   height: 100dvh;
   overflow: hidden;
   isolation: isolate;
-  touch-action: pan-y;
+  touch-action: manipulation;
   background: #000;
   z-index: 0;
 }
@@ -96,6 +101,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   background: #000;
 }
 
@@ -160,14 +166,23 @@
     font-size: clamp(2.5rem, 12vw, 4.5rem);
   }
 
+  .scrubberSection {
+    background: #000;
+  }
+
   .scrubberSectionHud {
     align-items: flex-start;
     padding-top: max(1.25rem, env(safe-area-inset-top));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-left: max(1rem, env(safe-area-inset-left));
   }
 
   .scrubberSectionBeat {
     align-items: end;
-    padding-bottom: calc(5rem + env(safe-area-inset-bottom));
+    padding: clamp(1rem, 4vw, 2rem);
+    padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   .scrubberSectionBeat h2 {
@@ -177,5 +192,6 @@
 
   .scrubberSectionHint {
     max-width: 16rem;
+    font-size: clamp(0.875rem, 2vw, 1rem);
   }
 }
