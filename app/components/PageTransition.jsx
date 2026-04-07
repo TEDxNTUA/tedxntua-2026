@@ -76,6 +76,10 @@ export default function PageTransition({ children }) {
       ? "animate-slide-in-from-right"
       : "animate-slide-in-from-left";
 
+  if (pathname === "/") {
+    return children;
+  }
+
   return (
     <div key={pathname} className="page-transition-container">
       <div className={`page-content ${animClass}`}>{children}</div>

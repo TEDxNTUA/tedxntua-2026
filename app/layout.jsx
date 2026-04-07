@@ -2,7 +2,7 @@
 import "./globals.css";
 
 import PageTransition from "./components/PageTransition";
-import Nav from "./components/Nav";
+import SiteHeader from "./components/SiteHeader";
 import EventNavProvider from "./components/EventNavProvider";
 import { TEDSocialButton } from "./components/TedxNTUAsocials";
 import FooterContactPanel from "./components/FooterContactPanel";
