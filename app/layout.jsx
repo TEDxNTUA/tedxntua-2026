@@ -9,6 +9,7 @@ import FooterContactPanel from "./components/FooterContactPanel";
 import CycleZeroMark from "./components/CycleZeroMark";
 import Nav from "./components/Nav";
 import { withBasePath } from "./lib/basePath";
+import AssetLoader from "./components/AssetLoader";
 
 
 // Page metadata for SEO and browser tab display
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
       <body
         className="site-shell bg-blue-100 text-gray-900"
       >
+        <AssetLoader />
         <style>{`
           .header-side-button__decor,
           .header-side-button__label,
