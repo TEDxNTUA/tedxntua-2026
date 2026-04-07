@@ -24,7 +24,6 @@ export default function TeamTimeline({ teams }) {
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const windowH = window.innerHeight;
-      const elTop = rect.top;
       const elHeight = rect.height;
 
       // Use document-scroll based mapping for more stable progress:
@@ -94,21 +93,20 @@ export default function TeamTimeline({ teams }) {
   return (
     <div ref={containerRef} className="relative" style={minHeight ? { minHeight } : undefined}>
       {/* Vertical progress bar (background always full height) */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-gray-200 rounded-full">
+      <div className="absolute left-5 top-0 bottom-0 hidden w-1 rounded-full bg-gray-200 sm:block sm:left-1/2 sm:-translate-x-1/2">
         {/* Progress fill (moves with scroll) */}
         <div
           className="absolute top-0 left-0 w-full bg-gradient-to-b from-red-600 to-red-500 rounded-full transition-all duration-100"
           style={{ height: `${scrollProgress * 100}%` }} />
         
         {/* Moving ball (moves with scroll) */}
-          <div
-          className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-red-600 border-4 border-black rounded-full shadow-lg transition-all duration-100 z-10"
+        <div
+          className="absolute left-1/2 z-10 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-black bg-red-600 shadow-lg transition-all duration-100"
           style={{ top: `${scrollProgress * 100}%` }} />
-        
       </div>
 
       {/* Teams */}
-      <div className="flex flex-col gap-32 py-16">
+      <div className="flex flex-col gap-14 py-10 sm:gap-24 sm:py-16">
         {teams.map((team, i) =>
         <TeamRow key={team.slug} team={team} index={i} />
         )}
@@ -144,25 +142,25 @@ function TeamRow({ team, index }) {
   return (
     <div
       ref={ref}
-      className="grid grid-cols-[1fr_60px_1fr] items-center gap-4 min-h-[280px]">
+      className="grid min-h-[260px] grid-cols-1 gap-6 pl-0 sm:min-h-[280px] sm:grid-cols-[1fr_60px_1fr] sm:items-center sm:gap-4 sm:pl-0 md:pl-0">
       
       {/* Left: Name + Description */}
       <div
-        className={`text-right pr-6 transition-all duration-700 ${
+        className={`pr-0 text-left transition-all duration-700 sm:pr-6 sm:text-right ${
         visible ?
         "opacity-100 translate-x-0" :
         "opacity-0 -translate-x-12"}`
         }
         style={{ transitionDelay: `${index * 50}ms` }}>
         
-        <h3 className="text-3xl font-bold text-black mb-2">{team.title}</h3>
+        <h3 className="mb-2 text-2xl font-bold text-white sm:text-3xl">{team.title}</h3>
         {team.description &&
-        <p className="text-gray-600 text-sm">{team.description}</p>
+        <p className="max-w-prose text-sm text-gray-600">{team.description}</p>
         }
       </div>
 
       {/* Center: Connector dot on bar */}
-      <div className="flex justify-center">
+      <div className="pointer-events-none absolute left-5 top-7 hidden -translate-x-1/2 justify-center sm:flex sm:relative sm:left-auto sm:top-auto sm:translate-x-0">
         <div
           className={`w-4 h-4 rounded-full border-4 border-red-600 bg-white transition-all duration-500 ${
           visible ? "scale-100" : "scale-0"}`
@@ -173,7 +171,7 @@ function TeamRow({ team, index }) {
 
       {/* Right: Member photos */}
       <div
-        className={`flex flex-wrap gap-4 pl-6 transition-all duration-700 ${
+        className={`grid grid-cols-2 gap-3 pl-0 transition-all duration-700 sm:flex sm:flex-wrap sm:gap-4 sm:pl-6 ${
         visible ?
         "opacity-100 translate-x-0" :
         "opacity-0 translate-x-12"}`
@@ -194,7 +192,7 @@ function TeamRow({ team, index }) {
             containerStyle={{ width: MEMBER_PHOTO_WIDTH, height: MEMBER_PHOTO_HEIGHT }} />
           
             <span
-            className="mt-2 text-sm font-medium text-black text-center truncate"
+            className="mt-2 max-w-full text-center text-xs font-medium text-white sm:text-sm"
             style={{ maxWidth: MEMBER_PHOTO_WIDTH }}>
             
               {m.name}

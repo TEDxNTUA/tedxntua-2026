@@ -23,8 +23,8 @@ export default function FooterContactPanel() {
   }
 
   return (
-    <section className="flex flex-col items-start gap-4">
-      <div className="text-lg font-medium tracking-wide text-white/90">
+    <section className="flex flex-col items-start gap-3 sm:gap-4">
+      <div className="text-base font-medium tracking-wide text-white/90 sm:text-lg">
         Contact us:
       </div>
 
@@ -32,15 +32,15 @@ export default function FooterContactPanel() {
         {EMAILS.map((email) => (
           <div
             key={email}
-            className="flex w-full h-10 items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3"
+            className="flex w-full min-h-9 items-center justify-between gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 sm:gap-3 sm:rounded-2xl sm:px-4 sm:py-3"
           >
-            <div className="min-w-0 text-sm text-white/70 break-all">
+            <div className="min-w-0 text-xs text-white/70 break-all sm:text-sm">
               {email}
             </div>
             <button
               type="button"
               onClick={() => handleCopyEmail(email)}
-              className="shrink-0 rounded-full border border-white/20 px-3 py-2 text-xs font-medium text-white/85 transition-colors hover:border-white/40 hover:text-white"
+              className="shrink-0 rounded-full border border-white/20 px-2 py-1 text-[10px] font-medium text-white/85 transition-colors hover:border-white/40 hover:text-white sm:px-3 sm:py-2 sm:text-xs"
             >
               {copyState === email ? "Copied" : "Copy email"}
             </button>
@@ -48,10 +48,10 @@ export default function FooterContactPanel() {
         ))}
       </div>
 
-      <div className="flex w-full flex-wrap items-center gap-3">
+      <div className="flex w-full flex-wrap items-center gap-2 sm:gap-3">
         <a
           href={mailtoHref}
-          className="inline-flex min-h-11 items-center justify-center rounded-full bg-red-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-red-500"
+          className="inline-flex min-h-10 items-center justify-center rounded-full bg-red-600 px-4 text-xs font-semibold text-white transition-colors hover:bg-red-500 sm:min-h-11 sm:px-5 sm:text-sm"
         >
           Open email app
         </a>

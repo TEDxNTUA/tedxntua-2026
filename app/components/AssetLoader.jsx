@@ -67,6 +67,7 @@ export default function AssetLoader() {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    document.body.style.overflow = "hidden";
     let isMounted = true;
 
     const finalize = () => {
@@ -87,9 +88,16 @@ export default function AssetLoader() {
 
     run();
     return () => {
+      document.body.style.overflow = "";
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (isReady) {
+      document.body.style.overflow = "";
+    }
+  }, [isReady]);
 
   if (isReady) {
     return null;
@@ -97,7 +105,7 @@ export default function AssetLoader() {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 text-white"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black text-white"
       aria-live="polite"
       aria-busy="true"
     >

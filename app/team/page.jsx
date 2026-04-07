@@ -1,41 +1,27 @@
-import TeamHero from "./components/TeamHero";
 import TeamTimeline from "./components/TeamTimeline";
 import teams from "./teamsData";
 
 export default function TeamPage() {
-  const heroImages = teams.flatMap((t) => t.heroImages || []).slice(0, 8);
-
   return (
     <section
       className="min-h-screen bg-center bg-fixed bg-repeat"
       // style={{ backgroundImage: "url('/team_page_background.png')", backgroundSize: "auto" }}
     >
       {/* Hero Section */}
-      <div className="bg-black text-white py-16 px-8">
+      <div className="bg-black text-white px-4 py-12 sm:px-8 sm:py-16">
         <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-4">
+          <h1 className="mb-4 text-3xl font-bold sm:text-4xl md:text-5xl">
             Our <span className="text-red-600">Team</span>
           </h1>
-          <p className="text-lg text-gray-300">
+          <p className="mx-auto max-w-2xl text-sm text-gray-300 sm:text-base md:text-lg">
             Meet the passionate people behind TEDxNTUA 2026.
           </p>
         </div>
       </div>
 
-      {/* Hero carousel */}
-      <div className="max-w-5xl mx-auto px-8 -mt-8">
-        <TeamHero images={heroImages} alt="team carousel" />
-      </div>
-
       {/* Timeline Section */}
-      <div className="py-16 px-8">
+      <div className="px-4 py-10 sm:px-8 sm:py-16">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-4">
-            Meet Our <span className="text-red-600">Teams</span>
-          </h2>
-          <p className="text-gray-600 text-center mb-12">
-            Scroll down to discover each team
-          </p>
           <TeamTimeline teams={teams} />
         </div>
       </div>
