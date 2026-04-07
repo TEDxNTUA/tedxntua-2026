@@ -126,6 +126,7 @@ export default function Nav() {
           aria-label="Team"
         >
           <span className={classes.sliceInner} />
+          <span className={classes.sliceLabel}>TEAM</span>
         </a>
 
         <a
@@ -134,6 +135,7 @@ export default function Nav() {
           aria-label="Sponsors"
         >
           <span className={classes.sliceInner} />
+          <span className={classes.sliceLabel}>SPONSORS</span>
         </a>
 
         <button
@@ -143,6 +145,7 @@ export default function Nav() {
           aria-label="Event"
         >
           <span className={classes.sliceInner} />
+          <span className={classes.sliceLabel}>EVENT</span>
         </button>
       </div>
 
