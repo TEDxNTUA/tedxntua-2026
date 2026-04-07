@@ -7,6 +7,7 @@ import EventNavProvider from "./components/EventNavProvider";
 import { TEDSocialButton } from "./components/TedxNTUAsocials";
 import FooterContactPanel from "./components/FooterContactPanel";
 import CycleZeroMark from "./components/CycleZeroMark";
+import Nav from "./components/Nav";
 
 
 // Page metadata for SEO and browser tab display
@@ -70,7 +71,7 @@ export default function RootLayout({ children }) {
         `}</style>
         <EventNavProvider>
           <header className="sticky top-0 z-40 overflow-visible border-b border-white/8 bg-transparent text-white">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top,rgba(34,197,94,0.12),transparent_100%)]" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top,rgba(236, 255, 243, 0.12),transparent_100%)]" />
             <div className="pointer-events-none absolute left-[-2rem] top-[-3.5rem] h-40 w-40 rounded-full border border-white/10" />
             <div className="pointer-events-none absolute left-[2.5rem] top-[-5rem] h-56 w-56 rounded-full border border-white/8" />
             <div className="pointer-events-none absolute right-[-3rem] top-[-4rem] h-48 w-48 rounded-full border border-white/10" />
