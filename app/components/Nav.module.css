@@ -92,15 +92,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0;
+  opacity: 0.68;
   transition: opacity 300ms, transform 300ms;
-}
-
-/* Show images on hover or when menu is open or when active */
-.slice:hover .sliceInner,
-.sliceActive .sliceInner,
-.menuOpen .slice .sliceInner {
-  opacity: 1;
 }
 
 .sliceLabel {
@@ -115,16 +108,7 @@
   color: #04210f;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
   pointer-events: none;
-  transition: opacity 300ms, transform 300ms, font-size 300ms;
-  opacity: 1;
-  white-space: nowrap;
-}
-
-/* Hide labels when menu is open, or on hover, or when active */
-.slice:hover .sliceLabel,
-.sliceActive .sliceLabel,
-.menuOpen .slice .sliceLabel {
-  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
 }
 
 .slice:nth-child(1) .sliceLabel {
@@ -173,22 +157,13 @@
 }
 
 .slice:hover .sliceInner,
-.sliceActive .sliceInner,
-.menuOpen .slice .sliceInner {
+.sliceActive .sliceInner {
   opacity: 1;
 }
 
 .slice:hover .sliceLabel,
-.sliceActive .sliceLabel,
-.menuOpen .slice .sliceLabel {
-  opacity: 0;
-}
-
-/* Maximize image on hover when menu is closed */
-.wrap:not(.menuOpen) .slice:hover .sliceInner {
-  opacity: 0.95 !important;
-  transform: scale(1.5) rotate(0deg) !important;
-  z-index: 100;
+.sliceActive .sliceLabel {
+  color: #02150a;
 }
 
 .centerLogo {
