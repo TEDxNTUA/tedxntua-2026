@@ -56,18 +56,28 @@ export default function Nav() {
     }
 
     lastScrollYRef.current = window.scrollY;
+    let frameId;
 
     const handleScroll = () => {
-      const currentY = window.scrollY;
-      const isScrollingDown = currentY > lastScrollYRef.current;
-      const passedTop = currentY > 40;
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
 
-      setIsHiddenOnScroll(isScrollingDown && passedTop);
-      lastScrollYRef.current = currentY;
+      frameId = requestAnimationFrame(() => {
+        const currentY = window.scrollY;
+        const isScrollingDown = currentY > lastScrollYRef.current;
+        const passedTop = currentY > 40;
+
+        setIsHiddenOnScroll(isScrollingDown && passedTop);
+        lastScrollYRef.current = currentY;
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(frameId);
+    };
   }, []);
 
   useEffect(() => {
@@ -109,6 +119,7 @@ export default function Nav() {
         "--nav-sponsors-icon": `url(${withBasePath("/sponsors.png")})`,
         "--nav-event-icon": `url(${withBasePath("/event.png")})`,
         "--nav-home-icon": `url(${withBasePath("/home.png")})`,
+        "--nav-test-image": `url(${withBasePath("/testNav.jpg")})`,
       }}
       className={[
         classes.menuContainer,
@@ -125,7 +136,6 @@ export default function Nav() {
           className={[classes.slice, isTeamPage ? classes.sliceActive : ""].join(" ").trim()}
           aria-label="Team"
         >
-          <span className={classes.sliceInner} />
         </a>
 
         <a
@@ -133,7 +143,6 @@ export default function Nav() {
           className={[classes.slice, isSponsorsPage ? classes.sliceActive : ""].join(" ").trim()}
           aria-label="Sponsors"
         >
-          <span className={classes.sliceInner} />
         </a>
 
         <button
@@ -142,7 +151,6 @@ export default function Nav() {
           onClick={handleEventClick}
           aria-label="Event"
         >
-          <span className={classes.sliceInner} />
         </button>
       </div>
 
