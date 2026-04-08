@@ -101,67 +101,83 @@ export default function SponsorTierSection({ tier, index }) {
       {/* Sponsors Grid */}
       <div
         className={`
-          grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4
+          flex flex-wrap justify-center gap-6 sm:gap-8
           ${getSizeClasses()}
         `}
       >
         {tier.sponsors.map((sponsor, i) => (
-          <div
+          <a
+            href={sponsor.link || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
             key={`${tier.tier}-${i}`}
             style={{
               transitionDelay: reducedMotion ? "0ms" : `${index * 100 + i * 40}ms`
             }}
             className={`
-              group relative overflow-hidden rounded-lg
-              border transition-all duration-500
-              flex flex-col items-center justify-center
+              group relative w-40 sm:w-48 flex flex-col items-center
+              transform transition-all duration-500
               ${visible 
                 ? "opacity-100 scale-100" 
                 : "opacity-0 scale-95"
               }
-              ${getBorderColor()}
-              hover:border-green-400/80 hover:shadow-lg hover:shadow-green-500/20
-              bg-gradient-to-br ${getGradientColor()}
-              backdrop-blur-md
-              ${getPaddingLevel()}
               cursor-pointer
-              aspect-square
             `}
           >
-            {/* Animated background glow */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-              <div className="absolute -inset-full bg-gradient-to-r from-green-500/20 via-transparent to-green-500/20 animate-pulse" />
-            </div>
+            {/* Card Container */}
+            <div
+              className={`
+                relative overflow-hidden rounded-lg
+                border transition-all duration-500 w-full
+                flex flex-col items-center justify-center
+                ${getBorderColor()}
+                hover:border-green-400/80 hover:shadow-lg hover:shadow-green-500/20
+                bg-gradient-to-br ${getGradientColor()}
+                backdrop-blur-md
+                p-4 sm:p-5
+                aspect-square
+              `}
+            >
+              {/* Animated background glow */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="absolute -inset-full bg-gradient-to-r from-green-500/20 via-transparent to-green-500/20 animate-pulse" />
+              </div>
 
-            {/* Logo Image */}
-            <div className="relative z-10 w-full h-full flex items-center justify-center">
-              <div className="relative w-full h-full flex items-center justify-center px-2 py-2">
-                <img
-                  src={sponsor.logo}
-                  alt={sponsor.name}
-                  className="max-w-full max-h-full object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    if (e.target.nextElementSibling) {
-                      e.target.nextElementSibling.style.display = 'flex';
-                    }
-                  }}
-                />
-                {/* Fallback text if image fails */}
-                <div
-                  style={{ display: 'none' }}
-                  className="absolute inset-0 flex items-center justify-center group-hover:text-green-300 transition-colors duration-300"
-                >
-                  <p className="text-xs sm:text-sm font-bold text-center text-white px-2">
-                    {sponsor.name}
-                  </p>
+              {/* Logo Image */}
+              <div className="relative z-10 w-full h-full flex items-center justify-center">
+                <div className="relative w-full h-full flex items-center justify-center px-2">
+                  <img
+                    src={sponsor.logo}
+                    alt={sponsor.name}
+                    className="max-w-full max-h-full object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      if (e.target.nextElementSibling) {
+                        e.target.nextElementSibling.style.display = 'flex';
+                      }
+                    }}
+                  />
+                  {/* Fallback text if image fails */}
+                  <div
+                    style={{ display: 'none' }}
+                    className="absolute inset-0 flex items-center justify-center group-hover:text-green-300 transition-colors duration-300"
+                  >
+                    <p className="text-xs sm:text-sm font-bold text-center text-white px-2">
+                      {sponsor.name}
+                    </p>
+                  </div>
                 </div>
               </div>
+
+              {/* Gradient line at bottom */}
+              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
 
-            {/* Gradient line at bottom */}
-            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
+            {/* Company Name Below */}
+            <p className="mt-3 text-center text-sm sm:text-base font-semibold text-white group-hover:text-green-300 transition-colors duration-300 px-2 min-h-[2.5rem] flex items-center justify-center">
+              {sponsor.name}
+            </p>
+          </a>
         ))}
       </div>
 
