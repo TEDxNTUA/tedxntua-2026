@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 const READY_STATE_HAVE_CURRENT_DATA = 2;
 const MAX_LOADER_WAIT_MS = 5000;
 const VIEWPORT_MULTIPLIER = 1.2;
+const CACHE_SESSION_KEY = "tedx_assets_loaded_session";
 
 const waitForImage = (img) =>
   new Promise((resolve) => {
@@ -63,15 +64,41 @@ const waitForCriticalAssets = async () => {
   ]);
 };
 
+const isAssetsAlreadyCached = () => {
+  if (typeof window === "undefined") return false;
+  try {
+    return sessionStorage.getItem(CACHE_SESSION_KEY) === "true";
+  } catch {
+    return false;
+  }
+};
+
+const markAssetsCached = () => {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.setItem(CACHE_SESSION_KEY, "true");
+  } catch {
+    // Session storage unavailable
+  }
+};
+
 export default function AssetLoader() {
   const [isReady, setIsReady] = useState(false);
+  const [skipLoader, setSkipLoader] = useState(false);
 
   useEffect(() => {
+    // Check if assets are already cached in this session
+    if (isAssetsAlreadyCached()) {
+      setSkipLoader(true);
+      return;
+    }
+
     document.body.style.overflow = "hidden";
     let isMounted = true;
 
     const finalize = () => {
       if (!isMounted) return;
+      markAssetsCached();
       setIsReady(true);
     };
 
@@ -99,7 +126,7 @@ export default function AssetLoader() {
     }
   }, [isReady]);
 
-  if (isReady) {
+  if (isReady || skipLoader) {
     return null;
   }
 
@@ -109,22 +136,59 @@ export default function AssetLoader() {
       aria-live="polite"
       aria-busy="true"
     >
-      <div className="flex flex-col items-center gap-4">
-        <div className="relative h-16 w-16" aria-hidden="true">
-          <div
-            className="absolute inset-0 animate-spin rounded-full"
-            style={{
-              background:
-                "conic-gradient(from 120deg, rgba(255,255,255,0.1), rgba(255,255,255,0.9), rgba(34,197,94,0.9), rgba(255,255,255,0.1))",
-              filter: "drop-shadow(0 0 10px rgba(34,197,94,0.45))",
-            }}
-          />
-          <div className="absolute inset-[3px] rounded-full bg-black/90 border border-white/10" />
-          <div className="absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.9)] animate-pulse" />
+      <style>{`
+        @keyframes spin-gradient {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse-glow {
+          0%, 100% { 
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.6), 
+                        0 0 40px rgba(34, 197, 94, 0.3);
+            opacity: 1;
+          }
+          50% { 
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.8), 
+                        0 0 60px rgba(34, 197, 94, 0.4);
+            opacity: 0.8;
+          }
+        }
+        
+        .loader-spinner {
+          animation: spin-gradient 3s linear infinite;
+        }
+        
+        .loader-center {
+          animation: pulse-glow 2s ease-in-out infinite;
+        }
+      `}</style>
+      
+      <div className="flex flex-col items-center gap-6">
+        {/* Enhanced Spinner */}
+        <div className="relative h-20 w-20" aria-hidden="true">
+          {/* Outer rotating ring */}
+          <div className="loader-spinner absolute inset-0 rounded-full border-2 border-transparent border-t-green-400 border-r-green-500 border-b-green-400/30" />
+          
+          {/* Middle ring */}
+          <div className="absolute inset-2 rounded-full border border-green-500/30 opacity-60" />
+          
+          {/* Inner pulsing core */}
+          <div className="loader-center absolute inset-3 rounded-full bg-gradient-to-br from-green-500/40 to-green-600/20 backdrop-blur-sm border border-green-400/50" />
+          
+          {/* Center dot */}
+          <div className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_16px_rgba(34,197,94,0.8)]" />
         </div>
-        <span className="text-xs uppercase tracking-[0.32em] text-white/80">
-          Loading
-        </span>
+        
+        {/* Loading text */}
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-xs uppercase tracking-[0.24em] text-green-300 font-semibold">
+            Loading
+          </span>
+          <p className="text-xs text-gray-400/80">
+            Preparing your experience...
+          </p>
+        </div>
       </div>
     </div>
   );
