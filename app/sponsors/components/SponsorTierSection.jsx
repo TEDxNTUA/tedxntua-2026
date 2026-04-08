@@ -56,26 +56,26 @@ export default function SponsorTierSection({ tier, index }) {
   const getGradientColor = () => {
     switch (tier.tier) {
       case "Diamond":
-        return "from-green-500/20 to-green-600/10";
+        return "from-gray-100/95 to-gray-50/90";
       case "Platinum":
-        return "from-green-500/15 to-green-600/8";
+        return "from-gray-100/90 to-gray-50/85";
       case "Grand":
-        return "from-green-500/10 to-green-600/5";
+        return "from-gray-50/85 to-gray-100/80";
       default:
-        return "from-green-500/8 to-green-600/3";
+        return "from-gray-50/80 to-gray-100/75";
     }
   };
 
   const getBorderColor = () => {
     switch (tier.tier) {
       case "Diamond":
-        return "border-green-500/60";
+        return "border-gray-400/70";
       case "Platinum":
-        return "border-green-500/50";
+        return "border-gray-400/60";
       case "Grand":
-        return "border-green-500/40";
+        return "border-gray-300/50";
       default:
-        return "border-green-500/25";
+        return "border-gray-300/40";
     }
   };
 

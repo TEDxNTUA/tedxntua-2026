@@ -31,7 +31,7 @@ export const sponsorTiers = [
   },
     {
     "name": "Dialectica",
-    "logo": "",
+    "logo": assetPath("/Dialectica_idzOXMZJL7_0.png"),
     "link": "https://www.dialectica.io/"
   },
   {
@@ -52,7 +52,7 @@ export const sponsorTiers = [
     sponsors: [
       {
     "name": "PWC",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/PricewaterhouseCoopers_Logo.svg/512px-PricewaterhouseCoopers_Logo.svg.png",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/PwC_2025_Logo.svg/120px-PwC_2025_Logo.svg.png?_=20250429090744",
     "link": "https://www.pwc.com/"
   },
     ]
@@ -74,12 +74,12 @@ export const sponsorTiers = [
     sponsors: [
       {
     "name": "Symetal",
-    "logo": "https://www.symetal.gr/wp-content/themes/symetal/images/logo.svg",
+    "logo": "https://www.symetal.gr/img/site/symetal-logo-new.png",
     "link": "https://www.symetal.gr/"
   },
   {
     "name": "Ελληνική Παραγωγή",
-    "logo": "https://www.symetal.gr/img/site/symetal-logo-new.png",
+    "logo": "https://hellenicproduction.org/wp-content/uploads/2017/09/logo.png",
     "link": "https://hellenicproduction.org/"
   },
   {
