@@ -71,12 +71,12 @@ export default function SiteHeader() {
             <a
               href="https://www.tedxntua.com/"
               aria-label="TEDxNTUA home"
-              className="pointer-events-auto group relative inline-flex min-h-[76px] items-center gap-4 rounded-[1.75rem] border border-white/10 bg-white/[0.03] px-4 py-3 backdrop-blur-sm transition-colors hover:bg-white/[0.05] sm:gap-5 sm:px-5"
+              className="pointer-events-auto group relative inline-flex min-h-[76px] items-center gap-2 rounded-[1.75rem] border border-white/10 bg-white/[0.03] px-3 py-3 backdrop-blur-sm transition-colors hover:bg-white/[0.05] sm:gap-4 sm:px-4"
             >
               <div className="pointer-events-none absolute left-4 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full border border-white/8 sm:h-28 sm:w-28" />
               <div className="pointer-events-none absolute left-9 top-1/2 h-14 w-14 -translate-y-1/2 rounded-full border border-white/10 sm:h-16 sm:w-16" />
               <div className="relative flex flex-wrap items-end gap-x-2 gap-y-2 leading-none sm:gap-x-3">
-                <span className="shrink-0">
+                <span className="hidden shrink-0 sm:inline">
                   <span className="text-1xl font-bold text-red-600 sm:text-2xl">TEDx</span>
                   <span className="text-1xl font-bold text-white sm:text-2xl">NTUA</span>
                 </span>
@@ -91,15 +91,15 @@ export default function SiteHeader() {
 
           <div className="hidden lg:block" />
 
-          <div className="flex justify-end">
+          <div className="flex justify-end items-center">
             <a
               href="#"
               aria-disabled="true"
-              className="pointer-events-auto group relative inline-flex min-h-[76px] min-w-[230px] items-center justify-between gap-4 rounded-[1.75rem] border border-white/10 bg-white/[0.03] px-4 py-3 backdrop-blur-sm transition-colors hover:bg-white/[0.05] sm:min-w-[260px] sm:gap-5 sm:px-5"
+              className="pointer-events-auto group relative inline-flex min-h-[76px] items-center justify-between gap-2 rounded-[1.75rem] border border-white/10 bg-white/[0.03] px-3 py-3 backdrop-blur-sm transition-colors hover:bg-white/[0.05] sm:min-w-[260px] sm:gap-5 sm:px-5"
             >
               <div className="pointer-events-none absolute right-4 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full border border-white/8 sm:h-28 sm:w-28" />
               <div className="pointer-events-none absolute right-9 top-1/2 h-14 w-14 -translate-y-1/2 rounded-full border border-white/10 sm:h-16 sm:w-16" />
-              <span className="relative text-xs font-semibold uppercase tracking-[0.34em] text-white/72 sm:text-sm">
+              <span className="relative hidden text-xs font-semibold uppercase tracking-[0.34em] text-white/72 sm:inline sm:text-sm">
                 Tickets
               </span>
               <img

@@ -18,7 +18,7 @@ export const metadata = {
 };
 
 // Minimum viewport width in pixels at which the archive/ticket buttons expand.
-const HEADER_BUTTON_EXPAND_MIN_WIDTH = 1060;
+const HEADER_BUTTON_EXPAND_MIN_WIDTH = 200;
 
 
 
