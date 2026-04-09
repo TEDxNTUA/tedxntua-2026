@@ -252,34 +252,6 @@ export const teams = [
     ]
   },
   {
-    slug: "venue",
-    title: "Venue",
-    description: "Venue logistics and on-site operations.",
-    heroImages: [
-      assetPath("/MTT/venue_mtt/thodoris/mtt-540.jpg"),
-      assetPath("/MTT/venue_mtt/fenia/mtt-138.jpg"),
-      assetPath("/MTT/venue_mtt/fenia/mtt-139.jpg")
-    ],
-    members: [
-      {
-        id: "thodoris",
-        name: "Θοδωρής Κεραμιανός",
-        photo: assetPath("/MTT/venue_mtt/thodoris/mtt-539.jpg"),
-        social: {
-          instagram: "https://www.instagram.com/theodore_keramianos",
-        }
-      },
-      {
-        id: "fenia",
-        name: "Φωτεινή Κωνσταντίνα Μπρίτσα",
-        photo: assetPath("/MTT/venue_mtt/fenia/mtt-137.jpg"),
-        social: {
-          instagram: "https://www.instagram.com/fenia_br",
-        }
-      }
-    ]
-  },
-  {
     slug: "social-media",
     title: "Social Media",
     description: "Communications, socials and outreach.",
@@ -319,6 +291,34 @@ export const teams = [
         photo: assetPath("/MTT/media_mtt/"),
         social: {
           instagram: "https://www.instagram.com/kostasharos",
+        }
+      }
+    ]
+  },
+  {
+    slug: "venue",
+    title: "Venue",
+    description: "Venue logistics and on-site operations.",
+    heroImages: [
+      assetPath("/MTT/venue_mtt/thodoris/mtt-540.jpg"),
+      assetPath("/MTT/venue_mtt/fenia/mtt-138.jpg"),
+      assetPath("/MTT/venue_mtt/fenia/mtt-139.jpg")
+    ],
+    members: [
+      {
+        id: "thodoris",
+        name: "Θοδωρής Κεραμιανός",
+        photo: assetPath("/MTT/venue_mtt/thodoris/mtt-539.jpg"),
+        social: {
+          instagram: "https://www.instagram.com/theodore_keramianos",
+        }
+      },
+      {
+        id: "fenia",
+        name: "Φωτεινή Κωνσταντίνα Μπρίτσα",
+        photo: assetPath("/MTT/venue_mtt/fenia/mtt-137.jpg"),
+        social: {
+          instagram: "https://www.instagram.com/fenia_br",
         }
       }
     ]
