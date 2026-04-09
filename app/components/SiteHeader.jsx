@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Nav from "./Nav";
 import { withBasePath } from "../lib/basePath";
@@ -7,6 +8,42 @@ import { withBasePath } from "../lib/basePath";
 export default function SiteHeader() {
   const pathname = usePathname() ?? "/";
   const isHomePage = pathname === "/";
+  const lastScrollYRef = useRef(0);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    lastScrollYRef.current = window.scrollY;
+    let frameId;
+
+    const handleScroll = () => {
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
+
+      frameId = requestAnimationFrame(() => {
+        const currentY = window.scrollY;
+        const isScrollingDown = currentY > lastScrollYRef.current;
+        const passedTop = currentY > 40;
+
+        // Close nav menu when scrolling down past threshold
+        if (isScrollingDown && passedTop) {
+          // Emit custom event that nav components can listen to
+          window.dispatchEvent(new CustomEvent("headerScrollDown"));
+        }
+
+        lastScrollYRef.current = currentY;
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(frameId);
+    };
+  }, []);
 
   return (
     <header

@@ -47,6 +47,19 @@ export default function Nav() {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const handleHeaderScrollDown = () => {
+      setIsOpen(false);
+    };
+
+    window.addEventListener("headerScrollDown", handleHeaderScrollDown);
+    return () => window.removeEventListener("headerScrollDown", handleHeaderScrollDown);
+  }, []);
+
+  useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
