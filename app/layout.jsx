@@ -30,58 +30,12 @@ export default function RootLayout({ children }) {
         className="site-shell bg-blue-100 text-gray-900"
       >
         <AssetLoader />
-        <style>{`
-          .header-side-button__decor,
-          .header-side-button__label,
-          .header-side-button__ticket-label {
-            display: none;
-          }
-
-          @media (min-width: ${HEADER_BUTTON_EXPAND_MIN_WIDTH}px) {
-            .header-side-button__decor {
-              display: block;
-            }
-
-            .header-side-button__label {
-              display: flex;
-              gap: 0.75rem;
-            }
-
-            .header-side-button__ticket-label {
-              display: inline;
-              font-size: 0.875rem;
-            }
-
-            .header-side-button--archive {
-              min-width: 240px;
-              max-width: 290px;
-              justify-content: flex-start;
-              gap: 1.25rem;
-              padding-left: 1.25rem;
-              padding-right: 1.25rem;
-            }
-
-            .header-side-button--ticket {
-              min-width: 240px;
-              max-width: 290px;
-              justify-content: space-between;
-              gap: 1.25rem;
-              padding-left: 1.25rem;
-              padding-right: 1.25rem;
-            }
-          }
-        `}</style>
         <EventNavProvider>
-          <SiteHeader />
-
-
-
+        <SiteHeader />
 
           <main className="site-main">
             {children}
           </main>
-
-
 
 
           <footer className="site-footer border-t border-white/20 bg-black text-white">
