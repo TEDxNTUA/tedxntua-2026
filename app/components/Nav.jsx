@@ -2,181 +2,108 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { useEventNav } from "./EventNavProvider";
-import classes from "./Nav.module.css";
+import { useScrollDirection } from "../hooks/useScrollDirection";
 import { withBasePath } from "../lib/basePath";
-
-const ROUTE_TO_INDEX = {
-  "/": 0,
-  "/event": 1,
-  "/sponsors": 2,
-  "/team": 3,
-};
+import classes from "./Nav.module.css";
 
 export default function Nav() {
   const pathname = usePathname() ?? "/";
   const { isOpen: isEventNavOpen, toggle: toggleEventNav } = useEventNav();
   const [isOpen, setIsOpen] = useState(false);
-  const [isHiddenOnScroll, setIsHiddenOnScroll] = useState(false);
-  const containerRef = useRef(null);
+  
+  const isHiddenOnScroll = useScrollDirection({ threshold: 40 });
   const menuRef = useRef(null);
   const centerLogoRef = useRef(null);
-  const lastScrollYRef = useRef(0);
 
   const isEventPage = pathname.startsWith("/event");
   const isSponsorsPage = pathname === "/sponsors";
-  const isTeamPage = pathname === "/team" || pathname.startsWith("/team/");
+  const isTeamPage = pathname.startsWith("/team");
 
-  const handleEventClick = () => {
+  const handleEventClick = (e) => {
     if (isEventPage) {
+      e.preventDefault();
       setIsOpen(false);
       toggleEventNav();
-      return;
     }
-
-    window.location.href = withBasePath("/event");
   };
 
-  const handleCenterLogoClick = () => {
+  const handleCenterClick = (e) => {
     if (!isOpen) {
+      e.preventDefault();
       setIsOpen(true);
-      return;
-    }
-
-    window.location.href = withBasePath("/");
-  };
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const handleHeaderScrollDown = () => {
+    } else {
       setIsOpen(false);
-    };
-
-    window.addEventListener("headerScrollDown", handleHeaderScrollDown);
-    return () => window.removeEventListener("headerScrollDown", handleHeaderScrollDown);
-  }, []);
+    }
+  };
 
   useEffect(() => {
     setIsOpen(false);
-  }, [pathname]);
+  }, [pathname, isEventNavOpen]);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    lastScrollYRef.current = window.scrollY;
-    let frameId;
-
-    const handleScroll = () => {
-      if (frameId) {
-        cancelAnimationFrame(frameId);
+    if (!isOpen) return;
+    const handleClickOutside = (e) => {
+      if (!menuRef.current?.contains(e.target) && !centerLogoRef.current?.contains(e.target)) {
+        setIsOpen(false);
       }
-
-      frameId = requestAnimationFrame(() => {
-        const currentY = window.scrollY;
-        const isScrollingDown = currentY > lastScrollYRef.current;
-        const passedTop = currentY > 40;
-
-        setIsHiddenOnScroll(isScrollingDown && passedTop);
-        lastScrollYRef.current = currentY;
-      });
     };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(frameId);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isOpen || typeof document === "undefined") {
-      return;
-    }
-
-    const handlePointerDown = (event) => {
-      const target = event.target;
-
-      if (
-        menuRef.current?.contains(target) ||
-        centerLogoRef.current?.contains(target)
-      ) {
-        return;
-      }
-
-      setIsOpen(false);
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("pointerdown", handleClickOutside);
+    return () => document.removeEventListener("pointerdown", handleClickOutside);
   }, [isOpen]);
 
-  useEffect(() => {
-    if (isEventNavOpen) {
-      setIsOpen(false);
-    }
-  }, [isEventNavOpen]);
-
-  // Remove hover/nearby pointer auto-open behavior.
-  // The semicircle nav should only open via explicit user interaction.
+  const containerClasses = [
+    classes.menuContainer,
+    isEventNavOpen && classes.menuContainerRaised,
+    isHiddenOnScroll && classes.menuContainerHidden,
+  ].filter(Boolean).join(" ");
 
   return (
-    <div
-      ref={containerRef}
+    <nav
+      className={containerClasses}
       style={{
-        "--nav-team-icon": `url(${withBasePath("/team.png")})`,
-        "--nav-sponsors-icon": `url(${withBasePath("/sponsors.png")})`,
-        "--nav-event-icon": `url(${withBasePath("/event.png")})`,
         "--nav-home-icon": `url(${withBasePath("/home.png")})`,
-        "--nav-test-image": `url(${withBasePath("/testNav.jpg")})`,
+        "--nav-test-image": `url(${withBasePath("/testNav.jpg")})`, // The one background you want
       }}
-      className={[
-        classes.menuContainer,
-        isEventNavOpen ? classes.menuContainerRaised : "",
-        isHiddenOnScroll ? classes.menuContainerHidden : "",
-      ].join(" ").trim()}
     >
-      <div
-        ref={menuRef}
-        className={[classes.wrap, isOpen ? classes.menuOpen : ""].join(" ").trim()}
+      <div 
+        ref={menuRef} 
+        className={`${classes.wrap} ${isOpen ? classes.menuOpen : ""}`}
       >
-        <a
-          href={withBasePath("/team")}
-          className={[classes.slice, isTeamPage ? classes.sliceActive : ""].join(" ").trim()}
+        <Link
+          href="/team"
+          className={`${classes.slice} ${isTeamPage ? classes.sliceActive : ""}`}
           aria-label="Team"
         >
-        </a>
+        </Link>
 
-        <a
-          href={withBasePath("/sponsors")}
-          className={[classes.slice, isSponsorsPage ? classes.sliceActive : ""].join(" ").trim()}
+        <Link
+          href="/sponsors"
+          className={`${classes.slice} ${isSponsorsPage ? classes.sliceActive : ""}`}
           aria-label="Sponsors"
         >
-        </a>
+        </Link>
 
-        <button
-          type="button"
-          className={[classes.slice, isEventPage ? classes.sliceActive : ""].join(" ").trim()}
+        <Link
+          href="/event"
           onClick={handleEventClick}
+          className={`${classes.slice} ${isEventPage ? classes.sliceActive : ""}`}
           aria-label="Event"
         >
-        </button>
+        </Link>
       </div>
 
-      <button
+      <Link
+        href="/"
         ref={centerLogoRef}
-        type="button"
+        onClick={handleCenterClick}
         className={classes.centerLogo}
-        onClick={handleCenterLogoClick}
         aria-label={isOpen ? "Go home" : "Open navigation"}
         aria-expanded={isOpen}
       >
         <span className={classes.centerLogoInner} />
-      </button>
-    </div>
+      </Link>
+    </nav>
   );
 }
