@@ -2,7 +2,7 @@ import AnchorScrollHandler from "../components/AnchorScrollHandler";
 import InfoSpeakerBox from "../components/ProgramInfoBoxSimgular";
 import InfoWorkshopBox from "../components/ProgramInfoBoxWorkshops";
 
-import { mySpeakers1 } from "../infoDatabase";
+import { mySpeakers1, mySpeakers3 } from "../infoDatabase";
 import { mySpeakers2 } from "../infoDatabase";
 import { myExperienceWorkshopsPack1 } from "../infoDatabase";
 import { myProfessionalWorkshopsPack1 } from "../infoDatabase";
@@ -54,6 +54,12 @@ export default function ProgramPage() {
 
             <ProgramSection title="Phase 1 - Start Time">
               {mySpeakers2.map((item, index) => (
+                <InfoSpeakerBox key={index} {...item} />
+              ))}
+            </ProgramSection>
+
+            <ProgramSection title="Phase 1 - Start Time">
+              {mySpeakers3.map((item, index) => (
                 <InfoSpeakerBox key={index} {...item} />
               ))}
             </ProgramSection>

@@ -1,4 +1,5 @@
 import { withBasePath } from "../lib/basePath";
+import Speakers from "./LineUpInfo/Speakers.json";
 
 const applyPosterBasePath = (items) =>
   items.map((item) => ({
@@ -13,78 +14,224 @@ export const myEventInfo = {
 
 export const allSpeakers = applyPosterBasePath([
 { time: "10:00 - 11:00",
-  name: "Ελένη Καββάδα",
-  profession: "Ιδρύτρια του brand υψηλής ραπτικής και installation 240791",
-  theme: "Μόδα",
+  name: Speakers[0].NameGR,
+  profession: Speakers[0].ProfessionGR,
+  theme: Speakers[0].Theme,
   title: "Fashion as identity",
   itemColor: "rgba(189, 149, 74, 0.3)",
-  description: "Η ομιλία, ακολουθώντας τη γενική θεματική του Tedx, πραγματεύεται την σημαντικότητα του κώδικα 0, σαν ταυτότητα του καλλιτέχνη. Τα προσωπικά του χαρακτηριστικά, που λειτουργούν σαν εφόδια και εργαλεία, απέναντι στην εκάστοτε δημιουργική πρόκληση. Θα συζητήσουμε την ισχύ της προσωπικής υπογραφής σε έναν κόσμο που βάλλεται από πληθώρα πληροφορίας και επιλογών και τη θέση του καλλιτέχνη απέναντι στα δεδομένα. Μέσω της μέχρι τώρα δικής της πορείας, η Ελένη Καββάδα θα μιλήσει για τους προσωπικούς της κώδικες κλειδιά και κατά πόσο την έχουν εξοπλίσει για την δική της διαδρομή. Πρέπει όλοι να έχουμε ένα σημείο 0; Το χτίζουμε στρατηγικά ή ηταν πάντα εκεί και πρέπει απλά να του δώσουμε την απαιτούμενη προσοχή; (+ από Speakers: Όπως αναφέρει η ίδια, «Ασυνείδητα συνέδεσα τη δουλειά μου με την ημερομηνία γέννησής μου», δίνοντας στο γνωστό της brand το όνομα: 240791. Με ποιον τρόπο αποτελούν και τα 2, Cycle 0 Codes; Διαδικασία «επιστροφής» στο χώρο της μόδας σε παλιότερα σχέδια & έργα.)",
+  description: Speakers[0].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Η Ελένη Καββάδα γεννήθηκε και μεγάλωσε στην Αθήνα. Σπούδασε σχέδιο μόδας στο Μιλάνο και την Φλωρεντία. Έχει στο ενεργητικό της πρακτική εξάσκηση στον οίκο Salvatore Ferragamo καθώς και 6ετή εργασία στο πλευρό του Γιώργου Ελευθεριάδη. Το 2021 ιδρύει το 240791, γνωστό για τις ανορθόδοξες σιλουέτες και όγκους των δημιουργιών του. Έχει δείξει τις συλλογές της δύο φορές στην εβδομάδα μόδας του Παρισιού και μία σε αυτή του Μιλάνου, καθώς έχει πάρει μέρος και σε shows στην Αθήνα. ",
+  personalDescription: Speakers[0].BioGR,
   socials: {
-    instagram: 'https://www.instagram.com/240791ek/',
-  } },
-
-{ time: "11:00 - 12:00",
-  name: "Νάσος Κατσαμάνης",
-  profession: "Co-founder at Auxilis AI & Διευθυντής Ερευνών στο Ερευνητικό Κέντρο «Αθηνά»",
-  theme: "Τεχνητή Νοημοσύνη",
-  title: "Kazad-Dum",
-  itemColor: "rgba(255, 255, 255, 0.43)",
-  description: "An increadible journey on how Gandalf the grey kills the Balrog and becomes Gandalf the white",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Ο Νάσος Κατσαμάνης είναι ερευνητής και επιχειρηματίας στον χώρο της τεχνητής νοημοσύνης, με έμφαση στις τεχνολογίες φωνής και την αλληλεπίδραση ανθρώπου-μηχανής. Είναι συνιδρυτής της Auxilis AI, όπου αναπτύσσει φωνητικούς ψηφιακούς βοηθούς με στόχο τη βελτίωση της πρόσβασης στην ιατρική περίθαλψη. Επίσης, είναι διδάκτορας Ηλεκτρολόγος Μηχανικός του ΕΜΠ και Διευθυντής Ερευνών στο Ερευνητικό Κέντρο «Αθηνά». Εστιάζει στην αξιοποίηση τεχνητής νοημοσύνης αιχμής σε λύσεις με ουσιαστικό αντίκτυπο στον πραγματικό κόσμο.",
-  socials: {
-    linkedin: 'https://gr.linkedin.com/in/nkatsam'
+    instagram: Speakers[0].Instagram,
+    instagram2: Speakers[0].Instagram2,
+    linkedin: Speakers[0].LinkedIn,
+    facebook: Speakers[0].Facebook,
+    youtube: Speakers[0].Youtube,
+    tiktok: Speakers[0].TikTok,
+    webpage: Speakers[0].Web,
   } },
 
   { time: "13:00 - 14:00",
-  name: "Θάνος Ιωαννίδης",
-  name2: "Ιωάννα Κοντοχρήστου",
-  profession: "Αρχιτέκτονας Μηχανικός",
-  profession2: "Content Creator",
-  theme: "Αρχιτεκτονική",
+  name: Speakers[2].NameGR,
+  name2: Speakers[1].NameGR,
+  profession: Speakers[2].ProfessionGR,
+  profession2: Speakers[1].ProfessionGR,
+  theme: Speakers[1].Theme,
   title: "Crafting Architecture Stories",
   itemColor: "rgba(230, 57, 70, 0.3)",
-  description: "Η ομιλία πραγματεύεται την αρχιτεκτονική ως διαδικασία και ως αφήγηση. Μέσα από το έργο του Erion Workshop και το format της σειράς «Αρχιτεκτονική για το παγωτό σας», παρουσιάζεται πώς η αρχιτεκτονική δεν είναι μόνο το τελικό αποτέλεσμα, αλλά μια αλληλουχία αποφάσεων, επανασχεδιασμών και ερμηνειών. Παράλληλα, αναδεικνύεται η ανάγκη η αρχιτεκτονική να επιστρέψει στη δημόσια κουβέντα με πιο άμεσο, κατανοητό και σύγχρονο τρόπο. (+ από Sp Η αρχιτεκτονική δημιουργία δεν είναι γραμμική αλλά νοείται ως μια συνεχής διαδικασία αξιολόγησης, όπου το τελικό αποτέλεσμα προκύπτει σταδιακά μέσα από δοκιμές και αναθεωρήσεις.)",
+  description: Speakers[1].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Ο Θάνος Ιωαννίδης είναι αρχιτέκτονας μηχανικός και συνιδρυτής του design-build γραφείου Erion Workshop. Μέσα από το γραφείο του δημιουργεί αρχιτεκτονικές ιστορίες, τις οποίες ακολουθεί από τα πρώτα σκίτσα μέχρι την υλοποίησή τους. Παράλληλα, μαζί με τη Χαρά Κοντοχρήστου έχει δημιουργήσει τη σειρά «Αρχιτεκτονική για το παγωτό σας», με στόχο να επαναφέρει την αρχιτεκτονική στη δημόσια συζήτηση, φέρνοντάς την πιο κοντά στις πλατφόρμες κοινωνικής δικτύωσης.                                                                                          Η Χαρά Κοντοχρήστου είναι δημιουργός περιεχομένου, γνωστή αρχικά μέσα από τα POV vlogs της, και σήμερα δραστηριοποιείται σε μια σειρά από διαφορετικά content projects. Είναι παρουσιάστρια, παραγωγός και συνδημιουργός της σειράς «Αρχιτεκτονική για το παγωτό σας» και φροντίζει το περιεχόμενο να παίρνει μορφή συμβατή με τον τρόπο με τον οποίο καταναλώνεται στα μέσα κοινωνικής δικτύωσης.",
-  personalDescription2: "Η Χαρά Κοντοχρήστου είναι δημιουργός περιεχομένου, γνωστή αρχικά μέσα από τα POV vlogs της, και σήμερα δραστηριοποιείται σε μια σειρά από διαφορετικά content projects. Είναι παρουσιάστρια, παραγωγός και συνδημιουργός της σειράς «Αρχιτεκτονική για το παγωτό σας» και φροντίζει το περιεχόμενο να παίρνει μορφή συμβατή με τον τρόπο με τον οποίο καταναλώνεται στα μέσα κοινωνικής δικτύωσης.",
+  personalDescription: Speakers[2].BioGR,
+  personalDescription2: Speakers[1].BioGR,
   socials: {
-    instagram: 'https://www.instagram.com/thanos__ioannidis/',
-    webpage: 'https://www.instagram.com/erion_workshop/ '
+    instagram: Speakers[2].Instagram,
+    instagram2: Speakers[2].Instagram2,
+    linkedin: Speakers[2].LinkedIn,
+    facebook: Speakers[2].Facebook,
+    youtube: Speakers[2].Youtube,
+    tiktok: Speakers[2].TikTok,
+    webpage: Speakers[2].Web
   },
   socials2: {
-    instagram: 'https://www.instagram.com/chara_kontochristou/'
+    instagram: Speakers[1].Instagram,
+    instagram2: Speakers[1].Instagram2,
+    linkedin: Speakers[1].LinkedIn,
+    facebook: Speakers[1].Facebook,
+    youtube: Speakers[1].Youtube,
+    tiktok: Speakers[1].TikTok,
+    webpage: Speakers[1].Web
   } },
 
 { time: "14:00 - 15:00",
-  name: "Γιάννης Δαγκλής",
-  profession: "Καθηγητής Διαστημικής Φυσικής",
-  theme: "Αστροφυσική",
+  name: Speakers[3].NameGR,
+  profession: Speakers[3].ProfessionGR,
+  theme: Speakers[3].Theme,
   title: "Why i gave my hair to a dwarf",
   itemColor: "rgba(121, 147, 183, 0.3)",
-  description: "(Αρχικές ακέψεις του στην πρώτη συνάντηση, θα επανέλθουμε όταν έχουμε προσχέδιο.) Η ομιλία πραγματεύεται την “κυκλικότητα” της μαγνητικής δραστηριότητας του Ήλιου και την αντίστοιχη κυκλικότητα που προκύπτει για δυναμικά φαινόμενα στο γεωδιάστημα, όπως για παράδειγμα μαγνητικές καταιγίδες, βόρειο σέλας και διαμόρφωση κοσμικής ακτινοβολίας. Πρόκειται για κυκλικά φαινόμενα που δεν είχαν επηρεάσει την ανθρωπότητα στο παρελθόν, αλλά μετά την αυγή της διαστημικής εποχής και τη μελέτη και βασική κατανόηση αυτών των φαινομένων, και την αυξανόμενη χρήση του διαστημικού χώρου για δραστηριότητες έρευνας, τεχνολογίας και επιχειρηματικότητας, επηρεάζουν πλέον σαφώς την ανθρώπινη πραγματικότητα - από τη διαστημική εξερεύνηση μέχρι τον τουρισμό σέλαος στη βόρεια Σκανδιναβία. Οι όποιες βιολογικές και ενδεχομένως ψυχολογικές επιδράσεις δεν έχουν ακόμη πιστοποιηθεί/επιβεβαιωθεί.",
+  description: Speakers[3].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Ο Γιάννης Δαγκλής μελετά τα καπρίτσια του Ήλιου, τις μαγνητικές καταιγίδες και το βόρειο σέλας, και διδάσκει στους φοιτητές του Πανεπιστημίου Αθηνών. Έχει συμβάλλει σε 10 διαστημικές αποστολές της NASA και της ESA, έχει συντονίσει 24 ευρωπαϊκά ερευνητικά προγράμματα κι έχει δημοσιεύσει 7 βιβλία και 200 ερευνητικές εργασίες. Τον μαγεύει το σύμπαν και οι πεζοπορίες στη φύση - ιδίως στα βουνά.",
+  personalDescription: Speakers[3].BioGR,
   socials: {
-    instagram: 'https://www.instagram.com/ioannisdaglis/',
-    linkedin: 'https://gr.linkedin.com/in/ioannis-a-daglis-a2b8a46',
-    facebook: 'https://www.facebook.com/ioannisdaglis/'
+    instagram: Speakers[3].Instagram,
+    instagram2: Speakers[3].Instagram2,
+    linkedin: Speakers[3].LinkedIn,
+    facebook: Speakers[3].Facebook,
+    youtube: Speakers[3].Youtube,
+    tiktok: Speakers[3].TikTok,
+    webpage: Speakers[3].Web
   } },
 
 { time: "16:00 - 17:00",
-  name: "Έλενα Παπαδημητρίου",
-  profession: "Δημοσιογράφος",
-  theme: "Δημοσιογραφία",
+  name: Speakers[4].NameGR,
+  profession: Speakers[4].ProfessionGR,
+  theme: Speakers[4].Theme,
   title: "The importance of second breakfast",
   itemColor: "rgba(109, 222, 139, 0.3)",
-  description: "Its just mandatory",
+  description: Speakers[4].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Η Έλενα είναι δημοσιογράφος. Έχει σπουδάσει Δημοσιογραφία στο ΑΠΘ και έχει Μεταπτυχιακό στην Πολιτική Επιστήμη και την Κοινωνιολογία στο ΕΚΠΑ. Δουλεύει εδώ και 25 χρόνια, κυρίως στην τηλεόραση και το ραδιόφωνο, στις ειδήσεις και σε ενημερωτικές εκπομπές. Έχει καλύψει εκλογές, δημοψηφίσματα και ανθρωπιστικές κρίσεις σε δημοσιογραφικές αποστολές εκτός Ελλάδας. Το 2025, βραβεύτηκε από το Ίδρυμα Προαγωγής Δημοσιογραφίας Αθανασίου Β. Μπότση. Από τον Οκτώβριο του 2023, είναι επικεφαλής του Editorial του fyi.news, ενός πρωτοποριακού social media first ειδησεογραφικού μέσου.",
+  personalDescription: Speakers[4].BioGR,
   socials: {
-    instagram: 'https://www.instagram.com/papadelena/?hl=en%5C',
-    linkedin: 'https://gr.linkedin.com/in/elena-papadimitriou-1b61831a1',
+    instagram: Speakers[4].Instagram,
+    instagram2: Speakers[4].Instagram2,
+    linkedin: Speakers[4].LinkedIn,
+    facebook: Speakers[4].Facebook,
+    youtube: Speakers[4].Youtube,
+    tiktok: Speakers[4].TikTok,
+    webpage: Speakers[4].Web
+  }},
+
+{ time: "16:00 - 17:00",
+  name: Speakers[5].NameGR,
+  profession: Speakers[5].ProfessionGR,
+  theme: Speakers[5].Theme,
+  title: "The importance of second breakfast",
+  itemColor: "rgba(109, 222, 139, 0.3)",
+  description: Speakers[5].DescriptionGR,
+  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+  personalDescription: Speakers[5].BioGR,
+  socials: {
+    instagram: Speakers[5].Instagram,
+    instagram2: Speakers[5].Instagram2,
+    linkedin: Speakers[5].LinkedIn,
+    facebook: Speakers[5].Facebook,
+    youtube: Speakers[5].Youtube,
+    tiktok: Speakers[5].TikTok,
+    webpage: Speakers[5].Web
+  }},
+
+{ time: "16:00 - 17:00",
+  name: Speakers[6].NameGR,
+  profession: Speakers[6].ProfessionGR,
+  theme: Speakers[6].Theme,
+  title: "The importance of second breakfast",
+  itemColor: "rgba(109, 222, 139, 0.3)",
+  description: Speakers[6].DescriptionGR,
+  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+  personalDescription: Speakers[6].BioGR,
+  socials: {
+    instagram: Speakers[6].Instagram,
+    instagram2: Speakers[6].Instagram2,
+    linkedin: Speakers[6].LinkedIn,
+    facebook: Speakers[6].Facebook,
+    youtube: Speakers[6].Youtube,
+    tiktok: Speakers[6].TikTok,
+    webpage: Speakers[6].Web
+  }},
+
+{ time: "16:00 - 17:00",
+  name: Speakers[7].NameGR,
+  profession: Speakers[7].ProfessionGR,
+  theme: Speakers[7].Theme,
+  title: "The importance of second breakfast",
+  itemColor: "rgba(109, 222, 139, 0.3)",
+  description: Speakers[7].DescriptionGR,
+  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+  personalDescription: Speakers[7].BioGR,
+  socials: {
+    instagram: Speakers[7].Instagram,
+    instagram2: Speakers[7].Instagram2,
+    linkedin: Speakers[7].LinkedIn,
+    facebook: Speakers[7].Facebook,
+    youtube: Speakers[7].Youtube,
+    tiktok: Speakers[7].TikTok,
+    webpage: Speakers[7].Web
+  }},
+
+{ time: "16:00 - 17:00",
+  name: Speakers[8].NameGR,
+  profession: Speakers[8].ProfessionGR,
+  theme: Speakers[8].Theme,
+  title: "The importance of second breakfast",
+  itemColor: "rgba(109, 222, 139, 0.3)",
+  description: Speakers[8].DescriptionGR,
+  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+  personalDescription: Speakers[8].BioGR,
+  socials: {
+    instagram: Speakers[8].Instagram,
+    instagram2: Speakers[8].Instagram2,
+    linkedin: Speakers[8].LinkedIn,
+    facebook: Speakers[8].Facebook,
+    youtube: Speakers[8].Youtube,
+    tiktok: Speakers[8].TikTok,
+    webpage: Speakers[8].Web
+  }},
+
+{ time: "16:00 - 17:00",
+  name: Speakers[9].NameGR,
+  profession: Speakers[9].ProfessionGR,
+  theme: Speakers[9].Theme,
+  title: "The importance of second breakfast",
+  itemColor: "rgba(109, 222, 139, 0.3)",
+  description: Speakers[9].DescriptionGR,
+  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+  personalDescription: Speakers[9].BioGR,
+  socials: {
+    instagram: Speakers[9].Instagram,
+    instagram2: Speakers[9].Instagram2,
+    linkedin: Speakers[9].LinkedIn,
+    facebook: Speakers[9].Facebook,
+    youtube: Speakers[9].Youtube,
+    tiktok: Speakers[9].TikTok,
+    webpage: Speakers[9].Web
+  }},
+
+{ time: "",
+  name: Speakers[10].NameGR,
+  profession: Speakers[10].ProfessionGR,
+  theme: Speakers[10].Theme,
+  title: "The importance of second breakfast",
+  itemColor: "rgba(109, 222, 139, 0.3)",
+  description: Speakers[10].DescriptionGR,
+  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+  personalDescription: Speakers[10].BioGR,
+  socials: {
+    instagram: Speakers[10].Instagram,
+    instagram2: Speakers[10].Instagram2,
+    linkedin: Speakers[10].LinkedIn,
+    facebook: Speakers[10].Facebook,
+    youtube: Speakers[10].Youtube,
+    tiktok: Speakers[10].TikTok,
+    webpage: Speakers[10].Web
+  }},
+
+{ time: "",
+  name: Speakers[11].NameGR,
+  profession: Speakers[11].ProfessionGR,
+  theme: Speakers[11].Theme,
+  title: "The importance of second breakfast",
+  itemColor: "rgba(109, 222, 139, 0.3)",
+  description: Speakers[11].DescriptionGR,
+  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
+  personalDescription: Speakers[11].BioGR,
+  socials: {
+    instagram: Speakers[11].Instagram,
+    instagram2: Speakers[11].Instagram2,
+    linkedin: Speakers[11].LinkedIn,
+    facebook: Speakers[11].Facebook,
+    youtube: Speakers[11].Youtube,
+    tiktok: Speakers[11].TikTok,
+    webpage: Speakers[11].Web
   }}]);
 
 const timeE1 = "14:00 - 15:00";
@@ -279,13 +426,20 @@ export const allSideHappenings = applyPosterBasePath([{ time: "13:00 - 14:00",
 //Speakers
 export const mySpeakers1 = [
 allSpeakers[0],
-allSpeakers[1],];
+allSpeakers[1],
+allSpeakers[2],];
 
 
 export const mySpeakers2 = [
-allSpeakers[2],
 allSpeakers[3],
-allSpeakers[4]
+allSpeakers[4],
+allSpeakers[5],
+];
+
+export const mySpeakers3 = [
+allSpeakers[6],
+allSpeakers[7],
+allSpeakers[8],
 ];
 
 
