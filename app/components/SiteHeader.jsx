@@ -1,15 +1,17 @@
 "use client";
 
-// Imports necessary React hooks, navigation components, and path utilities for the header.
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Nav from "./Nav";
+import { useHeaderNav } from "./EventNavProvider";
 import { withBasePath } from "../lib/basePath";
 
 /**
- * Configuration Constants
- * ARCH_SCALE_FACTOR: Defines the diameter of the decorative rings as a percentage of viewport width.
+ * Global site header that renders the centered radial navigation, responsive action buttons,
+ * and decorative background rings. The header reacts to route changes and shared nav state.
  */
+
+/** Decorative ring diameters, expressed as viewport-width percentages. */
 const ARCH_SCALE_FACTOR = {
   ring1: 10, // 10% of screen width
   ring2: 15, // 15% of screen width
@@ -17,11 +19,20 @@ const ARCH_SCALE_FACTOR = {
   ring4: 18, // 18% of screen width
 };
 
-// Defines the main SiteHeader component which manages the global layout and navigation state.
+/** Large screens switch to the fully expanded boxed action-button treatment. */
+const DESKTOP_BREAKPOINT = 1024;
+
+/**
+ * Renders the site-wide header shell and keeps its layout synchronized with header-nav state.
+ *
+ * @returns {JSX.Element}
+ */
 export default function SiteHeader() {
   // Identifies the current URL path to determine if the page should use homepage-specific styling.
   const pathname = usePathname() ?? "/";
   const isHomePage = pathname === "/";
+  // Mirror the real nav open state so the action buttons animate in lockstep with the semicircle menu.
+  const { isOpen: isHeaderNavOpen } = useHeaderNav();
   
   // Tracks the previous scroll position using a Ref to compare against new scroll values without re-rendering.
   const lastScrollYRef = useRef(0);
@@ -41,7 +52,7 @@ export default function SiteHeader() {
         tx: "255 255 255", txOp: 0.9,
       };
 
-  // Synchronizes a scroll listener that dispatches a custom event to hide the Nav menu when scrolling downwards.
+  // Broadcast downward scrolling so the nav can hide itself without this component owning that visibility state.
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -70,6 +81,15 @@ export default function SiteHeader() {
     };
   }, []);
 
+  // On small and medium screens the side buttons slide out to make room for the expanded nav.
+  const leftActionClasses = isHeaderNavOpen
+    ? "pointer-events-none -translate-x-[140%] opacity-0 lg:pointer-events-auto lg:translate-x-0 lg:opacity-100"
+    : "translate-x-0 opacity-100";
+
+  const rightActionClasses = isHeaderNavOpen
+    ? "pointer-events-none translate-x-[140%] opacity-0 lg:pointer-events-auto lg:translate-x-0 lg:opacity-100"
+    : "translate-x-0 opacity-100";
+
   // Renders the top-level header container with conditional positioning and glassmorphism styling.
   return (
     <header
@@ -87,11 +107,11 @@ export default function SiteHeader() {
         isHomePage ? "min-h-[108px] pt-5 sm:min-h-[120px]" : "min-h-[128px] sm:min-h-[144px]"
       }`}>
         
-        {/* Establishes a layout that remains flexible on mobile and switches to a 3-column grid on desktop. */}
+        {/* Mobile/tablet keep a simple flex row, while desktop switches to a three-column header grid. */}
         <div className="flex items-start justify-between lg:grid lg:grid-cols-[minmax(260px,1fr)_auto_minmax(260px,1fr)] lg:gap-6">
           
-          {/* Renders the left-side section containing the TEDxNTUA branding and archive link. */}
-          <div className="flex justify-start">
+          {/* Left action button animates off-canvas when the radial nav opens on non-desktop breakpoints. */}
+          <div className={`flex justify-start transition-all duration-500 ease-[cubic-bezier(0.8, 0.8, 0.5, 0.5)] ${leftActionClasses}`}>
             <ActionButton 
               href="https://www.tedxntua.com/" 
               theme={theme}
@@ -106,11 +126,11 @@ export default function SiteHeader() {
             </ActionButton>
           </div>
 
-          {/* Acts as a layout spacer to ensure the center remains clear for the absolute-positioned Nav. */}
+          {/* Desktop-only spacer preserves room for the centered nav between both action buttons. */}
           <div className="hidden lg:block" />
 
-          {/* Renders the right-side section containing the ticket information and link. */}
-          <div className="flex items-center justify-end">
+          {/* Right action button mirrors the left one by sliding to the opposite side when the nav opens. */}
+          <div className={`flex items-center justify-end transition-all duration-500 ease-[cubic-bezier(0.8, 0.8, 0.5, 0.5)] ${rightActionClasses}`}>
             <ActionButton 
               href="#" 
               theme={theme}
@@ -136,57 +156,78 @@ export default function SiteHeader() {
   );
 }
 
-// A helper component that constructs the buttons, removing the background box and text content entirely on small screens.
-// 1. Update the ActionButton component
+/**
+ * Responsive header action button used for the archive and ticket entry points.
+ *
+ * @param {{
+ *   href: string,
+ *   theme: {bg: string, bgOp: number, brd: string, brdOp: number, hvr: string, hvrOp: number},
+ *   icon: string,
+ *   alt: string,
+ *   children: import("react").ReactNode
+ * }} props
+ * @returns {JSX.Element}
+ */
 function ActionButton({ href, theme, icon, alt, children }) {
+  // Theme-derived colors keep the action button visuals consistent with the current page variant.
   const baseBg = `rgb(${theme.bg} / ${theme.bgOp})`;
   const baseBorder = `rgb(${theme.brd} / ${theme.brdOp})`;
   const hoverBg = `rgb(${theme.hvr} / ${theme.hvrOp})`;
+
+  // The boxed desktop treatment starts at lg; smaller breakpoints keep the compact stacked version.
+  const supportsDesktopActionStyles = () =>
+    typeof window !== "undefined" && window.innerWidth >= DESKTOP_BREAKPOINT;
 
   return (
     <a
       href={href}
       aria-disabled="true"
-      className="pointer-events-auto group relative flex flex-col items-center justify-center transition-all sm:min-h-[76px] sm:min-w-[260px] sm:flex-row-reverse sm:justify-between sm:rounded-[1.75rem] sm:border sm:border-solid sm:px-5 sm:backdrop-blur-sm"
+      className="pointer-events-auto group relative flex flex-col items-center justify-center transition-all lg:min-h-[76px] lg:min-w-[260px] lg:flex-row-reverse lg:justify-between lg:rounded-[1.75rem] lg:border lg:border-solid lg:px-5 lg:backdrop-blur-sm"
       style={{
-        "--base-bg": baseBg,
+        "--base-bg": "transparent",
         "--base-brd": baseBorder,
       }}
       // ... same hover logic as before ...
-      onMouseEnter={(e) => { if (window.innerWidth >= 640) e.currentTarget.style.backgroundColor = hoverBg; }}
-      onMouseLeave={(e) => { if (window.innerWidth >= 640) e.currentTarget.style.backgroundColor = baseBg; }}
+      onMouseEnter={(e) => { if (supportsDesktopActionStyles()) e.currentTarget.style.backgroundColor = hoverBg; }}
+      onMouseLeave={(e) => { if (supportsDesktopActionStyles()) e.currentTarget.style.backgroundColor = baseBg; }}
       ref={(el) => {
-        if (el && window.innerWidth >= 640) {
+        if (el && supportsDesktopActionStyles()) {
           el.style.backgroundColor = baseBg;
           el.style.borderColor = baseBorder;
         }
       }}
     >
-      {/* Primary button icon - now on top on mobile */}
+      {/* The icon stays visible at every breakpoint and scales up once the desktop treatment is active. */}
       <img
         src={withBasePath(icon)}
         alt={alt}
-        className="relative h-10 w-auto rounded-full border border-white/12 bg-black/30 p-1.5 transition-transform duration-300 group-hover:scale-110 sm:h-12 md:h-14"
+        className="relative h-10 w-auto rounded-full border border-white/12 bg-black/30 p-1.5 transition-transform duration-300 group-hover:scale-110 lg:h-12 xl:h-14"
       />
 
-      {/* The Span Container - relocated underneath on mobile via flex-col */}
-      <div className="mt-1 flex items-center leading-none sm:mt-0">
+      {/* Text sits below the icon on compact layouts and snaps inline once the desktop layout starts. */}
+      <div className="mt-1 flex items-center leading-none lg:mt-0">
         {children}
       </div>
 
-      {/* Decorative circles - keep hidden on mobile */}
-      <div className="pointer-events-none absolute right-4 top-1/2 hidden h-28 w-28 -translate-y-1/2 rounded-full sm:block" />
+      {/* Decorative geometry is reserved for the larger desktop button variant only. */}
+      <div className="pointer-events-none absolute right-4 top-1/2 hidden h-28 w-28 -translate-y-1/2 rounded-full lg:block" />
     </a>
   );
 }
 
-// A helper component that renders aesthetic arches with sizing relative to the viewport width percentage.
+/**
+ * Renders decorative orbital rings behind the header content.
+ *
+ * @param {{scale: {ring1: number, ring2: number, ring3: number, ring4: number}}} props
+ * @returns {JSX.Element}
+ */
 function BackgroundDecorations({ scale }) {
   return (
     <>
+      {/* Transparent overlay keeps the decoration layer aligned with the header bounds. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[transparent_100%)]" />
       
-      {/* Dynamic arches that scale with the screen width based on the ARCH_SCALE_FACTOR constant. */}
+      {/* Left and right ring pairs create the orbital framing behind the header content. */}
       <div
         className="pointer-events-none absolute left-[-2rem] top-[-3.5rem] rounded-full border border-white/30" 
         style={{ width: `${scale.ring1}vw`, height: `${scale.ring1}vw` }}
