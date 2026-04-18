@@ -1,11 +1,9 @@
 'use client';
 import AnchorScrollHandler from "../components/AnchorScrollHandler";
-import PerformancesInfoBox from "../components/GeneralInfoBox";
+import {PerformancesInfoBox} from "../components/GeneralInfoBox";
 import EventPageShell from "../components/EventPageShell";
 
-import { myPerformances } from "../infoDatabase";
-
-const allPerformances = [...myPerformances];
+import { allPerformances } from "../infoDatabase";
 
 export default function ProgramPage() {
   return (

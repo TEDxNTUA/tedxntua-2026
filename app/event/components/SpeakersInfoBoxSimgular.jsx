@@ -1,10 +1,9 @@
 "use client";
 import { useState } from 'react';
 
-
 const separtorLine = "border-r border-black";
 
-export default function InfoBox({ time, name, artName, theme, profession, itemColor, description, itemCategory }) {
+export default function InfoBox({ time, name, title, itemColor, description }) {
   // 1. Create the state (false = small, true = expanded)
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -32,15 +31,11 @@ export default function InfoBox({ time, name, artName, theme, profession, itemCo
         
       {/* Content Section */}
       <div className={`flex-1 flex flex-col items-center justify-center text-center p-2`}>
-        {itemCategory === "speaker" && <p className="font-bold">{name}</p>}
-        {itemCategory === "performance" && <p className="font-bold">{artName}</p>}
-
+        <p className="font-bold">{name}</p>
+        
         {/* 4. Only show description if expanded (optional) or let it reveal */}
-        {isExpanded && itemCategory === "speaker" &&
-        <p className="text-sm mt-3 animate-fadeIn">{itemCategory} - "{theme}"</p>
-        }
-        {isExpanded && itemCategory === "performance" &&
-        <p className="text-sm mt-3 animate-fadeIn">{itemCategory} - "{profession}"</p>
+        {isExpanded &&
+        <p className="text-sm mt-3 animate-fadeIn">"{title}"</p>
         }
         {isExpanded &&
         <p className="text-sm mt-2 animate-fadeIn">{description}</p>

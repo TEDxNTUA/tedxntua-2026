@@ -2,19 +2,16 @@ import AnchorScrollHandler from "../components/AnchorScrollHandler";
 import InfoSpeakerBox from "../components/ProgramInfoBoxSimgular";
 import InfoWorkshopBox from "../components/ProgramInfoBoxWorkshops";
 
-import { mySpeakers1, mySpeakers3 } from "../infoDatabase";
-import { mySpeakers2 } from "../infoDatabase";
+import { mySessions1, mySessions2, mySessions3, mySessions4 } from "../infoDatabase";
 import { myExperienceWorkshopsPack1 } from "../infoDatabase";
 import { myProfessionalWorkshopsPack1 } from "../infoDatabase";
 
-function ProgramSection({ title, children }) {
+function ProgramSection({ profession, children, title }) {
   return (
     <section>
       <div className="mb-6 flex items-center gap-4">
         <div className="h-px flex-1 bg-gradient-to-r from-emerald-400/70 via-white/40 to-transparent" />
-        <h2 className="shrink-0 text-sm font-semibold uppercase tracking-[0.28em] text-white/80">
-          {title}
-        </h2>
+        <h3 className="text-2xl font-semibold tracking-tight text-white">{title}</h3>
       </div>
       <div>{children}</div>
     </section>
@@ -46,35 +43,52 @@ export default function ProgramPage() {
           </div>
 
           <div className="space-y-8">
-            <ProgramSection title="Opening - Start Time">
-              {mySpeakers1.map((item, index) => (
-                <InfoSpeakerBox key={index} {...item} />
+            <ProgramSection title="1st Session - Start Time">
+              {mySessions1.map((item, index) => (
+                <InfoSpeakerBox key={index} {...item}/>
               ))}
             </ProgramSection>
 
-            <ProgramSection title="Phase 1 - Start Time">
-              {mySpeakers2.map((item, index) => (
-                <InfoSpeakerBox key={index} {...item} />
-              ))}
-            </ProgramSection>
 
-            <ProgramSection title="Phase 1 - Start Time">
-              {mySpeakers3.map((item, index) => (
-                <InfoSpeakerBox key={index} {...item} />
-              ))}
-            </ProgramSection>
 
-            <ProgramSection title="Phase 2 - Start Time">
+            <ProgramSection title="Workshops - Start Time">
               {myExperienceWorkshopsPack1.map((item, index) => (
                 <InfoWorkshopBox key={index} {...item} />
               ))}
             </ProgramSection>
 
-            <ProgramSection title="Phase 3 - Start Time">
-              {myProfessionalWorkshopsPack1.map((item, index) => (
+
+
+            <ProgramSection title="2nd Session - Start Time">
+              {mySessions2.map((item, index) => (
+                <InfoSpeakerBox key={index} {...item}/>
+              ))}
+            </ProgramSection>
+
+            <ProgramSection title="Workshops - Start Time">
+              {myExperienceWorkshopsPack1.map((item, index) => (
                 <InfoWorkshopBox key={index} {...item} />
               ))}
             </ProgramSection>
+
+            <ProgramSection title="3rd Session - Start Time">
+              {mySessions3.map((item, index) => (
+                <InfoSpeakerBox key={index} {...item}/>
+              ))}
+            </ProgramSection>
+
+          <ProgramSection title="Workshops - Start Time">
+              {myExperienceWorkshopsPack1.map((item, index) => (
+                <InfoWorkshopBox key={index} {...item} />
+              ))}
+            </ProgramSection>
+
+            <ProgramSection title="4th Session - Start Time">
+              {mySessions4.map((item, index) => (
+                <InfoSpeakerBox key={index} {...item}/>
+              ))}
+            </ProgramSection>
+
           </div>
         </div>
       </div>

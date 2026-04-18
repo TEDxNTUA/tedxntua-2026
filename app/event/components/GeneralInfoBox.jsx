@@ -1,12 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Popup from './InfoPopup';
-
-
-
-
 import { SocialButton } from './SocialButton';
-
 
 
 // The Component Box
@@ -90,7 +85,7 @@ export function PerformancesInfoBox(performance) {
       <div className="flex-1 flex items-center flex-col w-full px-6"> 
         <div>
           <h1 className="text-large mb-1 font-bold uppercase">
-            {performance.name}{performance.name2 ? ` & ${performance.name2}` : ''}
+            {performance.artName}
           </h1>
         </div>
 
