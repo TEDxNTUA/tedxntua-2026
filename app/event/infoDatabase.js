@@ -1,11 +1,62 @@
 import { withBasePath } from "../lib/basePath";
-import Speakers from "./LineUpInfo/Speakers.json";
+import Speakers from "./LineUpInfo/SpeakersIT.json";
+import ExpWorkshops from "./LineUpInfo/ExpWorkshopsIT.json";
+{/*import ProfWorkshops from "./LineUpInfo/ProfessionalWorkshopsIT.json";
+import SideHappenings from "./LineUpInfo/SideHappeningsIT.json";*/}
+import Performances from "./LineUpInfo/PerformancesIT.json";
 
 const applyPosterBasePath = (items) =>
   items.map((item) => ({
     ...item,
     posterImageUrl: withBasePath(item.posterImageUrl),
   }));
+
+export function getSocials(i, j) {
+  // 1. Declare the variable outside the block
+  let socials = {}; 
+
+  if (j == Speakers) {
+    // 2. Assign the values (don't use 'const' here again)
+    socials = {
+      instagram: Speakers[i].Instagram,
+      instagram2: Speakers[i].Instagram2,
+      linkedin: Speakers[i].LinkedIn,
+      facebook: Speakers[i].Facebook,
+      youtube: Speakers[i].Youtube,
+      tiktok: Speakers[i].TikTok,
+      webpage: Speakers[i].Web,
+    };
+  }
+
+  if (j == ExpWorkshops) {
+    // 2. Assign the values (don't use 'const' here again)
+    socials = {
+      instagram: ExpWorkshops[i].Instagram,
+      instagram2: ExpWorkshops[i].Instagram2,
+      linkedin: ExpWorkshops[i].LinkedIn,
+      facebook: ExpWorkshops[i].Facebook,
+      youtube: ExpWorkshops[i].Youtube,
+      tiktok: ExpWorkshops[i].TikTok,
+      webpage: ExpWorkshops[i].Web,
+    };
+  }
+
+  if (j == Performances) {
+    // 2. Assign the values (don't use 'const' here again)
+    socials = {
+      instagram: Performances[i].Instagram,
+      instagram2: Performances[i].Instagram2,
+      linkedin: Performances[i].LinkedIn,
+      facebook: Performances[i].Facebook,
+      youtube: Performances[i].Youtube,
+      tiktok: Performances[i].TikTok,
+      webpage: Performances[i].Web,
+    };
+  }
+
+  // 3. Now 'socials' is defined and accessible here
+  return socials;
+}
 
 export const myEventInfo = {
   title: "TEDxNTUA 2026",
@@ -22,15 +73,7 @@ export const allSpeakers = applyPosterBasePath([
   description: Speakers[0].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   personalDescription: Speakers[0].BioGR,
-  socials: {
-    instagram: Speakers[0].Instagram,
-    instagram2: Speakers[0].Instagram2,
-    linkedin: Speakers[0].LinkedIn,
-    facebook: Speakers[0].Facebook,
-    youtube: Speakers[0].Youtube,
-    tiktok: Speakers[0].TikTok,
-    webpage: Speakers[0].Web,
-  } },
+  socials: getSocials(0, Speakers) },
 
   { time: "13:00 - 14:00",
   name: Speakers[2].NameGR,
@@ -44,24 +87,8 @@ export const allSpeakers = applyPosterBasePath([
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   personalDescription: Speakers[2].BioGR,
   personalDescription2: Speakers[1].BioGR,
-  socials: {
-    instagram: Speakers[2].Instagram,
-    instagram2: Speakers[2].Instagram2,
-    linkedin: Speakers[2].LinkedIn,
-    facebook: Speakers[2].Facebook,
-    youtube: Speakers[2].Youtube,
-    tiktok: Speakers[2].TikTok,
-    webpage: Speakers[2].Web
-  },
-  socials2: {
-    instagram: Speakers[1].Instagram,
-    instagram2: Speakers[1].Instagram2,
-    linkedin: Speakers[1].LinkedIn,
-    facebook: Speakers[1].Facebook,
-    youtube: Speakers[1].Youtube,
-    tiktok: Speakers[1].TikTok,
-    webpage: Speakers[1].Web
-  } },
+  socials: getSocials(2, Speakers),
+  socials2: getSocials(1, Speakers) },
 
 { time: "14:00 - 15:00",
   name: Speakers[3].NameGR,
@@ -72,15 +99,7 @@ export const allSpeakers = applyPosterBasePath([
   description: Speakers[3].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   personalDescription: Speakers[3].BioGR,
-  socials: {
-    instagram: Speakers[3].Instagram,
-    instagram2: Speakers[3].Instagram2,
-    linkedin: Speakers[3].LinkedIn,
-    facebook: Speakers[3].Facebook,
-    youtube: Speakers[3].Youtube,
-    tiktok: Speakers[3].TikTok,
-    webpage: Speakers[3].Web
-  } },
+  socials: getSocials(3, Speakers) },
 
 { time: "16:00 - 17:00",
   name: Speakers[4].NameGR,
@@ -91,15 +110,7 @@ export const allSpeakers = applyPosterBasePath([
   description: Speakers[4].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   personalDescription: Speakers[4].BioGR,
-  socials: {
-    instagram: Speakers[4].Instagram,
-    instagram2: Speakers[4].Instagram2,
-    linkedin: Speakers[4].LinkedIn,
-    facebook: Speakers[4].Facebook,
-    youtube: Speakers[4].Youtube,
-    tiktok: Speakers[4].TikTok,
-    webpage: Speakers[4].Web
-  }},
+  socials: getSocials(4, Speakers) },
 
 { time: "16:00 - 17:00",
   name: Speakers[5].NameGR,
@@ -110,15 +121,7 @@ export const allSpeakers = applyPosterBasePath([
   description: Speakers[5].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   personalDescription: Speakers[5].BioGR,
-  socials: {
-    instagram: Speakers[5].Instagram,
-    instagram2: Speakers[5].Instagram2,
-    linkedin: Speakers[5].LinkedIn,
-    facebook: Speakers[5].Facebook,
-    youtube: Speakers[5].Youtube,
-    tiktok: Speakers[5].TikTok,
-    webpage: Speakers[5].Web
-  }},
+  socials: getSocials(5, Speakers) },
 
 { time: "16:00 - 17:00",
   name: Speakers[6].NameGR,
@@ -129,15 +132,7 @@ export const allSpeakers = applyPosterBasePath([
   description: Speakers[6].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   personalDescription: Speakers[6].BioGR,
-  socials: {
-    instagram: Speakers[6].Instagram,
-    instagram2: Speakers[6].Instagram2,
-    linkedin: Speakers[6].LinkedIn,
-    facebook: Speakers[6].Facebook,
-    youtube: Speakers[6].Youtube,
-    tiktok: Speakers[6].TikTok,
-    webpage: Speakers[6].Web
-  }},
+  socials: getSocials(6, Speakers) },
 
 { time: "16:00 - 17:00",
   name: Speakers[7].NameGR,
@@ -148,15 +143,7 @@ export const allSpeakers = applyPosterBasePath([
   description: Speakers[7].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   personalDescription: Speakers[7].BioGR,
-  socials: {
-    instagram: Speakers[7].Instagram,
-    instagram2: Speakers[7].Instagram2,
-    linkedin: Speakers[7].LinkedIn,
-    facebook: Speakers[7].Facebook,
-    youtube: Speakers[7].Youtube,
-    tiktok: Speakers[7].TikTok,
-    webpage: Speakers[7].Web
-  }},
+  socials: getSocials(7, Speakers) },
 
 { time: "16:00 - 17:00",
   name: Speakers[8].NameGR,
@@ -167,15 +154,7 @@ export const allSpeakers = applyPosterBasePath([
   description: Speakers[8].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   personalDescription: Speakers[8].BioGR,
-  socials: {
-    instagram: Speakers[8].Instagram,
-    instagram2: Speakers[8].Instagram2,
-    linkedin: Speakers[8].LinkedIn,
-    facebook: Speakers[8].Facebook,
-    youtube: Speakers[8].Youtube,
-    tiktok: Speakers[8].TikTok,
-    webpage: Speakers[8].Web
-  }},
+  socials: getSocials(8, Speakers) },
 
 { time: "16:00 - 17:00",
   name: Speakers[9].NameGR,
@@ -186,15 +165,7 @@ export const allSpeakers = applyPosterBasePath([
   description: Speakers[9].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   personalDescription: Speakers[9].BioGR,
-  socials: {
-    instagram: Speakers[9].Instagram,
-    instagram2: Speakers[9].Instagram2,
-    linkedin: Speakers[9].LinkedIn,
-    facebook: Speakers[9].Facebook,
-    youtube: Speakers[9].Youtube,
-    tiktok: Speakers[9].TikTok,
-    webpage: Speakers[9].Web
-  }},
+  socials: getSocials(9, Speakers) },
 
 { time: "",
   name: Speakers[10].NameGR,
@@ -205,15 +176,7 @@ export const allSpeakers = applyPosterBasePath([
   description: Speakers[10].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   personalDescription: Speakers[10].BioGR,
-  socials: {
-    instagram: Speakers[10].Instagram,
-    instagram2: Speakers[10].Instagram2,
-    linkedin: Speakers[10].LinkedIn,
-    facebook: Speakers[10].Facebook,
-    youtube: Speakers[10].Youtube,
-    tiktok: Speakers[10].TikTok,
-    webpage: Speakers[10].Web
-  }},
+  socials: getSocials(10, Speakers) },
 
 { time: "",
   name: Speakers[11].NameGR,
@@ -224,31 +187,21 @@ export const allSpeakers = applyPosterBasePath([
   description: Speakers[11].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
   personalDescription: Speakers[11].BioGR,
-  socials: {
-    instagram: Speakers[11].Instagram,
-    instagram2: Speakers[11].Instagram2,
-    linkedin: Speakers[11].LinkedIn,
-    facebook: Speakers[11].Facebook,
-    youtube: Speakers[11].Youtube,
-    tiktok: Speakers[11].TikTok,
-    webpage: Speakers[11].Web
-  }}]);
+  socials: getSocials(11, Speakers) },]);
 
 const timeE1 = "14:00 - 15:00";
 const timeP1 = "17:00 - 18:00";
 export const allExpWorkshops = applyPosterBasePath([
 { time: "10:00 - 11:00",
-  name: "Legolas",
+  name: ExpWorkshops[0].NameGR,
   room: "Room 1",
-  profession: "talker",
-  title: "They are taking the Hobbits to Isengard",
+  profession: ExpWorkshops[0].ProfessionGR,
+  title: ExpWorkshops[0].ArtNameGR,
   itemColor: "rgba(189, 149, 74, 0.3)",
-  description: "To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard ",
+  description: ExpWorkshops[0].DescriptionGR,
   posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } },
+  personalDescription: ExpWorkshops[0].BioGR,
+  socials: getSocials(0, ExpWorkshops) },
 
 { time: "11:00 - 12:00",
   name: "Gandalf the Grey",
