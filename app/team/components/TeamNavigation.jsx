@@ -10,7 +10,7 @@ const teamEmotes = {
   speakers: '🎤',
   experience: '🎯',
   'social-media': '📷',
-  venue: '�',
+  venue: '🏛️',
 };
 
 export default function TeamNavigation({ teams }) {
@@ -125,9 +125,9 @@ export default function TeamNavigation({ teams }) {
   return (
     <div 
       ref={containerRef}
-      className="fixed sm:top-0 sm:left-0 sm:right-0 top-1/2 right-0 z-50 sm:h-auto sm:max-h-none max-h-[70vh] bg-gradient-to-l sm:bg-gradient-to-b from-black via-black/95 to-transparent backdrop-blur-sm border-l sm:border-l-0 sm:border-b border-emerald-400/10 overflow-y-auto sm:overflow-x-auto sm:-translate-y-0 -translate-y-1/2 flex sm:flex-row flex-col items-stretch py-2 sm:py-6 px-1.5 sm:px-8 sm:justify-center transition-transform duration-100"
+      className="fixed sm:top-1/3 sm:left-auto sm:right-4 sm:bottom-auto sm:max-h-none top-1/2 right-2 z-50 max-h-[70vh] bg-transparent overflow-y-auto sm:-translate-y-0 -translate-y-1/2 flex flex-col items-stretch py-2 sm:py-2 px-1 sm:px-1 transition-transform duration-100"
     >
-      <div className="flex flex-col sm:flex-row gap-0.5 sm:gap-3 justify-start sm:justify-center items-stretch">
+      <div className="flex flex-col gap-0.5 justify-start items-stretch">
         {teams.map((team) => (
           <button
             key={team.slug}
@@ -136,10 +136,10 @@ export default function TeamNavigation({ teams }) {
             onTouchStart={(e) => handleTouchStart(e, team.slug)}
             onTouchMove={handleTouchMove}
             onTouchEnd={(e) => handleTouchEnd(e, team.slug)}
-            className={`relative flex-shrink-0 py-3 sm:py-4 px-2 sm:px-6 transition-all duration-300 ease-out group overflow-hidden text-center sm:rounded-b-lg sm:rounded-l-none rounded-l-lg ${
+            className={`relative flex-shrink-0 py-1 px-1.5 transition-all duration-300 ease-out group overflow-hidden text-center rounded-l-lg ${
               activeTeam === team.slug
-                ? 'bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.4)] scale-105 sm:scale-100'
-                : 'bg-slate-900/40 border-l-2 sm:border-l-0 sm:border-b-2 border-emerald-400/20 hover:bg-slate-800/60 hover:shadow-[0_0_12px_rgba(16,185,129,0.2)] hover:border-emerald-400/40 active:bg-slate-800/60 active:shadow-[0_0_12px_rgba(16,185,129,0.2)]'
+                ? 'bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.4)] scale-105'
+                : 'bg-slate-900/40 border-l border-emerald-400/20 hover:bg-slate-800/60 hover:shadow-[0_0_12px_rgba(16,185,129,0.2)] hover:border-emerald-400/40 active:bg-slate-800/60 active:shadow-[0_0_12px_rgba(16,185,129,0.2)]'
             }`}
             title={team.title}
           >
@@ -147,12 +147,12 @@ export default function TeamNavigation({ teams }) {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.15),transparent_70%)]" />
             </div>
             {/* Mobile: Show emote */}
-            <span className={`relative text-xl sm:hidden block transition-transform duration-200 ${isDragging && activeTeam === team.slug ? 'scale-150' : ''}`}>
+            <span className={`relative text-base block transition-transform duration-200 ${isDragging && activeTeam === team.slug ? 'scale-150' : ''}`}>
               {teamEmotes[team.slug]}
             </span>
-            {/* Desktop: Show text horizontally */}
+            {/* Desktop: Show text vertically */}
             <span 
-              className={`relative text-[9px] sm:text-sm font-bold uppercase tracking-[0.08em] sm:tracking-[0.1em] leading-tight block hidden sm:block ${
+              className={`relative text-[5px] font-bold uppercase tracking-[0.03em] leading-tight block mt-0 text-center ${
                 activeTeam === team.slug ? 'text-slate-950' : 'text-emerald-100'
               }`}
             >
