@@ -3,8 +3,7 @@ import InfoSpeakerBox from "../components/ProgramInfoBoxSimgular";
 import InfoWorkshopBox from "../components/ProgramInfoBoxWorkshops";
 
 import { mySessions1, mySessions2, mySessions3, mySessions4 } from "../infoDatabase";
-import { myExperienceWorkshopsPack1 } from "../infoDatabase";
-import { myProfessionalWorkshopsPack1 } from "../infoDatabase";
+import { myWorkshopsPack1, myWorkshopsPack2, myWorkshopsPack3 } from "../infoDatabase";
 
 function ProgramSection({ profession, children, title }) {
   return (
@@ -52,7 +51,7 @@ export default function ProgramPage() {
 
 
             <ProgramSection title="Workshops - Start Time">
-              {myExperienceWorkshopsPack1.map((item, index) => (
+              {myWorkshopsPack1.map((item, index) => (
                 <InfoWorkshopBox key={index} {...item} />
               ))}
             </ProgramSection>
@@ -65,11 +64,15 @@ export default function ProgramPage() {
               ))}
             </ProgramSection>
 
+
+
             <ProgramSection title="Workshops - Start Time">
-              {myExperienceWorkshopsPack1.map((item, index) => (
+              {myWorkshopsPack2.map((item, index) => (
                 <InfoWorkshopBox key={index} {...item} />
               ))}
             </ProgramSection>
+
+
 
             <ProgramSection title="3rd Session - Start Time">
               {mySessions3.map((item, index) => (
@@ -77,11 +80,15 @@ export default function ProgramPage() {
               ))}
             </ProgramSection>
 
+
+
           <ProgramSection title="Workshops - Start Time">
-              {myExperienceWorkshopsPack1.map((item, index) => (
+              {myWorkshopsPack3.map((item, index) => (
                 <InfoWorkshopBox key={index} {...item} />
               ))}
             </ProgramSection>
+
+
 
             <ProgramSection title="4th Session - Start Time">
               {mySessions4.map((item, index) => (
