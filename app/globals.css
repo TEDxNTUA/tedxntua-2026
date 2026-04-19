@@ -240,7 +240,76 @@ html.lenis body {
 .animate-slide-in-from-right { animation-name: slide-in-from-right; }
 .animate-slide-in-from-left { animation-name: slide-in-from-left; }
 
+@keyframes speaker-modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes speaker-modal-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.speaker-modal-backdrop {
+  animation: speaker-modal-backdrop-in 180ms ease-out;
+}
+
+.speaker-modal-panel {
+  animation: speaker-modal-panel-in 220ms ease-out;
+}
+
 /* Respect users who prefer reduced motion */
+@keyframes scroll-reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-reveal {
+  opacity: 0;
+  animation: scroll-reveal-in 600ms ease-out forwards;
+}
+
+.scroll-reveal:nth-child(1) {
+  animation-delay: 100ms;
+}
+
+.scroll-reveal:nth-child(2) {
+  animation-delay: 200ms;
+}
+
+.scroll-reveal:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+@keyframes speaker-modal-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.speaker-modal-backdrop-closing {
+  animation: speaker-modal-backdrop-out 300ms ease-in forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-slide-in-from-right,
   .animate-slide-in-from-left {
@@ -256,6 +325,17 @@ html.lenis body {
 
   .event-toggle-label {
     animation: none;
+  }
+
+  .speaker-modal-backdrop,
+  .speaker-modal-panel {
+    animation: none;
+  }
+
+  .scroll-reveal {
+    animation: none;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

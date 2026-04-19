@@ -3,156 +3,192 @@ import { useState } from 'react';
 import Popup from './InfoPopup';
 import { SocialButton } from './SocialButton';
 
-
-// The Component Box
-const separtorLine = "border-b border-white";
-const height = "550";
-const width = "320";
-const imgWidh = "280";
-const imgHeight = "360";
+const separtorLine = "border border-emerald-100/15";
 
 
 export default function SpeakerInfoBox(speaker) {
 
   const [showPopup, setShowPopup] = useState(false);
+  const [originRect, setOriginRect] = useState(null);
 
   return (
-    <div
-      className={`flex flex-col mb-7 items-center ${separtorLine} 
-    bg-black
-    cursor-pointer transition-all duration-300 ease-in-out
-    hover:scale-105 active:scale-95`}
-      style={{ width: `${width}px`, height: `${height}px` }}
-      onClick={() => setShowPopup(true)}>
-      
+    <button
+      type="button"
+      aria-haspopup="dialog"
+      aria-expanded={showPopup}
+      className={`group relative mb-7 flex w-full max-w-[360px] flex-col overflow-hidden rounded-[30px] ${separtorLine} bg-[linear-gradient(180deg,rgba(6,95,70,0.96),rgba(2,27,22,0.98))] text-left text-white shadow-[0_18px_60px_rgba(6,95,70,0.22)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(6,95,70,0.34)] active:scale-[0.99] sm:max-w-[420px]`}
+      onClick={(e) => {
+        setOriginRect(e.currentTarget.getBoundingClientRect());
+        setShowPopup(true);
+      }}
+      style={{ minHeight: '100%' }}
+    >
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(167,243,208,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(16,185,129,0.14),transparent_26%)]" />
 
-      <div className={`flex-1 flex items-center justify-center mt-6`}
-      style={{ width: `${imgWidh}px`, height: `${imgHeight}px` }}>
-        
-        <img src={speaker.posterImageUrl} alt="Speaker" />
-      </div>
-
-      <section className={'mt-4 flex items-center gap-2'}>
-        <SocialConnection socials={speaker.socials} size="25px" mode="greenyellow" />
-      </section>
-
-      <div className="flex-1 flex items-center flex-col w-full px-6"> 
-        <div>
-          <h1 className="text-large mb-1 font-bold uppercase">
-            {speaker.name}{speaker.name2 ? ` & ${speaker.name2}` : ''}
-          </h1>
+      <div className="relative flex flex-1 flex-col gap-4 p-4 sm:p-5">
+        <div className="overflow-hidden rounded-[24px] border border-white/10 bg-white/8 shadow-inner">
+          <div className="aspect-[4/5] w-full">
+            <img
+              src={speaker.posterImageUrl}
+              alt={speaker.name}
+              className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+            />
+          </div>
         </div>
 
-        <div>
-          <p className="font-medium mb-1">
+        <section className="flex flex-wrap items-center gap-2 text-emerald-50/90">
+          <SocialConnection socials={speaker.socials} size="25px" mode="greenyellow" />
+        </section>
+
+        <div className="flex flex-1 flex-col gap-2 px-1 pb-1">
+          <div className="space-y-1">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-emerald-100/70">Speaker</p>
+            <h1 className="text-xl font-semibold leading-tight sm:text-[1.55rem]">
+              {speaker.name}{speaker.name2 ? ` & ${speaker.name2}` : ''}
+            </h1>
+          </div>
+
+          <p className="text-sm leading-6 text-emerald-50/80 sm:text-[15px]">
             {speaker.profession}{speaker.profession2 ? ` & ${speaker.profession2}` : ''}
           </p>
+
+          <div className="pt-2 text-[11px] uppercase tracking-[0.28em] text-emerald-100/70">
+            Tap to open details
+          </div>
         </div>
       </div>
 
-      <div>
       <Popup
-          isOpen={showPopup}
-          onClose={() => setShowPopup(false)}
-          infoBase={speaker} />
-        
-      </div>
-    </div>);
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+        infoBase={speaker}
+        originRect={originRect}
+      />
+    </button>);
 
 }
 
 export function PerformancesInfoBox(performance) {
 
   const [showPopup, setShowPopup] = useState(false);
+  const [originRect, setOriginRect] = useState(null);
 
   return (
-    <div
-      className={`flex flex-col ${width} mb-5 ${height} items-center ${separtorLine} 
-    bg-black
-    cursor-pointer transition-all duration-300 ease-in-out
-    hover:scale-105 active:scale-95`}
-      onClick={() => setShowPopup(true)}>
-      
+    <button
+      type="button"
+      aria-haspopup="dialog"
+      aria-expanded={showPopup}
+      className={`group relative mb-7 flex w-full max-w-[360px] flex-col overflow-hidden rounded-[30px] ${separtorLine} bg-[linear-gradient(180deg,rgba(6,95,70,0.96),rgba(2,27,22,0.98))] text-left text-white shadow-[0_18px_60px_rgba(6,95,70,0.22)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(6,95,70,0.34)] active:scale-[0.99] sm:max-w-[420px]`}
+      onClick={(e) => {
+        setOriginRect(e.currentTarget.getBoundingClientRect());
+        setShowPopup(true);
+      }}
+      style={{ minHeight: '100%' }}
+    >
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(167,243,208,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(16,185,129,0.14),transparent_26%)]" />
 
-      <div className={`flex-1 flex items-center justify-center mt-4 ${width} ${height}`}>
-          <img src={performance.posterImageUrl} alt="Speaker" />
-      </div>
-
-      <section className={'mt-4 flex items-center gap-2'}>
-        <SocialConnection socials={performance.socials} size="25px" mode="greenyellow" />
-      </section>
-
-      <div className="flex-1 flex items-center flex-col w-full px-6"> 
-        <div>
-          <h1 className="text-large mb-1 font-bold uppercase">
-            {performance.artName}
-          </h1>
+      <div className="relative flex flex-1 flex-col gap-4 p-4 sm:p-5">
+        <div className="overflow-hidden rounded-[24px] border border-white/10 bg-white/8 shadow-inner">
+          <div className="aspect-[4/5] w-full">
+            <img
+              src={performance.posterImageUrl}
+              alt={performance.artName}
+              className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+            />
+          </div>
         </div>
 
-        <div>
-          <p className="font-medium mb-1">
+        <section className="flex flex-wrap items-center gap-2 text-emerald-50/90">
+          <SocialConnection socials={performance.socials} size="25px" mode="greenyellow" />
+        </section>
+
+        <div className="flex flex-1 flex-col gap-2 px-1 pb-1">
+          <div className="space-y-1">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-emerald-100/70">Performance</p>
+            <h1 className="text-xl font-semibold leading-tight sm:text-[1.55rem]">
+              {performance.artName}
+            </h1>
+          </div>
+
+          <p className="text-sm leading-6 text-emerald-50/80 sm:text-[15px]">
             {performance.profession}{performance.profession2 ? ` & ${performance.profession2}` : ''}
           </p>
+
+          <div className="pt-2 text-[11px] uppercase tracking-[0.28em] text-emerald-100/70">
+            Tap to open details
+          </div>
         </div>
       </div>
 
-      <div>
       <Popup
-          isOpen={showPopup}
-          onClose={() => setShowPopup(false)}
-          infoBase={performance} />
-        
-      </div>
-    </div>);
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+        infoBase={performance}
+        originRect={originRect}
+      />
+    </button>);
 
 }
 
 export function SideHappeningsInfoBox(sideHappening) {
 
   const [showPopup, setShowPopup] = useState(false);
+  const [originRect, setOriginRect] = useState(null);
 
   return (
-    <div>
-      <div
-        className={`flex flex-col ${width} mb-5 ${height} items-center ${separtorLine} 
-      bg-black
-      cursor-pointer transition-all duration-300 ease-in-out
-      hover:scale-105 active:scale-95`}
-        onClick={() => setShowPopup(true)}>
-        
+    <button
+      type="button"
+      aria-haspopup="dialog"
+      aria-expanded={showPopup}
+      className={`group relative mb-7 flex w-full max-w-[360px] flex-col overflow-hidden rounded-[30px] ${separtorLine} bg-[linear-gradient(180deg,rgba(6,95,70,0.96),rgba(2,27,22,0.98))] text-left text-white shadow-[0_18px_60px_rgba(6,95,70,0.22)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(6,95,70,0.34)] active:scale-[0.99] sm:max-w-[420px]`}
+      onClick={(e) => {
+        setOriginRect(e.currentTarget.getBoundingClientRect());
+        setShowPopup(true);
+      }}
+      style={{ minHeight: '100%' }}
+    >
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(167,243,208,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(16,185,129,0.14),transparent_26%)]" />
 
-        <div className={`flex-1 flex items-center justify-center mt-4 ${width} ${height}`}>
-            <img src={sideHappening.posterImageUrl} alt="Speaker" />
+      <div className="relative flex flex-1 flex-col gap-4 p-4 sm:p-5">
+        <div className="overflow-hidden rounded-[24px] border border-white/10 bg-white/8 shadow-inner">
+          <div className="aspect-[4/5] w-full">
+            <img
+              src={sideHappening.posterImageUrl}
+              alt={sideHappening.name}
+              className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+            />
+          </div>
         </div>
 
-        <section className={'mt-4 flex items-center gap-2'}>
+        <section className="flex flex-wrap items-center gap-2 text-emerald-50/90">
           <SocialConnection socials={sideHappening.socials} size="25px" mode="greenyellow" />
         </section>
 
-        <div className="flex-1 flex items-center flex-col w-full px-6"> 
-          <div>
-            <h1 className="text-large mb-1 font-bold uppercase">
+        <div className="flex flex-1 flex-col gap-2 px-1 pb-1">
+          <div className="space-y-1">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-emerald-100/70">Side Happening</p>
+            <h1 className="text-xl font-semibold leading-tight sm:text-[1.55rem]">
               {sideHappening.name}{sideHappening.name2 ? ` & ${sideHappening.name2}` : ''}
             </h1>
           </div>
 
-          <div>
-            <p className="font-medium mb-1">
-              {sideHappening.profession}{sideHappening.profession2 ? ` & ${sideHappening.profession2}` : ''}
-            </p>
+          <p className="text-sm leading-6 text-emerald-50/80 sm:text-[15px]">
+            {sideHappening.profession}{sideHappening.profession2 ? ` & ${sideHappening.profession2}` : ''}
+          </p>
+
+          <div className="pt-2 text-[11px] uppercase tracking-[0.28em] text-emerald-100/70">
+            Tap to open details
           </div>
         </div>
-
-        <div>
-        <Popup
-            isOpen={showPopup}
-            onClose={() => setShowPopup(false)}
-            infoBase={sideHappening} />
-          
-        </div>
-
       </div>
-    </div>);
+
+      <Popup
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+        infoBase={sideHappening}
+        originRect={originRect}
+      />
+    </button>);
 
 }
 

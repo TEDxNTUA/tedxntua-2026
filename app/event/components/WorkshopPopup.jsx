@@ -13,8 +13,10 @@ import { SocialButton } from './SocialButton';
 
 
 
-export default function WorkshopsPopup({ isOpen, onClose, workshop }) {
+export default function WorkshopsPopup({ isOpen, onClose, workshop, originRect }) {
   const [mounted, setMounted] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [panelStyle, setPanelStyle] = useState({});
 
   // 1. Handle mounting state to avoid Hydration errors in Next.js
   useEffect(() => {
@@ -33,80 +35,173 @@ export default function WorkshopsPopup({ isOpen, onClose, workshop }) {
     };
   }, [isOpen]);
 
-  // Don't render anything if not open, no speaker, or not yet mounted on client
+  // Handle closing animation and unmount
+  useEffect(() => {
+    if (isClosing && originRect) {
+      const ox = originRect.left + originRect.width / 2;
+      const oy = originRect.top + originRect.height / 2;
+      // Animate to tiny, transparent state
+      setPanelStyle({
+        transformOrigin: `${ox}px ${oy}px`,
+        transform: 'scale(0.2)',
+        opacity: 0,
+        transition: 'transform 300ms ease-in, opacity 300ms ease-in',
+      });
+      // After animation completes, call onClose
+      const timeoutId = window.setTimeout(() => {
+        onClose();
+      }, 300);
+      return () => window.clearTimeout(timeoutId);
+    }
+  }, [isClosing, originRect, onClose]);
+
+  // When the modal opens, compute a transform origin based on the workshop card position
+  useEffect(() => {
+    let timeoutId;
+
+    if (isOpen && !isClosing && originRect) {
+      const ox = originRect.left + originRect.width / 2;
+      const oy = originRect.top + originRect.height / 2;
+      // Start tiny and invisible, then transition to full size
+      setPanelStyle({
+        transformOrigin: `${ox}px ${oy}px`,
+        transform: 'scale(0.2)',
+        opacity: 0,
+      });
+      // Trigger the transition on the next tick
+      timeoutId = window.setTimeout(() => {
+        setPanelStyle({
+          transformOrigin: `${ox}px ${oy}px`,
+          transform: 'scale(1)',
+          opacity: 1,
+          transition: 'transform 400ms ease-out, opacity 400ms ease-out',
+        });
+      }, 10);
+    }
+
+    return () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [isOpen, isClosing, originRect]);
+
+  // Keyboard navigation (Escape key)
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        handleClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
+  // Don't render anything if not open, no workshop, or not yet mounted on client
   if (!isOpen || !workshop || !mounted) return null;
+
+  const handleClose = () => {
+    setIsClosing(true);
+  };
 
   // 3. Use createPortal to move the HTML to document.body
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
-      onClick={onClose}>
+      className={`speaker-modal-backdrop fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 p-3 backdrop-blur-md sm:p-4 ${isClosing ? 'speaker-modal-backdrop-closing' : ''}`}
+      role="presentation"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) {
+          handleClose();
+        }
+      }}>
       
       <div
-        className="relative bg-white rounded-[30px] w-full max-w-2xl p-8 shadow-2xl overflow-y-auto max-h-[90vh]"
-        onClick={(e) => e.stopPropagation()}>
+        style={panelStyle}
+        className="speaker-modal-panel relative w-full max-w-2xl rounded-2xl border border-emerald-400/20 bg-[linear-gradient(135deg,rgba(4,18,16,0.98),rgba(6,25,20,0.98))] p-6 shadow-[0_0_28px_rgba(34,197,94,0.07)] overflow-y-auto max-h-[90vh] sm:p-8 md:grid md:grid-cols-[minmax(240px,320px)_minmax(0,1fr)] md:gap-6"
+        onMouseDown={(event) => {
+          event.stopPropagation();
+        }}>
         
         {/* Close button */}
         <button
-          onClick={onClose}
-          className="absolute top-5 right-6 text-3xl text-gray-400 hover:text-black transition-colors">
-          
+          onClick={handleClose}
+          className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full border border-emerald-400/30 bg-slate-950/70 text-2xl text-emerald-200 shadow-[0_0_18px_rgba(34,197,94,0.18)] transition-all duration-200 hover:bg-slate-900 hover:text-emerald-100 sm:right-5 sm:top-5">
           ✕
         </button>
 
+        {/* Grid pattern overlay */}
+        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[linear-gradient(0deg,transparent_23%,rgba(34,197,94,0.04)_25%,rgba(34,197,94,0.04)_26%,transparent_27%,transparent_74%,rgba(34,197,94,0.04)_75%,rgba(34,197,94,0.04)_76%,transparent_77%,transparent),linear-gradient(90deg,transparent_23%,rgba(34,197,94,0.04)_25%,rgba(34,197,94,0.04)_26%,transparent_27%,transparent_74%,rgba(34,197,94,0.04)_75%,rgba(34,197,94,0.04)_76%,transparent_77%,transparent)] bg-[length:18px_18px]" />
 
-      {/* Actual Part*/}
-      
-        {/* Parent: Column on mobile, Row on medium screens+ */}
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 w-full p-4">
-            
-            {/* Speaker Image */}
-            {workshop.posterImageUrl &&
-          <div className="flex-shrink-0">
-                <img
-              src={workshop.posterImageUrl}
-              alt={workshop.name}
-              className="w-32 h-32 md:w-40 md:h-48 object-cover border-4 border-gray-100 shadow-md rounded-lg" />
-            
-              </div>
-          }
+        {/* Left sidebar: image and info */}
+        <div className="relative mb-6 md:sticky md:top-0 md:mb-0 md:flex md:flex-col md:gap-4">
+          {/* Workshop Image */}
+          {workshop.posterImageUrl && (
+            <div className="relative overflow-hidden rounded-xl border border-emerald-400/20 shadow-[0_0_18px_rgba(34,197,94,0.12)]">
+              <img
+                src={workshop.posterImageUrl}
+                alt={workshop.name}
+                className="aspect-[4/5] w-full object-cover"
+              />
+            </div>
+          )}
 
-            {/* Speaker Info */}
-            {/* min-w-0 is the "secret sauce" to prevent text overflow in flexbox */}
-            <div className="flex-1 min-w-0 text-center md:text-left">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 break-words leading-tight">
+          {/* Workshop Info Card */}
+          <div className="space-y-3 rounded-xl border border-emerald-400/20 bg-slate-900/50 p-4 backdrop-blur-sm">
+            <div>
+              <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-emerald-200/70">Workshop</p>
+              <h3 className="mt-1 text-lg font-bold leading-tight text-emerald-100 sm:text-xl">
                 {workshop.name}{workshop.name2 ? ` & ${workshop.name2}` : ''}
-              </h2>
-              
-              <p className="text-red-600 font-semibold text-lg mt-1 break-words">
-                {workshop.profession}{workshop.profession2 ? ` & ${workshop.profession2}` : ''}
-              </p>
+              </h3>
             </div>
-          </div>
-          
-          {/* --- SCROLLABLE SEGMENT START --- */}
-            <div className="mt-6 border-t border-gray-100 max-h-30 overflow-y-auto px-2 custom-scrollbar">
-              <h1 className="mt-6 text-black font-bold text-1xl">{workshop.title}</h1>
-              <p className="text-gray-700 leading-relaxed text-justify md:text-center whitespace-pre-line">
-                {workshop.description}
-                {workshop.description}
-                {workshop.description}
-              </p>
-            </div>
+            
+            <p className="font-mono text-sm leading-6 text-emerald-100/80">
+              {workshop.profession}{workshop.profession2 ? ` & ${workshop.profession2}` : ''}
+            </p>
 
-            <div className="mt-6 border-t border-gray-100 max-h-30 overflow-y-auto px-2 custom-scrollbar">
-              <h1 className="mt-6 text-black font-bold text-1xl">Personal Information</h1>
-              <p className="text-gray-700 leading-relaxed text-justify md:text-center whitespace-pre-line">
-                {workshop.personalDescription}
-                {workshop.personalDescription}
-                {workshop.personalDescription}
+            {/* Social links */}
+            {workshop.socials && (
+              <div className="flex flex-wrap gap-2 pt-2">
+                <SocialConnection {...workshop.socials} />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Right section: scrollable content */}
+        <div className="space-y-4 md:overflow-y-auto md:pr-4">
+          {/* Title */}
+          {workshop.title && (
+            <article className="scroll-reveal space-y-3 rounded-xl border border-emerald-400/20 bg-slate-900/30 p-4 backdrop-blur-sm">
+              <h2 className="font-mono text-base font-bold text-emerald-200 sm:text-lg">&gt; WORKSHOP_DESCRIPTION</h2>
+              <p className="font-mono text-sm leading-6 text-emerald-50/90 whitespace-pre-line">
+                {workshop.title}
+              </p>
+            </article>
+          )}
+
+          {/* Description */}
+          {workshop.description && (
+            <article className="scroll-reveal space-y-3 rounded-xl border border-emerald-400/20 bg-slate-900/30 p-4 backdrop-blur-sm">
+              <h2 className="font-mono text-base font-bold text-emerald-200 sm:text-lg">&gt; DESCRIPTION</h2>
+              <p className="font-mono text-sm leading-6 text-emerald-50/90 whitespace-pre-line max-h-[24vh] overflow-y-auto">
                 {workshop.description}
               </p>
-            </div>
-        {/* --- SCROLLABLE SEGMENT END --- */}
-                <section className={'mt-4'}>
-      <SocialConnection {...workshop.socials} />
-      </section>
+            </article>
+          )}
+
+          {/* Personal Description */}
+          {workshop.personalDescription && (
+            <article className="scroll-reveal space-y-3 rounded-xl border border-emerald-400/20 bg-slate-900/30 p-4 backdrop-blur-sm">
+              <h2 className="font-mono text-base font-bold text-emerald-200 sm:text-lg">&gt; PERSONAL_INFO</h2>
+              <p className="font-mono text-sm leading-6 text-emerald-50/90 whitespace-pre-line max-h-[20vh] overflow-y-auto">
+                {workshop.personalDescription}
+              </p>
+            </article>
+          )}
+        </div>
       </div>
     </div>,
     document.body
@@ -130,7 +225,7 @@ function SocialConnection(socials) {
             key={platformName} // Use the platform name as a unique key
             name={platformName}
             urlLink={url}
-            size="35px" />);
+            size="32px" />);
 
 
       })}
