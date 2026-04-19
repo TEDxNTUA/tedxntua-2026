@@ -3,10 +3,8 @@ import AnchorScrollHandler from "../components/AnchorScrollHandler";
 import SpeakersInfoBox from "../components/GeneralInfoBox";
 import EventPageShell from "../components/EventPageShell";
 
-import { mySpeakers1 } from "../infoDatabase";
-import { mySpeakers2 } from "../infoDatabase";
+import { allSpeakers } from "../infoDatabase";
 
-const allSpeakers = [...mySpeakers1, ...mySpeakers2];
 
 export default function ProgramPage() {
   return (

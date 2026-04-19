@@ -1,9 +1,6 @@
 "use client";
 
-
-
-
-export default function InfoBox({ time, workshop }) {
+export default function InfoBox({ time, workshop, color }) {
   const heightClass = "min-h-[150px]";
 
   return (
@@ -12,8 +9,8 @@ export default function InfoBox({ time, workshop }) {
     className={`items-center
         ${heightClass} border-2
         flex w-full transition-all duration-300 ease-in-out cursor-pointer overflow-hidden border border-black rounded-[40px] mb-4`}
-    style={{ backgroundColor: workshop[0].itemColor,
-      borderColor: workshop[0].itemColor
+    style={{ backgroundColor: color,
+      borderColor: color
     }}>
       
       {/* Time Section */}

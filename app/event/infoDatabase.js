@@ -1,4 +1,16 @@
 import { withBasePath } from "../lib/basePath";
+import Speakers from "./LineUpInfo/SpeakersIT.json";
+import ExpWorkshops from "./LineUpInfo/ExpWorkshopsIT.json";
+import ProfWorkshops from "./LineUpInfo/ProfWorkshopsIT.json";
+// import SideHappenings from "./LineUpInfo/SideHappeningsIT.json";
+import Performances from "./LineUpInfo/PerformancesIT.json";
+
+const DEFAULT_POSTER_IMAGE = "/eventimages/speakers/grogyResol.jpg";
+const WORKSHOP_TIME_1 = "14:00 - 15:00";
+const WORKSHOP_TIME_2 = "15:00 - 16:00";
+const WORKSHOP_TIME_3 = "16:00 - 17:00";
+const SPEAKER_ITEM_COLOR = "rgba(102, 187, 128, 0.28)";
+const PERFORMANCE_ITEM_COLOR = "rgba(98, 156, 227, 0.28)";
 
 const applyPosterBasePath = (items) =>
   items.map((item) => ({
@@ -6,334 +18,429 @@ const applyPosterBasePath = (items) =>
     posterImageUrl: withBasePath(item.posterImageUrl),
   }));
 
+// Normalize the social links shape across all JSON sources.
+const getSocials = (collection, index) => ({
+  instagram: collection[index].Instagram,
+  instagram2: collection[index].Instagram2,
+  linkedin: collection[index].LinkedIn,
+  facebook: collection[index].Facebook,
+  youtube: collection[index].Youtube,
+  tiktok: collection[index].TikTok,
+  webpage: collection[index].Web
+});
+
 export const myEventInfo = {
   title: "TEDxNTUA 2026",
-  date: "May 3, 2026",
-}
+  date: "May 9, 2026",
+};
 
+// Speakers
 export const allSpeakers = applyPosterBasePath([
-{ time: "10:00 - 11:00",
-  name: "Ελένη Καββάδα",
-  profession: "Ιδρύτρια του brand υψηλής ραπτικής και installation 240791",
-  theme: "Μόδα",
-  title: "Fashion as identity",
-  itemColor: "rgba(189, 149, 74, 0.3)",
-  description: "Η ομιλία, ακολουθώντας τη γενική θεματική του Tedx, πραγματεύεται την σημαντικότητα του κώδικα 0, σαν ταυτότητα του καλλιτέχνη. Τα προσωπικά του χαρακτηριστικά, που λειτουργούν σαν εφόδια και εργαλεία, απέναντι στην εκάστοτε δημιουργική πρόκληση. Θα συζητήσουμε την ισχύ της προσωπικής υπογραφής σε έναν κόσμο που βάλλεται από πληθώρα πληροφορίας και επιλογών και τη θέση του καλλιτέχνη απέναντι στα δεδομένα. Μέσω της μέχρι τώρα δικής της πορείας, η Ελένη Καββάδα θα μιλήσει για τους προσωπικούς της κώδικες κλειδιά και κατά πόσο την έχουν εξοπλίσει για την δική της διαδρομή. Πρέπει όλοι να έχουμε ένα σημείο 0; Το χτίζουμε στρατηγικά ή ηταν πάντα εκεί και πρέπει απλά να του δώσουμε την απαιτούμενη προσοχή; (+ από Speakers: Όπως αναφέρει η ίδια, «Ασυνείδητα συνέδεσα τη δουλειά μου με την ημερομηνία γέννησής μου», δίνοντας στο γνωστό της brand το όνομα: 240791. Με ποιον τρόπο αποτελούν και τα 2, Cycle 0 Codes; Διαδικασία «επιστροφής» στο χώρο της μόδας σε παλιότερα σχέδια & έργα.)",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Η Ελένη Καββάδα γεννήθηκε και μεγάλωσε στην Αθήνα. Σπούδασε σχέδιο μόδας στο Μιλάνο και την Φλωρεντία. Έχει στο ενεργητικό της πρακτική εξάσκηση στον οίκο Salvatore Ferragamo καθώς και 6ετή εργασία στο πλευρό του Γιώργου Ελευθεριάδη. Το 2021 ιδρύει το 240791, γνωστό για τις ανορθόδοξες σιλουέτες και όγκους των δημιουργιών του. Έχει δείξει τις συλλογές της δύο φορές στην εβδομάδα μόδας του Παρισιού και μία σε αυτή του Μιλάνου, καθώς έχει πάρει μέρος και σε shows στην Αθήνα. ",
-  socials: {
-    instagram: 'https://www.instagram.com/240791ek/',
-  } },
-
-{ time: "11:00 - 12:00",
-  name: "Νάσος Κατσαμάνης",
-  profession: "Co-founder at Auxilis AI & Διευθυντής Ερευνών στο Ερευνητικό Κέντρο «Αθηνά»",
-  theme: "Τεχνητή Νοημοσύνη",
-  title: "Kazad-Dum",
-  itemColor: "rgba(255, 255, 255, 0.43)",
-  description: "An increadible journey on how Gandalf the grey kills the Balrog and becomes Gandalf the white",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Ο Νάσος Κατσαμάνης είναι ερευνητής και επιχειρηματίας στον χώρο της τεχνητής νοημοσύνης, με έμφαση στις τεχνολογίες φωνής και την αλληλεπίδραση ανθρώπου-μηχανής. Είναι συνιδρυτής της Auxilis AI, όπου αναπτύσσει φωνητικούς ψηφιακούς βοηθούς με στόχο τη βελτίωση της πρόσβασης στην ιατρική περίθαλψη. Επίσης, είναι διδάκτορας Ηλεκτρολόγος Μηχανικός του ΕΜΠ και Διευθυντής Ερευνών στο Ερευνητικό Κέντρο «Αθηνά». Εστιάζει στην αξιοποίηση τεχνητής νοημοσύνης αιχμής σε λύσεις με ουσιαστικό αντίκτυπο στον πραγματικό κόσμο.",
-  socials: {
-    linkedin: 'https://gr.linkedin.com/in/nkatsam'
-  } },
-
-  { time: "13:00 - 14:00",
-  name: "Θάνος Ιωαννίδης",
-  name2: "Ιωάννα Κοντοχρήστου",
-  profession: "Αρχιτέκτονας Μηχανικός",
-  profession2: "Content Creator",
-  theme: "Αρχιτεκτονική",
-  title: "Crafting Architecture Stories",
-  itemColor: "rgba(230, 57, 70, 0.3)",
-  description: "Η ομιλία πραγματεύεται την αρχιτεκτονική ως διαδικασία και ως αφήγηση. Μέσα από το έργο του Erion Workshop και το format της σειράς «Αρχιτεκτονική για το παγωτό σας», παρουσιάζεται πώς η αρχιτεκτονική δεν είναι μόνο το τελικό αποτέλεσμα, αλλά μια αλληλουχία αποφάσεων, επανασχεδιασμών και ερμηνειών. Παράλληλα, αναδεικνύεται η ανάγκη η αρχιτεκτονική να επιστρέψει στη δημόσια κουβέντα με πιο άμεσο, κατανοητό και σύγχρονο τρόπο. (+ από Sp Η αρχιτεκτονική δημιουργία δεν είναι γραμμική αλλά νοείται ως μια συνεχής διαδικασία αξιολόγησης, όπου το τελικό αποτέλεσμα προκύπτει σταδιακά μέσα από δοκιμές και αναθεωρήσεις.)",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Ο Θάνος Ιωαννίδης είναι αρχιτέκτονας μηχανικός και συνιδρυτής του design-build γραφείου Erion Workshop. Μέσα από το γραφείο του δημιουργεί αρχιτεκτονικές ιστορίες, τις οποίες ακολουθεί από τα πρώτα σκίτσα μέχρι την υλοποίησή τους. Παράλληλα, μαζί με τη Χαρά Κοντοχρήστου έχει δημιουργήσει τη σειρά «Αρχιτεκτονική για το παγωτό σας», με στόχο να επαναφέρει την αρχιτεκτονική στη δημόσια συζήτηση, φέρνοντάς την πιο κοντά στις πλατφόρμες κοινωνικής δικτύωσης.                                                                                          Η Χαρά Κοντοχρήστου είναι δημιουργός περιεχομένου, γνωστή αρχικά μέσα από τα POV vlogs της, και σήμερα δραστηριοποιείται σε μια σειρά από διαφορετικά content projects. Είναι παρουσιάστρια, παραγωγός και συνδημιουργός της σειράς «Αρχιτεκτονική για το παγωτό σας» και φροντίζει το περιεχόμενο να παίρνει μορφή συμβατή με τον τρόπο με τον οποίο καταναλώνεται στα μέσα κοινωνικής δικτύωσης.",
-  personalDescription2: "Η Χαρά Κοντοχρήστου είναι δημιουργός περιεχομένου, γνωστή αρχικά μέσα από τα POV vlogs της, και σήμερα δραστηριοποιείται σε μια σειρά από διαφορετικά content projects. Είναι παρουσιάστρια, παραγωγός και συνδημιουργός της σειράς «Αρχιτεκτονική για το παγωτό σας» και φροντίζει το περιεχόμενο να παίρνει μορφή συμβατή με τον τρόπο με τον οποίο καταναλώνεται στα μέσα κοινωνικής δικτύωσης.",
-  socials: {
-    instagram: 'https://www.instagram.com/thanos__ioannidis/',
-    webpage: 'https://www.instagram.com/erion_workshop/ '
+  {
+    time: "10:00 - 11:00",
+    itemCategory: "speaker",
+    name: Speakers[0].NameGR,
+    profession: Speakers[0].ProfessionGR,
+    theme: Speakers[0].Theme,
+    title: "Fashion as identity",
+    itemColor: SPEAKER_ITEM_COLOR,
+    description: Speakers[0].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Speakers[0].BioGR,
+    socials: getSocials(Speakers, 0)
   },
-  socials2: {
-    instagram: 'https://www.instagram.com/chara_kontochristou/'
-  } },
+  {
+    time: "13:00 - 14:00",
+    itemCategory: "speaker",
+    name: Speakers[2].NameGR,
+    name2: Speakers[1].NameGR,
+    profession: Speakers[2].ProfessionGR,
+    profession2: Speakers[1].ProfessionGR,
+    theme: Speakers[1].Theme,
+    title: "Crafting Architecture Stories",
+    itemColor: SPEAKER_ITEM_COLOR,
+    description: Speakers[1].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Speakers[2].BioGR,
+    personalDescription2: Speakers[1].BioGR,
+    socials: getSocials(Speakers, 2),
+    socials2: getSocials(Speakers, 1)
+  },
+  {
+    time: "14:00 - 15:00",
+    itemCategory: "speaker",
+    name: Speakers[3].NameGR,
+    profession: Speakers[3].ProfessionGR,
+    theme: Speakers[3].Theme,
+    title: "Why i gave my hair to a dwarf",
+    itemColor: SPEAKER_ITEM_COLOR,
+    description: Speakers[3].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Speakers[3].BioGR,
+    socials: getSocials(Speakers, 3)
+  },
+  {
+    time: "16:00 - 17:00",
+    itemCategory: "speaker",
+    name: Speakers[4].NameGR,
+    profession: Speakers[4].ProfessionGR,
+    theme: Speakers[4].Theme,
+    title: "The importance of second breakfast",
+    itemColor: SPEAKER_ITEM_COLOR,
+    description: Speakers[4].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Speakers[4].BioGR,
+    socials: getSocials(Speakers, 4)
+  },
+  {
+    time: "16:00 - 17:00",
+    itemCategory: "speaker",
+    name: Speakers[5].NameGR,
+    profession: Speakers[5].ProfessionGR,
+    theme: Speakers[5].Theme,
+    title: "The importance of second breakfast",
+    itemColor: SPEAKER_ITEM_COLOR,
+    description: Speakers[5].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Speakers[5].BioGR,
+    socials: getSocials(Speakers, 5)
+  },
+  {
+    time: "16:00 - 17:00",
+    itemCategory: "speaker",
+    name: Speakers[6].NameGR,
+    profession: Speakers[6].ProfessionGR,
+    theme: Speakers[6].Theme,
+    title: "The importance of second breakfast",
+    itemColor: SPEAKER_ITEM_COLOR,
+    description: Speakers[6].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Speakers[6].BioGR,
+    socials: getSocials(Speakers, 6)
+  },
+  {
+    time: "16:00 - 17:00",
+    itemCategory: "speaker",
+    name: Speakers[7].NameGR,
+    profession: Speakers[7].ProfessionGR,
+    theme: Speakers[7].Theme,
+    title: "The importance of second breakfast",
+    itemColor: SPEAKER_ITEM_COLOR,
+    description: Speakers[7].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Speakers[7].BioGR,
+    socials: getSocials(Speakers, 7)
+  },
+  {
+    time: "16:00 - 17:00",
+    itemCategory: "speaker",
+    name: Speakers[8].NameGR,
+    profession: Speakers[8].ProfessionGR,
+    theme: Speakers[8].Theme,
+    title: "The importance of second breakfast",
+    itemColor: SPEAKER_ITEM_COLOR,
+    description: Speakers[8].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Speakers[8].BioGR,
+    socials: getSocials(Speakers, 8)
+  },
+  {
+    time: "16:00 - 17:00",
+    itemCategory: "speaker",
+    name: Speakers[9].NameGR,
+    profession: Speakers[9].ProfessionGR,
+    theme: Speakers[9].Theme,
+    title: "The importance of second breakfast",
+    itemColor: SPEAKER_ITEM_COLOR,
+    description: Speakers[9].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Speakers[9].BioGR,
+    socials: getSocials(Speakers, 9)
+  },
+  {
+    time: "",
+    itemCategory: "",
+    name: Speakers[10].NameGR,
+    profession: Speakers[10].ProfessionGR,
+    theme: Speakers[10].Theme,
+    title: "The importance of second breakfast",
+    itemColor: SPEAKER_ITEM_COLOR,
+    description: Speakers[10].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Speakers[10].BioGR,
+    socials: getSocials(Speakers, 10)
+  },
+  {
+    time: "",
+    itemCategory: "",
+    name: Speakers[11].NameGR,
+    profession: Speakers[11].ProfessionGR,
+    theme: Speakers[11].Theme,
+    title: "The importance of second breakfast",
+    itemColor: SPEAKER_ITEM_COLOR,
+    description: Speakers[11].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Speakers[11].BioGR,
+    socials: getSocials(Speakers, 11)
+  },
+]);
 
-{ time: "14:00 - 15:00",
-  name: "Γιάννης Δαγκλής",
-  profession: "Καθηγητής Διαστημικής Φυσικής",
-  theme: "Αστροφυσική",
-  title: "Why i gave my hair to a dwarf",
-  itemColor: "rgba(121, 147, 183, 0.3)",
-  description: "(Αρχικές ακέψεις του στην πρώτη συνάντηση, θα επανέλθουμε όταν έχουμε προσχέδιο.) Η ομιλία πραγματεύεται την “κυκλικότητα” της μαγνητικής δραστηριότητας του Ήλιου και την αντίστοιχη κυκλικότητα που προκύπτει για δυναμικά φαινόμενα στο γεωδιάστημα, όπως για παράδειγμα μαγνητικές καταιγίδες, βόρειο σέλας και διαμόρφωση κοσμικής ακτινοβολίας. Πρόκειται για κυκλικά φαινόμενα που δεν είχαν επηρεάσει την ανθρωπότητα στο παρελθόν, αλλά μετά την αυγή της διαστημικής εποχής και τη μελέτη και βασική κατανόηση αυτών των φαινομένων, και την αυξανόμενη χρήση του διαστημικού χώρου για δραστηριότητες έρευνας, τεχνολογίας και επιχειρηματικότητας, επηρεάζουν πλέον σαφώς την ανθρώπινη πραγματικότητα - από τη διαστημική εξερεύνηση μέχρι τον τουρισμό σέλαος στη βόρεια Σκανδιναβία. Οι όποιες βιολογικές και ενδεχομένως ψυχολογικές επιδράσεις δεν έχουν ακόμη πιστοποιηθεί/επιβεβαιωθεί.",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Ο Γιάννης Δαγκλής μελετά τα καπρίτσια του Ήλιου, τις μαγνητικές καταιγίδες και το βόρειο σέλας, και διδάσκει στους φοιτητές του Πανεπιστημίου Αθηνών. Έχει συμβάλλει σε 10 διαστημικές αποστολές της NASA και της ESA, έχει συντονίσει 24 ευρωπαϊκά ερευνητικά προγράμματα κι έχει δημοσιεύσει 7 βιβλία και 200 ερευνητικές εργασίες. Τον μαγεύει το σύμπαν και οι πεζοπορίες στη φύση - ιδίως στα βουνά.",
-  socials: {
-    instagram: 'https://www.instagram.com/ioannisdaglis/',
-    linkedin: 'https://gr.linkedin.com/in/ioannis-a-daglis-a2b8a46',
-    facebook: 'https://www.facebook.com/ioannisdaglis/'
-  } },
-
-{ time: "16:00 - 17:00",
-  name: "Έλενα Παπαδημητρίου",
-  profession: "Δημοσιογράφος",
-  theme: "Δημοσιογραφία",
-  title: "The importance of second breakfast",
-  itemColor: "rgba(109, 222, 139, 0.3)",
-  description: "Its just mandatory",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Η Έλενα είναι δημοσιογράφος. Έχει σπουδάσει Δημοσιογραφία στο ΑΠΘ και έχει Μεταπτυχιακό στην Πολιτική Επιστήμη και την Κοινωνιολογία στο ΕΚΠΑ. Δουλεύει εδώ και 25 χρόνια, κυρίως στην τηλεόραση και το ραδιόφωνο, στις ειδήσεις και σε ενημερωτικές εκπομπές. Έχει καλύψει εκλογές, δημοψηφίσματα και ανθρωπιστικές κρίσεις σε δημοσιογραφικές αποστολές εκτός Ελλάδας. Το 2025, βραβεύτηκε από το Ίδρυμα Προαγωγής Δημοσιογραφίας Αθανασίου Β. Μπότση. Από τον Οκτώβριο του 2023, είναι επικεφαλής του Editorial του fyi.news, ενός πρωτοποριακού social media first ειδησεογραφικού μέσου.",
-  socials: {
-    instagram: 'https://www.instagram.com/papadelena/?hl=en%5C',
-    linkedin: 'https://gr.linkedin.com/in/elena-papadimitriou-1b61831a1',
-  }}]);
-
-const timeE1 = "14:00 - 15:00";
-const timeP1 = "17:00 - 18:00";
+// Experience workshops
 export const allExpWorkshops = applyPosterBasePath([
-{ time: "10:00 - 11:00",
-  name: "Legolas",
-  room: "Room 1",
-  profession: "talker",
-  title: "They are taking the Hobbits to Isengard",
-  itemColor: "rgba(189, 149, 74, 0.3)",
-  description: "To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard To Isengard ",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } },
+  {
+    time: "10:00 - 11:00",
+    name: ExpWorkshops[0].NameGR,
+    room: "Room 1",
+    profession: ExpWorkshops[0].ProfessionGR,
+    title: ExpWorkshops[0].ArtNameGR,
+    itemColor: "rgba(189, 149, 74, 0.3)",
+    description: ExpWorkshops[0].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: ExpWorkshops[0].BioGR,
+    socials: getSocials(ExpWorkshops, 0)
+  },
+  {
+    time: "11:00 - 12:00",
+    name: ExpWorkshops[1].NameGR,
+    room: "Room 2",
+    profession: ExpWorkshops[1].ProfessionGR,
+    title: ExpWorkshops[1].ArtNameGR,
+    itemColor: "rgba(255, 255, 255, 0.43)",
+    description: ExpWorkshops[1].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: ExpWorkshops[1].BioGR,
+    socials: getSocials(ExpWorkshops, 1)
+  },
+  {
+    time: "13:00 - 14:00",
+    name: ExpWorkshops[2].NameGR,
+    room: "Room 1",
+    profession: ExpWorkshops[2].ProfessionGR,
+    title: ExpWorkshops[2].ArtNameGR,
+    itemColor: "rgba(230, 57, 70, 0.3)",
+    description: ExpWorkshops[2].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: ExpWorkshops[2].BioGR,
+    socials: getSocials(ExpWorkshops, 2)
+  },
+]);
 
-{ time: "11:00 - 12:00",
-  name: "Gandalf the Grey",
-  room: "Room 2",
-  profession: "talker",
-  title: "Kazad-Dum",
-  itemColor: "rgba(255, 255, 255, 0.43)",
-  description: "An increadible journey on how Gandalf the grey kills the Balrog and becomes Gandalf the white",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } },
-  { time: "13:00 - 14:00",
-  name: "Bilbo Bagins",
-  profession: "talker",
-  title: "Mountains Gandals",
-  room: "Room 1",
-  itemColor: "rgba(230, 57, 70, 0.3)",
-  description: "The story of a mighty burgler who happend to acquire a cerain ring",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } },
-
-{ time: "14:00 - 15:00",
-  name: "Galadriel of Lothlórien",
-  profession: "talker",
-  title: "Why i gave my hair to a dwarf",
-  room: "Room 1",
-  itemColor: "rgba(121, 147, 183, 0.3)",
-  description: "He was a really kind dwarf",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } },
-
-{ time: "16:00 - 17:00",
-  name: "Pepegrin Took",
-  profession: "talker",
-  name2: "Meriadoc Brundyback",
-  profession2: "talker",
-  title: "The importance of second breakfast",
-  room: "Room 1",
-  itemColor: "rgba(109, 222, 139, 0.3)",
-  description: "Its just mandatory",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } }]);
-export const allProfWorkshops = applyPosterBasePath([{ time: timeP1,
-  room: "Room 1",
-  title: "Total domination",
-  name: "Fernando Alonso",
-  profession: "Utter goat of rookies",
-  itemColor: "rgba(204, 243, 128, 0.3)",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
+// Placeholder entries are kept here for sections that do not yet come from JSON.
+export const allProfWorkshops = applyPosterBasePath([
+  {
+    time: WORKSHOP_TIME_1,
+    room: "Room 1",
+    title: ProfWorkshops[0].Title,
+    name: ProfWorkshops[0].NameGR,
+    description: ProfWorkshops[0].DescriptionGR,
+    personal: ProfWorkshops[0].BioGR,
+    itemColor: "rgba(204, 243, 128, 0.3)",
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    socials: getSocials(ProfWorkshops, 0)
+  },
+  {
+    time: WORKSHOP_TIME_2,
+    room: "Room 1",
+    title: ProfWorkshops[1].Title,
+    name: ProfWorkshops[1].NameGR,
+    description: ProfWorkshops[1].DescriptionGR,
+    personal: ProfWorkshops[1].BioGR,
+    itemColor: "rgba(204, 243, 128, 0.3)",
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    socials: getSocials(ProfWorkshops, 1)
+  },
+  {
+    time: WORKSHOP_TIME_3,
+    room: "Room 1",
+    title: ProfWorkshops[2].Title,
+    name: ProfWorkshops[2].NameGR,
+    description: ProfWorkshops[2].DescriptionGR,
+    personal: ProfWorkshops[2].BioGR,
+    itemColor: "rgba(204, 243, 128, 0.3)",
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    socials: getSocials(ProfWorkshops, 2)
+  },
+  {
+    time: WORKSHOP_TIME_3,
+    room: "Room 1",
+    title: ProfWorkshops[3].Title,
+    name: ProfWorkshops[3].NameGR,
+    description: ProfWorkshops[3].DescriptionGR,
+    personal: ProfWorkshops[3].BioGR,
+    itemColor: "rgba(204, 243, 128, 0.3)",
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    socials: getSocials(ProfWorkshops, 3)
   }
-},
+]);
 
-{ time: timeP1,
-  room: "Room 2",
-  title: "How to succeed long distance relationships",
-  name: "Charles Leclerc",
-  profession: "2026 WDC",
-  name2: "Carlos Sainz",
-  profession2: "Smooth operator",
-  itemColor: "rgba(204, 243, 128, 0.3)",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } },
+export const allSideHappenings = applyPosterBasePath([
+  {
+    time: "13:00 - 14:00",
+    name: "Bilbo Bagins",
+    profession: "talker",
+    title: "Mountains Gandals",
+    itemColor: "rgba(230, 57, 70, 0.3)",
+    description: "The story of a mighty burgler who happend to acquire a cerain ring",
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: "Hello there",
+    socials: {
+      youtube:
+        "https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS",
+    },
+  },
+  {
+    time: "14:00 - 15:00",
+    name: "Galadriel of LothlΓ³rien",
+    profession: "talker",
+    title: "Why i gave my hair to a dwarf",
+    itemColor: "rgba(121, 147, 183, 0.3)",
+    description: "He was a really kind dwarf",
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: "Hello there",
+    socials: {
+      youtube:
+        "https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS",
+      instagram: "https://www.instagram.com/tedxntua/",
+    },
+  },
+  {
+    time: "16:00 - 17:00",
+    name: "Pepegrin Took",
+    profession: "talker",
+    name2: "Meriadoc Brundyback",
+    profession2: "talker",
+    title: "The importance of second breakfast",
+    itemColor: "rgba(109, 222, 139, 0.3)",
+    description: "Its just mandatory",
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: "Hello there",
+    socials: {
+      youtube:
+        "https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS",
+    },
+  },
+]);
 
-{ time: timeP1,
-  room: "Room 3",
-  title: "Higher Bottling techniques",
-  name: "Lando Norris",
-  profession: "2025 WDC",
-  itemColor: "rgba(204, 243, 128, 0.3)",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } }]);
-
-
-export const allSideHappenings = applyPosterBasePath([{ time: "13:00 - 14:00",
-  name: "Bilbo Bagins",
-  profession: "talker",
-  title: "Mountains Gandals",
-  itemColor: "rgba(230, 57, 70, 0.3)",
-  description: "The story of a mighty burgler who happend to acquire a cerain ring",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } },
-
-{ time: "14:00 - 15:00",
-  name: "Galadriel of Lothlórien",
-  profession: "talker",
-  title: "Why i gave my hair to a dwarf",
-  itemColor: "rgba(121, 147, 183, 0.3)",
-  description: "He was a really kind dwarf",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS',
-    instagram: 'https://www.instagram.com/tedxntua/'
-  } },
-
-{ time: "16:00 - 17:00",
-  name: "Pepegrin Took",
-  profession: "talker",
-  name2: "Meriadoc Brundyback",
-  profession2: "talker",
-  title: "The importance of second breakfast",
-  itemColor: "rgba(109, 222, 139, 0.3)",
-  description: "Its just mandatory",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } }]);
-
-
-  export const allPerformances = applyPosterBasePath([{ time: "13:00 - 14:00",
-  name: "Bilbo Bagins",
-  profession: "talker",
-  title: "Mountains Gandals",
-  itemColor: "rgba(230, 57, 70, 0.3)",
-  description: "The story of a mighty burgler who happend to acquire a cerain ring",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } },
-
-{ time: "14:00 - 15:00",
-  name: "Galadriel of Lothlórien",
-  profession: "talker",
-  title: "Why i gave my hair to a dwarf",
-  itemColor: "rgba(121, 147, 183, 0.3)",
-  description: "He was a really kind dwarf",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS',
-    instagram: 'https://www.instagram.com/tedxntua/'
-  } },
-
-{ time: "16:00 - 17:00",
-  name: "Pepegrin Took",
-  profession: "talker",
-  name2: "Meriadoc Brundyback",
-  profession2: "talker",
-  title: "The importance of second breakfast",
-  itemColor: "rgba(109, 222, 139, 0.3)",
-  description: "Its just mandatory",
-  posterImageUrl: "/eventimages/speakers/grogyResol.jpg",
-  personalDescription: "Hello there",
-  socials: {
-    youtube: 'https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS'
-  } }]);
+// Performances
+export const allPerformances = applyPosterBasePath([
+  {
+    time: "13:00 - 14:00",
+    name: Performances[0].NameGR,
+    itemCategory: "performance",
+    profession: Performances[0].ProfessionGR,
+    artName: Performances[0].Artname,
+    itemColor: PERFORMANCE_ITEM_COLOR,
+    description: Performances[0].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Performances[0].BioGR,
+    socials: getSocials(Performances, 0)
+  },
+  {
+    time: "14:00 - 15:00",
+    name: Performances[1].NameGR,
+    itemCategory: "performance",
+    profession: Performances[1].ProfessionGR,
+    artName: Performances[1].Artname,
+    itemColor: PERFORMANCE_ITEM_COLOR,
+    description: Performances[1].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Performances[1].BioGR,
+    socials: getSocials(Performances, 1)
+  },
+  {
+    time: "16:00 - 17:00",
+    name: Performances[2].NameGR,
+    itemCategory: "performance",
+    profession: Performances[2].ProfessionGR,
+    artName: Performances[2].Artname,
+    itemColor: PERFORMANCE_ITEM_COLOR,
+    description: Performances[2].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Performances[2].BioGR,
+    socials: getSocials(Performances, 2)
+  },
+  {
+    time: "16:00 - 17:00",
+    name: Performances[3].NameGR,
+    itemCategory: "performance",
+    profession: Performances[3].ProfessionGR,
+    artName: Performances[3].Artname,
+    itemColor: PERFORMANCE_ITEM_COLOR,
+    description: Performances[3].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Performances[3].BioGR,
+    socials: getSocials(Performances, 3)
+  },
+]);
 
 
 
 
+// Session groupings consumed by the program UI.
+export const mySessions1 = [
+  allSpeakers[0],
+  allSpeakers[6]];
 
+export const mySessions2 = [
+  allPerformances[0],
+  allSpeakers[1],
+  allSpeakers[5],
+  allSpeakers[3],
+];
 
-//Speakers
-export const mySpeakers1 = [
-allSpeakers[0],
-allSpeakers[1],];
+export const mySessions3 = [
+  allPerformances[3],
+  allSpeakers[4],
+  allSpeakers[8],
+  allPerformances[1]
+];
 
+export const mySessions4 = [
+  allSpeakers[2], 
+  allSpeakers[7], 
+  allPerformances[2]];
 
-export const mySpeakers2 = [
-allSpeakers[2],
-allSpeakers[3],
-allSpeakers[4]
+// Experience workshops
+export const myWorkshopsPack1 = [
+  {
+    time: WORKSHOP_TIME_1,
+    color: "rgba(92, 169, 149, 0.47)",
+    workshop: [
+      allExpWorkshops[0],
+      allExpWorkshops[1],
+      allProfWorkshops[0]
+    ],
+  },
+];
+
+export const myWorkshopsPack2 = [
+  {
+    time: WORKSHOP_TIME_2,
+    color: "rgba(204, 243, 128, 0.3)",
+    workshop: [
+      allExpWorkshops[2],
+      allProfWorkshops[1],
+      allProfWorkshops[2]
+    ],
+  },
+];
+
+export const myWorkshopsPack3 = [
+  {
+    time: WORKSHOP_TIME_3,
+    color: "rgba(204, 243, 128, 0.3)",
+    workshop: [
+      allProfWorkshops[0],
+      allProfWorkshops[1],
+      allProfWorkshops[2]
+    ],
+  },
 ];
 
 
-
-//Performances
-export const myPerformances = [
-allPerformances[0],
-allPerformances[1],
-allPerformances[2],];
-
-
-
-
-
-
-//ExperienceWorkshops
-export const myExperienceWorkshops1 = [
-allExpWorkshops[0],
-allExpWorkshops[1],
-allExpWorkshops[2],];
-
-
-export const myExperienceWorkshopsPack1 = [
-{
-  time: timeE1,
-  color: "rgba(189, 149, 74, 0.3)",
-  workshop: myExperienceWorkshops1 }];
-
-
-//ProfessionalWorkShops
-export const myProfessionalWorkshops1 = [
-allProfWorkshops[0],
-allProfWorkshops[1],
-allProfWorkshops[2],];
-
-
-export const myProfessionalWorkshopsPack1 = [
-{
-  time: timeP1,
-  color: "rgba(204, 243, 128, 0.3)",
-  workshop: myProfessionalWorkshops1 }];
-
-
-
-
-
-//SideHappenings
+// Side happenings
 export const mySideHappenings = [
-allSideHappenings[0],
-allSideHappenings[1],
-allSideHappenings[2],];
+  allSideHappenings[0],
+  allSideHappenings[1],
+  allSideHappenings[2],
+];
