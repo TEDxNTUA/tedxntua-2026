@@ -33,7 +33,7 @@ export const teams = [
   },
   {
     slug: "it",
-    title: "IT",
+    title: "Information and Technology",
     description: "Technology, infrastructure and stage management.",
     heroImages: [
       assetPath("/MTT/it_mtt/nikos/mtt-306.jpg"),

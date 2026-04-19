@@ -310,6 +310,64 @@ html.lenis body {
   animation: speaker-modal-backdrop-out 300ms ease-in forwards;
 }
 
+@keyframes nav-handle-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+  }
+}
+
+@keyframes nav-handle-move-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes nav-handle-hide {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+.nav-handle-pulse {
+  animation: nav-handle-pulse 2s ease-in-out infinite;
+}
+
+.nav-handle-move-in {
+  animation: nav-handle-move-in 500ms ease-out forwards;
+}
+
+.nav-handle-hide {
+  animation: nav-handle-hide 400ms ease-in forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-handle-pulse,
+  .nav-handle-move-in,
+  .nav-handle-hide {
+    animation: none;
+  }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   .animate-slide-in-from-right,
   .animate-slide-in-from-left {

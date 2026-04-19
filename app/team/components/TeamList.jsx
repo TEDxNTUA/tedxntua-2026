@@ -4,23 +4,15 @@ import { useEffect, useRef, useState } from "react";
 
 import MemberPhoto from "./MemberPhoto";
 
-// ========== MEMBER PHOTO SIZE (edit these to change dimensions) ==========
-const MEMBER_PHOTO_WIDTH = 240; // px
-const MEMBER_PHOTO_HEIGHT = 300; // px
-// =========================================================================
-
-
-
-
 
 export default function TeamList({ teams }) {
   return (
     <div className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 opacity-60">
-        <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-cyan-400/0 via-cyan-400/50 to-cyan-400/0" />
-        <div className="absolute inset-x-0 top-24 h-px bg-gradient-to-r from-transparent via-cyan-400/35 to-transparent" />
+        <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-rose-400/0 via-rose-400/50 to-rose-400/0" />
+        <div className="absolute inset-x-0 top-24 h-px bg-gradient-to-r from-transparent via-rose-400/35 to-transparent" />
       </div>
-      <div className="flex flex-col gap-14 py-4 sm:gap-20 sm:py-8">
+      <div className="flex flex-col gap-14 py-4 sm:gap-20 sm:py-8 lg:gap-48 lg:py-16 pb-48 sm:pb-64 lg:pb-80">
         {teams.map((team, i) =>
         <TeamRow key={team.slug} team={team} index={i} />
         )}
@@ -58,8 +50,9 @@ function TeamRow({ team, index }) {
 
   return (
     <div
+      id={`team-${team.slug}`}
       ref={ref}
-      className="mx-auto w-full max-w-6xl px-4 py-1 sm:px-8 sm:py-2">
+      className="mx-auto w-full max-w-6xl px-4 py-1 sm:px-8 sm:py-2 lg:pb-48 scroll-mt-32">
       <div
         className={`mb-6 text-center transition-all duration-700 sm:mb-8 ${
         visible ?
@@ -68,12 +61,13 @@ function TeamRow({ team, index }) {
         }
         style={{ transitionDelay: `${index * 50}ms` }}>
 
-        <div className="mx-auto mb-3 h-px w-44 bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent" />
-        <h3 className="mb-2 text-2xl font-bold uppercase tracking-[0.22em] text-cyan-200 drop-shadow-[0_0_10px_rgba(34,211,238,0.45)] sm:text-3xl">{team.title}</h3>
-        {team.description &&
+        <div className="mx-auto mb-3 h-px w-44 bg-gradient-to-r from-transparent via-rose-300/70 to-transparent" />
+        <h3 className="mb-2 text-2xl font-bold uppercase tracking-[0.22em] text-rose-200 drop-shadow-[0_0_10px_rgba(244,63,94,0.45)] sm:text-3xl">{team.title}</h3>
+        {/* {
+        // team.description &&
         <p className="mx-auto max-w-2xl text-sm text-gray-300 sm:text-base">{team.description}</p>
-        }
-        <div className="mx-auto mt-3 h-px w-44 bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent" />
+        } */}
+        <div className="mx-auto mt-3 h-px w-44 bg-gradient-to-r from-transparent via-rose-300/40 to-transparent" />
       </div>
 
       <div
@@ -94,12 +88,12 @@ function TeamRow({ team, index }) {
 
               <MemberPhoto
             member={m}
-            containerClassName="rounded-lg border border-cyan-300/70 bg-slate-950 shadow-[0_0_18px_rgba(34,211,238,0.35)]"
-            containerStyle={{ width: MEMBER_PHOTO_WIDTH, height: MEMBER_PHOTO_HEIGHT }} />
+            containerClassName="rounded-lg border border-rose-300/70 bg-slate-950 shadow-[0_0_18px_rgba(244,63,94,0.35)] w-32 h-40 sm:w-60 sm:h-80"
+            containerStyle={{}} />
 
               <span
-            className="mt-2 max-w-full text-center text-xs font-medium text-cyan-50 sm:text-sm"
-            style={{ maxWidth: MEMBER_PHOTO_WIDTH }}>
+            className="mt-2 max-w-full text-center text-xs font-medium text-rose-50 sm:text-sm w-32 sm:w-60"
+            style={{}}>
 
                 {m.name}
               </span>

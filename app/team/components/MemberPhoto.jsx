@@ -1,6 +1,6 @@
 "use client";
 
-
+import { useState } from "react";
 import SmoothImage from "./SmoothImage";
 
 import { pickCollectiveImage } from "../collectiveImages";
@@ -60,11 +60,19 @@ function GlobeIcon() {
 
 
 export default function MemberPhoto({ member, containerClassName = "", containerStyle }) {
+  const [showSocial, setShowSocial] = useState(false);
   const social = member.social;
   const hasSocial = !!(
   social && (
   social.instagram || social.linkedin || social.twitter || social.facebook || social.website));
 
+  const handleImageClick = (e) => {
+    // Only toggle on mobile (touch devices)
+    if (window.matchMedia("(hover: none)").matches) {
+      e.preventDefault();
+      setShowSocial(!showSocial);
+    }
+  };
 
   return (
     <div
@@ -72,7 +80,9 @@ export default function MemberPhoto({ member, containerClassName = "", container
       style={containerStyle}>
       
       {/* Zoom wrapper — separate from SmoothImage so opacity & transform transitions don't conflict */}
-      <div className="w-full h-full transition-transform duration-300 ease-out group-hover:scale-110">
+      <div 
+        className="w-full h-full transition-transform duration-300 ease-out group-hover:scale-110 cursor-pointer"
+        onClick={handleImageClick}>
         <SmoothImage
           src={member.photo || pickCollectiveImage(member.id)}
           alt={member.name}
@@ -82,9 +92,11 @@ export default function MemberPhoto({ member, containerClassName = "", container
         
       </div>
 
-      {/* Social overlay — subtle visibility by default, enhanced on hover */}
+      {/* Social overlay — subtle visibility by default, enhanced on hover and toggle on mobile touch */}
       {hasSocial &&
-      <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center gap-3 py-3 px-2 bg-black/40 backdrop-blur-sm opacity-40 group-hover:opacity-100 group-hover:bg-black/60 transition-all duration-300 ease-out">
+      <div className={`absolute bottom-0 left-0 right-0 flex justify-center items-center gap-3 py-3 px-2 bg-rose-950/40 backdrop-blur-sm transition-all duration-300 ease-out ${
+        showSocial ? 'opacity-100 bg-rose-950/60' : 'opacity-40 group-hover:opacity-100 group-hover:bg-rose-950/60'
+      }`}>
           {social?.instagram &&
         <a
           href={social.instagram}
