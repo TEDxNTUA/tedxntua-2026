@@ -63,6 +63,27 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
+/* Optimize images for loading */
+img {
+  /* Prevent layout shift during image loading */
+  display: block;
+  /* Ensure images don't cause FOUC (Flash of Unstyled Content) */
+  background-color: transparent;
+  contain: layout style paint;
+}
+
+/* Prevent video layout shifts */
+video {
+  display: block;
+  contain: layout style paint;
+}
+
+/* Hide content until assets are ready */
+html body[style*="overflow: hidden"] {
+  /* During loading, prevent scrollbar jumps */
+  scrollbar-gutter: auto;
+}
+
 .site-shell {
   min-height: 100dvh;
   display: flex;

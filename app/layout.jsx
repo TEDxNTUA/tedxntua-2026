@@ -9,6 +9,7 @@ import CycleZeroMark from "./components/CycleZeroMark";
 import Nav from "./components/Nav";
 import { withBasePath } from "./lib/basePath";
 import AssetLoader from "./components/AssetLoader";
+import ContentVisibilityWrapper from "./components/ContentVisibilityWrapper";
 
 
 // Page metadata for SEO and browser tab display
@@ -30,17 +31,18 @@ export default function RootLayout({ children }) {
         className="site-shell bg-blue-100 text-gray-900"
       >
         <AssetLoader />
-        <EventNavProvider>
-        <SiteHeader />
+        <ContentVisibilityWrapper>
+          <EventNavProvider>
+            <SiteHeader />
 
-          <main className="site-main">
-            {children}
-          </main>
+            <main className="site-main">
+              {children}
+            </main>
 
 
-          <footer className="site-footer border-t border-white/20 bg-black text-white">
-            <div className="footer-content mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 xl:px-10">
-              <div className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 place-items-center text-center">
+            <footer className="site-footer border-t border-white/20 bg-black text-white">
+              <div className="footer-content mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 xl:px-10">
+                <div className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 place-items-center text-center">
 
 
                 <section className="relative flex flex-col items-center gap-5 border-white/15 lg:pr-8">
@@ -160,7 +162,8 @@ export default function RootLayout({ children }) {
               </div>
             </div>
           </footer>
-        </EventNavProvider>
+          </EventNavProvider>
+        </ContentVisibilityWrapper>
       </body>
     </html>
   );

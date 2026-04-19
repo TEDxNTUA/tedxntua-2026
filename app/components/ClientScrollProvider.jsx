@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Lenis from "../lib/lenis.mjs";
 
 const LENIS_OPTIONS = {
@@ -14,8 +14,27 @@ const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export default function ClientScrollProvider({ children }) {
+  const [isReady, setIsReady] = useState(false);
+
   useEffect(() => {
-    if (prefersReducedMotion()) {
+    // Wait for assets to be ready before initializing smooth scroll
+    const handleAssetsReady = () => {
+      setIsReady(true);
+    };
+
+    if (sessionStorage.getItem("tedx_assets_loaded_session") === "true") {
+      setIsReady(true);
+    } else {
+      window.addEventListener("assets-ready", handleAssetsReady);
+    }
+
+    return () => {
+      window.removeEventListener("assets-ready", handleAssetsReady);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isReady || prefersReducedMotion()) {
       return undefined;
     }
 
@@ -35,7 +54,7 @@ export default function ClientScrollProvider({ children }) {
       }
       lenis.destroy();
     };
-  }, []);
+  }, [isReady]);
 
   return children;
 }
