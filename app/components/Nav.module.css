@@ -1,18 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap");
-
+/* --- 1. Main Container --- */
 .menuContainer {
   position: absolute;
   top: 0;
   left: 50%;
   width: min(500px, calc(100vw - 16px));
   height: 0;
-  margin: 0;
   z-index: 60;
-  opacity: 1;
-  transform: translateX(-50%) scale(1);
-  transition: transform 280ms ease, opacity 280ms ease;
+  transform: translateX(-50%) translateY(20px);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 300ms ease;
 }
-
 
 .menuContainerRaised {
   transform: translateX(-50%) translateY(-72px);
@@ -24,163 +20,81 @@
   pointer-events: none;
 }
 
+/* --- 2. The Semicircle Wrapper (Consolidated) --- */
 .wrap {
-  position: relative;
-  width: min(500px, calc(100vw - 16px));
-  height: min(500px, calc(100vw - 16px));
+  position: absolute;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   margin: 0 auto;
   overflow: hidden;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 72%, rgba(34, 197, 94, 0.3), transparent 34%),
-    radial-gradient(circle at 50% 28%, rgba(74, 222, 128, 0.22), transparent 46%),
-    linear-gradient(180deg, rgba(12, 54, 30, 0.95), rgba(4, 18, 10, 0.98));
-  box-shadow:
-    0 26px 70px rgba(7, 20, 12, 0.45),
-    inset 0 0 0 1px rgba(134, 239, 172, 0.2);
+  
+  /* Background Image Logic */
+  background-image: var(--nav-test-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  
+  /* Initial State (Closed) */
+  opacity: 1;
+  pointer-events: none;
   transform: translateY(-55%) scale(0.5);
-  transition: transform 500ms;
+  transition: transform 500ms cubic-bezier(0.8, 0.8, 0.5, 0.5), opacity 300ms ease;
 }
 
+/* Open State for Wrap */
 .menuOpen {
-  transform: translateY(-55%);
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-55%) scale(1.2);
 }
 
+/* --- 3. Navigation Slices --- */
 .slice {
   position: absolute;
   width: 50%;
   height: 50%;
   padding: 0;
   border: none;
-  background:
-    linear-gradient(180deg, rgba(241, 255, 244, 0.94), rgba(178, 245, 198, 0.86));
+  background: transparent;
   cursor: pointer;
   clip-path: polygon(100% 100%, 100% 0%, -70% 0%);
   transform-origin: 100% 100%;
-  transform: translateZ(0);
+  transition: filter 500ms ease, transform 500ms ease;
 }
 
-.slice:nth-child(1) {
-  transform: rotate(150deg);
+.slice:nth-child(1) { transform: rotate(150deg); }
+.slice:nth-child(2) { transform: rotate(210deg); }
+.slice:nth-child(3) { transform: rotate(270deg); }
+
+.slice:hover {
+  filter: brightness(1.3);
 }
 
-.slice:nth-child(2) {
-  transform: rotate(210deg);
-}
 
-.slice:nth-child(3) {
-  transform: rotate(270deg);
-}
+/* Counter-rotations */
+.slice:nth-child(1) .sliceLabel { transform: translate(-74%, 18%) rotate(-150deg); }
+.slice:nth-child(2) .sliceLabel { transform: translate(-40%, -8%) rotate(-210deg); }
+.slice:nth-child(3) .sliceLabel { transform: translate(-8%, -2%) rotate(-270deg); }
 
-.menuOpen .slice:nth-child(1) {
-  transform: rotate(150deg) scale(1.1);
-}
-
-.menuOpen .slice:nth-child(2) {
-  transform: rotate(210deg) scale(1.1);
-}
-
-.menuOpen .slice:nth-child(3) {
-  transform: rotate(270deg) scale(1.1);
-}
-
-.sliceInner {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0.68;
-  transition: opacity 300ms, transform 300ms;
-}
-
-.sliceLabel {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-  font-family: "Orbitron", sans-serif;
-  font-size: clamp(0.75rem, 1.3vw, 1rem);
-  font-weight: 800;
-  letter-spacing: 0.22em;
-  color: #04210f;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
-  pointer-events: none;
-  transition: opacity 300ms, transform 300ms;
-}
-
-.slice:nth-child(1) .sliceLabel {
-  transform: translate(-74%, 18%) rotate(-150deg);
-}
-
-.slice:nth-child(2) .sliceLabel {
-  transform: translate(-40%, -8%) rotate(-210deg);
-}
-
-.slice:nth-child(3) .sliceLabel {
-  transform: translate(-8%, -2%) rotate(-270deg);
-}
-
-.slice:nth-child(1) .sliceInner {
-  width: 125%;
-  height: 125%;
-  margin: -18% 0 0;
-  background-image: var(--nav-team-icon);
-  background-repeat: no-repeat;
-  background-size: 80%;
-  background-position: 20% 70%;
-  transform: rotate(-150deg);
-}
-
-.slice:nth-child(2) .sliceInner {
-  width: 120%;
-  height: 120%;
-  margin: -18% 0 0;
-  background-image: var(--nav-sponsors-icon);
-  background-repeat: no-repeat;
-  background-size: 75%;
-  background-position: 30% 30%;
-  transform: rotate(-210deg);
-}
-
-.slice:nth-child(3) .sliceInner {
-  width: 120%;
-  height: 120%;
-  margin: -18% 0 0;
-  background-image: var(--nav-event-icon);
-  background-repeat: no-repeat;
-  background-size: 85%;
-  background-position: 80% 40%;
-  transform: rotate(-270deg);
-}
-
-.slice:hover .sliceInner,
-.sliceActive .sliceInner {
-  opacity: 1;
-}
-
-.slice:hover .sliceLabel,
 .sliceActive .sliceLabel {
-  color: #02150a;
+  color: #eb0028; /* TED Red */
 }
 
+/* --- 5. Center Logo Button --- */
 .centerLogo {
   position: absolute;
   top: 0;
   left: 50%;
   width: clamp(108px, 33vw, 165px);
   height: clamp(108px, 33vw, 165px);
-  padding: 0;
   border: none;
-  border-radius: 0 0 50vmin 50vmin;
+  border-radius: 0 0 85px 85px;
   background-color: #000000;
-  box-shadow: 0 0 0 5vmin #00000000;
   cursor: pointer;
-  overflow: hidden;
   transform: translateX(-50%) translateY(-56%);
-  z-index: 10;
+  z-index: 70;
+  overflow: hidden;
 }
 
 .centerLogoInner {
@@ -188,60 +102,39 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  margin-top: 20%;
+  margin-top: 15%;
   background-image: var(--nav-home-icon);
   background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 230px auto;
+  background-position: center;
+  background-size: contain;
   opacity: 0.9;
-  pointer-events: none;
-  transition: opacity 300ms;
+  transition: opacity 300ms, transform 300ms;
 }
 
 .centerLogo:hover .centerLogoInner {
   opacity: 1;
+  transform: scale(1.05);
 }
 
+/* --- 6. Mobile --- */
 @media (max-width: 640px) {
   .menuContainer {
-    position: relative;
-    top: 0;
-    left: auto;
-    width: min(360px, calc(100vw - 24px));
-    height: 34px;
-    transform: none;
-  }
-
-
-  .menuContainerRaised {
-    transform: translateY(-24px);
-  }
-
-  .menuContainerHidden {
-    transform: translateY(-72px);
-    opacity: 0;
-    pointer-events: none;
-  }
+  /* This adds the height of the notch automatically */
+  top: env(safe-area-inset-top); 
+}
 
   .wrap {
-    width: min(360px, calc(100vw - 24px));
-    height: min(360px, calc(100vw - 24px));
-    transform: translateY(-80%) scale(0.18);
-  }
-
-  .sliceLabel {
-    font-size: clamp(0.66rem, 2vw, 0.82rem);
-    letter-spacing: 0.16em;
+    transform: translateY(-57%) scale(0.5);
   }
 
   .menuOpen {
-    transform: translateY(-80%) scale(1);
+    /* Ensure the open state also respects the semicircle midline */
+    transform: translateY(-57%) scale(1);
   }
 
   .centerLogo {
-    top: -22px;
-    width: clamp(108px, 30vw, 138px);
-    height: clamp(108px, 30vw, 138px);
-    transform: translateX(-50%) translateY(-80%);
+    top: -15px;
+    width: 120px;
+    height: 120px;
   }
 }

@@ -1,161 +1,135 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { useEventNav } from "./EventNavProvider";
-import classes from "./Nav.module.css";
+import Link from "next/link";
+import { useEventNav, useHeaderNav } from "./EventNavProvider";
+import { useScrollDirection } from "../hooks/useScrollDirection";
 import { withBasePath } from "../lib/basePath";
+import classes from "./Nav.module.css";
 
-const ROUTE_TO_INDEX = {
-  "/": 0,
-  "/event": 1,
-  "/sponsors": 2,
-  "/team": 3,
-};
-
+/**
+ * Header radial navigation with three slices and a central home/menu trigger.
+ * The open state is shared through context so the header can animate around it.
+ *
+ * @returns {JSX.Element}
+ */
 export default function Nav() {
+  // Route flags are used for active styling and to coordinate with the event-specific navigation.
   const pathname = usePathname() ?? "/";
   const { isOpen: isEventNavOpen, toggle: toggleEventNav } = useEventNav();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isHiddenOnScroll, setIsHiddenOnScroll] = useState(false);
-  const containerRef = useRef(null);
+
+  // Read the main header nav state from context so the header can react to the exact same source of truth.
+  const { isOpen, open, close } = useHeaderNav();
+  
+  // Refs let us detect outside clicks without relying on brittle DOM queries.
+  const isHiddenOnScroll = useScrollDirection({ threshold: 40 });
   const menuRef = useRef(null);
   const centerLogoRef = useRef(null);
-  const lastScrollYRef = useRef(0);
 
+  // Route checks control which slice looks active and whether the event slice toggles the sidebar.
   const isEventPage = pathname.startsWith("/event");
   const isSponsorsPage = pathname === "/sponsors";
-  const isTeamPage = pathname === "/team" || pathname.startsWith("/team/");
+  const isTeamPage = pathname.startsWith("/team");
 
-  const handleEventClick = () => {
+  /**
+   * Opens the event sidebar instead of navigating when the user is already on an event route.
+   *
+   * @param {import("react").MouseEvent<HTMLAnchorElement>} e
+   */
+  const handleEventClick = (e) => {
     if (isEventPage) {
-      setIsOpen(false);
+      e.preventDefault();
+      close();
       toggleEventNav();
-      return;
     }
-
-    window.location.href = withBasePath("/event");
   };
 
-  const handleCenterLogoClick = () => {
+  /**
+   * Opens the radial menu on first click and collapses it on subsequent clicks.
+   *
+   * @param {import("react").MouseEvent<HTMLAnchorElement>} e
+   */
+  const handleCenterClick = (e) => {
     if (!isOpen) {
-      setIsOpen(true);
-      return;
+      e.preventDefault();
+      open();
+    } else {
+      close();
     }
-
-    window.location.href = withBasePath("/");
   };
 
+  // When the radial menu is open, outside clicks collapse it through the shared provider state.
   useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    lastScrollYRef.current = window.scrollY;
-
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      const isScrollingDown = currentY > lastScrollYRef.current;
-      const passedTop = currentY > 40;
-
-      setIsHiddenOnScroll(isScrollingDown && passedTop);
-      lastScrollYRef.current = currentY;
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (!isOpen || typeof document === "undefined") {
-      return;
-    }
-
-    const handlePointerDown = (event) => {
-      const target = event.target;
-
-      if (
-        menuRef.current?.contains(target) ||
-        centerLogoRef.current?.contains(target)
-      ) {
-        return;
+    if (!isOpen) return;
+    const handleClickOutside = (e) => {
+      if (!menuRef.current?.contains(e.target) && !centerLogoRef.current?.contains(e.target)) {
+        close();
       }
-
-      setIsOpen(false);
     };
+    document.addEventListener("pointerdown", handleClickOutside);
+    return () => document.removeEventListener("pointerdown", handleClickOutside);
+  }, [close, isOpen]);
 
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [isOpen]);
+  // Compose CSS-module states so scroll behavior and event-page behavior can layer cleanly.
+  const containerClasses = [
+    classes.menuContainer,
+    isEventNavOpen && classes.menuContainerRaised,
+    isHiddenOnScroll && classes.menuContainerHidden,
+  ].filter(Boolean).join(" ");
 
-  useEffect(() => {
-    if (isEventNavOpen) {
-      setIsOpen(false);
-    }
-  }, [isEventNavOpen]);
-
-  // Remove hover/nearby pointer auto-open behavior.
-  // The semicircle nav should only open via explicit user interaction.
-
+  // CSS variables allow the module stylesheet to consume image assets without hardcoding paths there.
   return (
-    <div
-      ref={containerRef}
+    <nav
+      className={containerClasses}
       style={{
-        "--nav-team-icon": `url(${withBasePath("/team.png")})`,
-        "--nav-sponsors-icon": `url(${withBasePath("/sponsors.png")})`,
-        "--nav-event-icon": `url(${withBasePath("/event.png")})`,
         "--nav-home-icon": `url(${withBasePath("/home.png")})`,
+        "--nav-test-image": `url(${withBasePath("/testNav.jpg")})`, // The one background you want
       }}
-      className={[
-        classes.menuContainer,
-        isEventNavOpen ? classes.menuContainerRaised : "",
-        isHiddenOnScroll ? classes.menuContainerHidden : "",
-      ].join(" ").trim()}
     >
-      <div
-        ref={menuRef}
-        className={[classes.wrap, isOpen ? classes.menuOpen : ""].join(" ").trim()}
+      {/* The circular wrapper holds the three radial slices and scales open from the top. */}
+      <div 
+        ref={menuRef} 
+        className={`${classes.wrap} ${isOpen ? classes.menuOpen : ""}`}
       >
-        <a
-          href={withBasePath("/team")}
-          className={[classes.slice, isTeamPage ? classes.sliceActive : ""].join(" ").trim()}
+        {/* Team slice links directly and only changes visual state when the route is active. */}
+        <Link
+          href="/team"
+          className={`${classes.slice} ${isTeamPage ? classes.sliceActive : ""}`}
           aria-label="Team"
         >
-          <span className={classes.sliceInner} />
-        </a>
+        </Link>
 
-        <a
-          href={withBasePath("/sponsors")}
-          className={[classes.slice, isSponsorsPage ? classes.sliceActive : ""].join(" ").trim()}
+        {/* Sponsors slice links directly and mirrors the active route styling. */}
+        <Link
+          href="/sponsors"
+          className={`${classes.slice} ${isSponsorsPage ? classes.sliceActive : ""}`}
           aria-label="Sponsors"
         >
-          <span className={classes.sliceInner} />
-        </a>
+        </Link>
 
-        <button
-          type="button"
-          className={[classes.slice, isEventPage ? classes.sliceActive : ""].join(" ").trim()}
+        {/* Event slice either navigates to /event or toggles the event sidebar if already there. */}
+        <Link
+          href="/event"
           onClick={handleEventClick}
+          className={`${classes.slice} ${isEventPage ? classes.sliceActive : ""}`}
           aria-label="Event"
         >
-          <span className={classes.sliceInner} />
-        </button>
+        </Link>
       </div>
 
-      <button
+      {/* The center badge is both the home link and the open/close trigger for the radial menu. */}
+      <Link
+        href="/"
         ref={centerLogoRef}
-        type="button"
+        onClick={handleCenterClick}
         className={classes.centerLogo}
-        onClick={handleCenterLogoClick}
         aria-label={isOpen ? "Go home" : "Open navigation"}
         aria-expanded={isOpen}
       >
+        {/* Inner span renders the branded home icon via CSS background imagery. */}
         <span className={classes.centerLogoInner} />
-      </button>
-    </div>
+      </Link>
+    </nav>
   );
 }
