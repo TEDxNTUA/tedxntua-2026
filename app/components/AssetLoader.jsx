@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const READY_STATE_HAVE_CURRENT_DATA = 2;
 const MAX_LOADER_WAIT_MS = 20000; // Increased to 20 seconds for comprehensive asset loading
-const CACHE_SESSION_KEY = "tedx_assets_loaded_session";
+const CACHE_SESSION_PREFIX = "tedx_assets_loaded_";
 
 // Comprehensive image waiting with network timeout handling
 const waitForImage = (img) =>
@@ -116,36 +117,43 @@ const waitForCriticalAssets = async () => {
   ]);
 };
 
-const isAssetsAlreadyCached = () => {
+const getCacheKey = (pathname) => `${CACHE_SESSION_PREFIX}${pathname || "/"}`;
+
+const isAssetsAlreadyCached = (pathname) => {
   if (typeof window === "undefined") return false;
   try {
-    return sessionStorage.getItem(CACHE_SESSION_KEY) === "true";
+    return sessionStorage.getItem(getCacheKey(pathname)) === "true";
   } catch {
     return false;
   }
 };
 
-const markAssetsCached = () => {
+const markAssetsCached = (pathname) => {
   if (typeof window === "undefined") return;
   try {
-    sessionStorage.setItem(CACHE_SESSION_KEY, "true");
+    sessionStorage.setItem(getCacheKey(pathname), "true");
   } catch {
     // Session storage unavailable
   }
 };
 
 export default function AssetLoader() {
-  const [isReady, setIsReady] = useState(false);
-  const [skipLoader, setSkipLoader] = useState(false);
+  const pathname = usePathname() ?? "/";
+  const [readyPath, setReadyPath] = useState(null);
   const [progress, setProgress] = useState(0);
 
+  const isPathCached = isAssetsAlreadyCached(pathname);
+  const isReady = readyPath === pathname || isPathCached;
+
   useEffect(() => {
-    // Check if assets are already cached in this session
-    if (isAssetsAlreadyCached()) {
-      setSkipLoader(true);
+    // If this route is already cached, skip loader for this path only.
+    if (isAssetsAlreadyCached(pathname)) {
+      setReadyPath(pathname);
+      window.dispatchEvent(new CustomEvent("assets-ready", { detail: { pathname } }));
       return;
     }
 
+    setProgress(0);
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
     let isMounted = true;
@@ -155,15 +163,15 @@ export default function AssetLoader() {
       if (!isMounted) return;
       if (progressInterval) clearInterval(progressInterval);
       setProgress(100);
-      markAssetsCached();
+      markAssetsCached(pathname);
       
       // Dispatch event to notify providers that assets are ready
-      window.dispatchEvent(new CustomEvent("assets-ready"));
+      window.dispatchEvent(new CustomEvent("assets-ready", { detail: { pathname } }));
       
       // Small delay to show completion
       setTimeout(() => {
         if (isMounted) {
-          setIsReady(true);
+          setReadyPath(pathname);
         }
       }, 300);
     };
@@ -202,16 +210,9 @@ export default function AssetLoader() {
       if (progressInterval) clearInterval(progressInterval);
       isMounted = false;
     };
-  }, []);
+  }, [pathname]);
 
-  useEffect(() => {
-    if (isReady) {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    }
-  }, [isReady]);
-
-  if (isReady || skipLoader) {
+  if (isReady) {
     return null;
   }
 
