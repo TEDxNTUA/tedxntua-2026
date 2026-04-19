@@ -165,6 +165,10 @@ export default function AssetLoader() {
       setProgress(100);
       markAssetsCached(pathname);
       
+      // Release scroll lock immediately
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      
       // Dispatch event to notify providers that assets are ready
       window.dispatchEvent(new CustomEvent("assets-ready", { detail: { pathname } }));
       
@@ -205,6 +209,7 @@ export default function AssetLoader() {
 
     run();
     return () => {
+      // Ensure scroll is released on cleanup
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
       if (progressInterval) clearInterval(progressInterval);
