@@ -195,6 +195,8 @@ export const teams = [
         photo: assetPath("/MTT/speakers_mtt/eleftheria/mtt-434.jpg"),
         social: {
           instagram: "https://www.instagram.com/eleftheria_laz_",
+          linkedin: "https://www.linkedin.com/in/eleftheria-lazaridi",
+          facebook: "https://www.facebook.com/people/Eleftheria-Lazaridi/pfbid02uy4baKjHQapGpaVcgiFaN5Kby8kVVXnZMWxz5cPADyp1eCQfg9fg2dMuSZvVynDWl/",
         }
       },
       {
@@ -202,8 +204,8 @@ export const teams = [
         name: "Κωνσταντίνος Καραγιαννόπουλος",
         photo: assetPath("/MTT/speakers_mtt/konstantinos/mtt-401.jpg"),
         social: {
-          instagram: "https://www.instagram.com/d.karlos_",
-        }
+          instagram: "https://www.instagram.com/d.karlos_",          linkedin: "https://www.linkedin.com/in/konstantinos-karagiannopoulos-5234ba39b/",
+          facebook: "https://www.facebook.com/dinoskarlos.dinoskarlos?locale=el_GR",        }
       }
     ]
   },
@@ -239,6 +241,7 @@ export const teams = [
         photo: assetPath("/MTT/experience_mtt/nancy/mtt-215.jpg"),
         social: {
           instagram: "https://www.instagram.com/naancysllt",
+          linkedin: "https://www.linkedin.com/in/nancy-soultanopoulou-6b3412239?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
         }
       },
       {
@@ -275,6 +278,7 @@ export const teams = [
         photo: assetPath("/MTT/media_mtt/malvina/mtt-1.jpg"),
         social: {
           instagram: "https://www.instagram.com/malvinaast",
+          linkedin: "https://www.linkedin.com/in/malvina-stempili-15995b392?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
         }
       },
       {
@@ -283,6 +287,7 @@ export const teams = [
         photo: assetPath("/MTT/media_mtt/myrto/mtt-205.jpg"),
         social: {
           instagram: "https://www.instagram.com/mimiminymoe",
+          linkedin: "https://www.linkedin.com/in/myrto-badou",
         }
       },
       {
