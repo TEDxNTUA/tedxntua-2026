@@ -19,12 +19,16 @@ const isPathCached = (pathname) => {
 export default function ContentVisibilityWrapper({ children }) {
   const pathname = usePathname() ?? "/";
   const [readyPath, setReadyPath] = useState(null);
+  const [isCached, setIsCached] = useState(false);
 
-  const isReady = readyPath === pathname || isPathCached(pathname);
+  const isReady = readyPath === pathname || isCached;
 
   useEffect(() => {
+    const cached = isPathCached(pathname);
+    setIsCached(cached);
+
     // Check if assets are already cached for current route
-    if (isPathCached(pathname)) {
+    if (cached) {
       setReadyPath(pathname);
       return;
     }

@@ -141,16 +141,20 @@ export default function AssetLoader() {
   const pathname = usePathname() ?? "/";
   const [readyPath, setReadyPath] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [isPathCached, setIsPathCached] = useState(false);
 
-  const isPathCached = isAssetsAlreadyCached(pathname);
   const isReady = readyPath === pathname || isPathCached;
 
   useEffect(() => {
-    // If this route is already cached, skip loader for this path only.
-    if (isAssetsAlreadyCached(pathname)) {
+    // Check for cached state on mount/pathname change
+    const cached = isAssetsAlreadyCached(pathname);
+    if (cached) {
+      setIsPathCached(true);
       setReadyPath(pathname);
       window.dispatchEvent(new CustomEvent("assets-ready", { detail: { pathname } }));
       return;
+    } else {
+      setIsPathCached(false);
     }
 
     setProgress(0);

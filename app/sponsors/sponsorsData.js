@@ -5,7 +5,6 @@ const assetPath = (path) => encodeURI(withBasePath(path));
 export const sponsorTiers = [
   {
     tier: "Diamond",
-    icon: "💎",
     sponsors: [
       { 
         name: "ΔΕΗ",
@@ -17,7 +16,6 @@ export const sponsorTiers = [
   },
   {
     tier: "Platinum",
-    icon: "⭐",
     sponsors: [
      {
     "name": "Oliver Wyman",
@@ -48,7 +46,6 @@ export const sponsorTiers = [
   },
   {
     tier: "Grand",
-    icon: "✨",
     sponsors: [
       {
     "name": "PWC",
@@ -59,7 +56,6 @@ export const sponsorTiers = [
   },
   {
     tier: "Partners",
-    icon: "🤝",
     sponsors: [
       {
     "name": "ΑΦΗΣ",
@@ -70,7 +66,6 @@ export const sponsorTiers = [
   },
   {
     tier: "Supporters",
-    icon: "🚀",
     sponsors: [
       {
     "name": "Symetal",

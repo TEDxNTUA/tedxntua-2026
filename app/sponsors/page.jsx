@@ -4,6 +4,14 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { sponsorTiers } from "./sponsorsData";
 import SponsorTierSection from "./components/SponsorTierSection";
 
+const TIER_COLORS = {
+  "Diamond": { main: "#22d3ee", glow: "rgba(34, 211, 238, 0.8)" },    // Cyan
+  "Platinum": { main: "#93c5fd", glow: "rgba(147, 197, 253, 0.8)" },  // Light Blue
+  "Grand": { main: "#facc15", glow: "rgba(250, 204, 21, 0.8)" },     // Gold
+  "Partners": { main: "#4ade80", glow: "rgba(74, 222, 128, 0.8)" },  // Green
+  "Supporters": { main: "#a1a1aa", glow: "rgba(161, 161, 170, 0.8)" } // Zinc
+};
+
 // Refined Scroll reveal component for the thank you text
 function ScrollRevealText({ progress, reducedMotion }) {
   const text = "With heartfelt gratitude to the sponsors who lift this stage, ignite bold ideas, and make TEDxNTUA 2026 possible.";
@@ -115,24 +123,59 @@ function ScrollRevealText({ progress, reducedMotion }) {
 
 // Professional Modal for Sponsor Contact
 function SponsorModal({ isOpen, onClose }) {
-  const [formData, setFormData] = useState({ name: "", company: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", company: "", email: "", message: "" });
+  const [status, setStatus] = useState("idle"); // idle, sending, success, error
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const recipients = "tedxntua.developers@gmail.com,tedxntua.fundraising@gmail.com,tedxntua@gmail.com";
-    const subject = encodeURIComponent(`Sponsorship Inquiry: ${formData.company}`);
-    const body = encodeURIComponent(`Name: ${formData.name}\nCompany: ${formData.company}\n\nMessage:\n${formData.message}`);
-    window.location.href = `mailto:${recipients}?subject=${subject}&body=${body}`;
-    onClose();
+    setStatus("sending");
+
+    // YOU MUST REPLACE 'YOUR_ACCESS_KEY_HERE' WITH YOUR ACTUAL KEY FROM WEB3FORMS.COM
+    const accessKey = "a3e2b416-7bf0-4825-8572-ef284e7873e6"; 
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          from_name: "TEDxNTUA Sponsorship",
+          subject: `Sponsorship Inquiry: ${formData.company}`,
+          replyto: formData.email,
+          name: formData.name,
+          company: formData.company,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setStatus("success");
+        setTimeout(() => {
+          onClose();
+          setStatus("idle");
+          setFormData({ name: "", company: "", email: "", message: "" });
+        }, 2500);
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      setStatus("error");
+    }
   };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div 
         className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
-        onClick={onClose}
+        onClick={status === "sending" ? null : onClose}
       />
       <div className="relative w-full max-w-lg bg-zinc-900 border border-white/10 rounded-2xl p-8 shadow-2xl overflow-hidden">
         {/* Glow effect */}
@@ -141,47 +184,91 @@ function SponsorModal({ isOpen, onClose }) {
         <div className="relative z-10">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-2xl font-bold text-white">Partner with TEDxNTUA</h3>
-            <button onClick={onClose} className="text-white/50 hover:text-white transition-colors text-2xl">&times;</button>
+            <button 
+              onClick={onClose} 
+              disabled={status === "sending"}
+              className="text-white/50 hover:text-white transition-colors text-2xl disabled:opacity-0"
+            >
+              &times;
+            </button>
           </div>
           
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-xs uppercase tracking-widest text-white/40 mb-1">Full Name</label>
-              <input 
-                required
-                type="text"
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors"
-                value={formData.name}
-                onChange={e => setFormData({ ...formData, name: e.target.value })}
-              />
+          {status === "success" ? (
+            <div className="py-12 text-center space-y-4 animate-in fade-in zoom-in duration-300">
+              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto border border-green-500/50">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3">
+                  <path d="M20 6L9 17L4 12" />
+                </svg>
+              </div>
+              <h4 className="text-xl font-bold text-white">Message Sent!</h4>
+              <p className="text-white/50">Our team will contact you shortly.</p>
             </div>
-            <div>
-              <label className="block text-xs uppercase tracking-widest text-white/40 mb-1">Company / Organization</label>
-              <input 
-                required
-                type="text"
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors"
-                value={formData.company}
-                onChange={e => setFormData({ ...formData, company: e.target.value })}
-              />
-            </div>
-            <div>
-              <label className="block text-xs uppercase tracking-widest text-white/40 mb-1">Message</label>
-              <textarea 
-                required
-                rows="4"
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors resize-none"
-                value={formData.message}
-                onChange={e => setFormData({ ...formData, message: e.target.value })}
-              />
-            </div>
-            <button 
-              type="submit"
-              className="w-full bg-white text-black font-bold py-4 rounded-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 mt-2"
-            >
-              Send Inquiry
-            </button>
-          </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-white/40 mb-1">Full Name</label>
+                <input 
+                  required
+                  type="text"
+                  placeholder="Your Name"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors disabled:opacity-50"
+                  value={formData.name}
+                  disabled={status === "sending"}
+                  onChange={e => setFormData({ ...formData, name: e.target.value })}
+                />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs uppercase tracking-widest text-white/40 mb-1">Company</label>
+                  <input 
+                    required
+                    type="text"
+                    placeholder="Organization"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors disabled:opacity-50"
+                    value={formData.company}
+                    disabled={status === "sending"}
+                    onChange={e => setFormData({ ...formData, company: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs uppercase tracking-widest text-white/40 mb-1">Email Address</label>
+                  <input 
+                    required
+                    type="email"
+                    placeholder="email@example.com"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors disabled:opacity-50"
+                    value={formData.email}
+                    disabled={status === "sending"}
+                    onChange={e => setFormData({ ...formData, email: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-white/40 mb-1">Message</label>
+                <textarea 
+                  required
+                  rows="4"
+                  placeholder="Tell us about your interest in sponsoring..."
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors resize-none disabled:opacity-50"
+                  value={formData.message}
+                  disabled={status === "sending"}
+                  onChange={e => setFormData({ ...formData, message: e.target.value })}
+                />
+              </div>
+              
+              {status === "error" && (
+                <p className="text-red-500 text-xs text-center">Something went wrong. Please try again.</p>
+              )}
+
+              <button 
+                type="submit"
+                disabled={status === "sending"}
+                className="w-full bg-white text-black font-bold py-4 rounded-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 mt-2 disabled:bg-white/20 disabled:text-white/30 disabled:cursor-not-allowed"
+              >
+                {status === "sending" ? "Sending Message..." : "Send Inquiry"}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>
@@ -338,6 +425,8 @@ export default function SponsorsPage() {
           {/* Section Markers (Bullets) */}
           {sectionMarkers.map((marker, i) => {
             const isActive = windowScrollProgress >= marker.percent - 0.01;
+            const tierColor = TIER_COLORS[marker.name] || { main: "#ffffff", glow: "rgba(255,255,255,0.5)" };
+
             return (
               <div 
                 key={i}
@@ -349,16 +438,23 @@ export default function SponsorsPage() {
                 }}
               >
                 {/* Bullet */}
-                <div className={`
-                  w-2 h-2 rounded-full border-2 transition-all duration-500 cursor-help
-                  ${isActive 
-                    ? "bg-green-500 border-green-400 scale-125 shadow-[0_0_10px_rgba(34,197,94,0.8)]" 
-                    : "bg-zinc-900 border-white/20 hover:border-white/50"
-                  }
-                `} />
+                <div 
+                  className={`
+                    w-2.5 h-2.5 rounded-full border-2 transition-all duration-500 cursor-help
+                    ${isActive ? "scale-125" : "bg-zinc-900 border-white/20 hover:border-white/50"}
+                  `} 
+                  style={isActive ? {
+                    backgroundColor: tierColor.main,
+                    borderColor: tierColor.main,
+                    boxShadow: `0 0 12px ${tierColor.glow}`
+                  } : {}}
+                />
                 
                 {/* Label */}
-                <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-2 py-1 rounded bg-black/80 border border-white/10 text-[10px] font-bold text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none backdrop-blur-sm">
+                <div 
+                  className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-2 py-1 rounded bg-black/80 border border-white/10 text-[10px] font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none backdrop-blur-sm"
+                  style={{ color: tierColor.main }}
+                >
                   {marker.name}
                 </div>
               </div>
@@ -403,46 +499,19 @@ export default function SponsorsPage() {
             ))}
           </div>
 
-          {/* Professional CTA Card */}
+          {/* Professional CTA Card - simplified to just the button */}
           <div className="mt-40 mb-32 flex justify-center">
-            <div className="relative group w-full max-w-2xl">
-              {/* Subtle background glow */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
-              
-              <div className="relative flex flex-col items-center p-12 bg-zinc-900/50 backdrop-blur-xl border border-white/10 rounded-2xl text-center">
-                <span className="inline-block px-4 py-1.5 mb-6 rounded-full bg-green-500/10 text-green-400 text-[10px] font-black uppercase tracking-[0.3em] border border-green-500/20">
-                  Opportunities
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold mb-4 tracking-tight">
-                  Fuel the Future of <span className="text-red-600">TEDx</span>NTUA
-                </h2>
-                <p className="max-w-md text-white/50 text-sm leading-relaxed mb-10">
-                  Join our community of visionaries and help us amplify ideas that matter. 
-                  Let's create something extraordinary together.
-                </p>
-                
-                <button 
-                  onClick={() => setIsModalOpen(true)}
-                  className="group relative inline-flex items-center gap-4 px-10 py-4 rounded-full bg-white text-black font-black hover:scale-105 transition-all duration-300 shadow-xl shadow-white/5"
-                >
-                  <span className="text-sm uppercase tracking-wider">Become a Sponsor</span>
-                  <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                </button>
-                
-                <div className="mt-12 flex items-center gap-8 opacity-30 grayscale transition-all duration-500 group-hover:opacity-60 group-hover:grayscale-0">
-                  <span className="text-[10px] font-bold tracking-widest uppercase">Trusted by</span>
-                  <div className="flex gap-4">
-                    <div className="w-2 h-2 rounded-full bg-white" />
-                    <div className="w-2 h-2 rounded-full bg-white/50" />
-                    <div className="w-2 h-2 rounded-full bg-white/20" />
-                  </div>
-                </div>
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="group relative inline-flex items-center gap-4 px-10 py-4 rounded-full bg-white text-black font-black hover:scale-105 transition-all duration-300 shadow-xl shadow-white/5"
+            >
+              <span className="text-sm uppercase tracking-wider">Become a Sponsor / Get in contact with us</span>
+              <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center group-hover:translate-x-1 transition-transform">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </div>
-            </div>
+            </button>
           </div>
         </div>
       </div>
