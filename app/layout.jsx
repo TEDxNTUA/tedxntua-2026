@@ -26,7 +26,7 @@ const HEADER_BUTTON_EXPAND_MIN_WIDTH = 200;
 // Define the layout component
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className="site-shell bg-blue-100 text-gray-900"
       >

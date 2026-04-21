@@ -79,6 +79,34 @@ export default function SponsorTierSection({ tier, index }) {
     }
   };
 
+  const getTierColor = () => {
+    switch (tier.tier) {
+      case "Diamond":
+        return "from-cyan-400 to-cyan-500";
+      case "Platinum":
+        return "from-blue-300 to-blue-400";
+      case "Grand":
+        return "from-yellow-400 to-yellow-500";
+      case "Partners":
+        return "from-green-400 to-green-500";
+      case "Supporters":
+        return "from-zinc-400 to-zinc-500";
+      default:
+        return "from-green-400 to-green-500";
+    }
+  };
+
+  const getTierColorHex = () => {
+    switch (tier.tier) {
+      case "Diamond": return "#22d3ee";
+      case "Platinum": return "#93c5fd";
+      case "Grand": return "#facc15";
+      case "Partners": return "#4ade80";
+      case "Supporters": return "#a1a1aa";
+      default: return "#22c55e";
+    }
+  };
+
   return (
     <div
       ref={ref}
@@ -90,12 +118,21 @@ export default function SponsorTierSection({ tier, index }) {
       `}
     >
       {/* Tier Header */}
-      <div className={`mb-6 text-center ${index === 0 ? "mb-8" : ""}`}>
-        <div className="flex items-center justify-center gap-3 mb-2">
-          <span className="text-4xl">{tier.icon}</span>
-          <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent">
+      <div className={`mb-10 text-center ${index === 0 ? "mb-12" : ""}`}>
+        <div className="flex flex-col items-center justify-center gap-2">
+          <span 
+            className="text-[10px] font-black uppercase tracking-[0.4em] mb-1"
+            style={{ color: getTierColorHex() }}
+          >
+            Tier Excellence
+          </span>
+          <h2 className={`text-4xl sm:text-5xl font-black tracking-tighter bg-gradient-to-r ${getTierColor()} bg-clip-text text-transparent uppercase`}>
             {tier.tier}
           </h2>
+          <div 
+            className="h-1 w-12 rounded-full mt-4"
+            style={{ backgroundColor: getTierColorHex() }}
+          />
         </div>
       </div>
 
@@ -184,7 +221,12 @@ export default function SponsorTierSection({ tier, index }) {
 
       {/* Separator line between tiers */}
       {index < 4 && (
-        <div className="my-10 sm:my-12 h-px bg-gradient-to-r from-transparent via-green-500/30 to-transparent" />
+        <div 
+          className="my-16 sm:my-20 h-px w-full max-w-lg mx-auto"
+          style={{ 
+            background: `linear-gradient(to right, transparent, ${getTierColorHex()}44, transparent)` 
+          }}
+        />
       )}
     </div>
   );

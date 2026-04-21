@@ -96,13 +96,17 @@ export default function AssetLoader() {
   const pathname = usePathname() ?? "/";
   const [readyPath, setReadyPath] = useState(null);
   const [progress, setProgress] = useState(0);
+<<<<<<< HEAD
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+=======
+  const [isPathCached, setIsPathCached] = useState(false);
+>>>>>>> sponsors_update
 
-  const isPathCached = isAssetsAlreadyCached(pathname);
   const isReady = readyPath === pathname || isPathCached;
 
   useEffect(() => {
+<<<<<<< HEAD
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -111,9 +115,17 @@ export default function AssetLoader() {
 
   useEffect(() => {
     if (isAssetsAlreadyCached(pathname)) {
+=======
+    // Check for cached state on mount/pathname change
+    const cached = isAssetsAlreadyCached(pathname);
+    if (cached) {
+      setIsPathCached(true);
+>>>>>>> sponsors_update
       setReadyPath(pathname);
       window.dispatchEvent(new CustomEvent("assets-ready", { detail: { pathname } }));
       return;
+    } else {
+      setIsPathCached(false);
     }
 
     const startTime = Date.now();

@@ -30,10 +30,14 @@ const prefersReducedMotion = () =>
 export default function ClientScrollProvider({ children }) {
   const pathname = usePathname() ?? "/";
   const [readyPath, setReadyPath] = useState(null);
+  const [isCached, setIsCached] = useState(false);
 
-  const isReady = readyPath === pathname || isPathCached(pathname);
+  const isReady = readyPath === pathname || isCached;
 
   useEffect(() => {
+    const cached = isPathCached(pathname);
+    setIsCached(cached);
+
     // Wait for assets to be ready before initializing smooth scroll
     const handleAssetsReady = (event) => {
       const loadedPath = event?.detail?.pathname;
@@ -42,7 +46,7 @@ export default function ClientScrollProvider({ children }) {
       }
     };
 
-    if (isPathCached(pathname)) {
+    if (cached) {
       setReadyPath(pathname);
     } else {
       window.addEventListener("assets-ready", handleAssetsReady);
