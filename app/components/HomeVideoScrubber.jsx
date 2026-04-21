@@ -27,27 +27,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const pinStateRef = useRef("before");
   const [scrubHeight, setScrubHeight] = useState("0px");
   const [pinState, setPinState] = useState("before");
-<<<<<<< HEAD
-  const [videoSrc, setVideoSrc] = useState(null);
-=======
   const [videoSrc, setVideoSrc] = useState("");
->>>>>>> sponsors_update
   const layoutCache = useRef({ top: 0, height: 0, windowHeight: 0 });
-  const currentVideoTimeRef = useRef(0);
-  const targetVideoTimeRef = useRef(0);
-
-  // Update video source based on width, allowing it to switch if the user resizes (useful for testing)
-  useEffect(() => {
-    const updateSrc = () => {
-      const isMobileWidth = window.innerWidth < 768;
-      const newSrc = isMobileWidth ? "/koutsouro_mobile.mp4" : "/output.mp4";
-      setVideoSrc((prev) => (prev !== newSrc ? newSrc : prev));
-    };
-
-    updateSrc();
-    window.addEventListener("resize", updateSrc);
-    return () => window.removeEventListener("resize", updateSrc);
-  }, []);
 
   useEffect(() => {
     const getSrc = () => {
@@ -142,12 +123,6 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
     // Calculate target time based on scroll
     const progress = clamp(scrollDistance / total, 0, 1);
-<<<<<<< HEAD
-    targetVideoTimeRef.current = Math.min(
-      progress * video.duration,
-      video.duration - 0.001
-    );
-=======
     const nextTime = Math.min(
       progress * (video.duration - 0.05), // slightly less than duration to avoid end-of-video issues
       video.duration - 0.05,
@@ -157,22 +132,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     if (Math.abs(video.currentTime - nextTime) > 0.016) {
       video.currentTime = nextTime;
     }
->>>>>>> sponsors_update
 
-    // Smoothly interpolate current time towards target for "buttery" feel
-    // Using a simple lerp: current = current + (target - current) * factor
-    const lerpFactor = 0.15; 
-    const timeDiff = targetVideoTimeRef.current - currentVideoTimeRef.current;
-    
-    if (Math.abs(timeDiff) > 0.001) {
-      currentVideoTimeRef.current += timeDiff * lerpFactor;
-      video.currentTime = currentVideoTimeRef.current;
-      // Continue animation if we haven't reached target
-      frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
-    } else {
-      video.currentTime = targetVideoTimeRef.current;
-      frameIdRef.current = 0;
-    }
+    frameIdRef.current = 0;
   }, []);
 
   const requestSync = useCallback(() => {
@@ -289,11 +250,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
           <video
             ref={videoRef}
             className={styles.scrubberSectionVideo}
-<<<<<<< HEAD
-            src={videoSrc ? withBasePath(videoSrc) : undefined}
-=======
             src={videoSrc}
->>>>>>> sponsors_update
             muted
             playsInline
             preload="auto"

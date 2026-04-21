@@ -138,27 +138,19 @@
 
 @media (max-width: 720px) {
   .scrubberSectionVideo {
-<<<<<<< HEAD
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 0;
-    box-shadow: none;
-=======
     width: 95%;
     height: 95%;
     object-fit: cover;
     border-radius: 0.75rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
->>>>>>> sponsors_update
   }
 }
 
 @media (max-width: 480px) {
   .scrubberSectionVideo {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
+    width: 90%;
+    height: 90%;
+    border-radius: 0.5rem;
   }
 }
 
