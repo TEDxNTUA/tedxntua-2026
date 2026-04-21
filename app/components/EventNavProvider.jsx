@@ -3,19 +3,11 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import EventSidebar from "./EventSidebar";
-import EventNavToggle from "./EventNavToggle";
 
 /**
  * Shared provider for the site header navigation and the event-page sidebar navigation.
  * It centralizes route-aware nav state so header controls and page-level overlays stay synchronized.
  */
-
-/** Session storage key used to ensure the event-nav peek animation runs only once per session. */
-const EVENT_NAV_PEEK_KEY = "event-nav-peeked";
-/** Delay before the event-nav peek animation opens. */
-const EVENT_NAV_PEEK_OPEN_DELAY_MS = 700;
-/** Delay before the event-nav peek animation closes and becomes marked as seen. */
-const EVENT_NAV_PEEK_CLOSE_DELAY_MS = 1700;
 
 // Separate contexts keep the event sidebar nav and the header semicircle nav independent.
 const EventNavContext = createContext(null);
@@ -60,51 +52,13 @@ export default function EventNavProvider({ children }) {
   const pathname = usePathname() ?? "/";
   const isEventPage = pathname.startsWith("/event");
 
-  // Event-page sidebar state and its first-visit peek animation state.
-  const [isEventNavOpen, setIsEventNavOpen] = useState(false);
-  const [isPeeking, setIsPeeking] = useState(false);
-
   // Keeps the semicircle header nav in sync across the header and the nav component.
   const [isHeaderNavOpen, setIsHeaderNavOpen] = useState(false);
 
-  // The event sidebar can only be considered open while the user is on an event route.
-  const isEventNavVisible = isEventPage;
-  const effectiveEventNavOpen = isEventNavVisible && isEventNavOpen;
-  const isEventNavPeeking = isEventNavVisible && !effectiveEventNavOpen && isPeeking;
-
   // Reset all navigation overlays on route changes so each page starts from a clean state.
   useEffect(() => {
-    setIsEventNavOpen(false);
-    setIsPeeking(false);
     setIsHeaderNavOpen(false);
   }, [pathname]);
-
-  // Show a one-time "peek" of the event navigation to hint that the sidebar exists.
-  useEffect(() => {
-    if (!isEventNavVisible || typeof window === "undefined") return;
-    if (window.sessionStorage.getItem(EVENT_NAV_PEEK_KEY)) return;
-
-    const openTimer = window.setTimeout(() => {
-      setIsPeeking(true);
-    }, EVENT_NAV_PEEK_OPEN_DELAY_MS);
-
-    const closeTimer = window.setTimeout(() => {
-      setIsPeeking(false);
-      window.sessionStorage.setItem(EVENT_NAV_PEEK_KEY, "true");
-    }, EVENT_NAV_PEEK_CLOSE_DELAY_MS);
-
-    return () => {
-      window.clearTimeout(openTimer);
-      window.clearTimeout(closeTimer);
-    };
-  }, [isEventNavVisible]);
-
-  // Stable event-nav actions are shared with the toggle button and the sidebar itself.
-  const toggleEventNav = useCallback(() => setIsEventNavOpen((prev) => !prev), []);
-  const closeEventNav = useCallback(() => {
-    setIsEventNavOpen(false);
-    setIsPeeking(false);
-  }, []);
 
   // Stable header-nav actions are shared with the center trigger and the header action buttons.
   const openHeaderNav = useCallback(() => setIsHeaderNavOpen(true), []);
@@ -122,9 +76,10 @@ export default function EventNavProvider({ children }) {
     [closeHeaderNav, isHeaderNavOpen, openHeaderNav, toggleHeaderNav]
   );
 
+  // Event nav context now just handles visibility for the dock
   const eventNavValue = useMemo(
-    () => ({ isOpen: effectiveEventNavOpen, toggle: toggleEventNav, close: closeEventNav }),
-    [closeEventNav, effectiveEventNavOpen, toggleEventNav]
+    () => ({ isOpen: false, toggle: () => {}, close: () => {} }),
+    []
   );
 
   // Both providers wrap the layout so header and event navigation can react anywhere in the tree.
@@ -133,20 +88,8 @@ export default function EventNavProvider({ children }) {
       <HeaderNavContext.Provider value={headerNavValue}>
         {children}
 
-        {/* Floating button that toggles the event-page sidebar navigation. */}
-        <EventNavToggle
-          isOpen={effectiveEventNavOpen}
-          isPeeking={isEventNavPeeking}
-          onToggle={toggleEventNav}
-          visible={isEventNavVisible}
-        />
-
         {/* Sliding sidebar navigation that is only meaningful on event routes. */}
-        <EventSidebar
-          isOpen={effectiveEventNavOpen}
-          isPeeking={isEventNavPeeking}
-          onClose={closeEventNav}
-        />
+        <EventSidebar visible={isEventPage} />
       </HeaderNavContext.Provider>
     </EventNavContext.Provider>
   );

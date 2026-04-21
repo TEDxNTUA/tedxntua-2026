@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useEventNav, useHeaderNav } from "./EventNavProvider";
+import { useHeaderNav } from "./EventNavProvider";
 import { useScrollDirection } from "../hooks/useScrollDirection";
 import { withBasePath } from "../lib/basePath";
 import classes from "./Nav.module.css";
@@ -17,7 +17,6 @@ import classes from "./Nav.module.css";
 export default function Nav() {
   // Route flags are used for active styling and to coordinate with the event-specific navigation.
   const pathname = usePathname() ?? "/";
-  const { isOpen: isEventNavOpen, toggle: toggleEventNav } = useEventNav();
 
   // Read the main header nav state from context so the header can react to the exact same source of truth.
   const { isOpen, open, close } = useHeaderNav();
@@ -34,16 +33,11 @@ export default function Nav() {
   const isTeamPage = pathname.startsWith("/team");
 
   /**
-   * Opens the event sidebar instead of navigating when the user is already on an event route.
-   *
-   * @param {import("react").MouseEvent<HTMLAnchorElement>} e
+   * Standard navigation for the event slice. 
+   * The event dock is handled independently within the event routes.
    */
-  const handleEventClick = (e) => {
-    if (isEventPage) {
-      e.preventDefault();
-      close();
-      toggleEventNav();
-    }
+  const handleEventClick = () => {
+    close();
   };
 
   /**
@@ -81,7 +75,6 @@ export default function Nav() {
   // Compose CSS-module states so scroll behavior and event-page behavior can layer cleanly.
   const containerClasses = [
     classes.menuContainer,
-    isEventNavOpen && classes.menuContainerRaised,
     isHiddenOnScroll && classes.menuContainerHidden,
   ].filter(Boolean).join(" ");
 
@@ -116,7 +109,9 @@ export default function Nav() {
           className={`${classes.slice} ${isTeamPage ? classes.sliceActive : ""}`}
           aria-label="Team"
         >
-          <span className={classes.sliceInner} />
+          <span className={classes.sliceInner}>
+            <img src={withBasePath("/team.png")} alt="" className="w-full h-full object-contain" />
+          </span>
           <span className={classes.sliceLabel}>TEAM</span>
         </Link>
 
@@ -127,7 +122,9 @@ export default function Nav() {
           className={`${classes.slice} ${isEventPage ? classes.sliceActive : ""}`}
           aria-label="Event"
         >
-          <span className={classes.sliceInner} />
+          <span className={classes.sliceInner}>
+            <img src={withBasePath("/event.png")} alt="" className="w-full h-full object-contain" />
+          </span>
           <span className={classes.sliceLabel}>EVENT</span>
         </Link>
 
@@ -137,7 +134,9 @@ export default function Nav() {
           className={`${classes.slice} ${isSponsorsPage ? classes.sliceActive : ""}`}
           aria-label="Sponsors"
         >
-          <span className={classes.sliceInner} />
+          <span className={classes.sliceInner}>
+            <img src={withBasePath("/sponsors.png")} alt="" className="w-full h-full object-contain" />
+          </span>
           <span className={classes.sliceLabel}>SPONSORS</span>
         </Link>
       </div>
@@ -153,7 +152,9 @@ export default function Nav() {
         data-current-page={isTeamPage ? "TEAM" : isEventPage ? "EVENT" : isSponsorsPage ? "SPONSORS" : ""}
       >
         {/* Inner span renders the branded home icon via CSS background imagery. */}
-        <span className={classes.centerLogoInner} />
+        <span className={classes.centerLogoInner}>
+          <img src={withBasePath("/home.png")} alt="" className="w-full h-full object-contain" />
+        </span>
       </Link>
     </nav>
   );

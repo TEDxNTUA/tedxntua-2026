@@ -7,7 +7,10 @@ import { allPerformances } from "../infoDatabase";
 
 export default function ProgramPage() {
   return (
-    <EventPageShell title="Performances">
+    <EventPageShell 
+      title="Performances"
+      description="Ανακαλύψτε τη δύναμη της τέχνης και της έκφρασης μέσα από καθηλωτικές παραστάσεις που προκαλούν τις προοπτικές και γιορτάζουν την ανθρώπινη δημιουργικότητα."
+    >
       <AnchorScrollHandler />
       <div className="grid grid-cols-1 justify-items-center gap-8 md:grid-cols-2 lg:grid-cols-3">
         {allPerformances.map((item, index) => (
