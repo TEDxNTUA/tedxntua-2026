@@ -32,8 +32,11 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const currentVideoTimeRef = useRef(0);
 
   // Smoothing factor: lower is smoother/slower, higher is more responsive
-  // 0.1 is usually the "sweet spot" for 60fps
-  const SMOOTHING = 0.12; 
+  // We use a slightly lower value on mobile for more "flow"
+  const getSmoothing = () => {
+    if (typeof window === "undefined") return 0.12;
+    return window.innerWidth < 720 ? 0.08 : 0.12;
+  };
 
   useEffect(() => {
     const getSrc = () => {
@@ -77,8 +80,10 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
     const viewportHeight = getViewportHeight();
     const isMobile = window.innerWidth < 720;
+    
+    // Mobile feels better with a bit more scroll distance per second of video
     const pixelsPerSecond = (isCoarsePointer() || isMobile)
-      ? MOBILE_PIXELS_PER_SECOND
+      ? 1200 // Increased from 900 for mobile
       : PIXELS_PER_SECOND;
     
     const minHeight = viewportHeight * storyBeats.length;
@@ -128,8 +133,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const targetTime = progress * (video.duration - 0.05);
     
     // LERP: current = current + (target - current) * smoothing
-    // This creates the "momentum" feel
-    const newTime = currentVideoTimeRef.current + (targetTime - currentVideoTimeRef.current) * SMOOTHING;
+    const smoothing = getSmoothing();
+    const newTime = currentVideoTimeRef.current + (targetTime - currentVideoTimeRef.current) * smoothing;
     currentVideoTimeRef.current = newTime;
 
     // Only update if the difference is significant
@@ -182,7 +187,6 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     };
 
     const handleLoadedMetadata = () => {
-      // Try to trigger layout on metadata load (more reliable on mobile)
       if (video.duration > 0) {
         handleLoadedData();
       }
@@ -194,7 +198,6 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       handleLoadedData();
     }
 
-    // Trigger initial layout calculation after a short delay
     const timeoutId = setTimeout(() => {
       if (video.duration > 0) {
         handleLoadedData();
@@ -202,6 +205,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     }, 500);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("touchmove", handleScroll, { passive: true }); // Faster updates for mobile
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -211,6 +215,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
         frameIdRef.current = 0;
       }
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("touchmove", handleScroll);
       window.removeEventListener("resize", handleResize);
       video.removeEventListener("loadeddata", handleLoadedData);
       video.removeEventListener("loadedmetadata", handleLoadedMetadata);
