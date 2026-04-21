@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "localserver": "npm run build && npx serve@latest out",
+    "localserver": "NEXT_PUBLIC_BASE_PATH='' npm run build && npx serve@latest out",
     "start": "next start",
     "lint": "eslint"
   },
