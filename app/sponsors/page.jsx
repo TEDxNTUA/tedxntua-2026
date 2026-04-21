@@ -455,7 +455,7 @@ export default function SponsorsPage() {
                 
                 {/* Label */}
                 <div 
-                  className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-2 py-1 rounded bg-black/80 border border-white/10 text-[10px] font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none backdrop-blur-sm"
+                  className={`absolute right-full mr-4 top-1/2 -translate-y-1/2 px-2 py-1 rounded bg-black/80 border border-white/10 text-[10px] font-bold whitespace-nowrap transition-opacity pointer-events-none backdrop-blur-sm ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
                   style={{ color: tierColor.main }}
                 >
                   {marker.name}
@@ -463,10 +463,6 @@ export default function SponsorsPage() {
               </div>
             );
           })}
-        </div>
-        
-        <div className="whitespace-nowrap text-[9px] font-black text-white/20 tracking-[0.3em] uppercase vertical-text mt-2">
-          Navigation
         </div>
       </div>
       {/* Sponsor Modal */}

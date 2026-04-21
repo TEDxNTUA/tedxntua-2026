@@ -88,6 +88,7 @@ html body[style*="overflow: hidden"] {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow-x: clip;
 }
 
 .site-main {

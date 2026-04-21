@@ -67,21 +67,6 @@ const waitForStylesheets = async () => {
   }
 };
 
-const waitForCriticalAssets = async () => {
-  const pageRoot = document.querySelector(".site-main") ?? document.body;
-  const images = Array.from(pageRoot.querySelectorAll("img"));
-  const videos = Array.from(pageRoot.querySelectorAll("video")).filter((video) => video.preload !== "none");
-  const imagePromises = images.map(waitForImage);
-  const videoPromises = videos.map(waitForVideo);
-  const fontPromise = document.fonts?.ready ?? Promise.resolve();
-  const stylesheetPromise = waitForStylesheets();
-  const timeoutPromise = new Promise((resolve) => window.setTimeout(resolve, MAX_LOADER_WAIT_MS));
-  await Promise.race([
-    Promise.all([...imagePromises, ...videoPromises, fontPromise, stylesheetPromise]),
-    timeoutPromise,
-  ]);
-};
-
 const getCacheKey = (pathname) => `${CACHE_SESSION_PREFIX}${pathname || "/"}`;
 const isAssetsAlreadyCached = (pathname) => {
   if (typeof window === "undefined") return false;
@@ -188,7 +173,21 @@ export default function AssetLoader() {
           }
         }, 300);
 
-        await waitForCriticalAssets();
+        // Scan the entire document to ensure header and footer assets are included in the wait.
+        const root = document.body;
+        const images = Array.from(root.querySelectorAll("img"));
+        const videos = Array.from(root.querySelectorAll("video")).filter((video) => video.preload !== "none");
+        const imagePromises = images.map(waitForImage);
+        const videoPromises = videos.map(waitForVideo);
+        const fontPromise = document.fonts?.ready ?? Promise.resolve();
+        const stylesheetPromise = waitForStylesheets();
+        const timeoutPromise = new Promise((resolve) => window.setTimeout(resolve, MAX_LOADER_WAIT_MS));
+        
+        await Promise.race([
+          Promise.all([...imagePromises, ...videoPromises, fontPromise, stylesheetPromise]),
+          timeoutPromise,
+        ]);
+        
         finalize();
       } catch (error) {
         finalize();

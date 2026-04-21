@@ -28,6 +28,7 @@ export default function Nav() {
   const centerLogoRef = useRef(null);
 
   // Route checks control which slice looks active and whether the event slice toggles the sidebar.
+  const isHomePage = pathname === "/";
   const isEventPage = pathname.startsWith("/event");
   const isSponsorsPage = pathname === "/sponsors";
   const isTeamPage = pathname.startsWith("/team");
@@ -47,6 +48,7 @@ export default function Nav() {
 
   /**
    * Opens the radial menu on first click and collapses it on subsequent clicks.
+   * On subpages, clicking while open navigates home.
    *
    * @param {import("react").MouseEvent<HTMLAnchorElement>} e
    */
@@ -55,6 +57,11 @@ export default function Nav() {
       e.preventDefault();
       open();
     } else {
+      // If we are on a subpage and the menu is open, let the Link navigate home.
+      // Otherwise, just close the menu.
+      if (isHomePage) {
+        e.preventDefault();
+      }
       close();
     }
   };
@@ -83,38 +90,55 @@ export default function Nav() {
     <nav
       className={containerClasses}
       style={{
+        "--nav-team-icon": `url(${withBasePath("/team.png")})`,
+        "--nav-sponsors-icon": `url(${withBasePath("/sponsors.png")})`,
+        "--nav-event-icon": `url(${withBasePath("/event.png")})`,
         "--nav-home-icon": `url(${withBasePath("/home.png")})`,
         "--nav-test-image": `url(${withBasePath("/testNav.jpg")})`, // The one background you want
       }}
     >
+      {/* Preload images so AssetLoader waits for these critical navbar assets */}
+      <div className="hidden" aria-hidden="true">
+        <img src={withBasePath("/team.png")} alt="" />
+        <img src={withBasePath("/sponsors.png")} alt="" />
+        <img src={withBasePath("/event.png")} alt="" />
+        <img src={withBasePath("/testNav.jpg")} alt="" />
+      </div>
+
       {/* The circular wrapper holds the three radial slices and scales open from the top. */}
       <div 
         ref={menuRef} 
         className={`${classes.wrap} ${isOpen ? classes.menuOpen : ""}`}
       >
-        {/* Team slice links directly and only changes visual state when the route is active. */}
+        {/* Team slice */}
         <Link
           href="/team"
           className={`${classes.slice} ${isTeamPage ? classes.sliceActive : ""}`}
           aria-label="Team"
         >
+          <span className={classes.sliceInner} />
+          <span className={classes.sliceLabel}>TEAM</span>
         </Link>
 
-        {/* Sponsors slice links directly and mirrors the active route styling. */}
-        <Link
-          href="/sponsors"
-          className={`${classes.slice} ${isSponsorsPage ? classes.sliceActive : ""}`}
-          aria-label="Sponsors"
-        >
-        </Link>
-
-        {/* Event slice either navigates to /event or toggles the event sidebar if already there. */}
+        {/* Event slice - now in the middle position (210deg) */}
         <Link
           href="/event"
           onClick={handleEventClick}
           className={`${classes.slice} ${isEventPage ? classes.sliceActive : ""}`}
           aria-label="Event"
         >
+          <span className={classes.sliceInner} />
+          <span className={classes.sliceLabel}>EVENT</span>
+        </Link>
+
+        {/* Sponsors slice */}
+        <Link
+          href="/sponsors"
+          className={`${classes.slice} ${isSponsorsPage ? classes.sliceActive : ""}`}
+          aria-label="Sponsors"
+        >
+          <span className={classes.sliceInner} />
+          <span className={classes.sliceLabel}>SPONSORS</span>
         </Link>
       </div>
 
@@ -123,9 +147,10 @@ export default function Nav() {
         href="/"
         ref={centerLogoRef}
         onClick={handleCenterClick}
-        className={classes.centerLogo}
-        aria-label={isOpen ? "Go home" : "Open navigation"}
+        className={`${classes.centerLogo} ${!isHomePage ? classes.centerLogoNotHome : ""}`}
+        aria-label={isOpen ? (isHomePage ? "Close menu" : "Go home") : "Open navigation"}
         aria-expanded={isOpen}
+        data-current-page={isTeamPage ? "TEAM" : isEventPage ? "EVENT" : isSponsorsPage ? "SPONSORS" : ""}
       >
         {/* Inner span renders the branded home icon via CSS background imagery. */}
         <span className={classes.centerLogoInner} />

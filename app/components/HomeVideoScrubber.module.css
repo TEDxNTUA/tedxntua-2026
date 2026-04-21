@@ -24,34 +24,52 @@
 
 .introPanelContent,
 .outroPanelContent {
-  width: min(100%, 64rem);
-}
-
-.eyebrow {
-  margin: 0 0 1rem;
-  font-size: 0.875rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #a6cd7f;
+  width: min(100%, 80rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
 .introPanel h1 {
-  max-width: 12ch;
   margin: 0;
-  font-size: clamp(3rem, 9vw, 7.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.05em;
+  font-size: clamp(5rem, 18vw, 14rem);
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  font-weight: 900;
+  text-align: center;
 }
 
-.introCopy,
-.outroPanel p:last-child,
-.scrubberSectionHint {
-  max-width: 34rem;
-  margin: 1.5rem 0 0;
+.introCopy {
+  max-width: 38rem;
+  margin: 0;
   font-family: "Avenir Next", "Segoe UI", sans-serif;
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  line-height: 1.7;
-  color: rgba(245, 241, 232, 0.8);
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  line-height: 1.5;
+  color: rgba(245, 241, 232, 0.9);
+  text-align: center;
+  text-wrap: balance;
+  font-weight: 500;
+}
+
+@media (min-width: 1024px) {
+  .introPanelContent {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    text-align: left;
+  }
+
+  .introPanel h1 {
+    text-align: left;
+    flex: 1;
+  }
+
+  .introCopy {
+    text-align: right;
+    max-width: 24ch;
+    margin-bottom: 1.5rem;
+  }
 }
 
 .scrubberSection {
@@ -189,20 +207,41 @@
 .scrubberSectionBeat {
   min-height: 100vh;
   min-height: 100dvh;
-  display: grid;
-  place-items: center;
-  padding: clamp(1.5rem, 4vw, 3rem);
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 8vw, 6rem);
 }
 
 .scrubberSectionBeat h2 {
-  max-width: 12ch;
+  max-width: 15ch;
   margin: 0;
-  font-size: clamp(2.4rem, 7vw, 5.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.4rem, 6vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
   text-wrap: balance;
-  text-shadow: 0 0.15em 1.2em rgba(0, 0, 0, 0.45);
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .scrubberSectionBeat {
+    justify-content: flex-start;
+  }
+
+  .scrubberSectionBeat:nth-child(even) {
+    justify-content: flex-end;
+  }
+
+  .scrubberSectionBeat h2 {
+    max-width: 12ch;
+    font-size: clamp(4rem, 8vw, 7rem);
+    text-align: left;
+  }
+
+  .scrubberSectionBeat:nth-child(even) h2 {
+    text-align: right;
+  }
 }
 
 .outroPanel {
@@ -212,7 +251,8 @@
 @media (max-width: 720px) {
   .introPanel h1 {
     max-width: none;
-    font-size: clamp(2.5rem, 12vw, 4.5rem);
+    font-size: clamp(3.5rem, 18vw, 6rem);
+    line-height: 0.9;
   }
 
   .scrubberSection {

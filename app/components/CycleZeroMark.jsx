@@ -5,8 +5,9 @@ export default function CycleZeroMark({ className = "" }) {
       role="img"
       aria-label="Cycle 0"
       className={className}
+      suppressHydrationWarning
     >
-      <g opacity="0.55" fill="none" stroke="#ffffff" strokeWidth="2.2">
+      <g opacity="0.55" fill="none" stroke="#ffffff" strokeWidth="2.2" suppressHydrationWarning>
         <circle cx="150" cy="68" r="24" />
         <circle cx="150" cy="68" r="40" />
         <circle cx="150" cy="68" r="56" />
@@ -17,8 +18,8 @@ export default function CycleZeroMark({ className = "" }) {
         <circle cx="320" cy="68" r="72" />
       </g>
 
-      <g>
-        <g>
+      <g suppressHydrationWarning>
+        <g suppressHydrationWarning>
           <animateTransform
             attributeName="transform"
             type="rotate"
@@ -28,9 +29,9 @@ export default function CycleZeroMark({ className = "" }) {
             repeatCount="indefinite"
           />
           <circle cx="150" cy="12" r="5.5" fill="#22c55e" />
-          <circle cx="150" cy="12" r="10" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="1.2" />
+          <circle cx="150" cy="12" r="10" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="1.2" suppressHydrationWarning />
         </g>
-        <g>
+        <g suppressHydrationWarning>
           <animateTransform
             attributeName="transform"
             type="rotate"
@@ -40,7 +41,7 @@ export default function CycleZeroMark({ className = "" }) {
             repeatCount="indefinite"
           />
           <circle cx="320" cy="124" r="5.5" fill="#ffffff" />
-          <circle cx="320" cy="124" r="10" fill="none" stroke="rgba(34,197,94,0.5)" strokeWidth="1.2" />
+          <circle cx="320" cy="124" r="10" fill="none" stroke="rgba(34,197,94,0.5)" strokeWidth="1.2" suppressHydrationWarning />
         </g>
       </g>
 
@@ -55,12 +56,13 @@ export default function CycleZeroMark({ className = "" }) {
         fontSize="86"
         fontWeight="900"
         letterSpacing="2"
+        suppressHydrationWarning
       >
         CYCLE
       </text>
 
       <text
-        x="380"
+        x="400"
         y="96"
         fill="#22c55e"
         stroke="#ffffff"
@@ -69,6 +71,7 @@ export default function CycleZeroMark({ className = "" }) {
         fontFamily="'Arial Black', 'Franklin Gothic Heavy', sans-serif"
         fontSize="86"
         fontWeight="900"
+        suppressHydrationWarning
       >
         0
       </text>

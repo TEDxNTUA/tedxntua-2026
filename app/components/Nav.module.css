@@ -29,7 +29,8 @@
   overflow: hidden;
   border-radius: 50%;
   
-  /* Background Image Logic */
+  /* Background Image Logic - The image is the primary base, with a green fallback color */
+  background-color: #0c361e;
   background-image: var(--nav-test-image);
   background-repeat: no-repeat;
   background-position: center;
@@ -38,19 +39,32 @@
   /* Initial State (Closed) */
   opacity: 1;
   pointer-events: none;
-  transform: translateY(-55%) scale(0.5);
+  transform: translateY(-55%) scale(0.55);
   transition: transform 500ms cubic-bezier(0.8, 0.8, 0.5, 0.5), opacity 300ms ease;
-}
+  }
 
-/* Open State for Wrap */
-.menuOpen {
+  /* Overlay gradient to ensure the green glow is always present without masking the image too much */
+  .wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 50% 72%, rgba(34, 197, 94, 0.35), transparent 50%),
+      radial-gradient(circle at 50% 28%, rgba(74, 222, 128, 0.25), transparent 55%),
+      linear-gradient(180deg, rgba(12, 54, 30, 0.3) 0%, rgba(4, 18, 10, 0.4) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Open State for Wrap */
+  .menuOpen {
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none;
   transform: translateY(-55%) scale(1.2);
-}
+  }
 
-/* --- 3. Navigation Slices --- */
-.slice {
+  /* --- 3. Navigation Slices --- */
+  .slice {
   position: absolute;
   width: 50%;
   height: 50%;
@@ -58,10 +72,11 @@
   border: none;
   background: transparent;
   cursor: pointer;
+  pointer-events: auto;
   clip-path: polygon(100% 100%, 100% 0%, -70% 0%);
   transform-origin: 100% 100%;
   transition: filter 500ms ease, transform 500ms ease;
-}
+  }
 
 .slice:nth-child(1) { transform: rotate(150deg); }
 .slice:nth-child(2) { transform: rotate(210deg); }
@@ -71,11 +86,84 @@
   filter: brightness(1.3);
 }
 
+.sliceInner {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.6; /* Partially visible by default as requested */
+  transition: opacity 300ms, transform 300ms;
+  z-index: 1;
+}
 
-/* Counter-rotations */
-.slice:nth-child(1) .sliceLabel { transform: translate(-74%, 18%) rotate(-150deg); }
-.slice:nth-child(2) .sliceLabel { transform: translate(-40%, -8%) rotate(-210deg); }
-.slice:nth-child(3) .sliceLabel { transform: translate(-8%, -2%) rotate(-270deg); }
+/* Specific background images and rotations for each slice icon */
+.slice:nth-child(1) .sliceInner {
+  width: 125%;
+  height: 125%;
+  margin: -18% 0 0;
+  background-image: var(--nav-team-icon);
+  background-size: 80%;
+  background-position: 20% 70%;
+  transform: rotate(-150deg);
+}
+
+.slice:nth-child(2) .sliceInner {
+  width: 120%;
+  height: 120%;
+  margin: -18% 0 0;
+  background-image: var(--nav-event-icon);
+  background-size: 85%;
+  background-position: 80% 40%;
+  transform: rotate(-210deg);
+}
+
+.slice:nth-child(3) .sliceInner {
+  width: 120%;
+  height: 120%;
+  margin: -18% 0 0;
+  background-image: var(--nav-sponsors-icon);
+  background-size: 75%;
+  background-position: 30% 30%;
+  transform: rotate(-270deg);
+}
+
+/* Show images on hover, when menu is open, or when route is active */
+.slice:hover .sliceInner,
+.sliceActive .sliceInner,
+.menuOpen .sliceInner {
+  opacity: 1;
+}
+
+/* --- 4. Slice Labels --- */
+.sliceLabel {
+  position: absolute;
+  top: 39.4%;
+  left: 65%;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: clamp(0.75rem, 2.5vw, 1.2rem);
+  letter-spacing: 0.12em;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 400ms ease, color 300ms ease, transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 5;
+}
+
+/* Counter-rotations and precise centering within the pie slices */
+.slice:nth-child(1) .sliceLabel { transform: translate(-50%, -50%) rotate(-150deg) scale(0.7); }
+.slice:nth-child(2) .sliceLabel { transform: translate(-50%, -50%) rotate(-210deg) scale(0.7); }
+.slice:nth-child(3) .sliceLabel { transform: translate(-50%, -50%) rotate(-270deg) scale(0.7); }
+
+/* Reveal and "seat" labels in the center when menu opens */
+.menuOpen .sliceLabel {
+  opacity: 1;
+}
+
+.menuOpen .slice:nth-child(1) .sliceLabel { transform: translate(-50%, -50%) rotate(-150deg) scale(1); }
+.menuOpen .slice:nth-child(2) .sliceLabel { transform: translate(-50%, -50%) rotate(-210deg) scale(1); }
+.menuOpen .slice:nth-child(3) .sliceLabel { transform: translate(-50%, -50%) rotate(-270deg) scale(1); }
 
 .sliceActive .sliceLabel {
   color: #eb0028; /* TED Red */
@@ -88,13 +176,47 @@
   left: 50%;
   width: clamp(108px, 33vw, 165px);
   height: clamp(108px, 33vw, 165px);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: none;
   border-radius: 0 0 85px 85px;
-  background-color: #000000;
+  background-color: #050505;
   cursor: pointer;
   transform: translateX(-50%) translateY(-56%);
   z-index: 70;
   overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  transition: background-color 300ms ease, border-color 300ms ease;
+}
+
+.centerLogo::after {
+  content: "";
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 300ms, opacity 300ms, transform 300ms;
+}
+
+.menuOpen + .centerLogo::after {
+  content: "CLOSE";
+  color: #eb0028;
+  opacity: 0.8;
+}
+
+.menuOpen + .centerLogoNotHome::after {
+  content: "RETURN HOME";
+  color: #eb0028;
+  width: 120%; /* Give it more room for the longer text */
+  text-align: center;
+}
+
+.centerLogo:hover::after {
+  color: #22c55e;
+  transform: translateX(-50%) translateY(-2px);
 }
 
 .centerLogoInner {
@@ -122,6 +244,15 @@
   /* This adds the height of the notch automatically */
   top: env(safe-area-inset-top); 
 }
+
+  .indicatorsDial {
+    width: 200px;
+    height: 200px;
+  }
+
+  .indicatorItem span {
+    font-size: 7px;
+  }
 
   .wrap {
     transform: translateY(-57%) scale(0.5);

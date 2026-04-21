@@ -47,16 +47,16 @@ export default function RootLayout({ children }) {
 
                 <section className="relative flex flex-col items-center gap-5 border-white/15 lg:pr-8">
                   <div className="pointer-events-none absolute right-0 top-3 hidden h-44 w-px bg-white/15 lg:block" />
-                  <div className="flex flex-wrap items-end gap-x-2 gap-y-2 leading-none sm:gap-x-3">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-2 leading-none sm:gap-x-3">
                     <span className="shrink-0">
                       <span className="text-xl font-bold text-red-600 sm:text-2xl md:text-3xl">TEDx</span>
                       <span className="text-xl font-bold text-white sm:text-2xl md:text-3xl">NTUA</span>
                     </span>
-                    <CycleZeroMark className="h-6 w-auto translate-y-[1px] sm:h-8 md:h-10" />
+                    <CycleZeroMark className="h-6 w-auto sm:h-8 md:h-10" />
                   </div>
-                  <div className="max-w-xl text-xs leading-6 text-white/80 sm:text-sm md:text-base md:leading-7">
+                  <div className="max-w-xl text-[10px] leading-relaxed text-white/50 sm:text-xs">
                     This independent TEDx event is operated under license from TED
-                    and the auspices of ICCS. This website is our latest version : 2026
+                    and the auspices of ICCS.
                   </div>
                   <div className="pt-2 text-[10px] uppercase tracking-[0.18em] text-white/55 sm:text-xs sm:tracking-[0.22em]">
                     ALL RIGHTS RESERVED © 2026
@@ -97,6 +97,7 @@ export default function RootLayout({ children }) {
                         viewBox="0 -14 320 164"
                         aria-hidden="true"
                         className="h-auto w-full overflow-visible"
+                        suppressHydrationWarning
                       >
                         <ellipse
                           cx="159"
@@ -107,6 +108,7 @@ export default function RootLayout({ children }) {
                           stroke="rgba(255,255,255,0.18)"
                           strokeWidth="1.1"
                           strokeDasharray="5 8"
+                          suppressHydrationWarning
                         />
                         <ellipse
                           cx="159"
@@ -118,16 +120,17 @@ export default function RootLayout({ children }) {
                           strokeWidth="1.2"
                           strokeDasharray="14 124"
                           strokeLinecap="round"
+                          suppressHydrationWarning
                         />
-                        <g>
-                          <circle cx="0" cy="0" r="4" fill="rgba(34,197,94,0.72)">
+                        <g suppressHydrationWarning>
+                          <circle cx="0" cy="0" r="4" fill="rgba(34,197,94,0.72)" suppressHydrationWarning>
                             <animateMotion
                               dur="6.8s"
                               repeatCount="indefinite"
                               path="M 159 46 m -72,-22 a 72 22 0 1 1 144 0 a 72 22 0 1 1 -144 0"
                             />
                           </circle>
-                          <circle cx="0" cy="0" r="7.5" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="1">
+                          <circle cx="0" cy="0" r="7.5" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="1" suppressHydrationWarning>
                             <animateMotion
                               dur="6.8s"
                               repeatCount="indefinite"
@@ -135,8 +138,8 @@ export default function RootLayout({ children }) {
                             />
                           </circle>
                         </g>
-                        <g>
-                          <circle cx="0" cy="0" r="4" fill="rgba(255,255,255,0.92)">
+                        <g suppressHydrationWarning>
+                          <circle cx="0" cy="0" r="4" fill="rgba(255,255,255,0.92)" suppressHydrationWarning>
                             <animateMotion
                               dur="8.4s"
                               repeatCount="indefinite"
@@ -144,7 +147,7 @@ export default function RootLayout({ children }) {
                               path="M 159 46 m -72,-22 a 72 22 0 1 1 144 0 a 72 22 0 1 1 -144 0"
                             />
                           </circle>
-                          <circle cx="0" cy="0" r="7.5" fill="none" stroke="rgba(34,197,94,0.5)" strokeWidth="1">
+                          <circle cx="0" cy="0" r="7.5" fill="none" stroke="rgba(34,197,94,0.5)" strokeWidth="1" suppressHydrationWarning>
                             <animateMotion
                               dur="8.4s"
                               repeatCount="indefinite"

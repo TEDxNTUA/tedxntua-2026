@@ -5,11 +5,11 @@ import styles from "./HomeVideoScrubber.module.css";
 import { withBasePath } from "../lib/basePath";
 
 const storyBeats = [
-  "A quiet opening before the motion begins.",
-  "Scroll down and the video answers step for step.",
-  "The frame keeps pace with your movement.",
-  "Each viewport advances the sequence a little further.",
-  "By the end, the whole moment has played out.",
+  "Identity is the code of our genesis.",
+  "Mastery emerges from the rhythm of repetition.",
+  "We are bound by the cosmic loops of nature.",
+  "Progress is an iterative pulse of evolution.",
+  "Every revolution returns to the essence.",
 ];
 
 const PIXELS_PER_SECOND = 1600;
@@ -239,10 +239,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
         style={{ "--scrubber-gradient": `url(${withBasePath("/gradient.png")})` }}
       >
         <div className={styles.introPanelContent}>
-          <h1 className={heroTitleClassName}>we were here before</h1>
-          <p className={styles.introCopy}>
-            Scroll-driven playback with a sticky viewport video.
-          </p>
+          <h1 className={heroTitleClassName}>CYCLE&nbsp;0</h1>
         </div>
       </section>
 
@@ -274,7 +271,6 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
           />
           <div className={styles.scrubberSectionVeil} />
           <div className={styles.scrubberSectionHud}>
-            <p className={styles.eyebrow}>Scroll to scrub</p>
           </div>
         </div>
 

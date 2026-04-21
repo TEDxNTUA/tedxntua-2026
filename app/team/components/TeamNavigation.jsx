@@ -17,7 +17,6 @@ export default function TeamNavigation({ teams }) {
   const [activeTeam, setActiveTeam] = useState(teams[0]?.slug || 'curator');
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState(0);
-  const [isDesktopMenuVisible, setIsDesktopMenuVisible] = useState(false);
   const mobileContainerRef = useRef(null);
 
   const handleNavigateToTeam = (teamSlug) => {
@@ -26,13 +25,16 @@ export default function TeamNavigation({ teams }) {
     requestAnimationFrame(() => {
       const element = document.getElementById(`team-${teamSlug}`);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // More robust scroll with offset to account for any sticky elements
+        const yOffset = -window.innerHeight / 4; 
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
       }
     });
   };
 
   // Touch handlers for mobile swipe/drag
-  const handleTouchStart = (e, teamSlug) => {
+  const handleTouchStart = (e) => {
     setIsDragging(true);
     setDragStart(e.touches[0].clientY);
   };
@@ -61,9 +63,9 @@ export default function TeamNavigation({ teams }) {
     // Reset active button animation
     const activeButton = mobileContainerRef.current?.querySelector('[data-active="true"]');
     if (activeButton) {
-      activeButton.style.transform = 'translateY(0) scale(1)';
-      activeButton.style.opacity = '1';
-      activeButton.style.transition = 'all 300ms ease-out';
+      activeButton.style.transform = '';
+      activeButton.style.opacity = '';
+      activeButton.style.transition = 'all 300ms cubic-bezier(0.23, 1, 0.32, 1)';
       setTimeout(() => {
         activeButton.style.transition = '';
       }, 300);
@@ -91,21 +93,19 @@ export default function TeamNavigation({ teams }) {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-50% 0px -50% 0px',
+      rootMargin: '-45% 0px -45% 0px',
       threshold: 0,
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Extract team slug from id (format: team-{slug})
           const teamSlug = entry.target.id.replace('team-', '');
           setActiveTeam(teamSlug);
         }
       });
     }, observerOptions);
 
-    // Observe all team sections
     teams.forEach((team) => {
       const element = document.getElementById(`team-${team.slug}`);
       if (element) {
@@ -123,86 +123,44 @@ export default function TeamNavigation({ teams }) {
     };
   }, [teams]);
 
-  useEffect(() => {
-    const updateDesktopMenuVisibility = () => {
-      setIsDesktopMenuVisible(window.scrollY > 150);
-    };
-
-    const handleHeaderScrollDown = () => {
-      if (window.scrollY > 80) {
-        setIsDesktopMenuVisible(true);
-      }
-    };
-
-    updateDesktopMenuVisibility();
-    window.addEventListener('scroll', updateDesktopMenuVisibility, { passive: true });
-    window.addEventListener('headerScrollDown', handleHeaderScrollDown);
-
-    return () => {
-      window.removeEventListener('scroll', updateDesktopMenuVisibility);
-      window.removeEventListener('headerScrollDown', handleHeaderScrollDown);
-    };
-  }, []);
-
   return (
-    <>
-      <div 
-        ref={mobileContainerRef}
-        className="fixed sm:top-1/3 sm:left-auto sm:right-4 sm:bottom-auto sm:max-h-none top-1/2 right-2 z-50 max-h-[70vh] bg-transparent overflow-y-auto sm:-translate-y-0 -translate-y-1/2 flex flex-col items-stretch py-2 sm:py-2 px-1 sm:px-1 transition-transform duration-100 lg:hidden"
-      >
-        <div className="flex flex-col gap-0.5 justify-start items-stretch">
-          {teams.map((team) => (
+    <div 
+      ref={mobileContainerRef}
+      className="fixed right-0 top-1/2 -translate-y-1/2 z-[100] flex flex-col items-end pointer-events-none"
+    >
+      <div className="flex flex-col gap-1.5 p-2 pointer-events-auto">
+        {teams.map((team) => (
+          <div key={team.slug} className="flex items-center group justify-end">
+            <span className="opacity-0 group-hover:opacity-100 lg:block hidden transition-all duration-300 translate-x-2 group-hover:translate-x-0 mr-3 px-3 py-1.5 bg-slate-950/80 backdrop-blur-xl border border-emerald-500/30 text-emerald-400 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap shadow-2xl pointer-events-none">
+              {team.title}
+            </span>
             <button
-              key={team.slug}
               data-active={activeTeam === team.slug}
               onClick={() => handleNavigateToTeam(team.slug)}
-              onTouchStart={(e) => handleTouchStart(e, team.slug)}
+              onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={(e) => handleTouchEnd(e, team.slug)}
-              className={`relative flex-shrink-0 py-1 px-1.5 transition-all duration-300 ease-out group overflow-hidden text-center rounded-l-lg ${
+              className={`relative flex-shrink-0 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] rounded-l-xl border-y border-l ${
                 activeTeam === team.slug
-                  ? 'bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.4)] scale-105'
-                  : 'bg-slate-900/40 border-l border-emerald-400/20 hover:bg-slate-800/60 hover:shadow-[0_0_12px_rgba(16,185,129,0.2)] hover:border-emerald-400/40 active:bg-slate-800/60 active:shadow-[0_0_12px_rgba(16,185,129,0.2)]'
+                  ? 'bg-emerald-500 border-emerald-400 shadow-[-5px_0_25px_rgba(16,185,129,0.45)] scale-110 translate-x-[-4px] z-10'
+                  : 'bg-slate-950/40 backdrop-blur-md border-emerald-500/10 hover:border-emerald-400/40 hover:bg-slate-900/80 hover:translate-x-[-2px] shadow-lg'
               }`}
               title={team.title}
             >
-              <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 ${activeTeam === team.slug ? 'opacity-0' : ''}`}>
+              <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${activeTeam === team.slug ? 'opacity-0' : ''}`}>
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.15),transparent_70%)]" />
               </div>
-              <span className={`relative text-base block transition-transform duration-200 ${isDragging && activeTeam === team.slug ? 'scale-150' : ''}`}>
+              <span className={`relative text-lg lg:text-xl block transition-all duration-300 ${activeTeam === team.slug ? 'drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]' : 'opacity-80 group-hover:opacity-100 group-hover:scale-110'}`}>
                 {teamEmotes[team.slug]}
               </span>
+              
+              {activeTeam === team.slug && (
+                <div className="absolute inset-0 border-l-2 border-emerald-200/50 rounded-l-xl" />
+              )}
             </button>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-
-      <div
-        className={`hidden lg:block fixed top-0 left-0 right-0 z-30 border-b border-emerald-500/20 bg-black/75 backdrop-blur-sm transition-all duration-300 ease-out ${
-          isDesktopMenuVisible
-            ? 'opacity-100 translate-y-0 pointer-events-auto'
-            : 'opacity-0 -translate-y-full pointer-events-none'
-        }`}
-      >
-        <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-center gap-2 px-6 py-3">
-          {teams.map((team) => (
-            <button
-              key={`desktop-${team.slug}`}
-              data-active={activeTeam === team.slug}
-              onClick={() => handleNavigateToTeam(team.slug)}
-              className={`relative flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold uppercase tracking-[0.04em] transition-all duration-300 ${
-                activeTeam === team.slug
-                  ? 'border-emerald-300 bg-emerald-500 text-slate-950 shadow-[0_0_18px_rgba(16,185,129,0.35)]'
-                  : 'border-emerald-400/35 bg-slate-900/55 text-emerald-100 hover:border-emerald-300/70 hover:bg-slate-800/75'
-              }`}
-              title={team.title}
-            >
-              <span aria-hidden="true">{teamEmotes[team.slug]}</span>
-              <span>{team.title}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-    </>
+    </div>
   );
 }

@@ -40,16 +40,16 @@ export default function SiteHeader() {
   // Configures a theme object containing dynamic RGB color values and opacities based on the current page route.
   const theme = isHomePage 
     ? {
-        bg: "202 221 221", bgOp: 0.35,
-        brd: "195 199 214", brdOp: 0.7,
-        hvr: "160 240 200", hvrOp: 0.15,
-        tx: "0 0 0", txOp: 0.9,
+        bg: "202, 221, 221", bgOp: 0.35,
+        brd: "195, 199, 214", brdOp: 0.7,
+        hvr: "160, 240, 200", hvrOp: 0.15,
+        tx: "0, 0, 0", txOp: 0.9,
       }
     : {
-        bg: "255 255 255", bgOp: 0.05,
-        brd: "255 255 255", brdOp: 0.3,
-        hvr: "160 240 200", hvrOp: 0.15,
-        tx: "255 255 255", txOp: 0.9,
+        bg: "255, 255, 255", bgOp: 0.05,
+        brd: "255, 255, 255", brdOp: 0.3,
+        hvr: "160, 240, 200", hvrOp: 0.15,
+        tx: "255, 255, 255", txOp: 0.9,
       };
 
   // Broadcast downward scrolling so the nav can hide itself without this component owning that visibility state.
@@ -118,11 +118,13 @@ export default function SiteHeader() {
               icon="/archive.png"
               alt="Archive"
             >
-              {/* Removed 'hidden' and 'mr-3', added 'text-center' */}
-              <span className="flex flex-row mr-3 items-center whitespace-nowrap text-[11px] font-bold sm:text-lg">
-                <span className="text-red-600">TEDx</span>
-                <span style={{ color: `rgb(${theme.tx} / ${theme.txOp})` }}>NTUA</span>
-              </span>
+              <div className="mr-3 flex items-center h-4 sm:h-7">
+                <img 
+                  src={withBasePath("/tedxntua_logo.png")} 
+                  alt="TEDxNTUA Logo" 
+                  className="h-full w-auto object-contain bg-transparent border-none p-0"
+                />
+              </div>
             </ActionButton>
           </div>
 
@@ -138,9 +140,11 @@ export default function SiteHeader() {
               alt="Ticket"
             >
               {/* Removed 'hidden', adjusted tracking for mobile readability */}
-              <span className="text-[9px] font-semibold uppercase tracking-widest sm:text-sm sm:tracking-[0.34em]"
-              style={{ color: `rgb(${theme.tx} / ${theme.txOp})` }}> 
-
+              <span 
+                className="text-[9px] font-semibold uppercase tracking-widest sm:text-sm sm:tracking-[0.34em]"
+                style={{ color: `rgba(${theme.tx}, ${theme.txOp})` }}
+                suppressHydrationWarning
+              > 
                 Tickets
               </span>
             </ActionButton>
@@ -170,31 +174,27 @@ export default function SiteHeader() {
  */
 function ActionButton({ href, theme, icon, alt, children }) {
   // Theme-derived colors keep the action button visuals consistent with the current page variant.
-  const baseBg = `rgb(${theme.bg} / ${theme.bgOp})`;
-  const baseBorder = `rgb(${theme.brd} / ${theme.brdOp})`;
-  const hoverBg = `rgb(${theme.hvr} / ${theme.hvrOp})`;
-
-  // The boxed desktop treatment starts at lg; smaller breakpoints keep the compact stacked version.
-  const supportsDesktopActionStyles = () =>
-    typeof window !== "undefined" && window.innerWidth >= DESKTOP_BREAKPOINT;
+  const baseBg = `rgba(${theme.bg}, ${theme.bgOp})`;
+  const baseBorder = `rgba(${theme.brd}, ${theme.brdOp})`;
+  const hoverBg = `rgba(${theme.hvr}, ${theme.hvrOp})`;
 
   return (
     <a
       href={href}
       aria-disabled="true"
-      className="pointer-events-auto group relative flex flex-col items-center justify-center transition-all lg:min-h-[76px] lg:min-w-[260px] lg:flex-row-reverse lg:justify-between lg:rounded-[1.75rem] lg:border lg:border-solid lg:px-5 lg:backdrop-blur-sm"
+      className="pointer-events-auto group relative flex flex-col items-center justify-center transition-all lg:min-h-[76px] lg:min-w-[260px] lg:flex-row-reverse lg:justify-between lg:rounded-[1.75rem] lg:border lg:border-solid lg:px-5 lg:backdrop-blur-sm [--bg-final:transparent] [--brd-final:transparent] lg:[--bg-final:var(--bg-current,var(--base-bg))] lg:[--brd-final:var(--brd-current,var(--base-brd))]"
       style={{
-        "--base-bg": "transparent",
+        "--base-bg": baseBg,
         "--base-brd": baseBorder,
+        backgroundColor: "var(--bg-final)",
+        borderColor: "var(--brd-final)",
       }}
-      // ... same hover logic as before ...
-      onMouseEnter={(e) => { if (supportsDesktopActionStyles()) e.currentTarget.style.backgroundColor = hoverBg; }}
-      onMouseLeave={(e) => { if (supportsDesktopActionStyles()) e.currentTarget.style.backgroundColor = baseBg; }}
-      ref={(el) => {
-        if (el && supportsDesktopActionStyles()) {
-          el.style.backgroundColor = baseBg;
-          el.style.borderColor = baseBorder;
-        }
+      suppressHydrationWarning
+      onMouseEnter={(e) => { 
+        e.currentTarget.style.setProperty("--bg-current", hoverBg);
+      }}
+      onMouseLeave={(e) => { 
+        e.currentTarget.style.setProperty("--bg-current", "var(--base-bg)");
       }}
     >
       {/* The icon stays visible at every breakpoint and scales up once the desktop treatment is active. */}
