@@ -1,0 +1,7 @@
+{
+  "trailingSlash": true,
+  "rewrites": [
+    { "source": "/tedxntua-2026/:path*", "destination": "/:path*" },
+    { "source": "**", "destination": "/404.html" }
+  ]
+}
