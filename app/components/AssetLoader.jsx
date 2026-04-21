@@ -6,6 +6,7 @@ import { withBasePath } from "../lib/basePath";
 
 const READY_STATE_HAVE_CURRENT_DATA = 2;
 const MAX_LOADER_WAIT_MS = 20000;
+const MIN_LOAD_TIME = 5000; 
 const CACHE_SESSION_PREFIX = "tedx_assets_loaded_";
 
 const waitForImage = (img) =>
@@ -96,6 +97,7 @@ export default function AssetLoader() {
   const [readyPath, setReadyPath] = useState(null);
   const [progress, setProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   const isPathCached = isAssetsAlreadyCached(pathname);
   const isReady = readyPath === pathname || isPathCached;
@@ -114,7 +116,9 @@ export default function AssetLoader() {
       return;
     }
 
+    const startTime = Date.now();
     setProgress(0);
+    setIsVisible(true);
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
     let isMounted = true;
@@ -122,13 +126,45 @@ export default function AssetLoader() {
 
     const finalize = () => {
       if (!isMounted) return;
+      
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, MIN_LOAD_TIME - elapsedTime);
+
+      // Smoothly animate the progress to 100% over the remaining time
       if (progressInterval) clearInterval(progressInterval);
-      setProgress(100);
-      markAssetsCached(pathname);
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-      window.dispatchEvent(new CustomEvent("assets-ready", { detail: { pathname } }));
-      setTimeout(() => { if (isMounted) setReadyPath(pathname); }, 500);
+      
+      const startProgress = progress;
+      const finishStartTime = Date.now();
+      
+      const finishInterval = setInterval(() => {
+        const finishElapsed = Date.now() - finishStartTime;
+        const finishDuration = Math.max(500, remainingTime); // At least 500ms for the final push
+        const finishRate = Math.min(1, finishElapsed / finishDuration);
+        
+        const currentProgress = startProgress + (100 - startProgress) * finishRate;
+        setProgress(currentProgress);
+
+        if (finishRate >= 1) {
+          clearInterval(finishInterval);
+          if (!isMounted) return;
+          
+          markAssetsCached(pathname);
+          // Start the fade out
+          setIsVisible(false);
+          
+          // Dispatch ready event to start page content fade-in early
+          window.dispatchEvent(new CustomEvent("assets-ready", { detail: { pathname } }));
+          
+          // Wait for fade out to complete before removing from DOM
+          setTimeout(() => {
+            if (isMounted) {
+              setReadyPath(pathname);
+              document.body.style.overflow = "";
+              document.documentElement.style.overflow = "";
+            }
+          }, 1000);
+        }
+      }, 16);
     };
 
     const run = async () => {
@@ -138,13 +174,15 @@ export default function AssetLoader() {
           await new Promise((resolve) => document.addEventListener("DOMContentLoaded", resolve, { once: true }));
           setProgress(20);
         }
+        
         let simulatedProgress = 20;
         progressInterval = setInterval(() => {
-          if (simulatedProgress < 95) {
-            simulatedProgress += Math.random() * 8;
-            setProgress(Math.min(simulatedProgress, 95));
+          if (simulatedProgress < 85) {
+            simulatedProgress += Math.random() * 3;
+            setProgress(Math.min(simulatedProgress, 85));
           }
-        }, 400);
+        }, 300);
+
         await waitForCriticalAssets();
         finalize();
       } catch (error) {
@@ -164,16 +202,30 @@ export default function AssetLoader() {
   if (isReady) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center overflow-hidden">
-      {/* Ambient Background Glow */}
+    <div 
+      className={`fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center overflow-hidden transition-all duration-1000 ease-in-out ${
+        isVisible ? "opacity-100 visibility-visible" : "opacity-0 invisible pointer-events-none"
+      }`}
+    >
       <div className="absolute inset-0 pointer-events-none opacity-40">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(34,197,94,0.1)_0%,_transparent_70%)]" />
       </div>
 
       <div className="relative flex flex-col items-center w-full max-w-lg px-8">
-        {/* Zoomed Central Animation Container */}
+        {/* Branding Header */}
+        <div className="mb-6 flex flex-col items-center animate-pulse">
+          <h1 className="text-4xl md:text-6xl font-black tracking-[0.25em] uppercase italic">
+            <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+              Cycle
+            </span>
+            <span className="ml-4 text-green-500 drop-shadow-[0_0_30px_rgba(34,197,94,0.8)]">
+              0
+            </span>
+          </h1>
+          <div className="h-[2px] w-12 bg-green-500 mt-2 shadow-[0_0_10px_rgba(34,197,94,0.8)]" />
+        </div>
+
         <div className="relative w-full aspect-square flex items-center justify-center overflow-hidden">
-          {/* Main Video */}
           <video
             key={isMobile ? "mobile" : "desktop"}
             autoPlay
@@ -185,16 +237,13 @@ export default function AssetLoader() {
             <source src={withBasePath(isMobile ? "/loading_mobile.webm" : "/loading_desktop.webm")} type="video/webm" />
             <source src={withBasePath(isMobile ? "/loading_mobile.mp4" : "/loading_desktop.mp4")} type="video/mp4" />
           </video>
-          
-          {/* Subtle Vignette to blend edges */}
           <div className="absolute inset-0 shadow-[inset_0_0_80px_60px_#050505] pointer-events-none" />
         </div>
 
-        {/* Minimalist Progress Indicator */}
         <div className="mt-12 flex flex-col items-center w-full max-w-[240px] gap-6">
           <div className="relative w-full h-[1px] bg-white/10 overflow-hidden">
             <div 
-              className="absolute left-0 top-0 h-full bg-green-500/80 shadow-[0_0_8px_rgba(34,197,94,0.5)] transition-all duration-700 ease-out"
+              className="absolute left-0 top-0 h-full bg-green-500/80 shadow-[0_0_8px_rgba(34,197,94,0.5)] transition-none"
               style={{ width: `${progress}%` }}
             />
           </div>
