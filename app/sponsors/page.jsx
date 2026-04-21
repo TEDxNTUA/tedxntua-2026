@@ -4,6 +4,66 @@ import { useEffect, useRef, useState } from "react";
 import { sponsorTiers } from "./sponsorsData";
 import SponsorTierSection from "./components/SponsorTierSection";
 
+// Scroll reveal component for the thank you text - letter by letter reveal
+function ScrollRevealText() {
+  const containerRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const text = "Thank you to all our amazing sponsors and partners for making TEDxNTUA 2026 possible.";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+
+      const element = containerRef.current;
+      const rect = element.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Reveal starts as soon as element enters viewport from bottom
+      let progress = 0;
+      
+      // When element reaches viewport, start revealing
+      if (rect.top < windowHeight) {
+        // Calculate reveal: starts at bottom of viewport, completes at top
+        progress = (windowHeight - rect.top) / windowHeight;
+      }
+
+      setScrollProgress(Math.min(Math.max(progress, 0), 1));
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    // Call once to check initial position
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Calculate how many characters should be visible
+  const visibleCharCount = Math.floor(scrollProgress * text.length);
+
+  return (
+    <div
+      ref={containerRef}
+      className="max-w-2xl mx-auto text-center min-h-[100px]"
+      style={{
+        transform: `translateY(${(1 - scrollProgress) * 20}px)`,
+      }}
+    >
+      <p className="text-lg sm:text-xl text-gray-200 leading-relaxed">
+        {text.split("").map((char, index) => (
+          <span
+            key={index}
+            style={{
+              opacity: index < visibleCharCount ? 1 : 0,
+            }}
+          >
+            {char}
+          </span>
+        ))}
+      </p>
+    </div>
+  );
+}
+
 export default function SponsorsPage() {
   const containerRef = useRef(null);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -27,29 +87,9 @@ export default function SponsorsPage() {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Header Section */}
-        <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-28 pb-16 sm:pb-20">
-          <div className="max-w-3xl mx-auto text-center">
-            {/* Decorative elements */}
-            <div className="mb-8 inline-block relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-green-500/30 to-green-600/20 blur-2xl rounded-full" />
-              <div className="relative px-6 py-2 rounded-full border border-green-500/50 bg-green-500/10 backdrop-blur-md">
-                <span className="text-sm font-semibold text-green-300">FUTURISTIC PARTNERSHIPS</span>
-              </div>
-            </div>
-
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-green-300 via-green-400 to-green-500 bg-clip-text text-transparent leading-tight">
-              Our Partners
-            </h1>
-
-            <p className="text-lg sm:text-xl text-gray-300 mb-6 leading-relaxed">
-              Incredible organizations powering the TEDxNTUA 2026 experience. Together we're shaping the future of ideas.
-            </p>
-
-            <p className="text-sm text-green-300/70">
-              Thanks to our partners for their incredible support and commitment to innovation.
-            </p>
-          </div>
+        {/* Scroll Reveal Thank You Section */}
+        <div className="container mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-20 sm:pb-32">
+          <ScrollRevealText />
         </div>
 
         {/* Sponsors Grid */}
