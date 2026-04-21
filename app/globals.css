@@ -368,6 +368,12 @@ html body[style*="overflow: hidden"] {
   }
 }
 
+/* Scroll handle and other custom elements */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
 .nav-handle-pulse {
   animation: nav-handle-pulse 2s ease-in-out infinite;
 }

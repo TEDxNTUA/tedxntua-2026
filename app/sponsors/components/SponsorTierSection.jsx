@@ -82,9 +82,10 @@ export default function SponsorTierSection({ tier, index }) {
   return (
     <div
       ref={ref}
+      data-tier={tier.tier}
       style={{ transitionDelay: reducedMotion ? "0ms" : `${index * 100}ms` }}
       className={`
-        transform transition-all duration-700
+        sponsor-tier-section transform transition-all duration-700
         ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
       `}
     >
