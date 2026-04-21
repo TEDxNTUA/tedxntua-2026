@@ -2,25 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { withBasePath } from "../lib/basePath";
 
 const READY_STATE_HAVE_CURRENT_DATA = 2;
-const MAX_LOADER_WAIT_MS = 20000; // Increased to 20 seconds for comprehensive asset loading
+const MAX_LOADER_WAIT_MS = 20000;
 const CACHE_SESSION_PREFIX = "tedx_assets_loaded_";
 
-// Comprehensive image waiting with network timeout handling
 const waitForImage = (img) =>
   new Promise((resolve) => {
     if (img.complete && img.naturalHeight !== 0) {
       resolve();
       return;
     }
-
-    if (img.complete && img.naturalHeight === 0) {
-      // Image failed to load
-      resolve();
-      return;
-    }
-
     let timeoutId;
     const done = () => {
       clearTimeout(timeoutId);
@@ -28,21 +21,17 @@ const waitForImage = (img) =>
       img.removeEventListener("error", done);
       resolve();
     };
-
-    // 3 second per-image timeout
     timeoutId = setTimeout(done, 3000);
     img.addEventListener("load", done, { once: true });
     img.addEventListener("error", done, { once: true });
   });
 
-// Comprehensive video waiting with network timeout handling
 const waitForVideo = (video) =>
   new Promise((resolve) => {
     if (video.readyState >= READY_STATE_HAVE_CURRENT_DATA) {
       resolve();
       return;
     }
-
     let timeoutId;
     const done = () => {
       clearTimeout(timeoutId);
@@ -50,17 +39,13 @@ const waitForVideo = (video) =>
       video.removeEventListener("error", done);
       resolve();
     };
-
-    // 3 second per-video timeout
     timeoutId = setTimeout(done, 3000);
     video.addEventListener("loadeddata", done, { once: true });
     video.addEventListener("error", done, { once: true });
   });
 
-// Wait for all stylesheets to be loaded
 const waitForStylesheets = async () => {
   const styleSheets = Array.from(document.styleSheets);
-  
   for (const sheet of styleSheets) {
     if (sheet.href && !sheet.cssRules) {
       await new Promise((resolve) => {
@@ -70,12 +55,8 @@ const waitForStylesheets = async () => {
               clearInterval(checkInterval);
               resolve();
             }
-          } catch {
-            // Continue checking even if there's a CORS error
-          }
+          } catch {}
         }, 100);
-        
-        // Timeout after 2 seconds
         setTimeout(() => {
           clearInterval(checkInterval);
           resolve();
@@ -85,32 +66,15 @@ const waitForStylesheets = async () => {
   }
 };
 
-// Comprehensive critical assets waiting
 const waitForCriticalAssets = async () => {
   const pageRoot = document.querySelector(".site-main") ?? document.body;
-
-  // Get ALL images in the document (not just viewport)
   const images = Array.from(pageRoot.querySelectorAll("img"));
-
-  // Get ALL videos that should be preloaded
-  const videos = Array.from(pageRoot.querySelectorAll("video")).filter((video) => {
-    const shouldPreload = video.preload !== "none";
-    return shouldPreload;
-  });
-
-  // Also check for background images in elements
-  const elementsWithBg = Array.from(pageRoot.querySelectorAll("[style*='background-image']"));
-
+  const videos = Array.from(pageRoot.querySelectorAll("video")).filter((video) => video.preload !== "none");
   const imagePromises = images.map(waitForImage);
   const videoPromises = videos.map(waitForVideo);
   const fontPromise = document.fonts?.ready ?? Promise.resolve();
   const stylesheetPromise = waitForStylesheets();
-
-  const timeoutPromise = new Promise((resolve) => {
-    window.setTimeout(resolve, MAX_LOADER_WAIT_MS);
-  });
-
-  // Wait for all assets to load or timeout
+  const timeoutPromise = new Promise((resolve) => window.setTimeout(resolve, MAX_LOADER_WAIT_MS));
   await Promise.race([
     Promise.all([...imagePromises, ...videoPromises, fontPromise, stylesheetPromise]),
     timeoutPromise,
@@ -118,35 +82,32 @@ const waitForCriticalAssets = async () => {
 };
 
 const getCacheKey = (pathname) => `${CACHE_SESSION_PREFIX}${pathname || "/"}`;
-
 const isAssetsAlreadyCached = (pathname) => {
   if (typeof window === "undefined") return false;
-  try {
-    return sessionStorage.getItem(getCacheKey(pathname)) === "true";
-  } catch {
-    return false;
-  }
+  try { return sessionStorage.getItem(getCacheKey(pathname)) === "true"; } catch { return false; }
 };
-
 const markAssetsCached = (pathname) => {
   if (typeof window === "undefined") return;
-  try {
-    sessionStorage.setItem(getCacheKey(pathname), "true");
-  } catch {
-    // Session storage unavailable
-  }
+  try { sessionStorage.setItem(getCacheKey(pathname), "true"); } catch {}
 };
 
 export default function AssetLoader() {
   const pathname = usePathname() ?? "/";
   const [readyPath, setReadyPath] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const isPathCached = isAssetsAlreadyCached(pathname);
   const isReady = readyPath === pathname || isPathCached;
 
   useEffect(() => {
-    // If this route is already cached, skip loader for this path only.
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
     if (isAssetsAlreadyCached(pathname)) {
       setReadyPath(pathname);
       window.dispatchEvent(new CustomEvent("assets-ready", { detail: { pathname } }));
@@ -164,52 +125,35 @@ export default function AssetLoader() {
       if (progressInterval) clearInterval(progressInterval);
       setProgress(100);
       markAssetsCached(pathname);
-      
-      // Release scroll lock immediately
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
-      
-      // Dispatch event to notify providers that assets are ready
       window.dispatchEvent(new CustomEvent("assets-ready", { detail: { pathname } }));
-      
-      // Small delay to show completion
-      setTimeout(() => {
-        if (isMounted) {
-          setReadyPath(pathname);
-        }
-      }, 300);
+      setTimeout(() => { if (isMounted) setReadyPath(pathname); }, 500);
     };
 
     const run = async () => {
       try {
         if (document.readyState === "loading") {
           setProgress(10);
-          await new Promise((resolve) => {
-            document.addEventListener("DOMContentLoaded", resolve, { once: true });
-          });
+          await new Promise((resolve) => document.addEventListener("DOMContentLoaded", resolve, { once: true }));
           setProgress(20);
         }
-
-        // Simulate progress while waiting for assets
         let simulatedProgress = 20;
         progressInterval = setInterval(() => {
           if (simulatedProgress < 95) {
-            simulatedProgress += Math.random() * 15;
+            simulatedProgress += Math.random() * 8;
             setProgress(Math.min(simulatedProgress, 95));
           }
-        }, 300);
-
+        }, 400);
         await waitForCriticalAssets();
         finalize();
       } catch (error) {
-        console.error("Asset loading error:", error);
-        finalize(); // Finalize anyway to prevent infinite loading
+        finalize();
       }
     };
 
     run();
     return () => {
-      // Ensure scroll is released on cleanup
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
       if (progressInterval) clearInterval(progressInterval);
@@ -217,94 +161,61 @@ export default function AssetLoader() {
     };
   }, [pathname]);
 
-  if (isReady) {
-    return null;
-  }
+  if (isReady) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black text-white"
-      aria-live="polite"
-      aria-busy="true"
-    >
-      <style>{`
-        @keyframes spin-gradient {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        
-        @keyframes pulse-glow {
-          0%, 100% { 
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.6), 
-                        0 0 40px rgba(34, 197, 94, 0.3);
-            opacity: 1;
-          }
-          50% { 
-            box-shadow: 0 0 30px rgba(34, 197, 94, 0.8), 
-                        0 0 60px rgba(34, 197, 94, 0.4);
-            opacity: 0.8;
-          }
-        }
-        
-        @keyframes progress-fill {
-          from { width: 0%; }
-          to { width: ${progress}%; }
-        }
-        
-        .loader-spinner {
-          animation: spin-gradient 3s linear infinite;
-        }
-        
-        .loader-center {
-          animation: pulse-glow 2s ease-in-out infinite;
-        }
-        
-        .progress-bar-fill {
-          width: ${progress}%;
-          transition: width 0.3s ease-out;
-        }
-      `}</style>
-      
-      <div className="flex flex-col items-center gap-8">
-        {/* Enhanced Spinner */}
-        <div className="relative h-20 w-20" aria-hidden="true">
-          {/* Outer rotating ring */}
-          <div className="loader-spinner absolute inset-0 rounded-full border-2 border-transparent border-t-green-400 border-r-green-500 border-b-green-400/30" />
+    <div className="fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center overflow-hidden">
+      {/* Ambient Background Glow */}
+      <div className="absolute inset-0 pointer-events-none opacity-40">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(34,197,94,0.1)_0%,_transparent_70%)]" />
+      </div>
+
+      <div className="relative flex flex-col items-center w-full max-w-lg px-8">
+        {/* Zoomed Central Animation Container */}
+        <div className="relative w-full aspect-square flex items-center justify-center overflow-hidden">
+          {/* Main Video */}
+          <video
+            key={isMobile ? "mobile" : "desktop"}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover scale-[1.3] md:scale-[1.1] transition-opacity duration-700"
+          >
+            <source src={withBasePath(isMobile ? "/loading_mobile.webm" : "/loading_desktop.webm")} type="video/webm" />
+            <source src={withBasePath(isMobile ? "/loading_mobile.mp4" : "/loading_desktop.mp4")} type="video/mp4" />
+          </video>
           
-          {/* Middle ring */}
-          <div className="absolute inset-2 rounded-full border border-green-500/30 opacity-60" />
-          
-          {/* Inner pulsing core */}
-          <div className="loader-center absolute inset-3 rounded-full bg-gradient-to-br from-green-500/40 to-green-600/20 backdrop-blur-sm border border-green-400/50" />
-          
-          {/* Center dot */}
-          <div className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_16px_rgba(34,197,94,0.8)]" />
+          {/* Subtle Vignette to blend edges */}
+          <div className="absolute inset-0 shadow-[inset_0_0_80px_60px_#050505] pointer-events-none" />
         </div>
-        
-        {/* Loading text */}
-        <div className="flex flex-col items-center gap-4">
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-xs uppercase tracking-[0.24em] text-green-300 font-semibold">
-              Loading
-            </span>
-            <p className="text-xs text-gray-400/80">
-              Preparing your experience...
-            </p>
-          </div>
-          
-          {/* Progress bar */}
-          <div className="w-48 h-1 bg-gray-800 rounded-full overflow-hidden">
+
+        {/* Minimalist Progress Indicator */}
+        <div className="mt-12 flex flex-col items-center w-full max-w-[240px] gap-6">
+          <div className="relative w-full h-[1px] bg-white/10 overflow-hidden">
             <div 
-              className="progress-bar-fill h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full"
+              className="absolute left-0 top-0 h-full bg-green-500/80 shadow-[0_0_8px_rgba(34,197,94,0.5)] transition-all duration-700 ease-out"
+              style={{ width: `${progress}%` }}
             />
           </div>
           
-          {/* Progress percentage */}
-          <div className="text-xs text-gray-500">
-            {Math.round(progress)}%
+          <div className="flex justify-between w-full">
+            <span className="text-[10px] uppercase tracking-[0.4em] text-white/30 font-light">
+              Preparing Experience
+            </span>
+            <span className="text-[10px] tabular-nums text-white/50 font-mono tracking-wider">
+              {Math.round(progress)}%
+            </span>
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        body {
+          background-color: #050505 !important;
+          overflow: hidden !important;
+        }
+      `}</style>
     </div>
   );
 }
