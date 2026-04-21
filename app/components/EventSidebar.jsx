@@ -82,13 +82,6 @@ export default function EventSidebar({ visible }) {
   return (
     <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[100] flex flex-col items-end pointer-events-none group/nav">
       <div className="flex flex-col gap-2 p-3 pointer-events-auto">
-        {/* Dock Header Label */}
-        <div className="mb-6 mr-2 lg:block hidden">
-          <span className="text-[9px] font-black uppercase tracking-[0.5em] text-emerald-500/40 [writing-mode:vertical-rl] rotate-180">
-            Navigation
-          </span>
-        </div>
-
         {eventTabs.map((tab) => {
           const isActive = pathname === tab.path;
           

@@ -9,13 +9,13 @@ import { myWorkshopsPack1, myWorkshopsPack2, myWorkshopsPack3 } from "../infoDat
 
 function ProgramSection({ children, title, id }) {
   return (
-    <section id={id} className="mb-24 scroll-mt-32">
-      <div className="mb-12 flex items-center gap-6">
-        <div className="relative flex flex-col">
-           <h3 className="text-2xl md:text-3xl font-black uppercase tracking-[0.25em] text-white">
+    <section id={id} className="mb-16 md:mb-24 scroll-mt-32">
+      <div className="mb-8 md:mb-12 flex items-center gap-4 md:gap-6">
+        <div className="relative flex flex-col shrink-0">
+           <h3 className="text-xl md:text-3xl font-black uppercase tracking-[0.2em] md:tracking-[0.25em] text-white">
              {title}
            </h3>
-           <div className="h-1 w-20 bg-emerald-400 mt-2 rounded-full" />
+           <div className="h-1 w-12 md:w-20 bg-emerald-400 mt-1 md:mt-2 rounded-full" />
         </div>
         <div className="h-px flex-1 bg-gradient-to-r from-emerald-400/30 via-emerald-400/5 to-transparent" />
       </div>
@@ -37,7 +37,7 @@ function ProgramNav() {
   ];
 
   return (
-    <div className="sticky top-24 z-30 mb-12 hidden lg:block">
+    <div className="sticky top-20 md:top-24 z-30 mb-8 md:mb-12 hidden md:block">
       <div className="flex items-center justify-center gap-2 rounded-full border border-white/10 bg-black/40 p-2 backdrop-blur-xl w-fit mx-auto">
         {sections.map((sec) => (
           <a

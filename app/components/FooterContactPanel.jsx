@@ -23,39 +23,39 @@ export default function FooterContactPanel() {
   }
 
   return (
-    <section className="flex w-full flex-col items-center gap-3 sm:gap-4 text-center">
-      <div className="text-base font-medium tracking-wide text-white/90 sm:text-lg">
-        Contact us:
+    <section className="flex w-full flex-col gap-4">
+      <div className="flex flex-col gap-0.5">
+        <h4 className="text-[9px] font-black uppercase tracking-[0.3em] text-red-600">Get in touch</h4>
+        <p className="text-xs font-medium text-white/40">Questions? We're here to help.</p>
       </div>
 
-      <div className="flex w-full max-w-sm flex-col gap-2">
+      <div className="flex flex-col gap-2">
         {EMAILS.map((email) => (
           <div
             key={email}
-            className="flex w-full min-h-9 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 sm:gap-3 sm:rounded-2xl sm:px-4 sm:py-3"
+            className="group/item flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.03] p-3 transition-all hover:border-white/10 hover:bg-white/[0.06]"
           >
-            <div className="min-w-0 text-xs text-white/70 break-all sm:text-sm">
-              {email}
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <span className="text-[8px] font-bold uppercase tracking-wider text-white/20">Email</span>
+              <span className="truncate text-xs font-bold text-white/70">{email}</span>
             </div>
             <button
               type="button"
               onClick={() => handleCopyEmail(email)}
-              className="shrink-0 rounded-full border border-white/20 px-2 py-1 text-[10px] font-medium text-white/85 transition-colors hover:border-white/40 hover:text-white sm:px-3 sm:py-2 sm:text-xs"
+              className="flex h-7 items-center justify-center rounded-lg border border-white/10 px-3 text-[9px] font-black uppercase tracking-widest text-white/50 transition-all hover:bg-white hover:text-black active:scale-95"
             >
-              {copyState === email ? "Copied" : "Copy email"}
+              {copyState === email ? "Done" : "Copy"}
             </button>
           </div>
         ))}
       </div>
 
-      <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:gap-3">
-        <a
-          href={mailtoHref}
-          className="inline-flex min-h-10 items-center justify-center rounded-full bg-red-600 px-4 text-xs font-semibold text-white transition-colors hover:bg-red-500 sm:min-h-11 sm:px-5 sm:text-sm"
-        >
-          Open email app
-        </a>
-      </div>
+      <a
+        href={mailtoHref}
+        className="group relative flex h-10 w-full items-center justify-center overflow-hidden rounded-xl bg-red-600 font-black uppercase tracking-[0.2em] text-white transition-all hover:bg-red-500 hover:shadow-[0_0_20px_rgba(220,38,38,0.2)] active:scale-[0.98]"
+      >
+        <span className="relative z-10 text-[10px]">Launch Mailer</span>
+      </a>
     </section>
   );
 }

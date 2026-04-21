@@ -5,13 +5,13 @@ export default function ProgramInfoBoxWorkshops({ time, workshop, color }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="group relative pl-8 pb-8 last:pb-0">
+    <div className="group relative pl-6 md:pl-8 pb-6 md:pb-8 last:pb-0">
       {/* Timeline Line */}
-      <div className="absolute left-[11px] top-2 h-full w-[2px] bg-gradient-to-b from-white/20 via-white/10 to-transparent group-last:h-0" />
+      <div className="absolute left-[9px] md:left-[11px] top-2 h-full w-[1.5px] md:w-[2px] bg-gradient-to-b from-white/20 via-white/10 to-transparent group-last:h-0" />
       
       {/* Timeline Dot */}
-      <div className="absolute left-0 top-2 h-6 w-6 rounded-full border-2 border-white/20 bg-black flex items-center justify-center">
-        <div className="h-2 w-2 rounded-full bg-yellow-400" />
+      <div className="absolute left-0 top-2 h-5 w-5 md:h-6 md:w-6 rounded-full border-2 border-white/20 bg-black flex items-center justify-center">
+        <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-yellow-400" />
       </div>
 
       <div 
@@ -31,11 +31,11 @@ export default function ProgramInfoBoxWorkshops({ time, workshop, color }) {
         <div className="flex flex-col md:flex-row md:items-stretch">
           {/* Time Section */}
           <div className="flex flex-row md:flex-col items-center justify-start md:justify-center p-6 md:w-36">
-            <span className="font-mono text-xl font-black tracking-tighter text-white">
+            <span className="font-mono text-lg md:text-xl font-black tracking-tighter text-white">
               {time?.split(' - ')[0]}
             </span>
-            <span className="mx-2 md:my-1 font-mono text-xs font-bold text-white/20 uppercase tracking-widest">—</span>
-            <span className="font-mono text-sm font-bold text-white/40">
+            <span className="mx-2 md:my-1 font-mono text-[10px] md:text-xs font-bold text-white/20 uppercase tracking-widest">—</span>
+            <span className="font-mono text-xs md:text-sm font-bold text-white/40">
               {time?.split(' - ')[1]}
             </span>
           </div>

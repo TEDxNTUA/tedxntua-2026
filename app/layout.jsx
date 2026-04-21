@@ -10,6 +10,7 @@ import Nav from "./components/Nav";
 import { withBasePath } from "./lib/basePath";
 import AssetLoader from "./components/AssetLoader";
 import ContentVisibilityWrapper from "./components/ContentVisibilityWrapper";
+import Link from "next/link";
 
 
 // Page metadata for SEO and browser tab display
@@ -18,18 +19,11 @@ export const metadata = {
   description: "TEDxNTUA 2026 - Ideas Worth Spreading"
 };
 
-// Minimum viewport width in pixels at which the archive/ticket buttons expand.
-const HEADER_BUTTON_EXPAND_MIN_WIDTH = 200;
-
-
-
 // Define the layout component
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className="site-shell bg-blue-100 text-gray-900"
-      >
+      <body className="site-shell bg-blue-100 text-gray-900">
         <AssetLoader />
         <ContentVisibilityWrapper>
           <EventNavProvider>
@@ -39,132 +33,74 @@ export default function RootLayout({ children }) {
               {children}
             </main>
 
+            <footer className="site-footer relative border-t border-white/10 bg-black text-white overflow-hidden">
+              {/* Decorative Background Elements */}
+              <div className="pointer-events-none absolute -left-20 -top-20 h-96 w-96 rounded-full bg-red-600/5 blur-[120px]" />
+              <div className="pointer-events-none absolute -right-20 bottom-0 h-96 w-96 rounded-full bg-emerald-600/5 blur-[120px]" />
 
-            <footer className="site-footer border-t border-white/20 bg-black text-white">
-              <div className="footer-content mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 xl:px-10">
-                <div className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 place-items-center text-center">
-
-
-                <section className="relative flex flex-col items-center gap-5 border-white/15 lg:pr-8">
-                  <div className="pointer-events-none absolute right-0 top-3 hidden h-44 w-px bg-white/15 lg:block" />
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-2 leading-none sm:gap-x-3">
-                    <span className="shrink-0">
-                      <span className="text-xl font-bold text-red-600 sm:text-2xl md:text-3xl">TEDx</span>
-                      <span className="text-xl font-bold text-white sm:text-2xl md:text-3xl">NTUA</span>
-                    </span>
-                    <CycleZeroMark className="h-6 w-auto sm:h-8 md:h-10" />
-                  </div>
-                  <div className="max-w-xl text-[10px] leading-relaxed text-white/50 sm:text-xs">
-                    This independent TEDx event is operated under license from TED
-                    and the auspices of ICCS.
-                  </div>
-                  <div className="pt-2 text-[10px] uppercase tracking-[0.18em] text-white/55 sm:text-xs sm:tracking-[0.22em]">
-                    ALL RIGHTS RESERVED © 2026
-                  </div>
-                </section>
-
-
-                <section className="relative border-b border-white/15 pb-6 sm:pb-8 md:border-b-0 md:pb-0 md:pr-6 lg:pr-8">
-                  <div className="pointer-events-none absolute right-0 top-3 hidden h-44 w-px bg-white/15 md:block" />
-                  <FooterContactPanel />
-                </section>
-
-
-                <section className="relative flex flex-col items-center gap-4 sm:gap-5 lg:pl-2">
-                  <div className="text-base font-medium tracking-wide text-white/90 sm:text-lg">
-                    Stay tuned:
-                  </div>
-                  <section className="relative flex flex-col gap-4 sm:gap-5 bg-auto">
-                    <div className="flex flex-wrap gap-2 sm:gap-3">
-                      <div className="transition-transform duration-300 hover:-translate-y-2">
-                        <TEDSocialButton name='youtube' size='40px' color='color' colorHover='yellow' />
+              <div className="footer-content relative mx-auto w-full max-w-7xl px-6 py-10 lg:px-12">
+                <div className="grid gap-10 lg:grid-cols-12 items-center">
+                  
+                  {/* Branding & Mission Block */}
+                  <div className="lg:col-span-5 flex flex-col gap-6">
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-baseline">
+                        <span className="text-3xl font-black tracking-tighter text-red-600">TEDx</span>
+                        <span className="text-3xl font-black tracking-tighter text-white ml-0.5">NTUA</span>
                       </div>
-                      <div className="transition-transform duration-300 hover:-translate-y-2">
-                        <TEDSocialButton name='instagram' size='40px' color='color' colorHover='yellow' />
-                      </div>
-                      <div className="transition-transform duration-300 hover:-translate-y-2">
-                        <TEDSocialButton name='linkedIn' size='40px' color='color' colorHover='yellow' />
-                      </div>
-                      <div className="transition-transform duration-300 hover:-translate-y-2">
-                        <TEDSocialButton name='tiktok' size='40px' color='color' colorHover='yellow' />
-                      </div>
-                      <div className="transition-transform duration-300 hover:-translate-y-2">
-                        <TEDSocialButton name='facebook' size='40px' color='color' colorHover='yellow' />
-                      </div>
+                      <div className="h-6 w-px bg-white/20" />
+                      <CycleZeroMark className="h-8 w-auto opacity-80" />
                     </div>
-                    <div className="footer-social-loop w-full max-w-sm pl-0 sm:pl-1">
-                      <svg
-                        viewBox="0 -14 320 164"
-                        aria-hidden="true"
-                        className="h-auto w-full overflow-visible"
-                        suppressHydrationWarning
-                      >
-                        <ellipse
-                          cx="159"
-                          cy="46"
-                          rx="72"
-                          ry="22"
-                          fill="none"
-                          stroke="rgba(255,255,255,0.18)"
-                          strokeWidth="1.1"
-                          strokeDasharray="5 8"
-                          suppressHydrationWarning
-                        />
-                        <ellipse
-                          cx="159"
-                          cy="46"
-                          rx="72"
-                          ry="22"
-                          fill="none"
-                          stroke="rgba(34,197,94,0.22)"
-                          strokeWidth="1.2"
-                          strokeDasharray="14 124"
-                          strokeLinecap="round"
-                          suppressHydrationWarning
-                        />
-                        <g suppressHydrationWarning>
-                          <circle cx="0" cy="0" r="4" fill="rgba(34,197,94,0.72)" suppressHydrationWarning>
-                            <animateMotion
-                              dur="6.8s"
-                              repeatCount="indefinite"
-                              path="M 159 46 m -72,-22 a 72 22 0 1 1 144 0 a 72 22 0 1 1 -144 0"
-                            />
-                          </circle>
-                          <circle cx="0" cy="0" r="7.5" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="1" suppressHydrationWarning>
-                            <animateMotion
-                              dur="6.8s"
-                              repeatCount="indefinite"
-                              path="M 159 46 m -72,-22 a 72 22 0 1 1 144 0 a 72 22 0 1 1 -144 0"
-                            />
-                          </circle>
-                        </g>
-                        <g suppressHydrationWarning>
-                          <circle cx="0" cy="0" r="4" fill="rgba(255,255,255,0.92)" suppressHydrationWarning>
-                            <animateMotion
-                              dur="8.4s"
-                              repeatCount="indefinite"
-                              begin="-3.4s"
-                              path="M 159 46 m -72,-22 a 72 22 0 1 1 144 0 a 72 22 0 1 1 -144 0"
-                            />
-                          </circle>
-                          <circle cx="0" cy="0" r="7.5" fill="none" stroke="rgba(34,197,94,0.5)" strokeWidth="1" suppressHydrationWarning>
-                            <animateMotion
-                              dur="8.4s"
-                              repeatCount="indefinite"
-                              begin="-3.4s"
-                              path="M 159 46 m -72,-22 a 72 22 0 1 1 144 0 a 72 22 0 1 1 -144 0"
-                            />
-                          </circle>
-                        </g>
-                      </svg>
-                    </div>
-                  </section>
-                </section>
+                    
+                    <p className="max-w-md text-[11px] leading-relaxed text-white/40 font-medium italic">
+                      In the spirit of "Ideas Worth Spreading", TEDx is a program of local, self-organized events that bring people together to share a TED-like experience.
+                    </p>
 
-                
+                    <div className="flex flex-wrap gap-3">
+                      {['youtube', 'instagram', 'linkedIn', 'tiktok', 'facebook'].map((social) => (
+                        <div key={social} className="relative transition-all duration-300 hover:-translate-y-1 active:scale-95">
+                          <TEDSocialButton name={social} size='36px' color='color' colorHover='yellow' />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Quick Links Column */}
+                  <div className="lg:col-span-2 flex flex-col gap-5">
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-red-600">Explore</h4>
+                    <nav className="flex flex-col gap-2.5 text-[10px] font-bold tracking-wider text-white/40">
+                      <Link href="/event/program" className="hover:text-emerald-400 transition-colors uppercase">Program</Link>
+                      <Link href="/event/speakers" className="hover:text-emerald-400 transition-colors uppercase">Speakers</Link>
+                      <Link href="/event/performances" className="hover:text-emerald-400 transition-colors uppercase">Performances</Link>
+                      <Link href="/sponsors" className="hover:text-emerald-400 transition-colors uppercase">Sponsors</Link>
+                      <Link href="/team" className="hover:text-emerald-400 transition-colors uppercase">Our Team</Link>
+                    </nav>
+                  </div>
+
+                  {/* Contact Hub - Span 5 */}
+                  <div className="lg:col-span-5">
+                    <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-3xl shadow-2xl group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                      <FooterContactPanel />
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* Bottom Bar */}
+                <div className="mt-10 pt-6 border-t border-white/5 flex flex-col lg:flex-row justify-between items-center gap-4">
+                  <div className="flex items-center gap-4 text-[9px] font-black uppercase tracking-[0.4em] text-white/20">
+                    <span>Innovate • Create • Inspire</span>
+                  </div>
+
+                  <div className="flex flex-col items-center lg:items-end text-center lg:text-right gap-0.5">
+                    <div className="text-[9px] font-bold text-white/20 tracking-wider uppercase">
+                      © 2026 TEDxNTUA — Operated under license from TED
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </footer>
+            </footer>
           </EventNavProvider>
         </ContentVisibilityWrapper>
       </body>
