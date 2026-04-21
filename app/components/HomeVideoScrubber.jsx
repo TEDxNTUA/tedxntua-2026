@@ -27,12 +27,26 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const pinStateRef = useRef("before");
   const [scrubHeight, setScrubHeight] = useState("0px");
   const [pinState, setPinState] = useState("before");
+  const [videoSrc, setVideoSrc] = useState(null);
   const layoutCache = useRef({ top: 0, height: 0, windowHeight: 0 });
+  const currentVideoTimeRef = useRef(0);
+  const targetVideoTimeRef = useRef(0);
+
+  // Update video source based on width, allowing it to switch if the user resizes (useful for testing)
+  useEffect(() => {
+    const updateSrc = () => {
+      const isMobileWidth = window.innerWidth < 768;
+      const newSrc = isMobileWidth ? "/koutsouro_mobile.mp4" : "/output.mp4";
+      setVideoSrc((prev) => (prev !== newSrc ? newSrc : prev));
+    };
+
+    updateSrc();
+    window.addEventListener("resize", updateSrc);
+    return () => window.removeEventListener("resize", updateSrc);
+  }, []);
 
   const updateLayoutCache = useCallback(() => {
-    if (!sectionRef.current) {
-      return;
-    }
+    if (!sectionRef.current) return;
 
     const sectionTop =
       sectionRef.current.getBoundingClientRect().top + window.scrollY;
@@ -49,7 +63,6 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const video = videoRef.current;
 
     if (!section || !video || !Number.isFinite(video.duration) || video.duration <= 0) {
-      console.warn('Video not ready yet - duration:', video?.duration);
       return;
     }
 
@@ -58,13 +71,13 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const pixelsPerSecond = (isCoarsePointer() || isMobile)
       ? MOBILE_PIXELS_PER_SECOND
       : PIXELS_PER_SECOND;
+    
     const minHeight = viewportHeight * storyBeats.length;
     const desiredHeight = Math.max(
       minHeight,
       video.duration * pixelsPerSecond + viewportHeight,
     );
 
-    console.log('Scrub Height calculated:', {desiredHeight, duration: video.duration, pixelsPerSecond});
     setScrubHeight(`${Math.ceil(desiredHeight)}px`);
   }, []);
 
@@ -82,11 +95,13 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
     const scrollDistance = currentScroll - top;
     const total = height - windowHeight;
+    
     if (total <= 0) {
       frameIdRef.current = 0;
       return;
     }
 
+    // Update pin state
     let nextPinState = "before";
     if (currentScroll >= top + total) {
       nextPinState = "after";
@@ -99,24 +114,33 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       setPinState(nextPinState);
     }
 
+    // Calculate target time based on scroll
     const progress = clamp(scrollDistance / total, 0, 1);
-    const nextTime = Math.min(
+    targetVideoTimeRef.current = Math.min(
       progress * video.duration,
-      Math.max(video.duration - 0.001, 0),
+      video.duration - 0.001
     );
-    if (Math.abs(video.currentTime - nextTime) > 0.01) {
-      video.currentTime = nextTime;
-    }
 
-    frameIdRef.current = 0;
+    // Smoothly interpolate current time towards target for "buttery" feel
+    // Using a simple lerp: current = current + (target - current) * factor
+    const lerpFactor = 0.15; 
+    const timeDiff = targetVideoTimeRef.current - currentVideoTimeRef.current;
+    
+    if (Math.abs(timeDiff) > 0.001) {
+      currentVideoTimeRef.current += timeDiff * lerpFactor;
+      video.currentTime = currentVideoTimeRef.current;
+      // Continue animation if we haven't reached target
+      frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
+    } else {
+      video.currentTime = targetVideoTimeRef.current;
+      frameIdRef.current = 0;
+    }
   }, []);
 
   const requestSync = useCallback(() => {
-    if (frameIdRef.current) {
-      return;
+    if (!frameIdRef.current) {
+      frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
     }
-
-    frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
   }, [syncVideoToScroll]);
 
   useEffect(() => {
@@ -227,10 +251,10 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
           <video
             ref={videoRef}
             className={styles.scrubberSectionVideo}
-            src={withBasePath("/output.mp4")}
+            src={videoSrc ? withBasePath(videoSrc) : undefined}
             muted
             playsInline
-            preload="metadata"
+            preload="auto"
             disableRemotePlayback
             disablePictureInPicture
             crossOrigin="anonymous"

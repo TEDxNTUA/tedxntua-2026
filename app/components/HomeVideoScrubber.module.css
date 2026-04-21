@@ -69,7 +69,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 200px;
+  height: 40vh; /* Deeper fade for a more premium feel */
   background: linear-gradient(180deg, transparent 0%, #000 100%);
   pointer-events: none;
   z-index: 5;
@@ -94,7 +94,7 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  transition: opacity 0.6s ease-out;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 1;
 }
 
@@ -109,6 +109,7 @@
   opacity: 0;
   pointer-events: none;
   top: 0;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scrubberSectionVideo,
@@ -137,19 +138,19 @@
 
 @media (max-width: 720px) {
   .scrubberSectionVideo {
-    width: 95%;
-    height: 95%;
-    object-fit: contain;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    box-shadow: none;
   }
 }
 
 @media (max-width: 480px) {
   .scrubberSectionVideo {
-    width: 90%;
-    height: 90%;
-    border-radius: 0.5rem;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
   }
 }
 
@@ -226,16 +227,18 @@
   }
 
   .scrubberSectionBeat {
-    align-items: end;
-    padding: clamp(1rem, 4vw, 2rem);
-    padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+    align-items: center; /* Center vertically for better balance */
+    padding: clamp(1rem, 5vw, 2rem);
+    padding-bottom: 20vh; /* Lift the text up slightly */
     min-height: 100vh;
     min-height: 100dvh;
   }
 
   .scrubberSectionBeat h2 {
-    max-width: 10ch;
-    font-size: clamp(2rem, 11vw, 3.75rem);
+    max-width: 12ch;
+    font-size: clamp(1.8rem, 10vw, 2.8rem); /* Slightly smaller font */
+    line-height: 1.1;
+    text-shadow: 0 0.1em 0.8em rgba(0, 0, 0, 0.6);
   }
 
   .scrubberSectionHint {
