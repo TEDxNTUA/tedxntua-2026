@@ -27,25 +27,27 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const pinStateRef = useRef("before");
   const [scrubHeight, setScrubHeight] = useState("0px");
   const [pinState, setPinState] = useState("before");
-  const [videoSrc, setVideoSrc] = useState("");
+  const [videoSrc, setVideoSrc] = useState(null);
   const layoutCache = useRef({ top: 0, height: 0, windowHeight: 0 });
+  const currentVideoTimeRef = useRef(0);
+
+  // Smoothing factor: lower is smoother/slower, higher is more responsive
+  // 0.1 is usually the "sweet spot" for 60fps
+  const SMOOTHING = 0.12; 
 
   useEffect(() => {
     const getSrc = () => {
       const isMobile = window.innerWidth < 720;
-      return isMobile
-        ? withBasePath("/animations/output_mobile.mp4")
-        : withBasePath("/animations/output.mp4");
+      return withBasePath(
+        isMobile ? "/animations/output_mobile.mp4" : "/animations/output_desktop.mp4"
+      );
     };
 
     setVideoSrc(getSrc());
 
     const handleResize = () => {
       const nextSrc = getSrc();
-      setVideoSrc((prev) => {
-        if (prev !== nextSrc) return nextSrc;
-        return prev;
-      });
+      setVideoSrc((prev) => (prev !== nextSrc ? nextSrc : prev));
     };
 
     window.addEventListener("resize", handleResize);
@@ -123,17 +125,24 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
     // Calculate target time based on scroll
     const progress = clamp(scrollDistance / total, 0, 1);
-    const nextTime = Math.min(
-      progress * (video.duration - 0.05), // slightly less than duration to avoid end-of-video issues
-      video.duration - 0.05,
-    );
+    const targetTime = progress * (video.duration - 0.05);
     
-    // Only update if the difference is significant enough (e.g., more than half a frame at 30fps)
-    if (Math.abs(video.currentTime - nextTime) > 0.016) {
-      video.currentTime = nextTime;
+    // LERP: current = current + (target - current) * smoothing
+    // This creates the "momentum" feel
+    const newTime = currentVideoTimeRef.current + (targetTime - currentVideoTimeRef.current) * SMOOTHING;
+    currentVideoTimeRef.current = newTime;
+
+    // Only update if the difference is significant
+    if (Math.abs(video.currentTime - newTime) > 0.008) {
+      video.currentTime = newTime;
     }
 
-    frameIdRef.current = 0;
+    // Continue the animation loop if we haven't reached the target
+    if (Math.abs(targetTime - currentVideoTimeRef.current) > 0.001) {
+      frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
+    } else {
+      frameIdRef.current = 0;
+    }
   }, []);
 
   const requestSync = useCallback(() => {

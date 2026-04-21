@@ -138,19 +138,19 @@
 
 @media (max-width: 720px) {
   .scrubberSectionVideo {
-    width: 95%;
-    height: 95%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    border-radius: 0;
+    box-shadow: none;
   }
 }
 
 @media (max-width: 480px) {
   .scrubberSectionVideo {
-    width: 90%;
-    height: 90%;
-    border-radius: 0.5rem;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
   }
 }
 
@@ -228,17 +228,19 @@
 
   .scrubberSectionBeat {
     align-items: center; /* Center vertically for better balance */
-    padding: clamp(1rem, 5vw, 2rem);
-    padding-bottom: 20vh; /* Lift the text up slightly */
+    padding: clamp(1rem, 7vw, 2.5rem);
+    padding-bottom: 10vh; /* Adjust for mobile viewports */
     min-height: 100vh;
     min-height: 100dvh;
   }
 
   .scrubberSectionBeat h2 {
-    max-width: 12ch;
-    font-size: clamp(1.8rem, 10vw, 2.8rem); /* Slightly smaller font */
+    max-width: 15ch;
+    font-size: clamp(2rem, 11vw, 3.2rem); 
     line-height: 1.1;
-    text-shadow: 0 0.1em 0.8em rgba(0, 0, 0, 0.6);
+    text-shadow: 
+      0 0 20px rgba(0, 0, 0, 0.8),
+      0 2px 4px rgba(0, 0, 0, 0.9);
   }
 
   .scrubberSectionHint {

@@ -237,7 +237,7 @@ export default function AssetLoader() {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover scale-[1.3] md:scale-[1.1] transition-opacity duration-700"
+            className="w-full h-full object-cover scale-[1.3] md:scale-[1.1] transition-opacity duration-700 mix-blend-lighten opacity-50"
           >
             <source src={withBasePath(isMobile ? "/loading_mobile.webm" : "/loading_desktop.webm")} type="video/webm" />
             <source src={withBasePath(isMobile ? "/loading_mobile.mp4" : "/loading_desktop.mp4")} type="video/mp4" />
