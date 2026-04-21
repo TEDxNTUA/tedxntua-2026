@@ -131,7 +131,7 @@
 
 @media (max-width: 1024px) {
   .scrubberSectionVideo {
-    object-fit: contain;
+    object-fit: cover;
   }
 }
 
@@ -139,7 +139,7 @@
   .scrubberSectionVideo {
     width: 95%;
     height: 95%;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 0.75rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
   }

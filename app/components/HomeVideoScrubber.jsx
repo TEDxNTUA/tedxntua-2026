@@ -27,7 +27,30 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const pinStateRef = useRef("before");
   const [scrubHeight, setScrubHeight] = useState("0px");
   const [pinState, setPinState] = useState("before");
+  const [videoSrc, setVideoSrc] = useState("");
   const layoutCache = useRef({ top: 0, height: 0, windowHeight: 0 });
+
+  useEffect(() => {
+    const getSrc = () => {
+      const isMobile = window.innerWidth < 720;
+      return isMobile
+        ? withBasePath("/animations/output_mobile.mp4")
+        : withBasePath("/animations/output.mp4");
+    };
+
+    setVideoSrc(getSrc());
+
+    const handleResize = () => {
+      const nextSrc = getSrc();
+      setVideoSrc((prev) => {
+        if (prev !== nextSrc) return nextSrc;
+        return prev;
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const updateLayoutCache = useCallback(() => {
     if (!sectionRef.current) {
@@ -54,7 +77,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     }
 
     const viewportHeight = getViewportHeight();
-    const isMobile = window.innerWidth < 768;
+    const isMobile = window.innerWidth < 720;
     const pixelsPerSecond = (isCoarsePointer() || isMobile)
       ? MOBILE_PIXELS_PER_SECOND
       : PIXELS_PER_SECOND;
@@ -101,10 +124,12 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
     const progress = clamp(scrollDistance / total, 0, 1);
     const nextTime = Math.min(
-      progress * video.duration,
-      Math.max(video.duration - 0.001, 0),
+      progress * (video.duration - 0.05), // slightly less than duration to avoid end-of-video issues
+      video.duration - 0.05,
     );
-    if (Math.abs(video.currentTime - nextTime) > 0.01) {
+    
+    // Only update if the difference is significant enough (e.g., more than half a frame at 30fps)
+    if (Math.abs(video.currentTime - nextTime) > 0.016) {
       video.currentTime = nextTime;
     }
 
@@ -227,7 +252,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
           <video
             ref={videoRef}
             className={styles.scrubberSectionVideo}
-            src={withBasePath("/output.mp4")}
+            src={videoSrc}
             muted
             playsInline
             preload="metadata"

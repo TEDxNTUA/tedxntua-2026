@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, Fragment } from "react";
 import { sponsorTiers } from "./sponsorsData";
 import SponsorTierSection from "./components/SponsorTierSection";
+import { withBasePath } from "../lib/basePath";
+
+const assetPath = (path) => encodeURI(withBasePath(path));
 
 const TIER_COLORS = {
   "Diamond": { main: "#22d3ee", glow: "rgba(34, 211, 238, 0.8)" },    // Cyan
@@ -409,7 +412,7 @@ export default function SponsorsPage() {
   }, [isUnlocked, updateProgress, reducedMotion]);
 
   return (
-    <section className="min-h-screen bg-black text-white selection:bg-green-500/30 overflow-x-hidden">
+    <section className="relative min-h-screen bg-black text-white selection:bg-green-500/30 overflow-x-hidden">
       {/* Enhanced Scroll Progress Bar (Vertical Right) */}
       <div className={`fixed right-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-50 transition-all duration-700 ${isUnlocked ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
         <div className="relative w-[3px] h-64 bg-white/5 rounded-full overflow-visible">
@@ -466,7 +469,6 @@ export default function SponsorsPage() {
           Navigation
         </div>
       </div>
-
       {/* Sponsor Modal */}
       <SponsorModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
@@ -481,6 +483,7 @@ export default function SponsorsPage() {
 
       <div className="relative z-10">
         {/* Reveal Section - Higher and more compact */}
+
         <div className={`flex flex-col items-center justify-center transition-all duration-1000 ease-in-out ${isUnlocked ? "min-h-[60vh] pt-24" : "min-h-[100vh]"}`}>
           <ScrollRevealText progress={progress} reducedMotion={reducedMotion} />
         </div>
@@ -491,11 +494,12 @@ export default function SponsorsPage() {
         >
           <div className="space-y-20 sm:space-y-32">
             {sponsorTiers.map((tier, index) => (
-              <SponsorTierSection
-                key={tier.tier}
-                tier={tier}
-                index={index}
-              />
+              <Fragment key={tier.tier}>
+                <SponsorTierSection
+                  tier={tier}
+                  index={index}
+                />
+              </Fragment>
             ))}
           </div>
 
