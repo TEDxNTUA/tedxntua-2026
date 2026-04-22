@@ -129,36 +129,35 @@ function SponsorModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({ name: "", company: "", email: "", message: "" });
   const [status, setStatus] = useState("idle"); // idle, sending, success, error
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
+    setErrorMessage("");
 
-    // YOU MUST REPLACE 'YOUR_ACCESS_KEY_HERE' WITH YOUR ACTUAL KEY FROM WEB3FORMS.COM
-    const accessKey = "a3e2b416-7bf0-4825-8572-ef284e7873e6"; 
+    const submissionData = new FormData();
+    submissionData.append("access_key", "a3e2b416-7bf0-4825-8572-ef284e7873e6");
+    submissionData.append("name", formData.name);
+    submissionData.append("company", formData.company);
+    submissionData.append("email", formData.email);
+    submissionData.append("message", formData.message);
+    submissionData.append("from_name", "TEDxNTUA Sponsorship");
+    submissionData.append("subject", `Sponsorship Inquiry from ${formData.company || formData.name}`);
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          "Accept": "application/json"
         },
-        body: JSON.stringify({
-          access_key: accessKey,
-          from_name: "TEDxNTUA Sponsorship",
-          subject: `Sponsorship Inquiry: ${formData.company}`,
-          replyto: formData.email,
-          name: formData.name,
-          company: formData.company,
-          email: formData.email,
-          message: formData.message,
-        }),
+        body: submissionData
       });
 
       const result = await response.json();
-      if (result.success) {
+      if (response.ok && result.success) {
         setStatus("success");
         setTimeout(() => {
           onClose();
@@ -166,10 +165,11 @@ function SponsorModal({ isOpen, onClose }) {
           setFormData({ name: "", company: "", email: "", message: "" });
         }, 2500);
       } else {
+        setErrorMessage(result.message || "Submission failed");
         setStatus("error");
       }
     } catch (error) {
-      console.error("Submission error:", error);
+      setErrorMessage("Network error. Please try again.");
       setStatus("error");
     }
   };
@@ -213,6 +213,7 @@ function SponsorModal({ isOpen, onClose }) {
                 <input 
                   required
                   type="text"
+                  name="name"
                   placeholder="Your Name"
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors disabled:opacity-50"
                   value={formData.name}
@@ -226,6 +227,7 @@ function SponsorModal({ isOpen, onClose }) {
                   <input 
                     required
                     type="text"
+                    name="company"
                     placeholder="Organization"
                     className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors disabled:opacity-50"
                     value={formData.company}
@@ -238,6 +240,7 @@ function SponsorModal({ isOpen, onClose }) {
                   <input 
                     required
                     type="email"
+                    name="email"
                     placeholder="email@example.com"
                     className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors disabled:opacity-50"
                     value={formData.email}
@@ -251,6 +254,7 @@ function SponsorModal({ isOpen, onClose }) {
                 <textarea 
                   required
                   rows="4"
+                  name="message"
                   placeholder="Tell us about your interest in sponsoring..."
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors resize-none disabled:opacity-50"
                   value={formData.message}
@@ -260,7 +264,7 @@ function SponsorModal({ isOpen, onClose }) {
               </div>
               
               {status === "error" && (
-                <p className="text-red-500 text-xs text-center">Something went wrong. Please try again.</p>
+                <p className="text-red-500 text-xs text-center">{errorMessage}</p>
               )}
 
               <button 
