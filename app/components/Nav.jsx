@@ -5,66 +5,72 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useHeaderNav } from "./EventNavProvider";
 import { useScrollDirection } from "../hooks/useScrollDirection";
-import { withBasePath } from "../lib/basePath";
 import classes from "./Nav.module.css";
 
 /**
- * Header radial navigation with three slices and a central home/menu trigger.
- * The open state is shared through context so the header can animate around it.
- *
- * @returns {JSX.Element}
+ * Fancy Neural Roots Navigation - Version 7.0
+ * Features glow-layered branches and junction nodes.
+ * ABSOLUTELY NO movement on hover.
  */
+
+const TeamIcon = () => (
+  <svg viewBox="0 0 24 24" className={classes.svgIcon}>
+    <circle cx="12" cy="7" r="4" />
+    <path d="M17 21v-2a4 4 0 0 0-4-4H11a4 4 0 0 0-4 4v2" />
+    <circle cx="6" cy="11" r="2" />
+    <circle cx="18" cy="11" r="2" />
+  </svg>
+);
+
+const EventIcon = () => (
+  <svg viewBox="0 0 24 24" className={classes.svgIcon}>
+    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+    <circle cx="12" cy="12" r="4" />
+  </svg>
+);
+
+const SponsorsIcon = () => (
+  <svg viewBox="0 0 24 24" className={classes.svgIcon}>
+    <path d="M12 3l8.66 5v10L12 21l-8.66-5V8z" />
+    <path d="M12 8l4.33 2.5v5L12 18l-4.33-2.5v-5z" />
+    <path d="M12 3v5M20.66 18l-4.33-2.5M3.34 18l4.33-2.5" />
+  </svg>
+);
+
+const HomeIcon = () => (
+  <svg viewBox="0 0 24 24" className={classes.svgIcon}>
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+    <polyline points="9 22 9 12 15 12 15 22" />
+  </svg>
+);
+
 export default function Nav() {
-  // Route flags are used for active styling and to coordinate with the event-specific navigation.
   const pathname = usePathname() ?? "/";
-
-  // Read the main header nav state from context so the header can react to the exact same source of truth.
   const { isOpen, open, close } = useHeaderNav();
-  
-  // Refs let us detect outside clicks without relying on brittle DOM queries.
   const isHiddenOnScroll = useScrollDirection({ threshold: 40 });
-  const menuRef = useRef(null);
-  const centerLogoRef = useRef(null);
+  const containerRef = useRef(null);
 
-  // Route checks control which slice looks active and whether the event slice toggles the sidebar.
   const isHomePage = pathname === "/";
   const isEventPage = pathname.startsWith("/event");
-  const isSponsorsPage = pathname === "/sponsors";
+  const isSponsorsPage = pathname.startsWith("/sponsors");
   const isTeamPage = pathname.startsWith("/team");
 
-  /**
-   * Standard navigation for the event slice. 
-   * The event dock is handled independently within the event routes.
-   */
-  const handleEventClick = () => {
-    close();
-  };
-
-  /**
-   * Opens the radial menu on first click and collapses it on subsequent clicks.
-   * On subpages, clicking while open navigates home.
-   *
-   * @param {import("react").MouseEvent<HTMLAnchorElement>} e
-   */
-  const handleCenterClick = (e) => {
+  const handleCoreClick = (e) => {
     if (!isOpen) {
       e.preventDefault();
       open();
     } else {
-      // If we are on a subpage and the menu is open, let the Link navigate home.
-      // Otherwise, just close the menu.
       if (isHomePage) {
         e.preventDefault();
+        close();
       }
-      close();
     }
   };
 
-  // When the radial menu is open, outside clicks collapse it through the shared provider state.
   useEffect(() => {
     if (!isOpen) return;
     const handleClickOutside = (e) => {
-      if (!menuRef.current?.contains(e.target) && !centerLogoRef.current?.contains(e.target)) {
+      if (!containerRef.current?.contains(e.target)) {
         close();
       }
     };
@@ -72,89 +78,92 @@ export default function Nav() {
     return () => document.removeEventListener("pointerdown", handleClickOutside);
   }, [close, isOpen]);
 
-  // Compose CSS-module states so scroll behavior and event-page behavior can layer cleanly.
   const containerClasses = [
     classes.menuContainer,
     isHiddenOnScroll && classes.menuContainerHidden,
   ].filter(Boolean).join(" ");
 
-  // CSS variables allow the module stylesheet to consume image assets without hardcoding paths there.
   return (
-    <nav
-      className={containerClasses}
-      style={{
-        "--nav-team-icon": `url(${withBasePath("/team.png")})`,
-        "--nav-sponsors-icon": `url(${withBasePath("/sponsors.png")})`,
-        "--nav-event-icon": `url(${withBasePath("/event.png")})`,
-        "--nav-home-icon": `url(${withBasePath("/home.png")})`,
-        "--nav-test-image": `url(${withBasePath("/testNav.jpg")})`, // The one background you want
-      }}
-    >
-      {/* Preload images so AssetLoader waits for these critical navbar assets */}
-      <div className="hidden" aria-hidden="true">
-        <img src={withBasePath("/team.png")} alt="" />
-        <img src={withBasePath("/sponsors.png")} alt="" />
-        <img src={withBasePath("/event.png")} alt="" />
-        <img src={withBasePath("/testNav.jpg")} alt="" />
-      </div>
+    <nav className={containerClasses} ref={containerRef}>
+      
+      {/* Root SVG Lines - Fancy Glow Edition */}
+      <svg className={classes.rootLines} viewBox="0 0 240 180">
+        {/* Team Branch */}
+        <path d="M 120 0 C 100 25, 60 50, 15 80" className={`${classes.rootPathGlow} ${isOpen ? classes.rootPathOpen : ""}`} />
+        <path d="M 120 0 C 100 25, 60 50, 15 80" className={`${classes.rootPath} ${isOpen ? classes.rootPathOpen : ""}`} />
+        <circle cx="15" cy="80" r="3" className={classes.rootJunction} />
+        
+        {/* Event Branch */}
+        <path d="M 120 0 L 120 140" className={`${classes.rootPathGlow} ${isOpen ? classes.rootPathOpen : ""}`} style={{ transitionDelay: '80ms' }} />
+        <path d="M 120 0 L 120 140" className={`${classes.rootPath} ${isOpen ? classes.rootPathOpen : ""}`} style={{ transitionDelay: '80ms' }} />
+        <circle cx="120" cy="140" r="3" className={classes.rootJunction} style={{ transitionDelay: '750ms' }} />
 
-      {/* The circular wrapper holds the three radial slices and scales open from the top. */}
-      <div 
-        ref={menuRef} 
-        className={`${classes.wrap} ${isOpen ? classes.menuOpen : ""}`}
-      >
-        {/* Team slice */}
-        <Link
-          href="/team"
-          className={`${classes.slice} ${isTeamPage ? classes.sliceActive : ""}`}
-          aria-label="Team"
-        >
-          <span className={classes.sliceInner}>
-            <img src={withBasePath("/team.png")} alt="" className="w-full h-full object-contain" />
-          </span>
-          <span className={classes.sliceLabel}>TEAM</span>
-        </Link>
+        {/* Sponsors Branch */}
+        <path d="M 120 0 C 140 25, 180 50, 225 80" className={`${classes.rootPathGlow} ${isOpen ? classes.rootPathOpen : ""}`} style={{ transitionDelay: '160ms' }} />
+        <path d="M 120 0 C 140 25, 180 50, 225 80" className={`${classes.rootPath} ${isOpen ? classes.rootPathOpen : ""}`} style={{ transitionDelay: '160ms' }} />
+        <circle cx="225" cy="80" r="3" className={classes.rootJunction} style={{ transitionDelay: '800ms' }} />
 
-        {/* Event slice - now in the middle position (210deg) */}
-        <Link
-          href="/event"
-          onClick={handleEventClick}
-          className={`${classes.slice} ${isEventPage ? classes.sliceActive : ""}`}
-          aria-label="Event"
-        >
-          <span className={classes.sliceInner}>
-            <img src={withBasePath("/event.png")} alt="" className="w-full h-full object-contain" />
-          </span>
-          <span className={classes.sliceLabel}>EVENT</span>
-        </Link>
+        {/* Central Junction */}
+        <circle cx="120" cy="0" r="4" className={classes.rootJunction} style={{ transitionDelay: '0ms' }} />
+      </svg>
 
-        {/* Sponsors slice */}
-        <Link
-          href="/sponsors"
-          className={`${classes.slice} ${isSponsorsPage ? classes.sliceActive : ""}`}
-          aria-label="Sponsors"
-        >
-          <span className={classes.sliceInner}>
-            <img src={withBasePath("/sponsors.png")} alt="" className="w-full h-full object-contain" />
-          </span>
-          <span className={classes.sliceLabel}>SPONSORS</span>
-        </Link>
-      </div>
-
-      {/* The center badge is both the home link and the open/close trigger for the radial menu. */}
+      {/* Central Root Node */}
       <Link
         href="/"
-        ref={centerLogoRef}
-        onClick={handleCenterClick}
-        className={`${classes.centerLogo} ${!isHomePage ? classes.centerLogoNotHome : ""}`}
+        onClick={handleCoreClick}
+        className={`
+          ${classes.coreButton} 
+          ${isOpen ? classes.coreButtonOpen : ""} 
+          ${!isHomePage ? classes.coreButtonNotHome : ""}
+        `}
         aria-label={isOpen ? (isHomePage ? "Close menu" : "Go home") : "Open navigation"}
-        aria-expanded={isOpen}
-        data-current-page={isTeamPage ? "TEAM" : isEventPage ? "EVENT" : isSponsorsPage ? "SPONSORS" : ""}
       >
-        {/* Inner span renders the branded home icon via CSS background imagery. */}
-        <span className={classes.centerLogoInner}>
-          <img src={withBasePath("/home.png")} alt="" className="w-full h-full object-contain" />
+        <span className={classes.coreInner}>
+          <HomeIcon />
         </span>
+      </Link>
+
+      {/* Orbital Graph Nodes */}
+      <Link
+        href="/team"
+        onClick={() => close()}
+        className={`
+          ${classes.orbitalNode} 
+          ${classes.nodeTeam} 
+          ${isOpen ? classes.nodeOpen : ""} 
+          ${isTeamPage ? classes.nodeActive : ""}
+        `}
+      >
+        <span className={classes.nodeIcon}><TeamIcon /></span>
+        <span className={classes.nodeLabel}>Team</span>
+      </Link>
+
+      <Link
+        href="/event"
+        onClick={() => close()}
+        className={`
+          ${classes.orbitalNode} 
+          ${classes.nodeEvent} 
+          ${isOpen ? classes.nodeOpen : ""} 
+          ${isEventPage ? classes.nodeActive : ""}
+        `}
+      >
+        <span className={classes.nodeIcon}><EventIcon /></span>
+        <span className={classes.nodeLabel}>Event</span>
+      </Link>
+
+      <Link
+        href="/sponsors"
+        onClick={() => close()}
+        className={`
+          ${classes.orbitalNode} 
+          ${classes.nodeSponsors} 
+          ${isOpen ? classes.nodeOpen : ""} 
+          ${isSponsorsPage ? classes.nodeActive : ""}
+        `}
+      >
+        <span className={classes.nodeIcon}><SponsorsIcon /></span>
+        <span className={classes.nodeLabel}>Sponsors</span>
       </Link>
     </nav>
   );

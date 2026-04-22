@@ -1,272 +1,242 @@
-/* --- 1. Main Container --- */
+/* --- 1. Main Root Container --- */
 .menuContainer {
   position: absolute;
   top: 0;
   left: 50%;
-  width: min(500px, calc(100vw - 16px));
+  width: auto;
   height: auto;
   z-index: 60;
   transform: translateX(-50%) translateY(20px);
-  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 300ms ease;
-  pointer-events: none; /* Let scroll pass through by default */
-}
-
-.menuContainerRaised {
-  transform: translateX(-50%) translateY(-72px);
+  transition: transform 600ms cubic-bezier(0.23, 1, 0.32, 1), opacity 500ms ease;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .menuContainerHidden {
-  transform: translateX(-50%) translateY(-145px);
+  transform: translateX(-50%) translateY(-160px);
   opacity: 0;
-  pointer-events: none;
 }
 
-/* --- 2. The Semicircle Wrapper (Consolidated) --- */
-.wrap {
-  position: absolute;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  margin: 0 auto;
-  overflow: hidden;
+/* --- 2. The Central Core (Root Node) --- */
+.coreButton {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  background: #020202;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 50%;
-  
-  /* Background Image Logic - The image is the primary base, with a green fallback color */
-  background-color: #0c361e;
-  background-image: var(--nav-test-image);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  
-  /* Initial State (Closed) */
-  opacity: 1;
-  pointer-events: none;
-  transform: translateY(-55%) scale(0.55);
-  transition: transform 500ms cubic-bezier(0.8, 0.8, 0.5, 0.5), opacity 300ms ease;
-  }
-
-  /* Overlay gradient to ensure the green glow is always present without masking the image too much */
-  .wrap::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: 
-      radial-gradient(circle at 50% 72%, rgba(34, 197, 94, 0.35), transparent 50%),
-      radial-gradient(circle at 50% 28%, rgba(74, 222, 128, 0.25), transparent 55%),
-      linear-gradient(180deg, rgba(12, 54, 30, 0.3) 0%, rgba(4, 18, 10, 0.4) 100%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Open State for Wrap */
-  .menuOpen {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(-55%) scale(1.2);
-  }
-
-  /* --- 3. Navigation Slices --- */
-  .slice {
-  position: absolute;
-  width: 50%;
-  height: 50%;
-  padding: 0;
-  border: none;
-  background: transparent;
   cursor: pointer;
+  z-index: 100;
   pointer-events: auto;
-  clip-path: polygon(100% 100%, 100% 0%, -70% 0%);
-  transform-origin: 100% 100%;
-  transition: filter 500ms ease, transform 500ms ease;
-  }
-
-.slice:nth-child(1) { transform: rotate(150deg); }
-.slice:nth-child(2) { transform: rotate(210deg); }
-.slice:nth-child(3) { transform: rotate(270deg); }
-
-.slice:hover {
-  filter: brightness(1.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transform: translateY(-50%);
 }
 
-.sliceInner {
+.coreButtonOpen {
+  border-color: rgba(34, 197, 94, 0.8);
+  box-shadow: 0 0 50px rgba(34, 197, 94, 0.25), 0 15px 50px rgba(0, 0, 0, 0.9);
+}
+
+.coreButton::after {
+  content: "MENU";
   position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0.6; /* Partially visible by default as requested */
-  transition: opacity 300ms, transform 300ms;
-  z-index: 1;
+  bottom: 15%;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.4em;
+  color: rgba(255, 255, 255, 0.25);
+  transition: all 400ms ease;
 }
 
-/* Specific background images and rotations for each slice icon */
-.slice:nth-child(1) .sliceInner {
-  width: 125%;
-  height: 125%;
-  margin: -18% 0 0;
-  transform: rotate(-150deg);
+.coreButtonOpen::after {
+  content: "HOME";
+  color: #22c55e;
+  letter-spacing: 0.5em;
 }
 
-.slice:nth-child(2) .sliceInner {
-  width: 120%;
-  height: 120%;
-  margin: -18% 0 0;
-  transform: rotate(-210deg);
+.coreInner {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: -8%;
+  transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.slice:nth-child(3) .sliceInner {
-  width: 120%;
-  height: 120%;
-  margin: -18% 0 0;
-  transform: rotate(-270deg);
+.coreButtonOpen .coreInner {
+  transform: scale(1.1);
 }
 
-/* Show images on hover, when menu is open, or when route is active */
-.slice:hover .sliceInner,
-.sliceActive .sliceInner,
-.menuOpen .sliceInner {
-  opacity: 1;
+.coreButtonNotHome .coreInner {
+  color: #22c55e;
 }
 
-/* --- 4. Slice Labels --- */
-.sliceLabel {
-  position: absolute;
-  top: 39.4%;
-  left: 65%;
-  color: #ffffff;
-  font-weight: 900;
-  font-size: clamp(0.75rem, 2.5vw, 1.2rem);
-  letter-spacing: 0.12em;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 400ms ease, color 300ms ease, transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  z-index: 5;
-}
-
-/* Counter-rotations and precise centering within the pie slices */
-.slice:nth-child(1) .sliceLabel { transform: translate(-50%, -50%) rotate(-150deg) scale(0.7); }
-.slice:nth-child(2) .sliceLabel { transform: translate(-50%, -50%) rotate(-210deg) scale(0.7); }
-.slice:nth-child(3) .sliceLabel { transform: translate(-50%, -50%) rotate(-270deg) scale(0.7); }
-
-/* Reveal and "seat" labels in the center when menu opens */
-.menuOpen .sliceLabel {
-  opacity: 1;
-}
-
-.menuOpen .slice:nth-child(1) .sliceLabel { transform: translate(-50%, -50%) rotate(-150deg) scale(1); }
-.menuOpen .slice:nth-child(2) .sliceLabel { transform: translate(-50%, -50%) rotate(-210deg) scale(1); }
-.menuOpen .slice:nth-child(3) .sliceLabel { transform: translate(-50%, -50%) rotate(-270deg) scale(1); }
-
-.sliceActive .sliceLabel {
-  color: #eb0028; /* TED Red */
-}
-
-/* --- 5. Center Logo Button --- */
-.centerLogo {
+/* --- 3. Fancy Neural Roots (SVG Branches) --- */
+.rootLines {
   position: absolute;
   top: 0;
   left: 50%;
-  width: clamp(108px, 33vw, 165px);
-  height: clamp(108px, 33vw, 165px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-top: none;
-  border-radius: 0 0 85px 85px;
-  background-color: #050505;
-  cursor: pointer;
-  transform: translateX(-50%) translateY(-56%);
-  z-index: 70;
-  overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-  transition: background-color 300ms ease, border-color 300ms ease;
-  pointer-events: auto; /* Always interactable */
-}
-
-.centerLogo::after {
-  content: "MENU";
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
   transform: translateX(-50%);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.25em;
-  color: rgba(255, 255, 255, 0.4);
-  transition: color 300ms, opacity 300ms, transform 300ms;
+  width: 240px;
+  height: 180px;
+  z-index: 40;
+  pointer-events: none;
+  overflow: visible;
 }
 
-.menuOpen + .centerLogo::after {
-  content: "CLOSE";
-  color: #eb0028;
-  opacity: 0.8;
+.rootPath {
+  fill: none;
+  stroke: rgba(34, 197, 94, 0.4);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  transition: stroke-dashoffset 900ms cubic-bezier(0.23, 1, 0.32, 1), stroke 400ms ease;
 }
 
-.menuOpen + .centerLogoNotHome::after {
-  content: "RETURN HOME";
-  color: #eb0028;
-  width: 120%; /* Give it more room for the longer text */
-  text-align: center;
+.rootPathGlow {
+  fill: none;
+  stroke: rgba(34, 197, 94, 0.2);
+  stroke-width: 5;
+  stroke-linecap: round;
+  filter: blur(6px);
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  transition: stroke-dashoffset 900ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.centerLogo:hover::after {
-  color: #22c55e;
-  transform: translateX(-50%) translateY(-2px);
+.rootPathOpen {
+  stroke-dashoffset: 0;
 }
 
-.centerLogoInner {
+.rootJunction {
+  fill: #22c55e;
+  opacity: 0;
+  transition: opacity 500ms ease, transform 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-delay: 700ms;
+  transform: scale(0);
+}
+
+.rootPathOpen ~ .rootJunction {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* --- 4. Orbital Nodes (Graph Nodes) --- */
+.orbitalNode {
   position: absolute;
-  inset: 0;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(8, 8, 8, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 50;
+  transform: scale(0.4) translate(0, 0);
+  transition: all 600ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nodeOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* DESKTOP POSITIONS */
+.nodeTeam.nodeOpen { transform: translate(-105px, 80px) scale(1); }
+.nodeEvent.nodeOpen { transform: translate(0px, 140px) scale(1); }
+.nodeSponsors.nodeOpen { transform: translate(105px, 80px) scale(1); }
+
+.nodeTeam { transition-delay: 80ms; }
+.nodeEvent { transition-delay: 160ms; }
+.nodeSponsors { transition-delay: 240ms; }
+
+.nodeActive {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.8);
+  box-shadow: 0 0 25px rgba(34, 197, 94, 0.2), inset 0 0 15px rgba(34, 197, 94, 0.1);
+  animation: pulseActive 2s infinite ease-in-out;
+}
+
+@keyframes pulseActive {
+  0% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.1), inset 0 0 10px rgba(34, 197, 94, 0.05); }
+  50% { box-shadow: 0 0 30px rgba(34, 197, 94, 0.2), inset 0 0 15px rgba(34, 197, 94, 0.1); }
+  100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.1), inset 0 0 10px rgba(34, 197, 94, 0.05); }
+}
+
+/* --- 5. Node Content --- */
+.nodeIcon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 4px;
+  transition: all 400ms ease;
+}
+
+.nodeActive .nodeIcon {
+  color: #22c55e;
+  transform: scale(1.1);
+}
+
+.nodeLabel {
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  transition: all 400ms ease;
+}
+
+.nodeActive .nodeLabel {
+  color: #fff;
+  letter-spacing: 0.25em;
+}
+
+.svgIcon {
   width: 100%;
   height: 100%;
-  margin-top: 15%;
-  opacity: 0.9;
-  transition: opacity 300ms, transform 300ms;
-}
-
-.centerLogo:hover .centerLogoInner {
-  opacity: 1;
-  transform: scale(1.05);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* --- 6. Mobile --- */
-@media (max-width: 640px) {
-  .menuContainer {
-  /* This adds the height of the notch automatically */
-  top: env(safe-area-inset-top); 
-}
-
-  .indicatorsDial {
-    width: 200px;
-    height: 200px;
-  }
-
-  .indicatorItem span {
-    font-size: 7px;
-  }
-
-  .wrap {
-    transform: translateY(-57%) scale(0.5);
-  }
-
-  .menuOpen {
-    /* Ensure the open state also respects the semicircle midline */
-    transform: translateY(-57%) scale(1);
-  }
-
-  .centerLogo {
-    top: -15px;
-    width: 120px;
-    height: 120px;
-  }
-}
-
-@media (max-width: 400px) {
-  .centerLogo {
-    width: 100px;
-    height: 100px;
-    top: -10px;
-  }
+@media (max-width: 768px) {
+  .menuContainer { transform: translateX(-50%) translateY(15px); }
   
-  .centerLogo::after {
-    font-size: 8px;
-  }
+  .coreButton { width: 85px; height: 85px; }
+  .coreInner { width: 32px; height: 32px; }
+  .coreButton::after { font-size: 7px; bottom: 12%; }
+
+  .orbitalNode { width: 65px; height: 65px; }
+  .nodeIcon { width: 22px; height: 22px; }
+  .nodeLabel { font-size: 6px; }
+
+  .nodeTeam.nodeOpen { transform: translate(-87.5px, 66.6px) scale(1); }
+  .nodeEvent.nodeOpen { transform: translate(0px, 116.6px) scale(1); }
+  .nodeSponsors.nodeOpen { transform: translate(87.5px, 66.6px) scale(1); }
+
+  .rootLines { width: 200px; height: 150px; }
 }
+
