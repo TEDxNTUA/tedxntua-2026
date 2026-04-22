@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { SocialButton } from './SocialButton';
+import { capitalizeSegments } from '../textFormatters';
 
+const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
+const PERFORMER_SOCIAL_HOVER_COLOR = "#239d54";
 
 export default function Popup({ isOpen, onClose, infoBase, originRect }) {
   const [mounted, setMounted] = useState(false);
@@ -100,6 +103,34 @@ export default function Popup({ isOpen, onClose, infoBase, originRect }) {
   const handleClose = () => {
     setIsClosing(true);
   };
+
+  const socialHoverColor =
+    infoBase.itemCategory === "performance"
+      ? PERFORMER_SOCIAL_HOVER_COLOR
+      : infoBase.itemCategory === "speaker"
+        ? SPEAKER_SOCIAL_HOVER_COLOR
+        : undefined;
+  const bioSections = [
+    {
+      name: infoBase.artName || infoBase.name,
+      text: infoBase.personalDescription,
+    },
+    {
+      name: infoBase.name2,
+      text: infoBase.personalDescription2,
+    },
+  ].filter(({ text }) => Boolean(text));
+  const descriptionTitle =
+    infoBase.itemCategory === "performance"
+      ? "Περιγραφή performance"
+      : infoBase.itemCategory === "speaker"
+        ? "Περιγραφή ομιλίας"
+        : "Περιγραφή";
+  const displayProfession = [
+    infoBase.profession,
+    infoBase.profession2,
+  ].filter(Boolean).map(capitalizeSegments).join(" & ");
+
   return createPortal(
     <div
       className={`speaker-modal-backdrop fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 p-3 backdrop-blur-md sm:p-4 ${isClosing ? 'speaker-modal-backdrop-closing' : ''}`}
@@ -150,15 +181,25 @@ export default function Popup({ isOpen, onClose, infoBase, originRect }) {
                 {infoBase.name}{infoBase.name2 ? ` & ${infoBase.name2}` : ''}
               </h2>
               <p className="mt-2 font-mono text-base font-medium text-emerald-300 break-words sm:text-lg">
-                {infoBase.profession}{infoBase.profession2 ? ` & ${infoBase.profession2}` : ''}
+                {displayProfession}
               </p>
 
               <section className="mt-5 flex flex-wrap justify-start gap-4">
-                <SocialConnection socials={infoBase.socials} size="25px" mode="blackred" />
+                <SocialConnection
+                  socials={infoBase.socials}
+                  size="25px"
+                  mode="whitegreen"
+                  hoverColor={socialHoverColor}
+                />
               </section>
               {infoBase.personalDescription2 && (
                 <section className="mt-4 flex flex-wrap justify-start gap-4 border-t border-emerald-400/20 pt-4">
-                  <SocialConnection socials={infoBase.socials2} size="25px" mode="blackred" />
+                  <SocialConnection
+                    socials={infoBase.socials2}
+                    size="25px"
+                    mode="whitegreen"
+                    hoverColor={socialHoverColor}
+                  />
                 </section>
               )}
             </div>
@@ -176,28 +217,36 @@ export default function Popup({ isOpen, onClose, infoBase, originRect }) {
             </div>
 
             <div className="grid gap-6 lg:grid-cols-2">
-              <article className="scroll-reveal rounded-[22px] border border-emerald-400/20 bg-slate-950/80 p-6 sm:p-8 shadow-[0_0_28px_rgba(34,197,94,0.07)] backdrop-blur-sm lg:col-span-2">
-                <h1 className="font-mono text-2xl sm:text-3xl font-semibold text-emerald-100">&gt; {infoBase.title}</h1>
-                <p className="mt-4 max-h-[24vh] overflow-y-auto pr-2 font-mono text-base sm:text-lg leading-relaxed text-justify text-emerald-100/75 whitespace-pre-line custom-scrollbar">
-                  {infoBase.description}
-                </p>
-              </article>
-
-              <article className="scroll-reveal rounded-[22px] border border-emerald-400/20 bg-slate-950/80 p-6 sm:p-8 shadow-[0_0_28px_rgba(34,197,94,0.07)] backdrop-blur-sm">
-                <h1 className="font-mono text-xl sm:text-2xl font-semibold text-emerald-100">&gt; Personal_Info</h1>
-                <p className="mt-4 max-h-[20vh] overflow-y-auto pr-2 font-mono text-base sm:text-lg leading-relaxed text-justify text-emerald-100/75 whitespace-pre-line custom-scrollbar">
-                  {infoBase.personalDescription}
-                </p>
-              </article>
-
-              {infoBase.personalDescription2 && (
-                <article className="scroll-reveal rounded-[22px] border border-emerald-400/20 bg-slate-950/80 p-6 sm:p-8 shadow-[0_0_28px_rgba(34,197,94,0.07)] backdrop-blur-sm">
-                  <h1 className="font-mono text-xl sm:text-2xl font-semibold text-emerald-100">&gt; Personal_Info_02</h1>
-                  <p className="mt-4 max-h-[20vh] overflow-y-auto pr-2 font-mono text-base sm:text-lg leading-relaxed text-justify text-emerald-100/75 whitespace-pre-line custom-scrollbar">
-                    {infoBase.personalDescription2}
+              {infoBase.description && (
+                <article className="scroll-reveal rounded-[22px] border border-emerald-400/20 bg-slate-950/80 p-6 sm:p-8 shadow-[0_0_28px_rgba(34,197,94,0.07)] backdrop-blur-sm lg:col-span-2">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-emerald-300">
+                    Description_GR
+                  </p>
+                  <h1 className="mt-2 font-mono text-2xl sm:text-3xl font-semibold text-emerald-100">
+                    &gt; {descriptionTitle}
+                  </h1>
+                  <p className="mt-4 max-h-[24vh] overflow-y-auto pr-2 font-mono text-base sm:text-lg leading-relaxed text-justify text-emerald-100/75 whitespace-pre-line custom-scrollbar">
+                    {infoBase.description}
                   </p>
                 </article>
               )}
+
+              {bioSections.map((bio, index) => (
+                <article
+                  key={`${bio.name || "bio"}-${index}`}
+                  className="scroll-reveal rounded-[22px] border border-emerald-400/20 bg-slate-950/80 p-6 sm:p-8 shadow-[0_0_28px_rgba(34,197,94,0.07)] backdrop-blur-sm"
+                >
+                  <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-emerald-300">
+                    Bio_GR_{String(index + 1).padStart(2, "0")}
+                  </p>
+                  <h1 className="mt-2 font-mono text-xl sm:text-2xl font-semibold text-emerald-100">
+                    &gt; Bio: {bio.name || "Bio"}
+                  </h1>
+                  <p className="mt-4 max-h-[20vh] overflow-y-auto pr-2 font-mono text-base sm:text-lg leading-relaxed text-justify text-emerald-100/75 whitespace-pre-line custom-scrollbar">
+                    {bio.text}
+                  </p>
+                </article>
+              ))}
             </div>
           </section>
 
@@ -210,7 +259,7 @@ export default function Popup({ isOpen, onClose, infoBase, originRect }) {
 }
 
 
-function SocialConnection({ socials = {}, size = "25px", mode = "greenyellow" }) {
+function SocialConnection({ socials = {}, size = "25px", mode = "greenyellow", hoverColor }) {
   // 1. Convert the Object into an Array of [name, value] pairs
   // We filter out any keys that don't have a value (string) assigned
   const entries = Object.entries(socials);
@@ -227,7 +276,8 @@ function SocialConnection({ socials = {}, size = "25px", mode = "greenyellow" })
             name={platformName}
             urlLink={url}
             size={size}
-            mode={mode} />
+            mode={mode}
+            hoverColor={hoverColor} />
           );
       })}
     </>);

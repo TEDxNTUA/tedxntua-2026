@@ -1,5 +1,10 @@
 "use client";
 import { useState } from 'react';
+import { SocialButton } from './SocialButton';
+import { capitalizeSegments, formatUppercaseNoAccents } from '../textFormatters';
+
+const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
+const PERFORMER_SOCIAL_HOVER_COLOR = "#239d54";
 
 export default function ProgramInfoBoxSimgular({ 
   time, 
@@ -10,7 +15,8 @@ export default function ProgramInfoBoxSimgular({
   profession, 
   itemColor, 
   description, 
-  itemCategory 
+  itemCategory,
+  socials,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -48,8 +54,19 @@ export default function ProgramInfoBoxSimgular({
     }
   };
 
-  const config = categoryConfig[itemCategory] || categoryConfig.default;
   const canExpand = itemCategory === 'speaker' || itemCategory === 'performance';
+  const displayProfession = profession
+    ? formatUppercaseNoAccents(capitalizeSegments(profession))
+    : "";
+  const displayName = (() => {
+    if (itemCategory === 'speaker') {
+      return name2 ? `${name} & ${name2}` : name;
+    }
+    if (itemCategory === 'performance' || itemCategory === 'expworkshop') {
+      return artName;
+    }
+    return name;
+  })();
 
   return (
     <div 
@@ -84,21 +101,22 @@ export default function ProgramInfoBoxSimgular({
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
               <h4 className="text-xl md:text-2xl font-black text-white tracking-tight mb-1 group-hover:text-emerald-400 transition-colors">
-                {(() => {
-                  if (itemCategory === 'speaker') {
-                    return name2 ? `${name} & ${name2}` : name;
-                  }
-                  if (itemCategory === 'performance' || itemCategory === 'expworkshop') {
-                    return artName;
-                  }
-                  return name;
-                })()}
+                {displayName}
               </h4>
               {profession && (
                 <p className="text-xs md:text-sm font-medium text-white/50 uppercase tracking-[0.1em]">
-                  {profession}
+                  {displayProfession}
                 </p>
               )}
+              <SocialConnection
+                socials={socials}
+                ownerName={displayName}
+                hoverColor={
+                  itemCategory === "performance"
+                    ? PERFORMER_SOCIAL_HOVER_COLOR
+                    : SPEAKER_SOCIAL_HOVER_COLOR
+                }
+              />
             </div>
             
             <div className={`mt-1 md:mt-2 transition-all duration-300 ${!canExpand ? 'hidden' : isExpanded ? 'rotate-180 text-white' : 'text-white/20 group-hover:text-white/40'}`}>
@@ -130,6 +148,40 @@ export default function ProgramInfoBoxSimgular({
         </div>
       </div>
       )}
+    </div>
+  );
+}
+
+function SocialConnection({ socials = {}, ownerName, hoverColor }) {
+  const entries = Object.entries(socials).filter(([, url]) => {
+    return typeof url === "string" && url.trim();
+  });
+
+  if (!entries.length) {
+    return null;
+  }
+
+  return (
+    <div
+      className="mt-3 flex flex-wrap items-center gap-3"
+      onClick={(event) => event.stopPropagation()}
+      onMouseDown={(event) => event.stopPropagation()}
+    >
+      {entries.map(([platformName, url]) => {
+        const platform = platformName.toLowerCase().replace(/\d+$/, "");
+
+        return (
+          <SocialButton
+            key={`${platformName}-${url}`}
+            name={platform}
+            urlLink={url}
+            size="23px"
+            mode="whitegreen"
+            hoverColor={hoverColor}
+            ariaLabel={`${platform} for ${ownerName}`}
+          />
+        );
+      })}
     </div>
   );
 }

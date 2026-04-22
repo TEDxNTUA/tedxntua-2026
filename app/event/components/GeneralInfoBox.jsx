@@ -2,8 +2,14 @@
 import { useState } from 'react';
 import Popup from './InfoPopup';
 import { SocialButton } from './SocialButton';
+import { capitalizeSegments } from '../textFormatters';
 
 const separtorLine = "border border-emerald-100/15";
+const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
+const PERFORMER_SOCIAL_HOVER_COLOR = "#239d54";
+
+const joinCapitalizedProfessions = (...professions) =>
+  professions.filter(Boolean).map(capitalizeSegments).join(" & ");
 
 
 export default function SpeakerInfoBox(speaker) {
@@ -37,7 +43,12 @@ export default function SpeakerInfoBox(speaker) {
         </div>
 
         <section className="flex flex-wrap items-center gap-2 text-emerald-50/90">
-          <SocialConnection socials={speaker.socials} size="25px" mode="greenyellow" />
+          <SocialConnection
+            socials={speaker.socials}
+            size="25px"
+            mode="whitegreen"
+            hoverColor={SPEAKER_SOCIAL_HOVER_COLOR}
+          />
         </section>
 
         <div className="flex flex-1 flex-col gap-2 px-1 pb-1">
@@ -49,7 +60,7 @@ export default function SpeakerInfoBox(speaker) {
           </div>
 
           <p className="text-sm leading-6 text-emerald-50/80 sm:text-[15px]">
-            {speaker.profession}{speaker.profession2 ? ` & ${speaker.profession2}` : ''}
+            {joinCapitalizedProfessions(speaker.profession, speaker.profession2)}
           </p>
 
           <div className="pt-2 text-[11px] uppercase tracking-[0.28em] text-emerald-100/70">
@@ -99,7 +110,12 @@ export function PerformancesInfoBox(performance) {
         </div>
 
         <section className="flex flex-wrap items-center gap-2 text-emerald-50/90">
-          <SocialConnection socials={performance.socials} size="25px" mode="greenyellow" />
+          <SocialConnection
+            socials={performance.socials}
+            size="25px"
+            mode="whitegreen"
+            hoverColor={PERFORMER_SOCIAL_HOVER_COLOR}
+          />
         </section>
 
         <div className="flex flex-1 flex-col gap-2 px-1 pb-1">
@@ -111,7 +127,7 @@ export function PerformancesInfoBox(performance) {
           </div>
 
           <p className="text-sm leading-6 text-emerald-50/80 sm:text-[15px]">
-            {performance.profession}{performance.profession2 ? ` & ${performance.profession2}` : ''}
+            {joinCapitalizedProfessions(performance.profession, performance.profession2)}
           </p>
 
           <div className="pt-2 text-[11px] uppercase tracking-[0.28em] text-emerald-100/70">
@@ -193,7 +209,7 @@ export function SideHappeningsInfoBox(sideHappening) {
 }
 
 
-function SocialConnection({ socials = {}, size = "35px", mode = "greenyellow" }) {
+function SocialConnection({ socials = {}, size = "35px", mode = "greenyellow", hoverColor }) {
   // 1. Convert the Object into an Array of [name, value] pairs
   // We filter out any keys that don't have a value (string) assigned
   const entries = Object.entries(socials);
@@ -210,7 +226,8 @@ function SocialConnection({ socials = {}, size = "35px", mode = "greenyellow" })
             name={platformName}
             urlLink={url}
             size={size}
-            mode={mode} />);
+            mode={mode}
+            hoverColor={hoverColor} />);
 
       })}
     </>);
