@@ -81,20 +81,20 @@ export default function EventSidebar({ visible }) {
 
   return (
     <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[100] flex flex-col items-end pointer-events-none group/nav">
-      <div className="flex flex-col gap-2 p-3 pointer-events-auto">
+      <div className="flex flex-col gap-2 p-3 pointer-events-none">
         {eventTabs.map((tab) => {
           const isActive = pathname === tab.path;
           
           return (
-            <div key={tab.path} className="flex items-center justify-end">
-              {/* Navigation Button - Placed first in DOM to act as peer for the label */}
+            <div key={tab.path} className="flex items-center justify-end pointer-events-none">
+              {/* Navigation Button */}
               <Link
                 href={tab.path}
                 className={`
-                  peer group
+                  group pointer-events-auto
                   relative flex-shrink-0 w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center 
                   transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] 
-                  rounded-2xl border order-2
+                  rounded-2xl border
                   ${isActive
                     ? 'bg-emerald-500 border-emerald-400 shadow-[0_0_40_rgba(16,185,129,0.3)] scale-110 translate-x-[-6px] z-10'
                     : 'bg-black/60 backdrop-blur-xl border-white/10 hover:border-emerald-500/40 hover:bg-black/80 hover:translate-x-[-3px] shadow-2xl'
@@ -119,19 +119,6 @@ export default function EventSidebar({ visible }) {
                   <div className="absolute inset-0 rounded-2xl shadow-[inset_0_0_15px_rgba(255,255,255,0.4)] pointer-events-none" />
                 )}
               </Link>
-
-              {/* Tooltip Label - Uses peer-hover to react to the button's state */}
-              <span className={`
-                opacity-0 peer-hover:opacity-100 lg:block hidden 
-                transition-all duration-500 translate-x-4 peer-hover:translate-x-0 
-                mr-4 px-4 py-2 bg-black backdrop-blur-2xl border border-white/10 
-                text-white rounded-xl text-[10px] font-bold uppercase tracking-[0.3em] 
-                whitespace-nowrap shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-none
-                ${isActive ? 'border-emerald-500/40 text-emerald-400' : ''}
-                order-1
-              `}>
-                {tab.label}
-              </span>
             </div>
           );
         })}
