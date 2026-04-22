@@ -303,14 +303,14 @@ export default function SponsorsPage() {
       const vh = window.innerHeight;
       const scrollY = window.scrollY;
       
-      // dedicated scroll distance for animation - increased for more granularity
-      const scrollDistance = vh * 1.5;
+      // dedicated scroll distance for animation - text fully reveals at 1.0vh
+      const scrollDistance = vh * 1.0;
       const revealProgress = Math.min(scrollY / scrollDistance, 1);
       setProgress(revealProgress);
       
       // Determine if we've scrolled enough to "unlock" the sponsors visuals
-      // We unlock earlier now to ensure the transition is felt as seamless
-      const unlocked = scrollY > vh * 0.4;
+      // Threshold increased to match the dwell time
+      const unlocked = scrollY > vh * 0.6;
       if (unlocked !== isUnlocked) {
         setIsUnlocked(unlocked);
       }
@@ -392,35 +392,39 @@ export default function SponsorsPage() {
 
   return (
     <section className="relative min-h-screen bg-black text-white selection:bg-green-500/30">
-      {/* Scroll Progress Bar (Vertical Right) */}
-      <div className={`fixed right-3 sm:right-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-50 transition-all duration-700 ${isUnlocked ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
-        <div className="relative w-[2px] sm:w-[3px] h-48 sm:h-72 bg-white/5 rounded-full overflow-visible">
-          <div className="absolute inset-0 bg-green-500/5 blur-[2px] rounded-full" />
-          <div 
-            className="absolute top-0 w-full bg-gradient-to-b from-green-400 via-green-500 to-emerald-600 rounded-full transition-all duration-500 ease-out shadow-[0_0_15px_rgba(34,197,94,0.4)]"
-            style={{ height: `${windowScrollProgress * 100}%` }}
-          />
+      {/* Professional Sponsors Navigation Pill */}
+      <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ${isUnlocked ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+        <div className="flex items-center gap-1 sm:gap-2 rounded-full border border-white/10 bg-black/80 p-1.5 sm:p-2 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           {sectionMarkers.map((marker, i) => {
             const isCurrent = activeSection === marker.name;
-            const isPassed = windowScrollProgress >= marker.percent - 0.01;
             const tierColor = TIER_COLORS[marker.name] || { main: "#ffffff", glow: "rgba(255,255,255,0.5)" };
+            const label = marker.name;
+
             return (
-              <div 
+              <button 
                 key={i}
-                className="absolute left-1/2 -translate-x-1/2 group cursor-pointer"
-                style={{ top: `${marker.percent * 100}%` }}
                 onClick={() => scrollToSection(i)}
+                className={`
+                  group relative flex items-center justify-center px-3 py-2 sm:px-5 sm:py-2.5 rounded-full transition-all duration-500 overflow-hidden
+                  ${isCurrent ? "bg-white/[0.08]" : "hover:bg-white-[0.04]"}
+                `}
               >
+                {/* Active/Hover Indicator Line */}
                 <div 
-                  className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full border-2 transition-all duration-500 ${isCurrent ? "scale-125 sm:scale-150" : isPassed ? "scale-90 sm:scale-100" : "scale-75 bg-zinc-900 border-white/20 sm:group-hover:border-white/50 sm:group-hover:scale-100"}`} 
-                  style={isCurrent || isPassed ? {
-                    backgroundColor: tierColor.main,
-                    borderColor: tierColor.main,
-                    boxShadow: isCurrent ? `0 0 15px ${tierColor.glow}` : "none"
-                  } : {}}
+                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] rounded-t-full transition-all duration-500 ease-out ${isCurrent ? "w-1/2 opacity-100" : "w-0 opacity-0 group-hover:w-1/4 group-hover:opacity-50"}`}
+                  style={{ backgroundColor: tierColor.main, boxShadow: isCurrent ? `0 -2px 10px ${tierColor.glow}` : "none" }}
                 />
-                <div className={`absolute right-full mr-3 sm:mr-4 top-1/2 -translate-y-1/2 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-black/90 border border-white/10 text-[8px] sm:text-[10px] font-black tracking-widest uppercase whitespace-nowrap transition-all duration-300 pointer-events-none backdrop-blur-md ${isCurrent ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 sm:group-hover:opacity-100 sm:group-hover:translate-x-0"}`} style={{ color: tierColor.main }}>{marker.name}</div>
-              </div>
+                
+                <span 
+                  className={`
+                    relative z-10 text-[9px] sm:text-[10px] font-bold tracking-[0.25em] uppercase transition-colors duration-500
+                    ${isCurrent ? "text-white" : "text-white/40 group-hover:text-white/80"}
+                  `}
+                >
+                  <span className="hidden sm:inline">{label}</span>
+                  <span className="sm:hidden">{label.slice(0, 3)}</span>
+                </span>
+              </button>
             );
           })}
         </div>
@@ -435,25 +439,18 @@ export default function SponsorsPage() {
       </div>
 
       <div className="relative z-10">
-        {/* THE STICKY ANIMATION WRAPPER */}
-        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
-          <div 
-            className="transition-all duration-300 w-full px-4"
-            style={{ 
-              opacity: Math.max(0, 1 - (progress > 0.7 ? (progress - 0.7) * 4 : 0)),
-              transform: `scale(${1 - (progress > 0.7 ? (progress - 0.7) * 0.1 : 0)}) translateY(${(progress > 0.7 ? -(progress - 0.7) * 100 : 0)}px)`
-            }}
-          >
-            <ScrollRevealText progress={progress} reducedMotion={reducedMotion} />
+        {/* REVEAL PHASE - Sticky text that eventually scrolls away */}
+        <div className="relative h-[220vh] w-full">
+          <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
+            <div className="w-full px-4">
+              <ScrollRevealText progress={progress} reducedMotion={reducedMotion} />
+            </div>
           </div>
         </div>
 
-        {/* SCROLL SPACER - Drives the reveal */}
-        <div className="h-[140vh] pointer-events-none" />
-
-        {/* Sponsors Grid - Now in natural document flow */}
+        {/* Sponsors Grid - Starts once the text is fully revealed and stays a bit */}
         <div 
-          className={`relative z-20 container mx-auto px-4 sm:px-6 pb-32 transition-all duration-1000 pointer-events-auto ${progress > 0.6 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-40"}`}
+          className={`relative z-20 container mx-auto px-4 sm:px-6 pb-32 transition-all duration-1000 ${isUnlocked ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
         >
           <div className="space-y-20 sm:space-y-32">
             {sponsorTiers.map((tier, index) => (
