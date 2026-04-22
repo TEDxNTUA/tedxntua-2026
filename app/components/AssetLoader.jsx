@@ -11,8 +11,8 @@ const copixelDisplay = localFont({
 });
 
 const READY_STATE_HAVE_CURRENT_DATA = 2;
-const MAX_LOADER_WAIT_MS = 20000;
-const MIN_LOAD_TIME = 5000; 
+const MAX_LOADER_WAIT_MS = 15000;
+const MIN_LOAD_TIME = 2000; // Targeted 2 seconds
 const CACHE_SESSION_PREFIX = "tedx_assets_loaded_";
 
 const waitForImage = (img) =>
@@ -90,8 +90,15 @@ export default function AssetLoader() {
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isPathCached, setIsPathCached] = useState(false);
+  const videoRef = useRef(null);
 
   const isReady = readyPath === pathname || isPathCached;
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 2.5; // High speed reload
+    }
+  }, [isVisible]);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -102,15 +109,9 @@ export default function AssetLoader() {
 
   useEffect(() => {
     // Check for cached state on mount/pathname change
+    // We still run the loader but we can speed it up even more if desired
     const cached = isAssetsAlreadyCached(pathname);
-    if (cached) {
-      setIsPathCached(true);
-      setReadyPath(pathname);
-      window.dispatchEvent(new CustomEvent("assets-ready", { detail: { pathname } }));
-      return;
-    } else {
-      setIsPathCached(false);
-    }
+    setIsPathCached(cached);
 
     const startTime = Date.now();
     setProgress(0);
@@ -124,7 +125,8 @@ export default function AssetLoader() {
       if (!isMounted) return;
       
       const elapsedTime = Date.now() - startTime;
-      const remainingTime = Math.max(0, MIN_LOAD_TIME - elapsedTime);
+      const targetMinTime = cached ? 800 : MIN_LOAD_TIME; // Even faster if already seen this session
+      const remainingTime = Math.max(0, targetMinTime - elapsedTime);
 
       // Smoothly animate the progress to 100% over the remaining time
       if (progressInterval) clearInterval(progressInterval);
@@ -134,7 +136,7 @@ export default function AssetLoader() {
       
       const finishInterval = setInterval(() => {
         const finishElapsed = Date.now() - finishStartTime;
-        const finishDuration = Math.max(500, remainingTime); // At least 500ms for the final push
+        const finishDuration = Math.max(300, remainingTime); // Snappier final push
         const finishRate = Math.min(1, finishElapsed / finishDuration);
         
         const currentProgress = startProgress + (100 - startProgress) * finishRate;
@@ -158,7 +160,7 @@ export default function AssetLoader() {
               document.body.style.overflow = "";
               document.documentElement.style.overflow = "";
             }
-          }, 1000);
+          }, 800); // Shorter fade wait
         }
       }, 16);
     };
@@ -237,6 +239,7 @@ export default function AssetLoader() {
 
         <div className="relative w-full aspect-square flex items-center justify-center overflow-hidden">
           <video
+            ref={videoRef}
             key={isMobile ? "mobile" : "desktop"}
             autoPlay
             loop
