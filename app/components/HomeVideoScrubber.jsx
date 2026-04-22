@@ -5,11 +5,11 @@ import styles from "./HomeVideoScrubber.module.css";
 import { withBasePath } from "../lib/basePath";
 
 const storyBeats = [
-  "09 - ",
-  "Mastery emerges from the rhythm of repetition.",
-  "We are bound by the cosmic loops of nature.",
-  "Progress is an iterative pulse of evolution.",
-  "Every revolution returns to the essence.",
+  "09 - 05 - 2026",
+  "Athens Conservatoire",
+  "Some loops are not meant to be broken",
+  "NINE Speakers FIVE Performances THREE Workshops",
+  "A day of ideas, a day of connection",
 ];
 
 const PIXELS_PER_SECOND = 1000;
@@ -19,7 +19,7 @@ const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const getViewportHeight = () => window.visualViewport?.height ?? window.innerHeight;
 const isCoarsePointer = () => window.matchMedia("(pointer: coarse)").matches;
 
-export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
+export default function HomeVideoScrubber({ heroTitleClassName = "text-3xl" }) {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const frameIdRef = useRef(0);
