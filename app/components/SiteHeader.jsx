@@ -135,7 +135,7 @@ export default function SiteHeader() {
             <ActionButton 
               href="#" 
               theme={theme}
-              icon="/ticket.png"
+              icon="/LOGO_ASSET.png"
               alt="Ticket"
             >
               {/* Removed 'hidden', adjusted tracking for mobile readability */}
