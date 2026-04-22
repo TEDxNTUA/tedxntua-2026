@@ -130,34 +130,36 @@ export default function TeamNavigation({ teams }) {
     >
       <div className="flex flex-col gap-1.5 p-2 pointer-events-auto">
         {teams.map((team) => (
-          <div key={team.slug} className="flex items-center group justify-end">
-            <span className="opacity-0 group-hover:opacity-100 lg:block hidden transition-all duration-300 translate-x-2 group-hover:translate-x-0 mr-3 px-3 py-1.5 bg-slate-950/80 backdrop-blur-xl border border-emerald-500/30 text-emerald-400 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap shadow-2xl pointer-events-none">
-              {team.title}
-            </span>
-            <button
-              data-active={activeTeam === team.slug}
-              onClick={() => handleNavigateToTeam(team.slug)}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={(e) => handleTouchEnd(e, team.slug)}
-              className={`relative flex-shrink-0 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] rounded-l-xl border-y border-l ${
-                activeTeam === team.slug
-                  ? 'bg-emerald-500 border-emerald-400 shadow-[-5px_0_25px_rgba(16,185,129,0.45)] scale-110 translate-x-[-4px] z-10'
-                  : 'bg-slate-950/40 backdrop-blur-md border-emerald-500/10 hover:border-emerald-400/40 hover:bg-slate-900/80 hover:translate-x-[-2px] shadow-lg'
-              }`}
-              title={team.title}
-            >
-              <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${activeTeam === team.slug ? 'opacity-0' : ''}`}>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.15),transparent_70%)]" />
-              </div>
-              <span className={`relative text-lg lg:text-xl block transition-all duration-300 ${activeTeam === team.slug ? 'drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]' : 'opacity-80 group-hover:opacity-100 group-hover:scale-110'}`}>
-                {teamEmotes[team.slug]}
+          <div key={team.slug} className="flex items-center justify-end">
+            <div className="flex items-center group/btn">
+              <span className="opacity-0 group-hover/btn:opacity-100 lg:block hidden transition-all duration-300 translate-x-2 group-hover/btn:translate-x-0 mr-3 px-3 py-1.5 bg-slate-950/80 backdrop-blur-xl border border-emerald-500/30 text-emerald-400 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap shadow-2xl pointer-events-none">
+                {team.title}
               </span>
-              
-              {activeTeam === team.slug && (
-                <div className="absolute inset-0 border-l-2 border-emerald-200/50 rounded-l-xl" />
-              )}
-            </button>
+              <button
+                data-active={activeTeam === team.slug}
+                onClick={() => handleNavigateToTeam(team.slug)}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={(e) => handleTouchEnd(e, team.slug)}
+                className={`relative flex-shrink-0 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] rounded-l-xl border-y border-l ${
+                  activeTeam === team.slug
+                    ? 'bg-emerald-500 border-emerald-400 shadow-[-5px_0_25px_rgba(16,185,129,0.45)] scale-110 translate-x-[-4px] z-10'
+                    : 'bg-slate-950/40 backdrop-blur-md border-emerald-500/10 hover:border-emerald-400/40 hover:bg-slate-900/80 hover:translate-x-[-2px] shadow-lg'
+                }`}
+                title={team.title}
+              >
+                <div className={`absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 ${activeTeam === team.slug ? 'opacity-0' : ''}`}>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.15),transparent_70%)]" />
+                </div>
+                <span className={`relative text-lg lg:text-xl block transition-all duration-300 ${activeTeam === team.slug ? 'drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]' : 'opacity-80 group-hover/btn:opacity-100 group-hover/btn:scale-110'}`}>
+                  {teamEmotes[team.slug]}
+                </span>
+                
+                {activeTeam === team.slug && (
+                  <div className="absolute inset-0 border-l-2 border-emerald-200/50 rounded-l-xl" />
+                )}
+              </button>
+            </div>
           </div>
         ))}
       </div>
