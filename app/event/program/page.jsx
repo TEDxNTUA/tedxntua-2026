@@ -4,7 +4,7 @@ import InfoSpeakerBox from "../components/ProgramInfoBoxSimgular";
 import InfoWorkshopBox from "../components/ProgramInfoBoxWorkshops";
 import EventPageShell from "../components/EventPageShell";
 
-import { mySessions1, mySessions2, mySessions3, mySessions4 } from "../infoDatabase";
+import { mySessions1, mySessions2, mySessions3, mySessions4, theEnd } from "../infoDatabase";
 import { myWorkshopsPack1, myWorkshopsPack2, myWorkshopsPack3 } from "../infoDatabase";
 
 function ProgramSection({ children, title, id }) {
@@ -12,10 +12,10 @@ function ProgramSection({ children, title, id }) {
     <section id={id} className="mb-20 md:mb-32 scroll-mt-32">
       <div className="mb-6 md:mb-10 flex items-center gap-4">
         <div className="flex flex-col">
-           <h3 className="text-lg md:text-2xl font-black uppercase tracking-[0.3em] text-emerald-400">
-             {title}
-           </h3>
-           <div className="h-0.5 w-8 bg-white/20 mt-2" />
+          <h3 className="text-lg md:text-2xl font-black uppercase tracking-[0.3em] text-emerald-400">
+            {title}
+          </h3>
+          <div className="h-0.5 w-8 bg-white/20 mt-2" />
         </div>
       </div>
       <div className="border-t border-white/10">{children}</div>
@@ -102,6 +102,12 @@ export default function ProgramPage() {
 
         <ProgramSection title="Final Session" id="session4">
           {mySessions4.map((item, index) => (
+            <InfoSpeakerBox key={index} {...item}/>
+          ))}
+        </ProgramSection>
+
+        <ProgramSection title="The End" id="theend">
+          {theEnd.map((item, index) => (
             <InfoSpeakerBox key={index} {...item}/>
           ))}
         </ProgramSection>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 export default function ProgramInfoBoxSimgular({ 
   time, 
   name, 
+  name2,
   artName, 
   theme, 
   profession, 
@@ -27,6 +28,18 @@ export default function ProgramInfoBoxSimgular({
       border: "border-blue-500/30",
       text: "text-blue-300"
     },
+    oppening: {
+      label: "Opening",
+      color: "from-yellow-400/20 to-yellow-500/10",
+      border: "border-yellow-500/30",
+      text: "text-yellow-300"
+    },
+    closing: {
+      label: "Closing",
+      color: "from-yellow-400/20 to-yellow-500/10",
+      border: "border-yellow-500/30",
+      text: "text-yellow-300"
+    },
     default: {
       label: itemCategory || "Event",
       color: "from-gray-400/20 to-gray-500/10",
@@ -36,11 +49,12 @@ export default function ProgramInfoBoxSimgular({
   };
 
   const config = categoryConfig[itemCategory] || categoryConfig.default;
+  const canExpand = itemCategory === 'speaker' || itemCategory === 'performance';
 
   return (
     <div 
-      onClick={() => setIsExpanded(!isExpanded)}
-      className="group relative border-b border-white/10 hover:bg-white/[0.02] transition-colors cursor-pointer"
+      onClick={() => canExpand && setIsExpanded(!isExpanded)}
+      className={`group relative border-b border-white/10 hover:bg-white/[0.02] transition-colors ${canExpand ? 'cursor-pointer' : ''}`}
     >
       <div className="flex flex-col md:flex-row py-6 md:py-8 items-start md:items-center">
         {/* Time Section - Minimal Typography */}
@@ -62,7 +76,7 @@ export default function ProgramInfoBoxSimgular({
             </span>
             {theme && (
               <span className="text-white/30 text-[10px] md:text-xs font-medium italic tracking-wide">
-                 "{theme}"
+                "{theme}"
               </span>
             )}
           </div>
@@ -70,7 +84,15 @@ export default function ProgramInfoBoxSimgular({
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
               <h4 className="text-xl md:text-2xl font-black text-white tracking-tight mb-1 group-hover:text-emerald-400 transition-colors">
-                {name || artName}
+                {(() => {
+                  if (itemCategory === 'speaker') {
+                    return name2 ? `${name} & ${name2}` : name;
+                  }
+                  if (itemCategory === 'performance' || itemCategory === 'expworkshop') {
+                    return artName;
+                  }
+                  return name;
+                })()}
               </h4>
               {profession && (
                 <p className="text-xs md:text-sm font-medium text-white/50 uppercase tracking-[0.1em]">
@@ -79,7 +101,7 @@ export default function ProgramInfoBoxSimgular({
               )}
             </div>
             
-            <div className={`mt-1 md:mt-2 transition-all duration-300 ${isExpanded ? 'rotate-180 text-white' : 'text-white/20 group-hover:text-white/40'}`}>
+            <div className={`mt-1 md:mt-2 transition-all duration-300 ${!canExpand ? 'hidden' : isExpanded ? 'rotate-180 text-white' : 'text-white/20 group-hover:text-white/40'}`}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m6 9 6 6 6-6"/>
               </svg>
@@ -89,6 +111,7 @@ export default function ProgramInfoBoxSimgular({
       </div>
 
       {/* Expandable Bio - Minimal slide down */}
+      {canExpand && (
       <div className={`
         grid transition-all duration-500 ease-in-out
         ${isExpanded ? 'grid-rows-[1fr] opacity-100 pb-8' : 'grid-rows-[0fr] opacity-0'}
@@ -106,6 +129,7 @@ export default function ProgramInfoBoxSimgular({
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }

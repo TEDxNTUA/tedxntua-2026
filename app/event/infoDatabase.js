@@ -11,6 +11,7 @@ const WORKSHOP_TIME_2 = "15:00 - 16:00";
 const WORKSHOP_TIME_3 = "16:00 - 17:00";
 const SPEAKER_ITEM_COLOR = "rgba(102, 187, 128, 0.28)";
 const PERFORMANCE_ITEM_COLOR = "rgba(98, 156, 227, 0.28)";
+const EXTRA_ITEM_COLOR = "rgba(213, 128, 30, 0.28)";
 
 const applyPosterBasePath = (items) =>
   items.map((item) => ({
@@ -37,7 +38,7 @@ export const myEventInfo = {
 // Speakers
 export const allSpeakers = applyPosterBasePath([
   {
-    time: "10:00 - 11:00",
+    time: "11:50 - 12:10",
     itemCategory: "speaker",
     name: Speakers[0].NameGR,
     profession: Speakers[0].ProfessionGR,
@@ -50,7 +51,7 @@ export const allSpeakers = applyPosterBasePath([
     socials: getSocials(Speakers, 0)
   },
   {
-    time: "13:00 - 14:00",
+    time: "14:00 - 14:20",
     itemCategory: "speaker",
     name: Speakers[2].NameGR,
     name2: Speakers[1].NameGR,
@@ -67,7 +68,7 @@ export const allSpeakers = applyPosterBasePath([
     socials2: getSocials(Speakers, 1)
   },
   {
-    time: "14:00 - 15:00",
+    time: "18:40 - 19:00",
     itemCategory: "speaker",
     name: Speakers[3].NameGR,
     profession: Speakers[3].ProfessionGR,
@@ -80,7 +81,7 @@ export const allSpeakers = applyPosterBasePath([
     socials: getSocials(Speakers, 3)
   },
   {
-    time: "16:00 - 17:00",
+    time: "14:40 - 15:00",
     itemCategory: "speaker",
     name: Speakers[4].NameGR,
     profession: Speakers[4].ProfessionGR,
@@ -93,7 +94,7 @@ export const allSpeakers = applyPosterBasePath([
     socials: getSocials(Speakers, 4)
   },
   {
-    time: "16:00 - 17:00",
+    time: "16:30 - 16:50",
     itemCategory: "speaker",
     name: Speakers[5].NameGR,
     profession: Speakers[5].ProfessionGR,
@@ -106,7 +107,7 @@ export const allSpeakers = applyPosterBasePath([
     socials: getSocials(Speakers, 5)
   },
   {
-    time: "16:00 - 17:00",
+    time: "14:20 - 14:40",
     itemCategory: "speaker",
     name: Speakers[6].NameGR,
     profession: Speakers[6].ProfessionGR,
@@ -119,7 +120,7 @@ export const allSpeakers = applyPosterBasePath([
     socials: getSocials(Speakers, 6)
   },
   {
-    time: "16:00 - 17:00",
+    time: "12:10 - 12:30",
     itemCategory: "speaker",
     name: Speakers[7].NameGR,
     profession: Speakers[7].ProfessionGR,
@@ -132,7 +133,7 @@ export const allSpeakers = applyPosterBasePath([
     socials: getSocials(Speakers, 7)
   },
   {
-    time: "16:00 - 17:00",
+    time: "19:00 - 19:20",
     itemCategory: "speaker",
     name: Speakers[8].NameGR,
     profession: Speakers[8].ProfessionGR,
@@ -145,7 +146,7 @@ export const allSpeakers = applyPosterBasePath([
     socials: getSocials(Speakers, 8)
   },
   {
-    time: "16:00 - 17:00",
+    time: "16:50 - 17:10",
     itemCategory: "speaker",
     name: Speakers[9].NameGR,
     profession: Speakers[9].ProfessionGR,
@@ -188,7 +189,7 @@ export const allSpeakers = applyPosterBasePath([
 // Experience workshops
 export const allExpWorkshops = applyPosterBasePath([
   {
-    time: "10:00 - 11:00",
+    time: "11:00 - 11:00",
     name: ExpWorkshops[0].NameGR,
     room: "Room 1",
     profession: ExpWorkshops[0].ProfessionGR,
@@ -324,7 +325,7 @@ export const allSideHappenings = applyPosterBasePath([
 // Performances
 export const allPerformances = applyPosterBasePath([
   {
-    time: "13:00 - 14:00",
+    time: "13:45 - 14:00",
     name: Performances[0].NameGR,
     itemCategory: "performance",
     profession: Performances[0].ProfessionGR,
@@ -336,7 +337,7 @@ export const allPerformances = applyPosterBasePath([
     socials: getSocials(Performances, 0)
   },
   {
-    time: "14:00 - 15:00",
+    time: "17:10 - 17:25",
     name: Performances[1].NameGR,
     itemCategory: "performance",
     profession: Performances[1].ProfessionGR,
@@ -348,7 +349,7 @@ export const allPerformances = applyPosterBasePath([
     socials: getSocials(Performances, 1)
   },
   {
-    time: "16:00 - 17:00",
+    time: "19:20 - 19:35",
     name: Performances[2].NameGR,
     itemCategory: "performance",
     profession: Performances[2].ProfessionGR,
@@ -360,7 +361,7 @@ export const allPerformances = applyPosterBasePath([
     socials: getSocials(Performances, 2)
   },
   {
-    time: "16:00 - 17:00",
+    time: "16:15 - 16:30",
     name: Performances[3].NameGR,
     itemCategory: "performance",
     profession: Performances[3].ProfessionGR,
@@ -371,13 +372,65 @@ export const allPerformances = applyPosterBasePath([
     personalDescription: Performances[3].BioGR,
     socials: getSocials(Performances, 3)
   },
+  {
+    time: "11:15 - 11:30",
+    name: Performances[4].NameGR,
+    itemCategory: "performance",
+    profession: Performances[4].ProfessionGR,
+    artName: Performances[4].Artname,
+    itemColor: PERFORMANCE_ITEM_COLOR,
+    description: Performances[4].DescriptionGR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: Performances[4].BioGR,
+    socials: getSocials(Performances, 4)
+  }
 ]);
 
 
-
+export const extra = applyPosterBasePath([
+  {
+    time: "11:30 - 11:50",
+    itemCategory: "oppening",
+    name: "Opening Histess/ Backstage Host/ Curators",
+    itemColor: EXTRA_ITEM_COLOR,
+    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    personalDescription: "",
+    socials: ""
+  },
+  {
+      time: "10:00 - ",
+      itemCategory: "oppening",
+      name: "Registration",
+      profession: "",
+      itemColor: EXTRA_ITEM_COLOR,
+      posterImageUrl: DEFAULT_POSTER_IMAGE,
+      personalDescription: "",
+      socials: ""
+    },
+    {
+        time: "19:35 - 19:45",
+        itemCategory: "closing",
+        name: "Closing & Curators",
+        itemColor: EXTRA_ITEM_COLOR,
+        posterImageUrl: DEFAULT_POSTER_IMAGE,
+        personalDescription: "",
+        socials: ""
+      },
+    {
+        time: "19:45 - ",
+        itemCategory: "closing",
+        name: "the team, the hug",
+        itemColor: EXTRA_ITEM_COLOR,
+        posterImageUrl: DEFAULT_POSTER_IMAGE,
+        personalDescription: "",
+        socials: ""
+      }]);
 
 // Session groupings consumed by the program UI.
 export const mySessions1 = [
+  extra[1],
+  allPerformances[4],
+  extra[0],
   allSpeakers[0],
   allSpeakers[6]];
 
@@ -399,6 +452,11 @@ export const mySessions4 = [
   allSpeakers[2], 
   allSpeakers[7], 
   allPerformances[2]];
+
+export const theEnd = [
+  extra[2],
+  extra[3]
+];
 
 // Experience workshops
 export const myWorkshopsPack1 = [
