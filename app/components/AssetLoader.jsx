@@ -3,6 +3,12 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { withBasePath } from "../lib/basePath";
+import localFont from "next/font/local";
+
+const copixelDisplay = localFont({
+  src: "../../Copixel-Futuristic-Font/Fonts/Copixel-Display.otf",
+  display: "swap",
+});
 
 const READY_STATE_HAVE_CURRENT_DATA = 2;
 const MAX_LOADER_WAIT_MS = 20000;
@@ -216,9 +222,9 @@ export default function AssetLoader() {
       </div>
 
       <div className="relative flex flex-col items-center w-full max-w-lg px-8">
-        {/* Branding Header */}
-        <div className="mb-6 flex flex-col items-center animate-pulse">
-          <h1 className="text-4xl md:text-6xl font-black tracking-[0.25em] uppercase italic">
+        {/* Branding Header with Custom Font */}
+        <div className={`mb-6 flex flex-col items-center animate-pulse ${copixelDisplay.className}`}>
+          <h1 className="text-4xl md:text-6xl font-black tracking-[0.25em] uppercase italic flex items-center">
             <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
               Cycle
             </span>

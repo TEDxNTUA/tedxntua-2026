@@ -1,10 +1,11 @@
-export default function CycleZeroMark({ className = "" }) {
+export default function CycleZeroMark({ className = "", style = {} }) {
   return (
     <svg
       viewBox="0 0 540 140"
       role="img"
       aria-label="Cycle 0"
       className={className}
+      style={style}
       suppressHydrationWarning
     >
       <g opacity="0.55" fill="none" stroke="#ffffff" strokeWidth="2.2" suppressHydrationWarning>

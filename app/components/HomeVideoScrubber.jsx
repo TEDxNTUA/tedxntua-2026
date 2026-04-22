@@ -235,7 +235,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(34,197,94,0.15)_0%,_transparent_70%)]" />
         </div>
 
-        <div className={`${styles.introPanelContent} relative z-10`}>
+        <div className={`${styles.introPanelContent} relative z-10 w-full flex justify-center items-center ${heroTitleClassName}`}>
           <div className="flex flex-col items-center animate-pulse">
             <h1 className="text-6xl md:text-8xl lg:text-[13rem] font-black tracking-[0.15em] md:tracking-[0.25em] uppercase italic flex items-center">
               <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
