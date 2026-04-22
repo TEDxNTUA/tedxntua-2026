@@ -5,12 +5,11 @@ import SiteHeader from "./components/SiteHeader";
 import EventNavProvider from "./components/EventNavProvider";
 import { TEDSocialButton } from "./components/TedxNTUAsocials";
 import FooterContactPanel from "./components/FooterContactPanel";
-import CycleZeroMark from "./components/CycleZeroMark";
-import Nav from "./components/Nav";
 import { withBasePath } from "./lib/basePath";
 import AssetLoader from "./components/AssetLoader";
 import ContentVisibilityWrapper from "./components/ContentVisibilityWrapper";
 import Link from "next/link";
+import Image from 'next/image';
 
 
 // Page metadata for SEO and browser tab display
@@ -33,12 +32,17 @@ export default function RootLayout({ children }) {
               {children}
             </main>
 
+
+
+
+
+
             <footer className="site-footer relative border-t border-white/10 bg-black text-white overflow-hidden">
               {/* Decorative Background Elements */}
-              <div className="pointer-events-none absolute -left-20 -top-20 h-96 w-96 rounded-full bg-red-600/5 blur-[120px]" />
-              <div className="pointer-events-none absolute -right-20 bottom-0 h-96 w-96 rounded-full bg-emerald-600/5 blur-[120px]" />
+              <div className="pointer-events-none absolute -left-20 -top-10 w-96 rounded-full bg-red-600/5 blur-[120px]" />
+              <div className="pointer-events-none absolute -right-20 bottom-0 h-16 w-96 rounded-full bg-emerald-600/5 blur-[120px]" />
 
-              <div className="footer-content relative mx-auto w-full max-w-7xl px-6 py-10 lg:px-12">
+              <div className="footer-content relative mx-auto w-full max-w-7xl px-6 py-6 lg:px-12">
                 <div className="grid gap-10 lg:grid-cols-12 items-center">
                   
                   {/* Branding & Mission Block */}
@@ -49,7 +53,11 @@ export default function RootLayout({ children }) {
                         <span className="text-3xl font-black tracking-tighter text-white ml-0.5">NTUA</span>
                       </div>
                       <div className="h-6 w-px bg-white/20" />
-                      <CycleZeroMark className="h-8 w-auto opacity-80" />
+                        <img 
+                          src="/LOGO_ASSET.png" 
+                          alt="TEDxNTUA Logo" 
+                          className="h-12 w-auto" 
+                        />
                     </div>
                     
                     <p className="max-w-md text-[11px] leading-relaxed text-white/40 font-medium italic">
