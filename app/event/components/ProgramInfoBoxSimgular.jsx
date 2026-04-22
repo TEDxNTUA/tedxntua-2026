@@ -1,6 +1,7 @@
 "use client";
 import { useState } from 'react';
 import { SocialButton } from './SocialButton';
+import { capitalizeSegments, formatUppercaseNoAccents } from '../textFormatters';
 
 const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
 const PERFORMER_SOCIAL_HOVER_COLOR = "#239d54";
@@ -41,6 +42,9 @@ export default function ProgramInfoBoxSimgular({
   };
 
   const config = categoryConfig[itemCategory] || categoryConfig.default;
+  const displayProfession = profession
+    ? formatUppercaseNoAccents(capitalizeSegments(profession))
+    : "";
 
   return (
     <div className="group relative pl-6 md:pl-8 pb-6 md:pb-8 last:pb-0">
@@ -98,7 +102,7 @@ export default function ProgramInfoBoxSimgular({
                 </h4>
                 {profession && (
                   <p className="text-sm font-medium text-white/60 uppercase tracking-wider">
-                    {profession}
+                    {displayProfession}
                   </p>
                 )}
                 <SocialConnection

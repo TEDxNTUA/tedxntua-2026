@@ -2,10 +2,14 @@
 import { useState } from 'react';
 import Popup from './InfoPopup';
 import { SocialButton } from './SocialButton';
+import { capitalizeSegments } from '../textFormatters';
 
 const separtorLine = "border border-emerald-100/15";
 const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
 const PERFORMER_SOCIAL_HOVER_COLOR = "#239d54";
+
+const joinCapitalizedProfessions = (...professions) =>
+  professions.filter(Boolean).map(capitalizeSegments).join(" & ");
 
 
 export default function SpeakerInfoBox(speaker) {
@@ -56,7 +60,7 @@ export default function SpeakerInfoBox(speaker) {
           </div>
 
           <p className="text-sm leading-6 text-emerald-50/80 sm:text-[15px]">
-            {speaker.profession}{speaker.profession2 ? ` & ${speaker.profession2}` : ''}
+            {joinCapitalizedProfessions(speaker.profession, speaker.profession2)}
           </p>
 
           <div className="pt-2 text-[11px] uppercase tracking-[0.28em] text-emerald-100/70">
@@ -123,7 +127,7 @@ export function PerformancesInfoBox(performance) {
           </div>
 
           <p className="text-sm leading-6 text-emerald-50/80 sm:text-[15px]">
-            {performance.profession}{performance.profession2 ? ` & ${performance.profession2}` : ''}
+            {joinCapitalizedProfessions(performance.profession, performance.profession2)}
           </p>
 
           <div className="pt-2 text-[11px] uppercase tracking-[0.28em] text-emerald-100/70">

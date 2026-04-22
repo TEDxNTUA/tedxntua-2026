@@ -7,6 +7,7 @@ import localFont from "next/font/local";
 
 import speakers from "../LineUpInfo/SpeakersIT.json";
 import { SocialButton } from "../components/SocialButton";
+import { capitalizeSegments, formatUppercaseNoAccents } from "../textFormatters";
 import { withBasePath } from "../../lib/basePath";
 import styles from "./page.module.css";
 
@@ -99,6 +100,38 @@ function SocialLinks({ links = [], ownerName, className = "", size = "24px" }) {
   );
 }
 
+function BioSections({ bios = [] }) {
+  const visibleBios = bios.filter((bio) => bio.text);
+
+  if (!visibleBios.length) {
+    return null;
+  }
+
+  return (
+    <div className={styles.modalBios}>
+      {visibleBios.map((bio, index) => (
+        <section key={`${bio.name || "bio"}-${index}`} className={styles.modalBio}>
+          <h3 className={styles.modalBioName}>Bio: {formatUppercaseNoAccents(bio.name)}</h3>
+          <p className={styles.modalResume}>{bio.text}</p>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+function DescriptionSection({ description }) {
+  if (!description) {
+    return null;
+  }
+
+  return (
+    <section className={styles.modalDescription}>
+      <h3 className={styles.modalDescriptionName}>{formatUppercaseNoAccents("Περιγραφή ομιλίας")}</h3>
+      <p className={styles.modalResume}>{description}</p>
+    </section>
+  );
+}
+
 function buildSpeakerCard(name) {
   const speaker = speakerLookup[name];
 
@@ -110,9 +143,13 @@ function buildSpeakerCard(name) {
     return {
       id: "thanos-chara",
       name: "Thanos Ioannidis & Chara Kontochristou",
-      profession: `${jointSpeaker.ProfessionEN} & ${charaSpeaker.ProfessionEN}`,
+      profession: capitalizeSegments(`${jointSpeaker.ProfessionEN} & ${charaSpeaker.ProfessionEN}`),
       photo: speakerPhotos[name],
-      resume: `${jointSpeaker.BioEN}\n\n${charaSpeaker.BioEN}`,
+      description: jointSpeaker.DescriptionGR || charaSpeaker.DescriptionGR || "",
+      bios: [
+        { name: jointSpeaker.NameGR || jointSpeaker.NameEN, text: jointSpeaker.BioGR || "" },
+        { name: charaSpeaker.NameGR || charaSpeaker.NameEN, text: charaSpeaker.BioGR || "" },
+      ],
       socialLinks: getSocialLinks(jointSpeaker, charaSpeaker),
     };
   }
@@ -120,9 +157,10 @@ function buildSpeakerCard(name) {
   return {
     id: name,
     name: speaker.NameEN,
-    profession: speaker.ProfessionEN || "Speaker",
+    profession: capitalizeSegments(speaker.ProfessionEN || "Speaker"),
     photo: speakerPhotos[name],
-    resume: speaker.BioEN || speaker.BioGR || "",
+    description: speaker.DescriptionGR || "",
+    bios: [{ name: speaker.NameGR || speaker.NameEN, text: speaker.BioGR || "" }],
     socialLinks: getSocialLinks(speaker),
   };
 }
@@ -226,7 +264,7 @@ function SpeakerModal({ speaker, onClose }) {
         <div className={styles.modalContent}>
           <p className={styles.modalEyebrow}>Speaker</p>
           <h2 id="speaker-modal-name" className={`${copixelDisplay.className} ${styles.modalName}`}>
-            {speaker.name}
+            {formatUppercaseNoAccents(speaker.name)}
           </h2>
           <p className={styles.modalValue}>{speaker.profession}</p>
           <SocialLinks
@@ -235,7 +273,8 @@ function SpeakerModal({ speaker, onClose }) {
             className={styles.modalSocials}
             size="28px"
           />
-          <p className={styles.modalResume}>{speaker.resume}</p>
+          <DescriptionSection description={speaker.description} />
+          <BioSections bios={speaker.bios} />
         </div>
       </div>
     </div>,
@@ -313,7 +352,9 @@ export default function SpeakersPage() {
                 </div>
 
                 <div className={styles.caption}>
-                  <h2 className={`${copixelDisplay.className} ${styles.name}`}>{speaker.name}</h2>
+                  <h2 className={`${copixelDisplay.className} ${styles.name}`}>
+                    {formatUppercaseNoAccents(speaker.name)}
+                  </h2>
                   <p className={styles.profession}>{speaker.profession}</p>
                 </div>
               </button>

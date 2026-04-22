@@ -7,6 +7,7 @@ import localFont from "next/font/local";
 
 import performances from "../LineUpInfo/PerformancesIT.json";
 import { SocialButton } from "../components/SocialButton";
+import { capitalizeSegments, formatUppercaseNoAccents } from "../textFormatters";
 import { withBasePath } from "../../lib/basePath";
 import styles from "./page.module.css";
 
@@ -86,6 +87,38 @@ function SocialLinks({ links = [], ownerName, className = "", size = "24px" }) {
   );
 }
 
+function BioSections({ bios = [] }) {
+  const visibleBios = bios.filter((bio) => bio.text);
+
+  if (!visibleBios.length) {
+    return null;
+  }
+
+  return (
+    <div className={styles.modalBios}>
+      {visibleBios.map((bio, index) => (
+        <section key={`${bio.name || "bio"}-${index}`} className={styles.modalBio}>
+          <h3 className={styles.modalBioName}>Bio: {formatUppercaseNoAccents(bio.name)}</h3>
+          <p className={styles.modalResume}>{bio.text}</p>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+function DescriptionSection({ description }) {
+  if (!description) {
+    return null;
+  }
+
+  return (
+    <section className={styles.modalDescription}>
+      <h3 className={styles.modalDescriptionName}>{formatUppercaseNoAccents("Περιγραφή performance")}</h3>
+      <p className={styles.modalResume}>{description}</p>
+    </section>
+  );
+}
+
 function buildPerformerCard(name) {
   const performer = performerLookup[name];
 
@@ -96,9 +129,15 @@ function buildPerformerCard(name) {
   return {
     id: name,
     name: performerDisplayNames[name] || performer.NameEN,
-    profession: performer.ProfessionEN || "Performer",
+    profession: capitalizeSegments(performer.ProfessionEN || "Performer"),
     photo: performerPhotos[name],
-    resume: performer.BioEN || performer.BioGR || "",
+    description: performer.DescriptionGR || "",
+    bios: [
+      {
+        name: performer.Artname || performer.NameGR || performerDisplayNames[name] || performer.NameEN,
+        text: performer.BioGR || "",
+      },
+    ],
     socialLinks: getSocialLinks(performer),
   };
 }
@@ -194,7 +233,7 @@ function PerformerModal({ performer, onClose }) {
         <div className={styles.modalContent}>
           <p className={styles.modalEyebrow}>Performance</p>
           <h2 id="performer-modal-name" className={`${copixelDisplay.className} ${styles.modalName}`}>
-            {performer.name}
+            {formatUppercaseNoAccents(performer.name)}
           </h2>
           <p className={styles.modalValue}>{performer.profession}</p>
           <SocialLinks
@@ -203,7 +242,8 @@ function PerformerModal({ performer, onClose }) {
             className={styles.modalSocials}
             size="28px"
           />
-          <p className={styles.modalResume}>{performer.resume}</p>
+          <DescriptionSection description={performer.description} />
+          <BioSections bios={performer.bios} />
         </div>
       </div>
     </div>,
@@ -273,7 +313,9 @@ export default function PerformancesPage() {
                 </div>
 
                 <div className={styles.caption}>
-                  <h2 className={`${copixelDisplay.className} ${styles.name}`}>{performer.name}</h2>
+                  <h2 className={`${copixelDisplay.className} ${styles.name}`}>
+                    {formatUppercaseNoAccents(performer.name)}
+                  </h2>
                   <p className={styles.profession}>{performer.profession}</p>
                 </div>
               </button>
