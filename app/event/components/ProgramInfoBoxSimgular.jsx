@@ -54,6 +54,7 @@ export default function ProgramInfoBoxSimgular({
     }
   };
 
+  const config = categoryConfig[itemCategory] || categoryConfig.default;
   const canExpand = itemCategory === 'speaker' || itemCategory === 'performance';
   const displayProfession = profession
     ? formatUppercaseNoAccents(capitalizeSegments(profession))
