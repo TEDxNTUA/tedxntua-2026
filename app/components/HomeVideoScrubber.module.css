@@ -116,17 +116,14 @@
   opacity: 1;
 }
 
+/* Rely on sticky positioning instead of switching to fixed to avoid mobile jumps */
 .scrubberSectionStickyPinned {
-  position: fixed;
-  top: 0;
-  left: 0;
+  opacity: 1;
 }
 
 .scrubberSectionStickyAfter {
-  position: sticky;
-  opacity: 1; /* Keep video visible until it scrolls off naturally */
+  opacity: 1;
   pointer-events: none;
-  top: 0;
 }
 
 .scrubberSectionVideo,
