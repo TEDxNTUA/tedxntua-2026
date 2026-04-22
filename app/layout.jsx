@@ -56,7 +56,7 @@ export default function RootLayout({ children }) {
                       </div>
                       <div className="h-6 w-px bg-white/20" />
                         <img 
-                          src="/LOGO_ASSET.png" 
+                          src={withBasePath("/LOGO_ASSET.png")} 
                           alt="TEDxNTUA Logo" 
                           className="h-12 w-auto" 
                         />
