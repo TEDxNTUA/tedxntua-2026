@@ -53,12 +53,10 @@ export default function RootLayout({ children }) {
                         <span className="text-3xl font-black tracking-tighter text-white ml-0.5">NTUA</span>
                       </div>
                       <div className="h-6 w-px bg-white/20" />
-                        <Image 
+                        <img 
                           src="/LOGO_ASSET.png" 
                           alt="TEDxNTUA Logo" 
-                          width={300}
-                          height={210}
-                          className="h-12 w-auto"
+                          className="h-12 w-auto" 
                         />
                     </div>
                     
