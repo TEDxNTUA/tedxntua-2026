@@ -37,7 +37,7 @@ function ProgramNav() {
 
   return (
     <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
-      <div className="flex items-center gap-1 rounded-full border border-white/10 bg-black/60 p-1.5 backdrop-blur-2xl shadow-2xl">
+      <div className="flex items-center gap-1 rounded-full border border-white/10 bg-black p-1.5 backdrop-blur-2xl shadow-2xl">
         {sections.map((sec) => (
           <a
             key={sec.id}

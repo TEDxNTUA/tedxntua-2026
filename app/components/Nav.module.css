@@ -4,10 +4,11 @@
   top: 0;
   left: 50%;
   width: min(500px, calc(100vw - 16px));
-  height: 0;
+  height: auto;
   z-index: 60;
   transform: translateX(-50%) translateY(20px);
   transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 300ms ease;
+  pointer-events: none; /* Let scroll pass through by default */
 }
 
 .menuContainerRaised {
@@ -59,7 +60,7 @@
   /* Open State for Wrap */
   .menuOpen {
   opacity: 1;
-  pointer-events: none;
+  pointer-events: auto;
   transform: translateY(-55%) scale(1.2);
   }
 
@@ -177,10 +178,11 @@
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
   transition: background-color 300ms ease, border-color 300ms ease;
+  pointer-events: auto; /* Always interactable */
 }
 
 .centerLogo::after {
-  content: "";
+  content: "MENU";
   position: absolute;
   bottom: 10%;
   left: 50%;

@@ -8,6 +8,7 @@ import FooterContactPanel from "./components/FooterContactPanel";
 import { withBasePath } from "./lib/basePath";
 import AssetLoader from "./components/AssetLoader";
 import ContentVisibilityWrapper from "./components/ContentVisibilityWrapper";
+import ServiceWorkerRegistration from "./components/ServiceWorkerRegistration";
 import Link from "next/link";
 import Image from 'next/image';
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="site-shell bg-blue-100 text-gray-900">
+        <ServiceWorkerRegistration />
         <AssetLoader />
         <ContentVisibilityWrapper>
           <EventNavProvider>

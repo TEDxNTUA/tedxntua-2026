@@ -290,11 +290,45 @@ export default function SponsorsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sectionMarkers, setSectionMarkers] = useState([]);
   const [activeSection, setActiveSection] = useState(null);
-  const touchStartY = useRef(null);
 
+  // Sync scroll to animation progress
   useEffect(() => {
-    if (!isUnlocked) return;
-    
+    if (reducedMotion) {
+      setProgress(1);
+      setIsUnlocked(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      const vh = window.innerHeight;
+      const scrollY = window.scrollY;
+      
+      // dedicated scroll distance for animation - text fully reveals at 1.0vh
+      const scrollDistance = vh * 1.0;
+      const revealProgress = Math.min(scrollY / scrollDistance, 1);
+      setProgress(revealProgress);
+      
+      // Determine if we've scrolled enough to "unlock" the sponsors visuals
+      // Threshold increased to match the dwell time
+      const unlocked = scrollY > vh * 0.6;
+      if (unlocked !== isUnlocked) {
+        setIsUnlocked(unlocked);
+      }
+
+      // Sidebar progress tracking
+      const totalHeight = document.documentElement.scrollHeight - vh;
+      if (totalHeight > 0) {
+        setWindowScrollProgress(scrollY / totalHeight);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial check
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [reducedMotion, isUnlocked]);
+
+  // Markers and Observer
+  useEffect(() => {
     const calculateMarkers = () => {
       const sections = document.querySelectorAll(".sponsor-tier-section");
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -311,10 +345,9 @@ export default function SponsorsPage() {
       setSectionMarkers(markers);
     };
 
-    // Use IntersectionObserver for accurate active section tracking
     const observerOptions = {
       root: null,
-      rootMargin: "-20% 0px -70% 0px", // Trigger when section is in top part of viewport
+      rootMargin: "-20% 0px -70% 0px",
       threshold: 0
     };
 
@@ -330,7 +363,6 @@ export default function SponsorsPage() {
     const sections = document.querySelectorAll(".sponsor-tier-section");
     sections.forEach(section => observer.observe(section));
 
-    // Small delay to ensure layout is settled for marker calculation
     const timer = setTimeout(calculateMarkers, 1000);
     window.addEventListener("resize", calculateMarkers);
     
@@ -339,112 +371,17 @@ export default function SponsorsPage() {
       window.removeEventListener("resize", calculateMarkers);
       observer.disconnect();
     };
-  }, [isUnlocked]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!isUnlocked) return;
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight <= 0) return;
-      setWindowScrollProgress(window.scrollY / totalHeight);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isUnlocked]);
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mq?.matches || false);
   }, []);
 
-  const updateProgress = useCallback((delta) => {
-    if (isUnlocked) return;
-    setProgress(prev => {
-      const next = Math.min(Math.max(prev + delta * 0.0012, 0), 1);
-      if (next >= 1) setIsUnlocked(true);
-      return next;
-    });
-  }, [isUnlocked]);
-
-  // Handle locking and unlocking
-  useEffect(() => {
-    if (reducedMotion) {
-      setIsUnlocked(true);
-      setProgress(1);
-      return;
-    }
-
-    if (!isUnlocked) {
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
-      document.body.style.overflow = "hidden";
-      window.scrollTo(0, 0);
-    } else {
-      document.body.style.paddingRight = "";
-      document.body.style.overflow = "unset";
-    }
-
-    const handleWheel = (e) => {
-      if (isUnlocked) {
-        // Only re-lock if we are at the very top and scrolling UP
-        if (window.scrollY <= 0 && e.deltaY < 0) {
-          setIsUnlocked(false);
-          setProgress(0.99);
-        }
-        return; // Let native scroll happen
-      }
-      
-      // If locked, prevent native scroll and update animation progress
-      e.preventDefault();
-      updateProgress(e.deltaY);
-    };
-
-    const handleTouchStart = (e) => {
-      touchStartY.current = e.touches[0].clientY;
-    };
-
-    const handleTouchMove = (e) => {
-      if (isUnlocked) return;
-      if (touchStartY.current === null) return;
-      
-      const currentY = e.touches[0].clientY;
-      const delta = touchStartY.current - currentY;
-      
-      e.preventDefault();
-      updateProgress(delta * 2);
-      touchStartY.current = currentY;
-    };
-
-    const handleKeyDown = (e) => {
-      if (isUnlocked) return;
-      const keys = ["ArrowDown", "ArrowUp", "Space", "PageDown", "PageUp"];
-      if (keys.includes(e.code)) {
-        e.preventDefault();
-        const delta = (e.code === "ArrowUp" || e.code === "PageUp") ? -100 : 100;
-        updateProgress(delta);
-      }
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart);
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.paddingRight = "";
-      document.body.style.overflow = "unset";
-    };
-  }, [isUnlocked, updateProgress, reducedMotion]);
-
   const scrollToSection = (index) => {
     const sections = document.querySelectorAll(".sponsor-tier-section");
     if (sections[index]) {
-      const offset = 160; // Offset for sticky header
+      const offset = 160;
       const elementPosition = sections[index].getBoundingClientRect().top + window.scrollY;
       window.scrollTo({
         top: elementPosition - offset,
@@ -454,92 +391,75 @@ export default function SponsorsPage() {
   };
 
   return (
-    <section className="relative min-h-screen bg-black text-white selection:bg-green-500/30 overflow-x-hidden">
-      {/* Enhanced Scroll Progress Bar (Vertical Right) */}
-      <div className={`fixed right-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-50 transition-all duration-700 ${isUnlocked ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
-        <div className="relative w-[3px] h-72 bg-white/5 rounded-full overflow-visible">
-          {/* Background Track Glow */}
-          <div className="absolute inset-0 bg-green-500/5 blur-[2px] rounded-full" />
-          
-          {/* Fill */}
-          <div 
-            className="absolute top-0 w-full bg-gradient-to-b from-green-400 via-green-500 to-emerald-600 rounded-full transition-all duration-500 ease-out shadow-[0_0_15px_rgba(34,197,94,0.4)]"
-            style={{ height: `${windowScrollProgress * 100}%` }}
-          />
-
-          {/* Section Markers (Bullets) */}
+    <section className="relative min-h-screen bg-black text-white selection:bg-green-500/30">
+      {/* Professional Sponsors Navigation Pill */}
+      <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ${isUnlocked ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+        <div className="flex items-center gap-1 sm:gap-2 rounded-full border border-white/10 bg-black/80 p-1.5 sm:p-2 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           {sectionMarkers.map((marker, i) => {
             const isCurrent = activeSection === marker.name;
-            const isPassed = windowScrollProgress >= marker.percent - 0.01;
             const tierColor = TIER_COLORS[marker.name] || { main: "#ffffff", glow: "rgba(255,255,255,0.5)" };
+            const label = marker.name;
 
             return (
-              <div 
+              <button 
                 key={i}
-                className="absolute left-1/2 -translate-x-1/2 group cursor-pointer"
-                style={{ top: `${marker.percent * 100}%` }}
                 onClick={() => scrollToSection(i)}
+                className={`
+                  group relative flex items-center justify-center px-3 py-2 sm:px-5 sm:py-2.5 rounded-full transition-all duration-500 overflow-hidden
+                  ${isCurrent ? "bg-white/[0.08]" : "hover:bg-white-[0.04]"}
+                `}
               >
-                {/* Bullet */}
+                {/* Active/Hover Indicator Line */}
                 <div 
-                  className={`
-                    w-3 h-3 rounded-full border-2 transition-all duration-500
-                    ${isCurrent ? "scale-150" : isPassed ? "scale-100" : "scale-75 bg-zinc-900 border-white/20 group-hover:border-white/50 group-hover:scale-100"}
-                  `} 
-                  style={isCurrent || isPassed ? {
-                    backgroundColor: tierColor.main,
-                    borderColor: tierColor.main,
-                    boxShadow: isCurrent ? `0 0 15px ${tierColor.glow}` : "none"
-                  } : {}}
+                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] rounded-t-full transition-all duration-500 ease-out ${isCurrent ? "w-1/2 opacity-100" : "w-0 opacity-0 group-hover:w-1/4 group-hover:opacity-50"}`}
+                  style={{ backgroundColor: tierColor.main, boxShadow: isCurrent ? `0 -2px 10px ${tierColor.glow}` : "none" }}
                 />
                 
-                {/* Label */}
-                <div 
-                  className={`absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-lg bg-black/90 border border-white/10 text-[10px] font-black tracking-widest uppercase whitespace-nowrap transition-all duration-300 pointer-events-none backdrop-blur-md ${isCurrent ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`}
-                  style={{ color: tierColor.main, boxShadow: isCurrent ? `0 0 20px ${tierColor.glow}22` : "none" }}
+                <span 
+                  className={`
+                    relative z-10 text-[9px] sm:text-[10px] font-bold tracking-[0.25em] uppercase transition-colors duration-500
+                    ${isCurrent ? "text-white" : "text-white/40 group-hover:text-white/80"}
+                  `}
                 >
-                  {marker.name}
-                </div>
-              </div>
+                  <span className="hidden sm:inline">{label}</span>
+                  <span className="sm:hidden">{label.slice(0, 3)}</span>
+                </span>
+              </button>
             );
           })}
         </div>
       </div>
-      {/* Sponsor Modal */}
+
       <SponsorModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       {/* Dynamic background */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div 
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-green-500/5 rounded-full filter blur-[160px] transition-opacity duration-1000"
-          style={{ opacity: 0.3 + progress * 0.7 }}
-        />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-green-500/5 rounded-full filter blur-[160px] transition-opacity duration-1000" style={{ opacity: 0.3 + progress * 0.7 }} />
         <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(#22c55e_1px,transparent_1px)] bg-[length:40px_40px]" />
       </div>
 
       <div className="relative z-10">
-        {/* Reveal Section - Higher and more compact */}
-
-        <div className={`flex flex-col items-center justify-center transition-all duration-1000 ease-in-out ${isUnlocked ? "min-h-[60vh] pt-24" : "min-h-[100vh]"}`}>
-          <ScrollRevealText progress={progress} reducedMotion={reducedMotion} />
+        {/* REVEAL PHASE - Sticky text that eventually scrolls away */}
+        <div className="relative h-[220vh] w-full">
+          <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
+            <div className="w-full px-4">
+              <ScrollRevealText progress={progress} reducedMotion={reducedMotion} />
+            </div>
+          </div>
         </div>
 
-        {/* Sponsors Grid - Closer to reveal text */}
+        {/* Sponsors Grid - Starts once the text is fully revealed and stays a bit */}
         <div 
-          className={`container mx-auto px-4 sm:px-6 transition-all duration-1000 delay-100 ${isUnlocked ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-20 pointer-events-none"}`}
+          className={`relative z-20 container mx-auto px-4 sm:px-6 pb-32 transition-all duration-1000 ${isUnlocked ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
         >
           <div className="space-y-20 sm:space-y-32">
             {sponsorTiers.map((tier, index) => (
               <Fragment key={tier.tier}>
-                <SponsorTierSection
-                  tier={tier}
-                  index={index}
-                />
+                <SponsorTierSection tier={tier} index={index} />
               </Fragment>
             ))}
           </div>
 
-          {/* Professional CTA Card - simplified to just the button */}
           <div className="mt-40 mb-32 flex justify-center">
             <button 
               onClick={() => setIsModalOpen(true)}

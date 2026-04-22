@@ -206,7 +206,10 @@
 
 .cardButton:hover .circle,
 .cardButton:focus-visible .circle {
-  transform: scale(1.03);
+  transform: translateZ(0) scale(1.03) rotate(360deg) !important;
+  transition:
+    transform 0.4s ease-out,
+    filter 220ms ease;
   filter:
     drop-shadow(0 4px 16px rgba(255, 255, 255, 0.62))
     drop-shadow(0 26px 70px rgba(0, 121, 116, 0.24));
@@ -226,6 +229,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1.14;
+  perspective: 1000px;
 }
 
 .stageGlow {
@@ -244,8 +248,10 @@
 .circle {
   object-fit: contain;
   object-position: center center;
+  transform: translateZ(0) rotate(0deg);
+  will-change: transform;
   transition:
-    transform 220ms ease,
+    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
     filter 220ms ease;
   filter:
     drop-shadow(0 2px 10px rgba(255, 255, 255, 0.5))
@@ -373,9 +379,19 @@
 .modalCircle {
   object-fit: contain;
   object-position: center center;
+  transform: translateZ(0) rotate(0deg);
+  will-change: transform;
+  transition:
+    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 220ms ease;
   filter:
     drop-shadow(0 6px 20px rgba(255, 255, 255, 0.48))
     drop-shadow(0 28px 70px rgba(0, 121, 116, 0.24));
+}
+
+.modalMedia:hover .modalCircle {
+  transform: translateZ(0) rotate(360deg) !important;
+  transition: transform 0.4s ease-out;
 }
 
 .modalPhotoMask {

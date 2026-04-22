@@ -194,7 +194,7 @@ export const allExpWorkshops = applyPosterBasePath([
     room: "Room 1",
     profession: ExpWorkshops[0].ProfessionGR,
     title: ExpWorkshops[0].ArtNameGR,
-    itemColor: "rgba(189, 149, 74, 0.3)",
+    itemColor: "rgba(45, 35, 18, 0.9)",
     description: ExpWorkshops[0].DescriptionGR,
     posterImageUrl: DEFAULT_POSTER_IMAGE,
     personalDescription: ExpWorkshops[0].BioGR,
@@ -206,7 +206,7 @@ export const allExpWorkshops = applyPosterBasePath([
     room: "Room 2",
     profession: ExpWorkshops[1].ProfessionGR,
     title: ExpWorkshops[1].ArtNameGR,
-    itemColor: "rgba(255, 255, 255, 0.43)",
+    itemColor: "rgba(20, 20, 20, 0.92)",
     description: ExpWorkshops[1].DescriptionGR,
     posterImageUrl: DEFAULT_POSTER_IMAGE,
     personalDescription: ExpWorkshops[1].BioGR,
@@ -218,7 +218,7 @@ export const allExpWorkshops = applyPosterBasePath([
     room: "Room 1",
     profession: ExpWorkshops[2].ProfessionGR,
     title: ExpWorkshops[2].ArtNameGR,
-    itemColor: "rgba(230, 57, 70, 0.3)",
+    itemColor: "rgba(45, 12, 15, 0.9)",
     description: ExpWorkshops[2].DescriptionGR,
     posterImageUrl: DEFAULT_POSTER_IMAGE,
     personalDescription: ExpWorkshops[2].BioGR,
@@ -235,7 +235,7 @@ export const allProfWorkshops = applyPosterBasePath([
     name: ProfWorkshops[0].NameGR,
     description: ProfWorkshops[0].DescriptionGR,
     personal: ProfWorkshops[0].BioGR,
-    itemColor: "rgba(204, 243, 128, 0.3)",
+    itemColor: "rgba(25, 35, 12, 0.92)",
     posterImageUrl: DEFAULT_POSTER_IMAGE,
     socials: getSocials(ProfWorkshops, 0)
   },
@@ -246,7 +246,7 @@ export const allProfWorkshops = applyPosterBasePath([
     name: ProfWorkshops[1].NameGR,
     description: ProfWorkshops[1].DescriptionGR,
     personal: ProfWorkshops[1].BioGR,
-    itemColor: "rgba(204, 243, 128, 0.3)",
+    itemColor: "rgba(25, 35, 12, 0.92)",
     posterImageUrl: DEFAULT_POSTER_IMAGE,
     socials: getSocials(ProfWorkshops, 1)
   },
@@ -257,7 +257,7 @@ export const allProfWorkshops = applyPosterBasePath([
     name: ProfWorkshops[2].NameGR,
     description: ProfWorkshops[2].DescriptionGR,
     personal: ProfWorkshops[2].BioGR,
-    itemColor: "rgba(204, 243, 128, 0.3)",
+    itemColor: "rgba(25, 35, 12, 0.92)",
     posterImageUrl: DEFAULT_POSTER_IMAGE,
     socials: getSocials(ProfWorkshops, 2)
   },
@@ -268,7 +268,7 @@ export const allProfWorkshops = applyPosterBasePath([
     name: ProfWorkshops[3].NameGR,
     description: ProfWorkshops[3].DescriptionGR,
     personal: ProfWorkshops[3].BioGR,
-    itemColor: "rgba(204, 243, 128, 0.3)",
+    itemColor: "rgba(25, 35, 12, 0.92)",
     posterImageUrl: DEFAULT_POSTER_IMAGE,
     socials: getSocials(ProfWorkshops, 3)
   }
@@ -280,7 +280,7 @@ export const allSideHappenings = applyPosterBasePath([
     name: "Bilbo Bagins",
     profession: "talker",
     title: "Mountains Gandals",
-    itemColor: "rgba(230, 57, 70, 0.3)",
+    itemColor: "rgba(45, 12, 15, 0.9)",
     description: "The story of a mighty burgler who happend to acquire a cerain ring",
     posterImageUrl: DEFAULT_POSTER_IMAGE,
     personalDescription: "Hello there",
@@ -294,7 +294,7 @@ export const allSideHappenings = applyPosterBasePath([
     name: "Galadriel of LothlΓ³rien",
     profession: "talker",
     title: "Why i gave my hair to a dwarf",
-    itemColor: "rgba(121, 147, 183, 0.3)",
+    itemColor: "rgba(15, 25, 45, 0.9)",
     description: "He was a really kind dwarf",
     posterImageUrl: DEFAULT_POSTER_IMAGE,
     personalDescription: "Hello there",
@@ -311,7 +311,7 @@ export const allSideHappenings = applyPosterBasePath([
     name2: "Meriadoc Brundyback",
     profession2: "talker",
     title: "The importance of second breakfast",
-    itemColor: "rgba(109, 222, 139, 0.3)",
+    itemColor: "rgba(15, 45, 25, 0.9)",
     description: "Its just mandatory",
     posterImageUrl: DEFAULT_POSTER_IMAGE,
     personalDescription: "Hello there",
@@ -462,7 +462,7 @@ export const theEnd = [
 export const myWorkshopsPack1 = [
   {
     time: WORKSHOP_TIME_1,
-    color: "rgba(92, 169, 149, 0.47)",
+    color: "rgba(15, 35, 30, 0.9)",
     workshop: [
       allExpWorkshops[0],
       allExpWorkshops[1],
@@ -474,7 +474,7 @@ export const myWorkshopsPack1 = [
 export const myWorkshopsPack2 = [
   {
     time: WORKSHOP_TIME_2,
-    color: "rgba(204, 243, 128, 0.3)",
+    color: "rgba(25, 35, 12, 0.92)",
     workshop: [
       allExpWorkshops[2],
       allProfWorkshops[1],
@@ -486,7 +486,7 @@ export const myWorkshopsPack2 = [
 export const myWorkshopsPack3 = [
   {
     time: WORKSHOP_TIME_3,
-    color: "rgba(204, 243, 128, 0.3)",
+    color: "rgba(25, 35, 12, 0.92)",
     workshop: [
       allProfWorkshops[0],
       allProfWorkshops[1],
