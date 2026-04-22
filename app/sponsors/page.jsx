@@ -17,7 +17,7 @@ const TIER_COLORS = {
 
 // Refined Scroll reveal component for the thank you text
 function ScrollRevealText({ progress, reducedMotion }) {
-  const text = "With heartfelt gratitude to the sponsors who lift this stage, ignite bold ideas, and make TEDxNTUA 2026 possible.";
+  const text = "You help us at every step of the cycle.";
   const tedMark = "TEDxNTUA";
   const tedStart = text.indexOf(tedMark);
   const tedEnd = tedStart === -1 ? -1 : tedStart + tedMark.length;
