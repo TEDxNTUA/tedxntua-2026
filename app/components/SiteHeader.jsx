@@ -24,7 +24,6 @@ const DESKTOP_BREAKPOINT = 1024;
 
 /**
  * Renders the site-wide header shell and keeps its layout synchronized with header-nav state.
- *
  * @returns {JSX.Element}
  */
 export default function SiteHeader() {
