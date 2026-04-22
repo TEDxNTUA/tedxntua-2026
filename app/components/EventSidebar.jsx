@@ -90,6 +90,7 @@ export default function EventSidebar({ visible }) {
               {/* Navigation Button */}
               <Link
                 href={tab.path}
+                aria-label={tab.label}
                 className={`
                   peer group
                   pointer-events-auto
@@ -102,6 +103,18 @@ export default function EventSidebar({ visible }) {
                   }
                 `}
               >
+                <span
+                  className={`
+                    pointer-events-none absolute right-[calc(100%+0.75rem)] top-1/2 hidden -translate-y-1/2 translate-x-2 whitespace-nowrap px-1 py-1 text-[10px] font-black uppercase tracking-[0.24em] opacity-0 drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)] transition-all duration-300 md:block
+                    ${isActive
+                      ? 'text-emerald-300 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100'
+                      : 'text-emerald-50/90 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100'
+                    }
+                  `}
+                >
+                  {tab.label}
+                </span>
+
                 {/* Visual Feedback on Hover */}
                 {!isActive && (
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-emerald-500/5 transition-opacity duration-500 rounded-2xl" />
