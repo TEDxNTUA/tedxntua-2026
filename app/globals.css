@@ -33,8 +33,27 @@ html,
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   max-width: 100%;
   overflow-x: hidden;
+  /* Prevent pull-to-refresh on mobile which can break scroll-based animations */
+  overscroll-behavior-y: none;
+  /* Support for iOS safe areas */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Improve tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure fixed elements respect safe areas */
+.fixed-safe-top {
+  top: env(safe-area-inset-top, 0px);
+}
+
+.fixed-safe-bottom {
+  bottom: env(safe-area-inset-bottom, 0px);
 }
 
 html {

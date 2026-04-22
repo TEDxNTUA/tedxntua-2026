@@ -356,17 +356,20 @@ export default function SponsorsPage() {
       window.scrollTo(0, 0);
     } else {
       document.body.style.paddingRight = "";
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "unset";
     }
 
     const handleWheel = (e) => {
       if (isUnlocked) {
+        // Only re-lock if we are at the very top and scrolling UP
         if (window.scrollY <= 0 && e.deltaY < 0) {
           setIsUnlocked(false);
           setProgress(0.99);
         }
-        return;
+        return; // Let native scroll happen
       }
+      
+      // If locked, prevent native scroll and update animation progress
       e.preventDefault();
       updateProgress(e.deltaY);
     };
@@ -381,6 +384,7 @@ export default function SponsorsPage() {
       
       const currentY = e.touches[0].clientY;
       const delta = touchStartY.current - currentY;
+      
       e.preventDefault();
       updateProgress(delta * 2);
       touchStartY.current = currentY;
@@ -407,7 +411,7 @@ export default function SponsorsPage() {
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.paddingRight = "";
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "unset";
     };
   }, [isUnlocked, updateProgress, reducedMotion]);
 
@@ -486,7 +490,7 @@ export default function SponsorsPage() {
 
         {/* Sponsors Grid - Closer to reveal text */}
         <div 
-          className={`container mx-auto px-4 sm:px-6 transition-all duration-1000 delay-100 ${isUnlocked ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20 pointer-events-none"}`}
+          className={`container mx-auto px-4 sm:px-6 transition-all duration-1000 delay-100 ${isUnlocked ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-20 pointer-events-none"}`}
         >
           <div className="space-y-20 sm:space-y-32">
             {sponsorTiers.map((tier, index) => (

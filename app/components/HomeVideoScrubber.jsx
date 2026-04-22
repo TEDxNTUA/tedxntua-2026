@@ -12,8 +12,8 @@ const storyBeats = [
   "Every revolution returns to the essence.",
 ];
 
-const PIXELS_PER_SECOND = 1600;
-const MOBILE_PIXELS_PER_SECOND = 900;
+const PIXELS_PER_SECOND = 1000;
+const MOBILE_PIXELS_PER_SECOND = 800;
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const getViewportHeight = () => window.visualViewport?.height ?? window.innerHeight;
@@ -28,11 +28,19 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const [scrubHeight, setScrubHeight] = useState("0px");
   const [pinState, setPinState] = useState("before");
   const [videoSrc, setVideoSrc] = useState(null);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const layoutCache = useRef({ top: 0, height: 0, windowHeight: 0 });
   const currentVideoTimeRef = useRef(0);
 
+  // Use a more stable viewport height for layout calculations
+  const getStableViewportHeight = useCallback(() => {
+    if (typeof window === "undefined") return 800;
+    // On mobile, innerHeight is more stable for scroll-based layouts than visualViewport.height
+    // which changes when the address bar is toggled.
+    return window.innerHeight;
+  }, []);
+
   // Smoothing factor: lower is smoother/slower, higher is more responsive
-  // We use a slightly lower value on mobile for more "flow"
   const getSmoothing = () => {
     if (typeof window === "undefined") return 0.12;
     return window.innerWidth < 720 ? 0.08 : 0.12;
@@ -60,15 +68,15 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const updateLayoutCache = useCallback(() => {
     if (!sectionRef.current) return;
 
-    const sectionTop =
-      sectionRef.current.getBoundingClientRect().top + window.scrollY;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const sectionTop = rect.top + window.scrollY;
 
     layoutCache.current = {
       top: sectionTop,
-      height: sectionRef.current.offsetHeight,
-      windowHeight: getViewportHeight(),
+      height: rect.height,
+      windowHeight: getStableViewportHeight(),
     };
-  }, []);
+  }, [getStableViewportHeight]);
 
   const updateLayout = useCallback(() => {
     const section = sectionRef.current;
@@ -78,28 +86,27 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       return;
     }
 
-    const viewportHeight = getViewportHeight();
+    const viewportHeight = getStableViewportHeight();
     const isMobile = window.innerWidth < 720;
     
-    // Mobile feels better with a bit more scroll distance per second of video
     const pixelsPerSecond = (isCoarsePointer() || isMobile)
-      ? 1200 // Increased from 900 for mobile
+      ? MOBILE_PIXELS_PER_SECOND
       : PIXELS_PER_SECOND;
     
     const minHeight = viewportHeight * storyBeats.length;
     const desiredHeight = Math.max(
       minHeight,
-      video.duration * pixelsPerSecond + viewportHeight,
+      video.duration * pixelsPerSecond + viewportHeight * 0.4, // Increased buffer slightly
     );
 
     setScrubHeight(`${Math.ceil(desiredHeight)}px`);
-  }, []);
+  }, [getStableViewportHeight]);
 
   const syncVideoToScroll = useCallback(() => {
     const video = videoRef.current;
     const { top, height, windowHeight } = layoutCache.current;
 
-    if (!video || !Number.isFinite(video.duration) || video.duration <= 0) {
+    if (!video || !Number.isFinite(video.duration) || video.duration <= 0 || video.readyState < 2) {
       frameIdRef.current = 0;
       return;
     }
@@ -119,7 +126,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     let nextPinState = "before";
     if (currentScroll >= top + total) {
       nextPinState = "after";
-    } else if (currentScroll >= top) {
+    } else if (currentScroll >= top - 2) { // Small buffer to prevent flickering
       nextPinState = "pinned";
     }
 
@@ -132,17 +139,14 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const progress = clamp(scrollDistance / total, 0, 1);
     const targetTime = progress * (video.duration - 0.05);
     
-    // LERP: current = current + (target - current) * smoothing
     const smoothing = getSmoothing();
     const newTime = currentVideoTimeRef.current + (targetTime - currentVideoTimeRef.current) * smoothing;
     currentVideoTimeRef.current = newTime;
 
-    // Only update if the difference is significant
     if (Math.abs(video.currentTime - newTime) > 0.008) {
       video.currentTime = newTime;
     }
 
-    // Continue the animation loop if we haven't reached the target
     if (Math.abs(targetTime - currentVideoTimeRef.current) > 0.001) {
       frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
     } else {
@@ -158,9 +162,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) {
-      return;
-    }
+    if (!video) return;
 
     const handleScroll = () => {
       targetScrollRef.current = window.scrollY;
@@ -168,67 +170,57 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     };
 
     const handleResize = () => {
-      targetScrollRef.current = window.scrollY;
       updateLayout();
-      requestAnimationFrame(() => {
+      // Use a slight delay to allow layout to settle on mobile
+      setTimeout(() => {
         updateLayoutCache();
         requestSync();
-      });
+      }, 100);
     };
 
-    const handleLoadedData = () => {
+    const handleLoadedData = async () => {
+      if (!video) return;
       updateLayout();
-      video.pause();
-      targetScrollRef.current = window.scrollY;
-      requestAnimationFrame(() => {
-        updateLayoutCache();
-        requestSync();
-      });
-    };
-
-    const handleLoadedMetadata = () => {
-      if (video.duration > 0) {
-        handleLoadedData();
+      try {
+        video.muted = true;
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          await playPromise;
+          video.pause();
+        }
+        setIsVideoReady(true);
+      } catch (err) {
+        video.pause();
+        setIsVideoReady(true);
       }
+      requestAnimationFrame(() => {
+        updateLayoutCache();
+        requestSync();
+      });
     };
 
     video.addEventListener("loadeddata", handleLoadedData);
-    video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("canplay", handleLoadedData);
+
     if (video.readyState >= 2) {
       handleLoadedData();
     }
 
-    const timeoutId = setTimeout(() => {
-      if (video.duration > 0) {
-        handleLoadedData();
-      }
-    }, 500);
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("touchmove", handleScroll, { passive: true }); // Faster updates for mobile
     window.addEventListener("resize", handleResize);
 
     return () => {
-      clearTimeout(timeoutId);
-      if (frameIdRef.current) {
-        cancelAnimationFrame(frameIdRef.current);
-        frameIdRef.current = 0;
-      }
+      if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("touchmove", handleScroll);
       window.removeEventListener("resize", handleResize);
       video.removeEventListener("loadeddata", handleLoadedData);
-      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("canplay", handleLoadedData);
     };
   }, [requestSync, updateLayout, updateLayoutCache]);
 
   useEffect(() => {
-    if (scrubHeight === "0px") {
-      return;
-    }
-
+    if (scrubHeight === "0px") return;
     updateLayoutCache();
-    targetScrollRef.current = window.scrollY;
     requestSync();
   }, [scrubHeight, requestSync, updateLayoutCache]);
 
@@ -238,8 +230,23 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
         className={styles.introPanel}
         style={{ "--scrubber-gradient": `url(${withBasePath("/gradient.png")})` }}
       >
-        <div className={styles.introPanelContent}>
-          <h1 className={heroTitleClassName}>CYCLE&nbsp;0</h1>
+        {/* Match AssetLoader's radial gradient effect */}
+        <div className="absolute inset-0 pointer-events-none opacity-40 z-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(34,197,94,0.15)_0%,_transparent_70%)]" />
+        </div>
+
+        <div className={`${styles.introPanelContent} relative z-10 w-full flex justify-center items-center ${heroTitleClassName}`}>
+          <div className="flex flex-col items-center animate-pulse">
+            <h1 className="text-6xl md:text-8xl lg:text-[13rem] font-black tracking-[0.15em] md:tracking-[0.25em] uppercase italic flex items-center">
+              <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+                Cycle
+              </span>
+              <span className="ml-4 md:ml-10 text-green-500 drop-shadow-[0_0_30px_rgba(34,197,94,0.8)]">
+                0
+              </span>
+            </h1>
+            <div className="h-[2px] md:h-[3px] w-20 md:w-40 bg-green-500 mt-6 md:mt-10 shadow-[0_0_15px_rgba(34,197,94,0.8)]" />
+          </div>
         </div>
       </section>
 
@@ -261,8 +268,11 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
           <video
             ref={videoRef}
             className={styles.scrubberSectionVideo}
+            style={{ opacity: isVideoReady ? 1 : 0 }}
             src={videoSrc}
             muted
+            autoPlay
+            loop
             playsInline
             preload="auto"
             disableRemotePlayback
@@ -277,7 +287,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
         <div className={styles.scrubberSectionStory}>
           {storyBeats.map((beat) => (
             <div key={beat} className={styles.scrubberSectionBeat}>
-              <h2>{beat}</h2>
+              <h2 className={heroTitleClassName}>{beat}</h2>
             </div>
           ))}
         </div>
