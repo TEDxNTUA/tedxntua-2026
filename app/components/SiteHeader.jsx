@@ -93,7 +93,7 @@ export default function SiteHeader() {
   // Renders the top-level header container with conditional positioning and glassmorphism styling.
   return (
     <header
-      className={`z-40 overflow-visible bg-transparent text-white ${
+      className={`site-header z-40 overflow-visible bg-transparent text-white ${
         isHomePage 
           ? "pointer-events-none fixed inset-x-0 top-0 border-b-0" 
           : "sticky top-0 border-b border-white/8 max-h-[120px]"

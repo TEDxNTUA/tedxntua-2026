@@ -102,6 +102,15 @@ html body[style*="overflow: hidden"] {
   background: #000;
 }
 
+body.speaker-modal-open .site-header,
+body.speaker-modal-open .site-footer,
+body.speaker-modal-open .event-nav-container,
+body.speaker-modal-open .event-nav-toggle {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .site-footer > .footer-video-shell {
   position: absolute;
   inset: 0;
