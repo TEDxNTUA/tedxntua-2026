@@ -214,7 +214,7 @@ export default function AssetLoader() {
   return (
     <div 
       className={`fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center overflow-hidden transition-all duration-1000 ease-in-out ${
-        isVisible ? "opacity-100 visibility-visible" : "opacity-0 invisible pointer-events-none"
+        isVisible ? "opacity-100 visible pointer-events-auto" : "opacity-0 invisible pointer-events-none"
       }`}
     >
       <div className="absolute inset-0 pointer-events-none opacity-40">

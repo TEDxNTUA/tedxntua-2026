@@ -97,7 +97,7 @@ export default function EventSidebar({ visible }) {
                   rounded-2xl border order-2
                   ${isActive
                     ? 'bg-emerald-500 border-emerald-400 shadow-[0_0_40_rgba(16,185,129,0.3)] scale-110 translate-x-[-6px] z-10'
-                    : 'bg-white/5 backdrop-blur-xl border-white/5 hover:border-emerald-500/40 hover:bg-white/10 hover:translate-x-[-3px] shadow-2xl'
+                    : 'bg-black/60 backdrop-blur-xl border-white/10 hover:border-emerald-500/40 hover:bg-black/80 hover:translate-x-[-3px] shadow-2xl'
                   }
                 `}
               >
@@ -124,7 +124,7 @@ export default function EventSidebar({ visible }) {
               <span className={`
                 opacity-0 peer-hover:opacity-100 lg:block hidden 
                 transition-all duration-500 translate-x-4 peer-hover:translate-x-0 
-                mr-4 px-4 py-2 bg-slate-950/90 backdrop-blur-2xl border border-white/10 
+                mr-4 px-4 py-2 bg-black backdrop-blur-2xl border border-white/10 
                 text-white rounded-xl text-[10px] font-bold uppercase tracking-[0.3em] 
                 whitespace-nowrap shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-none
                 ${isActive ? 'border-emerald-500/40 text-emerald-400' : ''}
