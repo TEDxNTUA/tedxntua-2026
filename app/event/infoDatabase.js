@@ -391,7 +391,7 @@ export const extra = applyPosterBasePath([
   {
     time: "11:30 - 11:50",
     itemCategory: "oppening",
-    name: "Opening Histess/ Backstage Host/ Curators",
+    name: "Opening Hostess/ Backstage Host/ Curators",
     itemColor: EXTRA_ITEM_COLOR,
     posterImageUrl: DEFAULT_POSTER_IMAGE,
     personalDescription: "",
