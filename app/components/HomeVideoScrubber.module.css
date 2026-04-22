@@ -87,7 +87,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 40vh; /* Deeper fade for a more premium feel */
+  height: 15vh; /* Reduced from 40vh to minimize blank space at transition */
   background: linear-gradient(180deg, transparent 0%, #000 100%);
   pointer-events: none;
   z-index: 5;
@@ -124,10 +124,9 @@
 
 .scrubberSectionStickyAfter {
   position: sticky;
-  opacity: 0;
+  opacity: 1; /* Keep video visible until it scrolls off naturally */
   pointer-events: none;
   top: 0;
-  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scrubberSectionVideo,
@@ -251,8 +250,9 @@
 @media (max-width: 720px) {
   .introPanel h1 {
     max-width: none;
-    font-size: clamp(3.5rem, 18vw, 6rem);
-    line-height: 0.9;
+    font-size: clamp(3rem, 16vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
   }
 
   .scrubberSection {
@@ -267,20 +267,23 @@
   }
 
   .scrubberSectionBeat {
-    align-items: center; /* Center vertically for better balance */
+    align-items: center; 
     padding: clamp(1rem, 7vw, 2.5rem);
-    padding-bottom: 10vh; /* Adjust for mobile viewports */
     min-height: 100vh;
     min-height: 100dvh;
+    display: flex;
+    justify-content: center;
   }
 
   .scrubberSectionBeat h2 {
-    max-width: 15ch;
-    font-size: clamp(2rem, 11vw, 3.2rem); 
+    max-width: 12ch;
+    font-size: clamp(1.8rem, 10vw, 2.8rem); 
     line-height: 1.1;
     text-shadow: 
       0 0 20px rgba(0, 0, 0, 0.8),
       0 2px 4px rgba(0, 0, 0, 0.9);
+    text-align: center;
+    margin: 0;
   }
 
   .scrubberSectionHint {

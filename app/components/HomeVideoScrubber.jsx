@@ -12,8 +12,8 @@ const storyBeats = [
   "Every revolution returns to the essence.",
 ];
 
-const PIXELS_PER_SECOND = 1600;
-const MOBILE_PIXELS_PER_SECOND = 900;
+const PIXELS_PER_SECOND = 1000;
+const MOBILE_PIXELS_PER_SECOND = 800;
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const getViewportHeight = () => window.visualViewport?.height ?? window.innerHeight;
@@ -28,6 +28,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const [scrubHeight, setScrubHeight] = useState("0px");
   const [pinState, setPinState] = useState("before");
   const [videoSrc, setVideoSrc] = useState(null);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const layoutCache = useRef({ top: 0, height: 0, windowHeight: 0 });
   const currentVideoTimeRef = useRef(0);
 
@@ -83,13 +84,13 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     
     // Mobile feels better with a bit more scroll distance per second of video
     const pixelsPerSecond = (isCoarsePointer() || isMobile)
-      ? 1200 // Increased from 900 for mobile
+      ? MOBILE_PIXELS_PER_SECOND
       : PIXELS_PER_SECOND;
     
     const minHeight = viewportHeight * storyBeats.length;
     const desiredHeight = Math.max(
       minHeight,
-      video.duration * pixelsPerSecond + viewportHeight,
+      video.duration * pixelsPerSecond + viewportHeight * 0.2, // Reduced buffer to 20% of viewport
     );
 
     setScrubHeight(`${Math.ceil(desiredHeight)}px`);
@@ -99,7 +100,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const video = videoRef.current;
     const { top, height, windowHeight } = layoutCache.current;
 
-    if (!video || !Number.isFinite(video.duration) || video.duration <= 0) {
+    // Check readyState to ensure we don't scrub before data is available
+    if (!video || !Number.isFinite(video.duration) || video.duration <= 0 || video.readyState < 2) {
       frameIdRef.current = 0;
       return;
     }
@@ -176,9 +178,28 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       });
     };
 
-    const handleLoadedData = () => {
+    const handleLoadedData = async () => {
+      if (!video) return;
+      
       updateLayout();
-      video.pause();
+      
+      // Force a play/pause cycle to ensure the video engine is warmed up on mobile.
+      // This helps prevent black screens where the browser refuses to render
+      // the first frame or currentTime updates until the video has "started".
+      try {
+        video.muted = true; // Ensure it's muted for autoplay
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          await playPromise;
+          video.pause();
+        }
+        setIsVideoReady(true);
+      } catch (err) {
+        // Autoplay/play might be blocked or interrupted, but we've tried to "wake up" the decoder
+        video.pause();
+        setIsVideoReady(true);
+      }
+
       targetScrollRef.current = window.scrollY;
       requestAnimationFrame(() => {
         updateLayoutCache();
@@ -194,6 +215,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
     video.addEventListener("loadeddata", handleLoadedData);
     video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("canplay", handleLoadedData);
+
     if (video.readyState >= 2) {
       handleLoadedData();
     }
@@ -219,6 +242,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       window.removeEventListener("resize", handleResize);
       video.removeEventListener("loadeddata", handleLoadedData);
       video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("canplay", handleLoadedData);
     };
   }, [requestSync, updateLayout, updateLayoutCache]);
 
@@ -261,8 +285,11 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
           <video
             ref={videoRef}
             className={styles.scrubberSectionVideo}
+            style={{ opacity: isVideoReady ? 1 : 0 }}
             src={videoSrc}
             muted
+            autoPlay
+            loop
             playsInline
             preload="auto"
             disableRemotePlayback
@@ -277,7 +304,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
         <div className={styles.scrubberSectionStory}>
           {storyBeats.map((beat) => (
             <div key={beat} className={styles.scrubberSectionBeat}>
-              <h2>{beat}</h2>
+              <h2 className={heroTitleClassName}>{beat}</h2>
             </div>
           ))}
         </div>
