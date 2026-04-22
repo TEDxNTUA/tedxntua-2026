@@ -14,6 +14,11 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-copixel: var(--font-copixel), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-copixel {
+  font-family: var(--font-copixel);
 }
 
 @media (prefers-color-scheme: dark) {

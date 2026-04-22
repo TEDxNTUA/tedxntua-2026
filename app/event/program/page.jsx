@@ -9,22 +9,21 @@ import { myWorkshopsPack1, myWorkshopsPack2, myWorkshopsPack3 } from "../infoDat
 
 function ProgramSection({ children, title, id }) {
   return (
-    <section id={id} className="mb-16 md:mb-24 scroll-mt-32">
-      <div className="mb-8 md:mb-12 flex items-center gap-4 md:gap-6">
-        <div className="relative flex flex-col shrink-0">
-           <h3 className="text-xl md:text-3xl font-black uppercase tracking-[0.2em] md:tracking-[0.25em] text-white">
+    <section id={id} className="mb-20 md:mb-32 scroll-mt-32">
+      <div className="mb-6 md:mb-10 flex items-center gap-4">
+        <div className="flex flex-col">
+           <h3 className="text-lg md:text-2xl font-black uppercase tracking-[0.3em] text-emerald-400">
              {title}
            </h3>
-           <div className="h-1 w-12 md:w-20 bg-emerald-400 mt-1 md:mt-2 rounded-full" />
+           <div className="h-0.5 w-8 bg-white/20 mt-2" />
         </div>
-        <div className="h-px flex-1 bg-gradient-to-r from-emerald-400/30 via-emerald-400/5 to-transparent" />
       </div>
-      <div className="space-y-4">{children}</div>
+      <div className="border-t border-white/10">{children}</div>
     </section>
   );
 }
 
-// Quick Navigation Component
+// Quick Navigation Component - Floating Minimal Pill
 function ProgramNav() {
   const sections = [
     { id: 'session1', label: '01' },
@@ -37,13 +36,13 @@ function ProgramNav() {
   ];
 
   return (
-    <div className="sticky top-20 md:top-24 z-30 mb-8 md:mb-12 hidden md:block">
-      <div className="flex items-center justify-center gap-2 rounded-full border border-white/10 bg-black/40 p-2 backdrop-blur-xl w-fit mx-auto">
+    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+      <div className="flex items-center gap-1 rounded-full border border-white/10 bg-black/60 p-1.5 backdrop-blur-2xl shadow-2xl">
         {sections.map((sec) => (
           <a
             key={sec.id}
             href={`#${sec.id}`}
-            className="flex h-10 w-10 items-center justify-center rounded-full text-[10px] font-bold transition-all hover:bg-emerald-400 hover:text-black border border-white/5 text-white/50"
+            className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full text-[9px] md:text-[10px] font-black transition-all hover:bg-emerald-400 hover:text-black text-white/40 hover:scale-110 active:scale-95"
           >
             {sec.label}
           </a>

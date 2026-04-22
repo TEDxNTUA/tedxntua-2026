@@ -5,103 +5,84 @@ export default function ProgramInfoBoxWorkshops({ time, workshop, color }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="group relative pl-6 md:pl-8 pb-6 md:pb-8 last:pb-0">
-      {/* Timeline Line */}
-      <div className="absolute left-[9px] md:left-[11px] top-2 h-full w-[1.5px] md:w-[2px] bg-gradient-to-b from-white/20 via-white/10 to-transparent group-last:h-0" />
-      
-      {/* Timeline Dot */}
-      <div className="absolute left-0 top-2 h-5 w-5 md:h-6 md:w-6 rounded-full border-2 border-white/20 bg-black flex items-center justify-center">
-        <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-yellow-400" />
-      </div>
+    <div 
+      onClick={() => setIsExpanded(!isExpanded)}
+      className="group relative border-b border-white/10 hover:bg-white/[0.02] transition-colors cursor-pointer"
+    >
+      <div className="flex flex-col md:flex-row py-6 md:py-8 items-start md:items-center">
+        {/* Time Section - Minimal Typography */}
+        <div className="flex items-baseline md:flex-col md:items-center justify-start md:justify-center mb-3 md:mb-0 md:w-48 shrink-0">
+          <span className="font-mono text-lg md:text-xl font-black tracking-tighter text-white">
+            {time?.split(' - ')[0]}
+          </span>
+          <span className="mx-2 md:my-0.5 font-mono text-[10px] md:text-xs font-bold text-white/20 uppercase tracking-widest">—</span>
+          <span className="font-mono text-sm md:text-sm font-bold text-white/40">
+            {time?.split(' - ')[1]}
+          </span>
+        </div>
 
-      <div 
-        onClick={() => setIsExpanded(!isExpanded)}
-        className={`
-          relative overflow-hidden rounded-2xl border transition-all duration-500 cursor-pointer
-          ${isExpanded ? 'border-white/30 bg-white/10' : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.07]'}
-          backdrop-blur-md shadow-2xl
-        `}
-      >
-        {/* Glow Effect */}
-        <div 
-          className="absolute -right-20 -top-20 h-40 w-40 opacity-20 blur-[80px] transition-opacity duration-500 group-hover:opacity-30"
-          style={{ backgroundColor: color || '#fbbf24' }}
-        />
-
-        <div className="flex flex-col md:flex-row md:items-stretch">
-          {/* Time Section */}
-          <div className="flex flex-row md:flex-col items-center justify-start md:justify-center p-6 md:w-36">
-            <span className="font-mono text-lg md:text-xl font-black tracking-tighter text-white">
-              {time?.split(' - ')[0]}
+        {/* Content Section */}
+        <div className="flex-1 w-full">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <span className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-[0.15em] border border-yellow-500/30 from-yellow-400/20 to-yellow-500/10 bg-gradient-to-br text-yellow-300">
+              Workshops
             </span>
-            <span className="mx-2 md:my-1 font-mono text-[10px] md:text-xs font-bold text-white/20 uppercase tracking-widest">—</span>
-            <span className="font-mono text-xs md:text-sm font-bold text-white/40">
-              {time?.split(' - ')[1]}
+            <span className="text-white/30 text-[10px] md:text-xs font-medium italic tracking-wide">
+              {workshop.length} parallel sessions
             </span>
           </div>
 
-          {/* Content Section */}
-          <div className="flex-1 p-6 md:pl-2">
-            <div className="flex flex-wrap items-center gap-3 mb-2">
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest border border-yellow-500/30 from-yellow-400/20 to-yellow-500/10 bg-gradient-to-br text-yellow-300">
-                Workshops
-              </span>
-              <span className="text-white/40 text-xs font-medium italic">
-                {workshop.length} parallel sessions
-              </span>
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1">
+              <h4 className="text-xl md:text-2xl font-black text-white tracking-tight mb-1 group-hover:text-yellow-400 transition-colors">
+                Workshop Breakout
+              </h4>
+              <p className="text-xs md:text-sm font-medium text-white/50 uppercase tracking-[0.1em]">
+                Select your preferred session
+              </p>
             </div>
-
-            <div className="flex items-start justify-between">
-              <div>
-                <h4 className="text-xl md:text-2xl font-black text-white tracking-tight mb-1">
-                  Workshop Breakout
-                </h4>
-                <p className="text-sm font-medium text-white/60 uppercase tracking-wider">
-                  Select your preferred session
-                </p>
-              </div>
-              
-              <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-180 text-white' : 'text-white/30'}`}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="m6 9 6 6 6-6"/>
-                </svg>
-              </div>
+            
+            <div className={`mt-1 md:mt-2 transition-all duration-300 ${isExpanded ? 'rotate-180 text-white' : 'text-white/20 group-hover:text-white/40'}`}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
             </div>
+          </div>
+        </div>
+      </div>
 
-            {/* Expandable Workshops List */}
-            <div className={`
-              grid transition-all duration-500 ease-in-out
-              ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}
-            `}>
-              <div className="overflow-hidden">
-                <div className="pt-6 border-t border-white/10 space-y-4">
-                  {workshop.map((info, index) => (
-                    <div 
-                      key={index} 
-                      className="group/item relative overflow-hidden rounded-xl bg-white/5 border border-white/5 p-4 hover:bg-white/10 transition-colors"
-                    >
-                      <div className="flex justify-between items-start gap-4">
-                        <div className="flex-1">
-                          <p className="font-bold text-white text-lg leading-tight mb-1">{info.title}</p>
-                          {info.name && <p className="text-sm text-white/50">{info.name}</p>}
-                        </div>
-                        <div className="text-right shrink-0">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-400 border border-emerald-400/30 px-2 py-0.5 rounded">
-                            {info.room}
-                          </span>
-                        </div>
-                      </div>
-                      
-                      {/* Detailed info on hover or secondary expand if needed, but keeping it simple for now */}
-                      {info.description && isExpanded && (
-                         <p className="mt-2 text-xs text-white/40 leading-relaxed italic line-clamp-2">
-                           {info.description}
-                         </p>
+      {/* Expandable Workshops List - Minimal slide down */}
+      <div className={`
+        grid transition-all duration-500 ease-in-out
+        ${isExpanded ? 'grid-rows-[1fr] opacity-100 pb-8' : 'grid-rows-[0fr] opacity-0'}
+      `}>
+        <div className="overflow-hidden">
+          <div className="md:ml-48">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+              {workshop.map((info, index) => (
+                <div 
+                  key={index} 
+                  className="group/item relative p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all duration-300"
+                >
+                  <div className="flex flex-col gap-2">
+                    <div className="flex justify-between items-start">
+                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-emerald-400">
+                        {info.room}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-bold text-white text-base leading-tight group-hover/item:text-emerald-400 transition-colors">
+                        {info.title}
+                      </p>
+                      {info.name && (
+                        <p className="mt-1 text-xs text-white/40 font-medium">
+                          {info.name}
+                        </p>
                       )}
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
