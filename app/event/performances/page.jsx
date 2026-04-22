@@ -6,6 +6,7 @@ import Image from "next/image";
 import localFont from "next/font/local";
 
 import performances from "../LineUpInfo/PerformancesIT.json";
+import { SocialButton } from "../components/SocialButton";
 import { withBasePath } from "../../lib/basePath";
 import styles from "./page.module.css";
 
@@ -36,6 +37,55 @@ const performerDisplayNames = {
   "Konstantina Koutra": "KONIKOU",
 };
 
+const PERFORMER_SOCIAL_HOVER_COLOR = "#239d54";
+
+const socialFields = [
+  { field: "Instagram", platform: "instagram", label: "Instagram" },
+  { field: "Instagram2", platform: "instagram", label: "Instagram" },
+  { field: "Facebook", platform: "facebook", label: "Facebook" },
+  { field: "LinkedIn", platform: "linkedin", label: "LinkedIn" },
+  { field: "TikTok", platform: "tiktok", label: "TikTok" },
+  { field: "Youtube", platform: "youtube", label: "YouTube" },
+];
+
+function getSocialLinks(profile) {
+  return socialFields.flatMap(({ field, platform, label }) => {
+    const url = typeof profile?.[field] === "string" ? profile[field].trim() : "";
+
+    if (!url) {
+      return [];
+    }
+
+    return {
+      platform,
+      label,
+      url,
+    };
+  });
+}
+
+function SocialLinks({ links = [], ownerName, className = "", size = "24px" }) {
+  if (!links.length) {
+    return null;
+  }
+
+  return (
+    <div className={`${styles.socials} ${className}`}>
+      {links.map((link) => (
+        <SocialButton
+          key={`${link.platform}-${link.url}`}
+          name={link.platform}
+          urlLink={link.url}
+          size={size}
+          mode="blackgreen"
+          hoverColor={PERFORMER_SOCIAL_HOVER_COLOR}
+          ariaLabel={`${link.label} for ${ownerName}`}
+        />
+      ))}
+    </div>
+  );
+}
+
 function buildPerformerCard(name) {
   const performer = performerLookup[name];
 
@@ -49,6 +99,7 @@ function buildPerformerCard(name) {
     profession: performer.ProfessionEN || "Performer",
     photo: performerPhotos[name],
     resume: performer.BioEN || performer.BioGR || "",
+    socialLinks: getSocialLinks(performer),
   };
 }
 
@@ -146,6 +197,12 @@ function PerformerModal({ performer, onClose }) {
             {performer.name}
           </h2>
           <p className={styles.modalValue}>{performer.profession}</p>
+          <SocialLinks
+            links={performer.socialLinks}
+            ownerName={performer.name}
+            className={styles.modalSocials}
+            size="28px"
+          />
           <p className={styles.modalResume}>{performer.resume}</p>
         </div>
       </div>
@@ -156,6 +213,14 @@ function PerformerModal({ performer, onClose }) {
 
 export default function PerformancesPage() {
   const [activePerformer, setActivePerformer] = useState(null);
+
+  useEffect(() => {
+    document.body.classList.add("compact-site-footer");
+
+    return () => {
+      document.body.classList.remove("compact-site-footer");
+    };
+  }, []);
 
   return (
     <section
@@ -212,6 +277,11 @@ export default function PerformancesPage() {
                   <p className={styles.profession}>{performer.profession}</p>
                 </div>
               </button>
+              <SocialLinks
+                links={performer.socialLinks}
+                ownerName={performer.name}
+                className={styles.cardSocials}
+              />
             </article>
           ))}
         </div>

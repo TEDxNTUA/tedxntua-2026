@@ -80,8 +80,8 @@ export default function EventSidebar({ visible }) {
   if (!visible || !mounted) return null;
 
   return (
-    <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[100] flex flex-col items-end pointer-events-none group/nav">
-      <div className="flex flex-col gap-2 p-3 pointer-events-auto">
+    <div className="fixed bottom-3 left-1/2 z-[100] flex -translate-x-1/2 items-center pointer-events-none group/nav md:right-0 md:left-auto md:top-1/2 md:bottom-auto md:-translate-y-1/2 md:translate-x-0 md:flex-col md:items-end">
+      <div className="flex max-w-[calc(100vw-1rem)] flex-row gap-1.5 overflow-x-auto p-1 pointer-events-none md:max-w-none md:flex-col md:gap-2 md:overflow-visible md:p-3">
         {eventTabs.map((tab) => {
           const isActive = pathname === tab.path;
           
@@ -92,12 +92,13 @@ export default function EventSidebar({ visible }) {
                 href={tab.path}
                 className={`
                   peer group
-                  relative flex-shrink-0 w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center 
+                  pointer-events-auto
+                  relative flex-shrink-0 w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center
                   transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] 
-                  rounded-2xl border order-2
+                  rounded-xl md:rounded-2xl border order-2
                   ${isActive
-                    ? 'bg-emerald-500 border-emerald-400 shadow-[0_0_40_rgba(16,185,129,0.3)] scale-110 translate-x-[-6px] z-10'
-                    : 'bg-white/5 backdrop-blur-xl border-white/5 hover:border-emerald-500/40 hover:bg-white/10 hover:translate-x-[-3px] shadow-2xl'
+                    ? 'bg-emerald-500 border-emerald-400 shadow-[0_0_40_rgba(16,185,129,0.3)] scale-105 md:scale-110 md:translate-x-[-6px] z-10'
+                    : 'bg-white/5 backdrop-blur-xl border-white/5 hover:border-emerald-500/40 hover:bg-white/10 hover:-translate-y-0.5 md:hover:translate-x-[-3px] md:hover:translate-y-0 shadow-2xl'
                   }
                 `}
               >
@@ -108,7 +109,7 @@ export default function EventSidebar({ visible }) {
 
                 {/* Vector Icon */}
                 <div className={`
-                  relative w-5 h-5 lg:w-6 lg:h-6 transition-all duration-500
+                  relative w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 transition-all duration-500
                   ${isActive ? 'text-slate-950 scale-110' : 'text-emerald-50/60 group-hover:text-white group-hover:scale-110'}
                 `}>
                   {tab.icon}

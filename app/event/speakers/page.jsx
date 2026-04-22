@@ -6,6 +6,7 @@ import Image from "next/image";
 import localFont from "next/font/local";
 
 import speakers from "../LineUpInfo/SpeakersIT.json";
+import { SocialButton } from "../components/SocialButton";
 import { withBasePath } from "../../lib/basePath";
 import styles from "./page.module.css";
 
@@ -40,8 +41,63 @@ const selectedSpeakerNames = [
   "Dimitris Samolis",
 ];
 
+const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
+
+const socialFields = [
+  { field: "Instagram", platform: "instagram", label: "Instagram" },
+  { field: "Instagram2", platform: "instagram", label: "Instagram" },
+  { field: "Facebook", platform: "facebook", label: "Facebook" },
+  { field: "LinkedIn", platform: "linkedin", label: "LinkedIn" },
+  { field: "TikTok", platform: "tiktok", label: "TikTok" },
+  { field: "Youtube", platform: "youtube", label: "YouTube" },
+];
+
 const jointSpeaker = speakerLookup["Τhanos Ιoannidis - Chara Kontochristou"];
 const charaSpeaker = speakerLookup["Chara Kontochristou"];
+
+function getSocialLinks(...profiles) {
+  const seenUrls = new Set();
+
+  return profiles.flatMap((profile) =>
+    socialFields.flatMap(({ field, platform, label }) => {
+      const url = typeof profile?.[field] === "string" ? profile[field].trim() : "";
+
+      if (!url || seenUrls.has(url)) {
+        return [];
+      }
+
+      seenUrls.add(url);
+
+      return {
+        platform,
+        label,
+        url,
+      };
+    }),
+  );
+}
+
+function SocialLinks({ links = [], ownerName, className = "", size = "24px" }) {
+  if (!links.length) {
+    return null;
+  }
+
+  return (
+    <div className={`${styles.socials} ${className}`}>
+      {links.map((link) => (
+        <SocialButton
+          key={`${link.platform}-${link.url}`}
+          name={link.platform}
+          urlLink={link.url}
+          size={size}
+          mode="blackgreen"
+          hoverColor={SPEAKER_SOCIAL_HOVER_COLOR}
+          ariaLabel={`${link.label} for ${ownerName}`}
+        />
+      ))}
+    </div>
+  );
+}
 
 function buildSpeakerCard(name) {
   const speaker = speakerLookup[name];
@@ -57,6 +113,7 @@ function buildSpeakerCard(name) {
       profession: `${jointSpeaker.ProfessionEN} & ${charaSpeaker.ProfessionEN}`,
       photo: speakerPhotos[name],
       resume: `${jointSpeaker.BioEN}\n\n${charaSpeaker.BioEN}`,
+      socialLinks: getSocialLinks(jointSpeaker, charaSpeaker),
     };
   }
 
@@ -66,6 +123,7 @@ function buildSpeakerCard(name) {
     profession: speaker.ProfessionEN || "Speaker",
     photo: speakerPhotos[name],
     resume: speaker.BioEN || speaker.BioGR || "",
+    socialLinks: getSocialLinks(speaker),
   };
 }
 
@@ -171,6 +229,12 @@ function SpeakerModal({ speaker, onClose }) {
             {speaker.name}
           </h2>
           <p className={styles.modalValue}>{speaker.profession}</p>
+          <SocialLinks
+            links={speaker.socialLinks}
+            ownerName={speaker.name}
+            className={styles.modalSocials}
+            size="28px"
+          />
           <p className={styles.modalResume}>{speaker.resume}</p>
         </div>
       </div>
@@ -181,6 +245,14 @@ function SpeakerModal({ speaker, onClose }) {
 
 export default function SpeakersPage() {
   const [activeSpeaker, setActiveSpeaker] = useState(null);
+
+  useEffect(() => {
+    document.body.classList.add("compact-site-footer");
+
+    return () => {
+      document.body.classList.remove("compact-site-footer");
+    };
+  }, []);
 
   return (
     <section
@@ -245,6 +317,11 @@ export default function SpeakersPage() {
                   <p className={styles.profession}>{speaker.profession}</p>
                 </div>
               </button>
+              <SocialLinks
+                links={speaker.socialLinks}
+                ownerName={speaker.name}
+                className={styles.cardSocials}
+              />
             </article>
           ))}
         </div>

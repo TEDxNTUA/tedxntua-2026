@@ -1,5 +1,9 @@
 "use client";
 import { useState } from 'react';
+import { SocialButton } from './SocialButton';
+
+const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
+const PERFORMER_SOCIAL_HOVER_COLOR = "#239d54";
 
 export default function ProgramInfoBoxSimgular({ 
   time, 
@@ -9,7 +13,8 @@ export default function ProgramInfoBoxSimgular({
   profession, 
   itemColor, 
   description, 
-  itemCategory 
+  itemCategory,
+  socials,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -96,6 +101,15 @@ export default function ProgramInfoBoxSimgular({
                     {profession}
                   </p>
                 )}
+                <SocialConnection
+                  socials={socials}
+                  ownerName={name || artName}
+                  hoverColor={
+                    itemCategory === "performance"
+                      ? PERFORMER_SOCIAL_HOVER_COLOR
+                      : SPEAKER_SOCIAL_HOVER_COLOR
+                  }
+                />
               </div>
               
               <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-180 text-white' : 'text-white/30'}`}>
@@ -126,6 +140,40 @@ export default function ProgramInfoBoxSimgular({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function SocialConnection({ socials = {}, ownerName, hoverColor }) {
+  const entries = Object.entries(socials).filter(([, url]) => {
+    return typeof url === "string" && url.trim();
+  });
+
+  if (!entries.length) {
+    return null;
+  }
+
+  return (
+    <div
+      className="mt-3 flex flex-wrap items-center gap-3"
+      onClick={(event) => event.stopPropagation()}
+      onMouseDown={(event) => event.stopPropagation()}
+    >
+      {entries.map(([platformName, url]) => {
+        const platform = platformName.toLowerCase().replace(/\d+$/, "");
+
+        return (
+          <SocialButton
+            key={`${platformName}-${url}`}
+            name={platform}
+            urlLink={url}
+            size="23px"
+            mode="whitegreen"
+            hoverColor={hoverColor}
+            ariaLabel={`${platform} for ${ownerName}`}
+          />
+        );
+      })}
     </div>
   );
 }

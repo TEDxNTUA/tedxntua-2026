@@ -5,6 +5,8 @@ import { createPortal } from 'react-dom';
 
 import { SocialButton } from './SocialButton';
 
+const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
+const PERFORMER_SOCIAL_HOVER_COLOR = "#239d54";
 
 export default function Popup({ isOpen, onClose, infoBase, originRect }) {
   const [mounted, setMounted] = useState(false);
@@ -100,6 +102,14 @@ export default function Popup({ isOpen, onClose, infoBase, originRect }) {
   const handleClose = () => {
     setIsClosing(true);
   };
+
+  const socialHoverColor =
+    infoBase.itemCategory === "performance"
+      ? PERFORMER_SOCIAL_HOVER_COLOR
+      : infoBase.itemCategory === "speaker"
+        ? SPEAKER_SOCIAL_HOVER_COLOR
+        : undefined;
+
   return createPortal(
     <div
       className={`speaker-modal-backdrop fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 p-3 backdrop-blur-md sm:p-4 ${isClosing ? 'speaker-modal-backdrop-closing' : ''}`}
@@ -154,11 +164,21 @@ export default function Popup({ isOpen, onClose, infoBase, originRect }) {
               </p>
 
               <section className="mt-5 flex flex-wrap justify-start gap-4">
-                <SocialConnection socials={infoBase.socials} size="25px" mode="blackred" />
+                <SocialConnection
+                  socials={infoBase.socials}
+                  size="25px"
+                  mode="whitegreen"
+                  hoverColor={socialHoverColor}
+                />
               </section>
               {infoBase.personalDescription2 && (
                 <section className="mt-4 flex flex-wrap justify-start gap-4 border-t border-emerald-400/20 pt-4">
-                  <SocialConnection socials={infoBase.socials2} size="25px" mode="blackred" />
+                  <SocialConnection
+                    socials={infoBase.socials2}
+                    size="25px"
+                    mode="whitegreen"
+                    hoverColor={socialHoverColor}
+                  />
                 </section>
               )}
             </div>
@@ -210,7 +230,7 @@ export default function Popup({ isOpen, onClose, infoBase, originRect }) {
 }
 
 
-function SocialConnection({ socials = {}, size = "25px", mode = "greenyellow" }) {
+function SocialConnection({ socials = {}, size = "25px", mode = "greenyellow", hoverColor }) {
   // 1. Convert the Object into an Array of [name, value] pairs
   // We filter out any keys that don't have a value (string) assigned
   const entries = Object.entries(socials);
@@ -227,7 +247,8 @@ function SocialConnection({ socials = {}, size = "25px", mode = "greenyellow" })
             name={platformName}
             urlLink={url}
             size={size}
-            mode={mode} />
+            mode={mode}
+            hoverColor={hoverColor} />
           );
       })}
     </>);
