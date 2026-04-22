@@ -133,9 +133,9 @@ export default function SiteHeader() {
           {/* Right action button mirrors the left one by sliding to the opposite side when the nav opens. */}
           <div className={`flex items-center justify-end transition-all duration-500 ease-[cubic-bezier(0.8, 0.8, 0.5, 0.5)] ${rightActionClasses}`}>
             <ActionButton 
-              href="#" 
+              href="#"
               theme={theme}
-              icon="/ticket.png"
+              icon="/LOGO_ASSET.png"
               alt="Ticket"
             >
               {/* Removed 'hidden', adjusted tracking for mobile readability */}
@@ -200,7 +200,7 @@ function ActionButton({ href, theme, icon, alt, children }) {
       <img
         src={withBasePath(icon)}
         alt={alt}
-        className="relative h-10 w-auto rounded-full border border-white/12 bg-black/30 p-1.5 transition-transform duration-300 group-hover:scale-110 lg:h-12 xl:h-14"
+        className="relative bg-black h-10 w-auto rounded-full border border-white/12 bg-black/30 p-1.5 transition-transform duration-300 group-hover:scale-110 lg:h-12 xl:h-14"
       />
 
       {/* Text sits below the icon on compact layouts and snaps inline once the desktop layout starts. */}

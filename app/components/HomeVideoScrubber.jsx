@@ -5,7 +5,7 @@ import styles from "./HomeVideoScrubber.module.css";
 import { withBasePath } from "../lib/basePath";
 
 const storyBeats = [
-  "Identity is the code of our genesis.",
+  "09 - ",
   "Mastery emerges from the rhythm of repetition.",
   "We are bound by the cosmic loops of nature.",
   "Progress is an iterative pulse of evolution.",
