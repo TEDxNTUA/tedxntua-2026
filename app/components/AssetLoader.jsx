@@ -10,68 +10,13 @@ const copixelDisplay = localFont({
   display: "swap",
 });
 
-const READY_STATE_HAVE_CURRENT_DATA = 2;
-const MAX_LOADER_WAIT_MS = 15000;
 const MIN_LOAD_TIME = 2000; // Targeted 2 seconds
 const CACHE_SESSION_PREFIX = "tedx_assets_loaded_";
 
-const waitForImage = (img) =>
+const wait = (ms) =>
   new Promise((resolve) => {
-    if (img.complete && img.naturalHeight !== 0) {
-      resolve();
-      return;
-    }
-    let timeoutId;
-    const done = () => {
-      clearTimeout(timeoutId);
-      img.removeEventListener("load", done);
-      img.removeEventListener("error", done);
-      resolve();
-    };
-    timeoutId = setTimeout(done, 3000);
-    img.addEventListener("load", done, { once: true });
-    img.addEventListener("error", done, { once: true });
+    window.setTimeout(resolve, ms);
   });
-
-const waitForVideo = (video) =>
-  new Promise((resolve) => {
-    if (video.readyState >= READY_STATE_HAVE_CURRENT_DATA) {
-      resolve();
-      return;
-    }
-    let timeoutId;
-    const done = () => {
-      clearTimeout(timeoutId);
-      video.removeEventListener("loadeddata", done);
-      video.removeEventListener("error", done);
-      resolve();
-    };
-    timeoutId = setTimeout(done, 3000);
-    video.addEventListener("loadeddata", done, { once: true });
-    video.addEventListener("error", done, { once: true });
-  });
-
-const waitForStylesheets = async () => {
-  const styleSheets = Array.from(document.styleSheets);
-  for (const sheet of styleSheets) {
-    if (sheet.href && !sheet.cssRules) {
-      await new Promise((resolve) => {
-        const checkInterval = setInterval(() => {
-          try {
-            if (sheet.cssRules) {
-              clearInterval(checkInterval);
-              resolve();
-            }
-          } catch {}
-        }, 100);
-        setTimeout(() => {
-          clearInterval(checkInterval);
-          resolve();
-        }, 2000);
-      });
-    }
-  }
-};
 
 const getCacheKey = (pathname) => `${CACHE_SESSION_PREFIX}${pathname || "/"}`;
 const isAssetsAlreadyCached = (pathname) => {
@@ -188,19 +133,11 @@ export default function AssetLoader() {
           }
         }, 300);
 
-        // Scan the entire document to ensure header and footer assets are included in the wait.
-        const root = document.body;
-        const images = Array.from(root.querySelectorAll("img"));
-        const videos = Array.from(root.querySelectorAll("video")).filter((video) => video.preload !== "none");
-        const imagePromises = images.map(waitForImage);
-        const videoPromises = videos.map(waitForVideo);
-        const fontPromise = document.fonts?.ready ?? Promise.resolve();
-        const stylesheetPromise = waitForStylesheets();
-        const timeoutPromise = new Promise((resolve) => window.setTimeout(resolve, MAX_LOADER_WAIT_MS));
-        
+        // Do not wait for page videos here. The home scrubber video is large and
+        // should load progressively after the page becomes interactive.
         await Promise.race([
-          Promise.all([...imagePromises, ...videoPromises, fontPromise, stylesheetPromise]),
-          timeoutPromise,
+          document.fonts?.ready ?? Promise.resolve(),
+          wait(1200),
         ]);
         
         finalize();

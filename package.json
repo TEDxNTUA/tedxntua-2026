@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "build": "next build",
     "localserver": "NEXT_PUBLIC_BASE_PATH='' npm run build && npx serve@latest out",
     "start": "next start",

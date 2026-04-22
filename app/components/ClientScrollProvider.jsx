@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 import Lenis from "../lib/lenis.mjs";
 
 const LENIS_OPTIONS = {
@@ -11,54 +10,12 @@ const LENIS_OPTIONS = {
   wheelMultiplier: 0.95,
 };
 
-const CACHE_SESSION_PREFIX = "tedx_assets_loaded_";
-
-const getCacheKey = (pathname) => `${CACHE_SESSION_PREFIX}${pathname || "/"}`;
-
-const isPathCached = (pathname) => {
-  if (typeof window === "undefined") return false;
-  try {
-    return sessionStorage.getItem(getCacheKey(pathname)) === "true";
-  } catch {
-    return false;
-  }
-};
-
 const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export default function ClientScrollProvider({ children }) {
-  const pathname = usePathname() ?? "/";
-  const [readyPath, setReadyPath] = useState(null);
-  const [isCached, setIsCached] = useState(false);
-
-  const isReady = readyPath === pathname || isCached;
-
   useEffect(() => {
-    const cached = isPathCached(pathname);
-    setIsCached(cached);
-
-    // Wait for assets to be ready before initializing smooth scroll
-    const handleAssetsReady = (event) => {
-      const loadedPath = event?.detail?.pathname;
-      if (!loadedPath || loadedPath === pathname) {
-        setReadyPath(pathname);
-      }
-    };
-
-    if (cached) {
-      setReadyPath(pathname);
-    } else {
-      window.addEventListener("assets-ready", handleAssetsReady);
-    }
-
-    return () => {
-      window.removeEventListener("assets-ready", handleAssetsReady);
-    };
-  }, [pathname]);
-
-  useEffect(() => {
-    if (!isReady || prefersReducedMotion()) {
+    if (prefersReducedMotion()) {
       return undefined;
     }
 
@@ -78,7 +35,7 @@ export default function ClientScrollProvider({ children }) {
       }
       lenis.destroy();
     };
-  }, [isReady]);
+  }, []);
 
   return children;
 }
