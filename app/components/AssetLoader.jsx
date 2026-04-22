@@ -109,9 +109,16 @@ export default function AssetLoader() {
 
   useEffect(() => {
     // Check for cached state on mount/pathname change
-    // We still run the loader but we can speed it up even more if desired
     const cached = isAssetsAlreadyCached(pathname);
     setIsPathCached(cached);
+
+    if (cached) {
+      setReadyPath(pathname);
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      window.dispatchEvent(new CustomEvent("assets-ready", { detail: { pathname } }));
+      return undefined;
+    }
 
     const startTime = Date.now();
     setProgress(0);

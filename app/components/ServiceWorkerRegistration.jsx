@@ -1,22 +1,30 @@
 "use client";
 
 import { useEffect } from "react";
-import { withBasePath } from "../lib/basePath";
 
 export default function ServiceWorkerRegistration() {
   useEffect(() => {
-    if ("serviceWorker" in navigator && window.location.protocol === "https:" || window.location.hostname === "localhost") {
-      const swUrl = withBasePath("/service-worker.js");
-      
-      navigator.serviceWorker
-        .register(swUrl)
-        .then((registration) => {
-          console.log("Service Worker registered with scope:", registration.scope);
-        })
-        .catch((error) => {
-          console.error("Service Worker registration failed:", error);
-        });
-    }
+    const removeStaleServiceWorkers = async () => {
+      if ("caches" in window) {
+        const cacheNames = await caches.keys();
+        await Promise.all(
+          cacheNames
+            .filter((cacheName) => cacheName.startsWith("tedxntua"))
+            .map((cacheName) => caches.delete(cacheName)),
+        );
+      }
+
+      if (!("serviceWorker" in navigator)) {
+        return;
+      }
+
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registrations.map((registration) => registration.unregister()));
+    };
+
+    removeStaleServiceWorkers().catch((error) => {
+      console.error("Service Worker cleanup failed:", error);
+    });
   }, []);
 
   return null;
