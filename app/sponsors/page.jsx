@@ -289,6 +289,7 @@ export default function SponsorsPage() {
   const [windowScrollProgress, setWindowScrollProgress] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sectionMarkers, setSectionMarkers] = useState([]);
+  const [activeSection, setActiveSection] = useState(null);
   const touchStartY = useRef(null);
 
   useEffect(() => {
@@ -296,38 +297,59 @@ export default function SponsorsPage() {
     
     const calculateMarkers = () => {
       const sections = document.querySelectorAll(".sponsor-tier-section");
-      const totalHeight = document.body.scrollHeight - window.innerHeight;
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       if (totalHeight <= 0) return;
       
       const markers = Array.from(sections).map(section => {
         const rect = section.getBoundingClientRect();
         const absoluteTop = rect.top + window.scrollY;
         return {
-          percent: absoluteTop / totalHeight,
+          percent: Math.min(Math.max(absoluteTop / totalHeight, 0), 1),
           name: section.getAttribute("data-tier")
         };
       });
       setSectionMarkers(markers);
     };
 
-    // Small delay to ensure layout is settled
-    const timer = setTimeout(calculateMarkers, 500);
+    // Use IntersectionObserver for accurate active section tracking
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -70% 0px", // Trigger when section is in top part of viewport
+      threshold: 0
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.getAttribute("data-tier"));
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const sections = document.querySelectorAll(".sponsor-tier-section");
+    sections.forEach(section => observer.observe(section));
+
+    // Small delay to ensure layout is settled for marker calculation
+    const timer = setTimeout(calculateMarkers, 1000);
     window.addEventListener("resize", calculateMarkers);
+    
     return () => {
       clearTimeout(timer);
       window.removeEventListener("resize", calculateMarkers);
+      observer.disconnect();
     };
   }, [isUnlocked]);
 
   useEffect(() => {
     const handleScroll = () => {
       if (!isUnlocked) return;
-      const totalHeight = document.body.scrollHeight - window.innerHeight;
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       if (totalHeight <= 0) return;
       setWindowScrollProgress(window.scrollY / totalHeight);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isUnlocked]);
 
@@ -419,23 +441,36 @@ export default function SponsorsPage() {
     };
   }, [isUnlocked, updateProgress, reducedMotion]);
 
+  const scrollToSection = (index) => {
+    const sections = document.querySelectorAll(".sponsor-tier-section");
+    if (sections[index]) {
+      const offset = 160; // Offset for sticky header
+      const elementPosition = sections[index].getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: elementPosition - offset,
+        behavior: "smooth"
+      });
+    }
+  };
+
   return (
     <section className="relative min-h-screen bg-black text-white selection:bg-green-500/30 overflow-x-hidden">
       {/* Enhanced Scroll Progress Bar (Vertical Right) */}
       <div className={`fixed right-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-50 transition-all duration-700 ${isUnlocked ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
-        <div className="relative w-[3px] h-64 bg-white/5 rounded-full overflow-visible">
+        <div className="relative w-[3px] h-72 bg-white/5 rounded-full overflow-visible">
           {/* Background Track Glow */}
           <div className="absolute inset-0 bg-green-500/5 blur-[2px] rounded-full" />
           
           {/* Fill */}
           <div 
-            className="absolute top-0 w-full bg-gradient-to-b from-green-400 via-green-500 to-emerald-600 rounded-full transition-all duration-300 ease-out shadow-[0_0_15px_rgba(34,197,94,0.4)]"
+            className="absolute top-0 w-full bg-gradient-to-b from-green-400 via-green-500 to-emerald-600 rounded-full transition-all duration-500 ease-out shadow-[0_0_15px_rgba(34,197,94,0.4)]"
             style={{ height: `${windowScrollProgress * 100}%` }}
           />
 
           {/* Section Markers (Bullets) */}
           {sectionMarkers.map((marker, i) => {
-            const isActive = windowScrollProgress >= marker.percent - 0.01;
+            const isCurrent = activeSection === marker.name;
+            const isPassed = windowScrollProgress >= marker.percent - 0.01;
             const tierColor = TIER_COLORS[marker.name] || { main: "#ffffff", glow: "rgba(255,255,255,0.5)" };
 
             return (
@@ -443,28 +478,25 @@ export default function SponsorsPage() {
                 key={i}
                 className="absolute left-1/2 -translate-x-1/2 group cursor-pointer"
                 style={{ top: `${marker.percent * 100}%` }}
-                onClick={() => {
-                  const sections = document.querySelectorAll(".sponsor-tier-section");
-                  sections[i]?.scrollIntoView({ behavior: "smooth" });
-                }}
+                onClick={() => scrollToSection(i)}
               >
                 {/* Bullet */}
                 <div 
                   className={`
-                    w-2.5 h-2.5 rounded-full border-2 transition-all duration-500 cursor-help
-                    ${isActive ? "scale-125" : "bg-zinc-900 border-white/20 hover:border-white/50"}
+                    w-3 h-3 rounded-full border-2 transition-all duration-500
+                    ${isCurrent ? "scale-150" : isPassed ? "scale-100" : "scale-75 bg-zinc-900 border-white/20 group-hover:border-white/50 group-hover:scale-100"}
                   `} 
-                  style={isActive ? {
+                  style={isCurrent || isPassed ? {
                     backgroundColor: tierColor.main,
                     borderColor: tierColor.main,
-                    boxShadow: `0 0 12px ${tierColor.glow}`
+                    boxShadow: isCurrent ? `0 0 15px ${tierColor.glow}` : "none"
                   } : {}}
                 />
                 
                 {/* Label */}
                 <div 
-                  className={`absolute right-full mr-4 top-1/2 -translate-y-1/2 px-2 py-1 rounded bg-black/80 border border-white/10 text-[10px] font-bold whitespace-nowrap transition-opacity pointer-events-none backdrop-blur-sm ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
-                  style={{ color: tierColor.main }}
+                  className={`absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-lg bg-black/90 border border-white/10 text-[10px] font-black tracking-widest uppercase whitespace-nowrap transition-all duration-300 pointer-events-none backdrop-blur-md ${isCurrent ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`}
+                  style={{ color: tierColor.main, boxShadow: isCurrent ? `0 0 20px ${tierColor.glow}22` : "none" }}
                 >
                   {marker.name}
                 </div>
