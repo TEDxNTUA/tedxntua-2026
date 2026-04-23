@@ -67,7 +67,7 @@ export default function MemberPhoto({ member, containerClassName = "", container
   social.instagram || social.linkedin || social.twitter || social.facebook || social.website));
 
   const handleImageClick = (e) => {
-    // Only toggle on mobile (touch devices)
+    // Toggle state on mobile (touch devices)
     if (window.matchMedia("(hover: none)").matches) {
       e.preventDefault();
       setShowSocial(!showSocial);
@@ -86,7 +86,7 @@ export default function MemberPhoto({ member, containerClassName = "", container
       
       {/* Zoom wrapper — separate from SmoothImage so opacity & transform transitions don't conflict */}
       <div 
-        className="w-full h-full transition-transform duration-500 ease-out group-hover:scale-110 cursor-pointer relative"
+        className={`w-full h-full transition-transform duration-500 ease-out cursor-pointer relative ${showSocial ? 'scale-110' : 'group-hover:scale-110'}`}
         onClick={handleImageClick}>
         
         {/* Main Photo */}
@@ -94,7 +94,7 @@ export default function MemberPhoto({ member, containerClassName = "", container
           src={mainPhoto}
           alt={member.name}
           loading="eager"
-          className={`w-full h-full object-cover transition-opacity duration-700 ${hasHoverPhoto ? 'group-hover:opacity-0' : ''}`}
+          className={`w-full h-full object-cover transition-opacity duration-700 ${hasHoverPhoto ? 'group-hover:opacity-0' : ''} ${showSocial && hasHoverPhoto ? 'opacity-0' : ''}`}
           style={{ objectPosition: "50% 12%" }} />
         
         {/* Hover Photo */}
@@ -103,7 +103,7 @@ export default function MemberPhoto({ member, containerClassName = "", container
             src={hoverPhoto}
             alt={member.name}
             loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+            className={`absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700 ${showSocial ? 'opacity-100' : 'group-hover:opacity-100'}`}
             style={{ objectPosition: "50% 12%" }} />
         )}
       </div>
