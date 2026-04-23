@@ -87,9 +87,9 @@ export const teams = [
     title: "Design",
     description: "Visual identity, stage visuals and branding.",
     heroImages: [
-      assetPath("/MTT/design_mtt/argyro/mtt-172.jpg"),
-      assetPath("/MTT/design_mtt/evilia/mtt-182.jpg"),
-      assetPath("/MTT/design_mtt/kostas_p/mtt-289.jpg")
+      assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Αργυρώ/mtt-180.jpg"),
+      assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Ευηλία_/mtt-194.jpg"),
+      assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Κώστας_/mtt-289.jpg")
     ],
     members: [
       {
@@ -97,7 +97,7 @@ export const teams = [
         name: "Αργυρώ Κλενιάτη",
         photos: [
           assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Αργυρώ/mtt-180.jpg"),
-          assetPath("/MTT/design_mtt/argyro/mtt-171.jpg")
+          assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Αργυρώ/mtt-177.jpg")
         ],
         social: {
           instagram: "https://www.instagram.com/sylviaklen6",
@@ -106,7 +106,10 @@ export const teams = [
       {
         id: "evilia",
         name: "Ευηλία Χατζηπαρασκευαΐδου",
-        photo: assetPath("/MTT/design_mtt/evilia/mtt-181.jpg"),
+        photos: [
+          assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Ευηλία_/mtt-194.jpg"),
+          assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Ευηλία_/mtt-189.jpg")
+        ],
         social: {
           instagram: "https://www.instagram.com/ev3sun_",
         }
@@ -114,7 +117,10 @@ export const teams = [
       {
         id: "kostas-p",
         name: "Κωνσταντίνος Παριάρος",
-        photo: assetPath("/MTT/design_mtt/kostas_p/mtt-288.jpg"),
+        photos: [
+          assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Κώστας_/mtt-289.jpg"),
+          assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Κώστας_/mtt-50.jpg")
+        ],
         social: {
           instagram: "https://www.instagram.com/_kostaspar_",
         }
@@ -122,7 +128,10 @@ export const teams = [
       {
         id: "maria",
         name: "Μαρία Καραλή",
-        photo: assetPath("/MTT/design_mtt/maria/mtt-157.jpg"),
+        photos: [
+          assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Μαρία/mtt-158.jpg"),
+          assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Μαρία/mtt-169.jpg")
+        ],
         social: {
           instagram: "https://www.instagram.com/karalixo",
         }
