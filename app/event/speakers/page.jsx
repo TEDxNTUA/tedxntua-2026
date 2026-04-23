@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import localFont from "next/font/local";
 
-import speakers from "../LineUpInfo/SpeakersIT.json";
+import { allSpeakers } from "../infoDatabase";
 import { SocialButton } from "../components/SocialButton";
 import { capitalizeSegments, formatUppercaseNoAccents } from "../textFormatters";
 import { withBasePath } from "../../lib/basePath";
@@ -16,45 +16,17 @@ const copixelDisplay = localFont({
   display: "swap",
 });
 
-const speakerPhotos = {
-  "Eleni Kavvada": "/eventimages/speakers/photo_KAVVADA.png",
-  "Τhanos Ιoannidis - Chara Kontochristou": "/eventimages/speakers/photo_Thanos&Chara.png",
-  "Yannis Daglis": "/eventimages/speakers/photo_Daglis.png",
-  "Dimitris Barmpas": "/eventimages/speakers/photo_Mr Music.png",
-  "Elena Papadimitriou": "/eventimages/speakers/photo_Papadimitriou.png",
-  "Stergios Vakalis": "/eventimages/speakers/photo_VAKALIS.png",
-  "Nora Drakou": "/eventimages/speakers/photo_Drakou.png",
-  "Dimitris Samolis": "/eventimages/speakers/photo_Samolhs.png",
-};
-
-const speakerLookup = Object.fromEntries(
-  speakers.map((speaker) => [speaker.NameEN, speaker]),
-);
-
-const selectedSpeakerNames = [
-  "Eleni Kavvada",
-  "Τhanos Ιoannidis - Chara Kontochristou",
-  "Yannis Daglis",
-  "Dimitris Barmpas",
-  "Elena Papadimitriou",
-  "Stergios Vakalis",
-  "Nora Drakou",
-  "Dimitris Samolis",
-];
-
+const EMPTY_BASE_PATH = withBasePath("");
 const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
 
 const socialFields = [
-  { field: "Instagram", platform: "instagram", label: "Instagram" },
-  { field: "Instagram2", platform: "instagram", label: "Instagram" },
-  { field: "Facebook", platform: "facebook", label: "Facebook" },
-  { field: "LinkedIn", platform: "linkedin", label: "LinkedIn" },
-  { field: "TikTok", platform: "tiktok", label: "TikTok" },
-  { field: "Youtube", platform: "youtube", label: "YouTube" },
+  { field: "instagram", platform: "instagram", label: "Instagram" },
+  { field: "instagram2", platform: "instagram", label: "Instagram" },
+  { field: "facebook", platform: "facebook", label: "Facebook" },
+  { field: "linkedin", platform: "linkedin", label: "LinkedIn" },
+  { field: "tiktok", platform: "tiktok", label: "TikTok" },
+  { field: "youtube", platform: "youtube", label: "YouTube" },
 ];
-
-const jointSpeaker = speakerLookup["Τhanos Ιoannidis - Chara Kontochristou"];
-const charaSpeaker = speakerLookup["Chara Kontochristou"];
 
 function getSocialLinks(...profiles) {
   const seenUrls = new Set();
@@ -101,7 +73,7 @@ function SocialLinks({ links = [], ownerName, className = "", size = "24px" }) {
 }
 
 function BioSections({ bios = [] }) {
-  const visibleBios = bios.filter((bio) => bio.text);
+  const visibleBios = bios.filter((bio) => bio.text && bio.text !== "-");
 
   if (!visibleBios.length) {
     return null;
@@ -120,52 +92,54 @@ function BioSections({ bios = [] }) {
 }
 
 function DescriptionSection({ description }) {
-  if (!description) {
+  if (!description || description === "-") {
     return null;
   }
 
   return (
     <section className={styles.modalDescription}>
-      <h3 className={styles.modalDescriptionName}>{formatUppercaseNoAccents("Περιγραφή ομιλίας")}</h3>
+      <h3 className={styles.modalDescriptionName}>
+        {formatUppercaseNoAccents("Περιγραφή ομιλίας")}
+      </h3>
       <p className={styles.modalResume}>{description}</p>
     </section>
   );
 }
 
-function buildSpeakerCard(name) {
-  const speaker = speakerLookup[name];
-
-  if (!speaker || !speakerPhotos[name]) {
+function resolvePhoto(posterImageUrl) {
+  if (!posterImageUrl || posterImageUrl === EMPTY_BASE_PATH) {
     return null;
   }
 
-  if (name === "Τhanos Ιoannidis - Chara Kontochristou") {
-    return {
-      id: "thanos-chara",
-      name: "Thanos Ioannidis & Chara Kontochristou",
-      profession: capitalizeSegments(`${jointSpeaker.ProfessionEN} & ${charaSpeaker.ProfessionEN}`),
-      photo: speakerPhotos[name],
-      description: jointSpeaker.DescriptionGR || charaSpeaker.DescriptionGR || "",
-      bios: [
-        { name: jointSpeaker.NameGR || jointSpeaker.NameEN, text: jointSpeaker.BioGR || "" },
-        { name: charaSpeaker.NameGR || charaSpeaker.NameEN, text: charaSpeaker.BioGR || "" },
-      ],
-      socialLinks: getSocialLinks(jointSpeaker, charaSpeaker),
-    };
+  return posterImageUrl;
+}
+
+function buildSpeakerCard(speaker, index) {
+  if (!speaker?.name) {
+    return null;
   }
 
+  const names = [speaker.name, speaker.name2].filter(Boolean);
+  const professions = [speaker.profession, speaker.profession2]
+    .filter(Boolean)
+    .map((profession) => capitalizeSegments(profession));
+  const bios = [
+    { name: speaker.name, text: speaker.personalDescription || "" },
+    { name: speaker.name2, text: speaker.personalDescription2 || "" },
+  ].filter((bio) => bio.name);
+
   return {
-    id: name,
-    name: speaker.NameEN,
-    profession: capitalizeSegments(speaker.ProfessionEN || "Speaker"),
-    photo: speakerPhotos[name],
-    description: speaker.DescriptionGR || "",
-    bios: [{ name: speaker.NameGR || speaker.NameEN, text: speaker.BioGR || "" }],
-    socialLinks: getSocialLinks(speaker),
+    id: `${names.join("-")}-${index}`,
+    name: names.join(" & "),
+    profession: professions.join(" & ") || "Speaker",
+    photo: resolvePhoto(speaker.posterImageUrl),
+    description: speaker.description || "",
+    bios,
+    socialLinks: getSocialLinks(speaker.socials, speaker.socials2),
   };
 }
 
-const speakerCards = selectedSpeakerNames.map(buildSpeakerCard).filter(Boolean);
+const speakerCards = allSpeakers.map(buildSpeakerCard).filter(Boolean);
 
 function SpeakerModal({ speaker, onClose }) {
   const [mounted, setMounted] = useState(false);
@@ -235,13 +209,21 @@ function SpeakerModal({ speaker, onClose }) {
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className={styles.modalStage}>
-          {/* Close button for mobile and desktop */}
           <button
             onClick={onClose}
             className="absolute right-4 top-4 z-[110] flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/50 text-white/70 backdrop-blur-md transition-all hover:bg-white/10 hover:text-white sm:right-6 sm:top-6"
             aria-label="Close details"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
@@ -258,18 +240,20 @@ function SpeakerModal({ speaker, onClose }) {
               className={styles.modalCircle}
               sizes="(min-width: 960px) 32rem, 80vw"
             />
-            <div className={styles.modalPhotoMask}>
-              <div className={styles.modalPhotoFrame}>
-                <Image
-                  src={withBasePath(speaker.photo)}
-                  alt={speaker.name}
-                  fill
-                  priority
-                  className={styles.modalPhoto}
-                  sizes="(min-width: 960px) 34vw, 92vw"
-                />
+            {speaker.photo ? (
+              <div className={styles.modalPhotoMask}>
+                <div className={styles.modalPhotoFrame}>
+                  <Image
+                    src={speaker.photo}
+                    alt={speaker.name}
+                    fill
+                    priority
+                    className={styles.modalPhoto}
+                    sizes="(min-width: 960px) 34vw, 92vw"
+                  />
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
 
@@ -306,10 +290,7 @@ export default function SpeakersPage() {
   }, []);
 
   return (
-    <section
-      className={styles.page}
-      data-modal-open={activeSpeaker ? "true" : "false"}
-    >
+    <section className={styles.page} data-modal-open={activeSpeaker ? "true" : "false"}>
       <div className={styles.backdrop} aria-hidden="true">
         <Image
           src={withBasePath("/gradient.png")}
@@ -349,18 +330,20 @@ export default function SpeakersPage() {
                     className={styles.circle}
                     sizes="(min-width: 1200px) 18vw, (min-width: 768px) 26vw, 72vw"
                   />
-                  <div className={styles.photoMask}>
-                    <div className={styles.photoFrame}>
-                      <Image
-                        src={withBasePath(speaker.photo)}
-                        alt={speaker.name}
-                        fill
-                        priority
-                        className={styles.photo}
-                        sizes="(min-width: 1200px) 14vw, (min-width: 768px) 20vw, 54vw"
-                      />
+                  {speaker.photo ? (
+                    <div className={styles.photoMask}>
+                      <div className={styles.photoFrame}>
+                        <Image
+                          src={speaker.photo}
+                          alt={speaker.name}
+                          fill
+                          priority
+                          className={styles.photo}
+                          sizes="(min-width: 1200px) 14vw, (min-width: 768px) 20vw, 54vw"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  ) : null}
                 </div>
 
                 <div className={styles.caption}>

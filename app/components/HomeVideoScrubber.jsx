@@ -85,6 +85,52 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     };
   }, [getStableViewportHeight]);
 
+  const syncVideoToScroll = useCallback(() => {
+    frameIdRef.current = 0;
+
+    const section = sectionRef.current;
+    const video = videoRef.current;
+
+    if (!section || !video || !Number.isFinite(video.duration) || video.duration <= 0) {
+      return;
+    }
+
+    const { top, height, windowHeight } = layoutCache.current;
+    const usableDistance = Math.max(height - windowHeight, 1);
+    const scrollY = targetScrollRef.current || window.scrollY;
+    const relativeScroll = scrollY - top;
+    const progress = clamp(relativeScroll / usableDistance, 0, 1);
+
+    let nextPinState = "pinned";
+    if (relativeScroll <= 0) {
+      nextPinState = "before";
+    } else if (relativeScroll >= usableDistance) {
+      nextPinState = "after";
+    }
+
+    if (pinStateRef.current !== nextPinState) {
+      pinStateRef.current = nextPinState;
+      setPinState(nextPinState);
+    }
+
+    const targetTime = progress * video.duration;
+    const smoothing = getSmoothing();
+    const smoothedTime =
+      currentVideoTimeRef.current + (targetTime - currentVideoTimeRef.current) * smoothing;
+    const nextTime =
+      Math.abs(targetTime - smoothedTime) < 0.01 ? targetTime : smoothedTime;
+
+    currentVideoTimeRef.current = clamp(nextTime, 0, video.duration);
+
+    if (Math.abs(video.currentTime - currentVideoTimeRef.current) > 0.001) {
+      video.currentTime = currentVideoTimeRef.current;
+    }
+
+    if (Math.abs(targetTime - currentVideoTimeRef.current) > 0.001) {
+      frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
+    }
+  }, []);
+
   const requestSync = useCallback(() => {
     if (!frameIdRef.current) {
       frameIdRef.current = requestAnimationFrame(syncVideoToScroll);

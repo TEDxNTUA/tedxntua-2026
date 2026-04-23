@@ -166,11 +166,15 @@
 
 .card {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .cardButton {
   display: flex;
   width: 100%;
+  min-height: 100%;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   padding: 0.2rem 0.2rem 0.35rem;
@@ -629,7 +633,8 @@
 
 @media (max-width: 560px) {
   .speakerRow {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, min(100%, 24rem));
+    justify-content: center;
   }
 
   .hero {
@@ -637,21 +642,24 @@
   }
 
   .card {
-    max-width: 24rem;
-    margin-inline: auto;
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
   }
 
   .cardButton {
+    width: 100%;
     padding-bottom: 0.55rem;
   }
 
   .stage {
-    width: min(100%, 21rem);
+    width: 100%;
+    max-width: 21rem;
     margin-inline: auto;
   }
 
   .caption {
-    min-height: auto;
+    min-height: 4.95rem;
     margin-top: 0;
   }
 
@@ -660,12 +668,12 @@
   }
 
   .name {
-    min-height: auto;
+    min-height: 2.15em;
     font-size: clamp(1.05rem, 5vw, 1.3rem);
   }
 
   .profession {
-    min-height: auto;
+    min-height: 2.65em;
     max-width: 88%;
     margin-top: 0.18rem;
     font-size: clamp(0.8rem, 3.6vw, 0.94rem);

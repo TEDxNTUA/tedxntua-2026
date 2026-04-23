@@ -37,150 +37,161 @@ export const myEventInfo = {
 
 // Speakers
 export const allSpeakers = applyPosterBasePath([
+  // Speakers[0] = Eleni Kavvada
   {
     time: "11:50 - 12:10",
     itemCategory: "speaker",
-    name: Speakers[0].NameGR,
+    name: Speakers[0].NameEN,
     profession: Speakers[0].ProfessionGR,
     theme: Speakers[0].Theme,
     title: "Fashion as identity",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[0].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "/eventimages/speakers/photo_KAVVADA.png",
     personalDescription: Speakers[0].BioGR,
     socials: getSocials(Speakers, 0)
   },
+  // Speakers[2] = Thanos Ioannidis, Speakers[1] = Chara Kontochristou
   {
     time: "14:00 - 14:20",
     itemCategory: "speaker",
-    name: Speakers[2].NameGR,
-    name2: Speakers[1].NameGR,
+    name: Speakers[2].NameEN,
+    name2: Speakers[1].NameEN,
     profession: Speakers[2].ProfessionGR,
     profession2: Speakers[1].ProfessionGR,
     theme: Speakers[1].Theme,
     title: "Crafting Architecture Stories",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[1].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "/eventimages/speakers/photo_Thanos&Chara.png",
     personalDescription: Speakers[2].BioGR,
     personalDescription2: Speakers[1].BioGR,
     socials: getSocials(Speakers, 2),
     socials2: getSocials(Speakers, 1)
   },
+  // Speakers[3] = Yannis Daglis
   {
     time: "18:40 - 19:00",
     itemCategory: "speaker",
-    name: Speakers[3].NameGR,
-    profession: Speakers[3].ProfessionGR,
+    name: Speakers[3].NameEN,
+    profession: Speakers[3].ProfessionEN,
     theme: Speakers[3].Theme,
     title: "Why i gave my hair to a dwarf",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[3].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "/eventimages/speakers/photo_Daglis.png",
     personalDescription: Speakers[3].BioGR,
     socials: getSocials(Speakers, 3)
   },
+  // Speakers[4] = Dimitris Barmpas
   {
     time: "14:40 - 15:00",
     itemCategory: "speaker",
-    name: Speakers[4].NameGR,
+    name: Speakers[4].NameEN,
     profession: Speakers[4].ProfessionGR,
     theme: Speakers[4].Theme,
     title: "The importance of second breakfast",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[4].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "/eventimages/speakers/photo_Mr Music.png",
     personalDescription: Speakers[4].BioGR,
     socials: getSocials(Speakers, 4)
   },
+  // Speakers[5] = Elena Papadimitriou
   {
     time: "16:30 - 16:50",
     itemCategory: "speaker",
-    name: Speakers[5].NameGR,
+    name: Speakers[5].NameEN,
     profession: Speakers[5].ProfessionGR,
     theme: Speakers[5].Theme,
     title: "The importance of second breakfast",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[5].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "/eventimages/speakers/photo_Papadimitriou.png",
     personalDescription: Speakers[5].BioGR,
     socials: getSocials(Speakers, 5)
   },
+  // Speakers[6] = Stergios Vakalis
   {
     time: "14:20 - 14:40",
     itemCategory: "speaker",
-    name: Speakers[6].NameGR,
+    name: Speakers[6].NameEN,
     profession: Speakers[6].ProfessionGR,
     theme: Speakers[6].Theme,
     title: "The importance of second breakfast",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[6].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "/eventimages/speakers/photo_VAKALIS.png",
     personalDescription: Speakers[6].BioGR,
     socials: getSocials(Speakers, 6)
   },
+  // Speakers[7] = Nassos Katsamanis
   {
     time: "12:10 - 12:30",
     itemCategory: "speaker",
-    name: Speakers[7].NameGR,
+    name: Speakers[7].NameEN,
     profession: Speakers[7].ProfessionGR,
     theme: Speakers[7].Theme,
     title: "The importance of second breakfast",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[7].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     personalDescription: Speakers[7].BioGR,
     socials: getSocials(Speakers, 7)
   },
+  // Speakers[8] = Nora Drakou
   {
     time: "19:00 - 19:20",
     itemCategory: "speaker",
-    name: Speakers[8].NameGR,
+    name: Speakers[8].NameEN,
     profession: Speakers[8].ProfessionGR,
     theme: Speakers[8].Theme,
     title: "The importance of second breakfast",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[8].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "/eventimages/speakers/photo_Drakou.png",
     personalDescription: Speakers[8].BioGR,
     socials: getSocials(Speakers, 8)
   },
+  // Speakers[9] = Dimitris Samolis
   {
     time: "16:50 - 17:10",
     itemCategory: "speaker",
-    name: Speakers[9].NameGR,
+    name: Speakers[9].NameEN,
     profession: Speakers[9].ProfessionGR,
     theme: Speakers[9].Theme,
     title: "The importance of second breakfast",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[9].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "/eventimages/speakers/photo_Samolhs.png",
     personalDescription: Speakers[9].BioGR,
     socials: getSocials(Speakers, 9)
   },
+  // Speakers[10] = Chrysa Michalopoulou
   {
     time: "",
     itemCategory: "",
-    name: Speakers[10].NameGR,
+    name: Speakers[10].NameEN,
     profession: Speakers[10].ProfessionGR,
     theme: Speakers[10].Theme,
     title: "The importance of second breakfast",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[10].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     personalDescription: Speakers[10].BioGR,
     socials: getSocials(Speakers, 10)
   },
+  // Speakers[11] = Manos
   {
     time: "",
     itemCategory: "",
-    name: Speakers[11].NameGR,
+    name: Speakers[11].NameEN,
     profession: Speakers[11].ProfessionGR,
     theme: Speakers[11].Theme,
     title: "The importance of second breakfast",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[11].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     personalDescription: Speakers[11].BioGR,
     socials: getSocials(Speakers, 11)
   },
@@ -188,39 +199,42 @@ export const allSpeakers = applyPosterBasePath([
 
 // Experience workshops
 export const allExpWorkshops = applyPosterBasePath([
+  // ExpWorkshops[0] = Alexandros Galans, Dimitris Galanis, Vaggelis Dimopoulos
   {
     time: "11:00 - 11:00",
-    name: ExpWorkshops[0].NameGR,
+    name: ExpWorkshops[0].NameEN,
     room: "Room 1",
     profession: ExpWorkshops[0].ProfessionGR,
-    title: ExpWorkshops[0].ArtNameGR,
+    title: ExpWorkshops[0].ArtName,
     itemColor: "rgba(45, 35, 18, 0.9)",
     description: ExpWorkshops[0].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     personalDescription: ExpWorkshops[0].BioGR,
     socials: getSocials(ExpWorkshops, 0)
   },
+  // ExpWorkshops[1] = Ifigenia Pappa
   {
     time: "11:00 - 12:00",
-    name: ExpWorkshops[1].NameGR,
+    name: ExpWorkshops[1].NameEN,
     room: "Room 2",
     profession: ExpWorkshops[1].ProfessionGR,
-    title: ExpWorkshops[1].ArtNameGR,
+    title: ExpWorkshops[1].ArtName,
     itemColor: "rgba(20, 20, 20, 0.92)",
     description: ExpWorkshops[1].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     personalDescription: ExpWorkshops[1].BioGR,
     socials: getSocials(ExpWorkshops, 1)
   },
+  // ExpWorkshops[2] = Theodora Koutsogaki
   {
     time: "13:00 - 14:00",
-    name: ExpWorkshops[2].NameGR,
+    name: ExpWorkshops[2].NameEN,
     room: "Room 1",
     profession: ExpWorkshops[2].ProfessionGR,
-    title: ExpWorkshops[2].ArtNameGR,
+    title: ExpWorkshops[2].ArtName,
     itemColor: "rgba(45, 12, 15, 0.9)",
     description: ExpWorkshops[2].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     personalDescription: ExpWorkshops[2].BioGR,
     socials: getSocials(ExpWorkshops, 2)
   },
@@ -228,6 +242,7 @@ export const allExpWorkshops = applyPosterBasePath([
 
 // Placeholder entries are kept here for sections that do not yet come from JSON.
 export const allProfWorkshops = applyPosterBasePath([
+  // ProfWorkshops[0] = The American College of Greece - Deree
   {
     time: WORKSHOP_TIME_1,
     room: "Room 1",
@@ -236,9 +251,10 @@ export const allProfWorkshops = applyPosterBasePath([
     description: ProfWorkshops[0].DescriptionGR,
     personal: ProfWorkshops[0].BioGR,
     itemColor: "rgba(25, 35, 12, 0.92)",
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     socials: getSocials(ProfWorkshops, 0)
   },
+  // ProfWorkshops[1] = Dialectica
   {
     time: WORKSHOP_TIME_2,
     room: "Room 1",
@@ -247,9 +263,10 @@ export const allProfWorkshops = applyPosterBasePath([
     description: ProfWorkshops[1].DescriptionGR,
     personal: ProfWorkshops[1].BioGR,
     itemColor: "rgba(25, 35, 12, 0.92)",
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     socials: getSocials(ProfWorkshops, 1)
   },
+  // ProfWorkshops[2] = Oliver Wyman
   {
     time: WORKSHOP_TIME_3,
     room: "Room 1",
@@ -258,9 +275,10 @@ export const allProfWorkshops = applyPosterBasePath([
     description: ProfWorkshops[2].DescriptionGR,
     personal: ProfWorkshops[2].BioGR,
     itemColor: "rgba(25, 35, 12, 0.92)",
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     socials: getSocials(ProfWorkshops, 2)
   },
+  // ProfWorkshops[3] = Alpha Bank
   {
     time: WORKSHOP_TIME_3,
     room: "Room 1",
@@ -269,118 +287,105 @@ export const allProfWorkshops = applyPosterBasePath([
     description: ProfWorkshops[3].DescriptionGR,
     personal: ProfWorkshops[3].BioGR,
     itemColor: "rgba(25, 35, 12, 0.92)",
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     socials: getSocials(ProfWorkshops, 3)
   }
 ]);
 
 export const allSideHappenings = applyPosterBasePath([
   {
-    time: "13:00 - 14:00",
-    name: "Bilbo Bagins",
-    profession: "talker",
-    title: "Mountains Gandals",
+    name: "Stelios Vrakas",
+    artName: "stelios pupet",
+    profession: "",
+    title: "",
     itemColor: "rgba(45, 12, 15, 0.9)",
-    description: "The story of a mighty burgler who happend to acquire a cerain ring",
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
-    personalDescription: "Hello there",
+    description: "",
+    posterImageUrl: "",
+    personalDescription: "",
     socials: {
-      youtube:
-        "https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS",
-    },
+      instagram:
+        "https://www.instagram.com/stelios_pupet?igsh=czJhNXA4and6NGxq"
+      },
   },
   {
-    time: "14:00 - 15:00",
-    name: "Galadriel of LothlΓ³rien",
-    profession: "talker",
-    title: "Why i gave my hair to a dwarf",
+    name: "Stathis Giannakopoulos",
+    artName: "Stathis Giannakopoulos",
+    profession: "",
+    title: "Video Loops",
     itemColor: "rgba(15, 25, 45, 0.9)",
-    description: "He was a really kind dwarf",
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
-    personalDescription: "Hello there",
+    description: "οπτικοακουστικό installation με ταινιες μικρου μηκους σε λουπα",
+    posterImageUrl: "",
+    personalDescription: "",
     socials: {
-      youtube:
-        "https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS",
-      instagram: "https://www.instagram.com/tedxntua/",
+      
     },
-  },
-  {
-    time: "16:00 - 17:00",
-    name: "Pepegrin Took",
-    profession: "talker",
-    name2: "Meriadoc Brundyback",
-    profession2: "talker",
-    title: "The importance of second breakfast",
-    itemColor: "rgba(15, 45, 25, 0.9)",
-    description: "Its just mandatory",
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
-    personalDescription: "Hello there",
-    socials: {
-      youtube:
-        "https://youtube.com/playlist?list=PLd7-PjFC85gz9xYWxVVqTddWLg75c8jZU&si=hBMWFunVtHqfXeWS",
-    },
-  },
+  }
 ]);
 
 // Performances
 export const allPerformances = applyPosterBasePath([
+  // Performances[0] = Marios Psarianos
   {
     time: "13:45 - 14:00",
-    name: Performances[0].NameGR,
+    name: Performances[0].NameEN,
     itemCategory: "performance",
     profession: Performances[0].ProfessionGR,
     artName: Performances[0].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[0].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "/eventimages/performancers/photo_Psarianos.png",
     personalDescription: Performances[0].BioGR,
     socials: getSocials(Performances, 0)
   },
+  // Performances[1] = Stratos Fygetakis
   {
     time: "17:10 - 17:25",
-    name: Performances[1].NameGR,
+    name: Performances[1].NameEN,
     itemCategory: "performance",
     profession: Performances[1].ProfessionGR,
     artName: Performances[1].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[1].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "/eventimages/performancers/photo_Fygetakis.png",
     personalDescription: Performances[1].BioGR,
     socials: getSocials(Performances, 1)
   },
+  // Performances[2] = Konstantina Koutra / KONIKOU
   {
     time: "19:20 - 19:35",
-    name: Performances[2].NameGR,
+    name: Performances[2].NameEN,
     itemCategory: "performance",
     profession: Performances[2].ProfessionGR,
     artName: Performances[2].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[2].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "/eventimages/performancers/photo_Konikou.png",
     personalDescription: Performances[2].BioGR,
     socials: getSocials(Performances, 2)
   },
+  // Performances[3] = Black Brides
   {
     time: "16:15 - 16:30",
-    name: Performances[3].NameGR,
+    name: Performances[3].NameEN,
     itemCategory: "performance",
     profession: Performances[3].ProfessionGR,
     artName: Performances[3].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[3].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     personalDescription: Performances[3].BioGR,
     socials: getSocials(Performances, 3)
   },
+  // Performances[4] = Unforgetable
   {
     time: "11:15 - 11:30",
-    name: Performances[4].NameGR,
+    name: Performances[4].NameEN,
     itemCategory: "performance",
     profession: Performances[4].ProfessionGR,
     artName: Performances[4].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[4].DescriptionGR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
+    posterImageUrl: "",
     personalDescription: Performances[4].BioGR,
     socials: getSocials(Performances, 4)
   }
@@ -428,34 +433,36 @@ export const extra = applyPosterBasePath([
 
 // Session groupings consumed by the program UI.
 export const mySessions1 = [
-  extra[1],
-  allPerformances[4],
-  extra[0],
-  allSpeakers[0],
-  allSpeakers[6]];
+  extra[1], // Registration
+  allPerformances[4], // Unforgetable
+  extra[0], // Opening Hostess / Backstage Host / Curators
+  allSpeakers[0], // Eleni Kavvada
+  allSpeakers[6], // Nassos Katsamanis
+];
 
 export const mySessions2 = [
-  allPerformances[0],
-  allSpeakers[1],
-  allSpeakers[5],
-  allSpeakers[3],
+  allPerformances[0], // Marios Psarianos
+  allSpeakers[1], // Thanos Ioannidis + Chara Kontochristou
+  allSpeakers[5], // Stergios Vakalis
+  allSpeakers[3], // Dimitris Barmpas
 ];
 
 export const mySessions3 = [
-  allPerformances[3],
-  allSpeakers[4],
-  allSpeakers[8],
-  allPerformances[1]
+  allPerformances[3], // Black Brides
+  allSpeakers[4], // Elena Papadimitriou
+  allSpeakers[8], // Dimitris Samolis
+  allPerformances[1], // Stratos Fygetakis
 ];
 
 export const mySessions4 = [
-  allSpeakers[2], 
-  allSpeakers[7], 
-  allPerformances[2]];
+  allSpeakers[2], // Yannis Daglis
+  allSpeakers[7], // Nora Drakou
+  allPerformances[2], // Konstantina Koutra / KONIKOU
+];
 
 export const theEnd = [
-  extra[2],
-  extra[3]
+  extra[2], // Closing & Curators
+  extra[3], // the team, the hug
 ];
 
 // Experience workshops
@@ -464,9 +471,9 @@ export const myWorkshopsPack1 = [
     time: WORKSHOP_TIME_1,
     color: "rgba(15, 35, 30, 0.9)",
     workshop: [
-      allExpWorkshops[0],
-      allExpWorkshops[1],
-      allProfWorkshops[0]
+      allExpWorkshops[0], // Alexandros Galans, Dimitris Galanis, Vaggelis Dimopoulos
+      allExpWorkshops[1], // Ifigenia Pappa
+      allProfWorkshops[0], // The American College of Greece - Deree
     ],
   },
 ];
@@ -476,9 +483,9 @@ export const myWorkshopsPack2 = [
     time: WORKSHOP_TIME_2,
     color: "rgba(25, 35, 12, 0.92)",
     workshop: [
-      allExpWorkshops[2],
-      allProfWorkshops[1],
-      allProfWorkshops[2]
+      allExpWorkshops[2], // Theodora Koutsogaki
+      allProfWorkshops[1], // Dialectica
+      allProfWorkshops[2], // Oliver Wyman
     ],
   },
 ];
@@ -488,9 +495,9 @@ export const myWorkshopsPack3 = [
     time: WORKSHOP_TIME_3,
     color: "rgba(25, 35, 12, 0.92)",
     workshop: [
-      allProfWorkshops[0],
-      allProfWorkshops[1],
-      allProfWorkshops[2]
+      allProfWorkshops[0], // The American College of Greece - Deree
+      allProfWorkshops[1], // Dialectica
+      allProfWorkshops[2], // Oliver Wyman
     ],
   },
 ];

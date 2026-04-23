@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import localFont from "next/font/local";
 
-import performances from "../LineUpInfo/PerformancesIT.json";
+import { allPerformances } from "../infoDatabase";
 import { SocialButton } from "../components/SocialButton";
 import { capitalizeSegments, formatUppercaseNoAccents } from "../textFormatters";
 import { withBasePath } from "../../lib/basePath";
@@ -16,53 +16,38 @@ const copixelDisplay = localFont({
   display: "swap",
 });
 
-const performerPhotos = {
-  "Marios Psarianos": "/eventimages/performancers/photo_Psarianos.png",
-  "Stratos Fygetakis": "/eventimages/performancers/photo_Fygetakis.png",
-  "Konstantina Koutra": "/eventimages/performancers/photo_Konikou.png",
-};
-
-const performerLookup = Object.fromEntries(
-  performances.map((performer) => [performer.NameEN, performer]),
-);
-
-const performerNames = [
-  "Marios Psarianos",
-  "Stratos Fygetakis",
-  "Konstantina Koutra",
-];
-
-const performerDisplayNames = {
-  "Marios Psarianos": "Marios Psarianos",
-  "Stratos Fygetakis": "Stratos Fygetakis",
-  "Konstantina Koutra": "KONIKOU",
-};
-
+const EMPTY_BASE_PATH = withBasePath("");
 const PERFORMER_SOCIAL_HOVER_COLOR = "#239d54";
 
 const socialFields = [
-  { field: "Instagram", platform: "instagram", label: "Instagram" },
-  { field: "Instagram2", platform: "instagram", label: "Instagram" },
-  { field: "Facebook", platform: "facebook", label: "Facebook" },
-  { field: "LinkedIn", platform: "linkedin", label: "LinkedIn" },
-  { field: "TikTok", platform: "tiktok", label: "TikTok" },
-  { field: "Youtube", platform: "youtube", label: "YouTube" },
+  { field: "instagram", platform: "instagram", label: "Instagram" },
+  { field: "instagram2", platform: "instagram", label: "Instagram" },
+  { field: "facebook", platform: "facebook", label: "Facebook" },
+  { field: "linkedin", platform: "linkedin", label: "LinkedIn" },
+  { field: "tiktok", platform: "tiktok", label: "TikTok" },
+  { field: "youtube", platform: "youtube", label: "YouTube" },
 ];
 
-function getSocialLinks(profile) {
-  return socialFields.flatMap(({ field, platform, label }) => {
-    const url = typeof profile?.[field] === "string" ? profile[field].trim() : "";
+function getSocialLinks(...profiles) {
+  const seenUrls = new Set();
 
-    if (!url) {
-      return [];
-    }
+  return profiles.flatMap((profile) =>
+    socialFields.flatMap(({ field, platform, label }) => {
+      const url = typeof profile?.[field] === "string" ? profile[field].trim() : "";
 
-    return {
-      platform,
-      label,
-      url,
-    };
-  });
+      if (!url || seenUrls.has(url)) {
+        return [];
+      }
+
+      seenUrls.add(url);
+
+      return {
+        platform,
+        label,
+        url,
+      };
+    }),
+  );
 }
 
 function SocialLinks({ links = [], ownerName, className = "", size = "24px" }) {
@@ -88,7 +73,7 @@ function SocialLinks({ links = [], ownerName, className = "", size = "24px" }) {
 }
 
 function BioSections({ bios = [] }) {
-  const visibleBios = bios.filter((bio) => bio.text);
+  const visibleBios = bios.filter((bio) => bio.text && bio.text !== "-");
 
   if (!visibleBios.length) {
     return null;
@@ -107,42 +92,50 @@ function BioSections({ bios = [] }) {
 }
 
 function DescriptionSection({ description }) {
-  if (!description) {
+  if (!description || description === "-") {
     return null;
   }
 
   return (
     <section className={styles.modalDescription}>
-      <h3 className={styles.modalDescriptionName}>{formatUppercaseNoAccents("Περιγραφή performance")}</h3>
+      <h3 className={styles.modalDescriptionName}>
+        {formatUppercaseNoAccents("Περιγραφή performance")}
+      </h3>
       <p className={styles.modalResume}>{description}</p>
     </section>
   );
 }
 
-function buildPerformerCard(name) {
-  const performer = performerLookup[name];
+function resolvePhoto(posterImageUrl) {
+  if (!posterImageUrl || posterImageUrl === EMPTY_BASE_PATH) {
+    return null;
+  }
 
-  if (!performer || !performerPhotos[name]) {
+  return posterImageUrl;
+}
+
+function buildPerformerCard(performer, index) {
+  if (!performer?.name) {
     return null;
   }
 
   return {
-    id: name,
-    name: performerDisplayNames[name] || performer.NameEN,
-    profession: capitalizeSegments(performer.ProfessionEN || "Performer"),
-    photo: performerPhotos[name],
-    description: performer.DescriptionGR || "",
+    id: `${performer.name}-${index}`,
+    name: performer.artName || performer.name,
+    profession: capitalizeSegments(performer.profession || "Performer"),
+    photo: resolvePhoto(performer.posterImageUrl),
+    description: performer.description || "",
     bios: [
       {
-        name: performer.Artname || performer.NameGR || performerDisplayNames[name] || performer.NameEN,
-        text: performer.BioGR || "",
+        name: performer.name,
+        text: performer.personalDescription || "",
       },
     ],
-    socialLinks: getSocialLinks(performer),
+    socialLinks: getSocialLinks(performer.socials),
   };
 }
 
-const performerCards = performerNames.map(buildPerformerCard).filter(Boolean);
+const performerCards = allPerformances.map(buildPerformerCard).filter(Boolean);
 
 function PerformerModal({ performer, onClose }) {
   const [mounted, setMounted] = useState(false);
@@ -212,21 +205,43 @@ function PerformerModal({ performer, onClose }) {
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className={styles.modalStage}>
+          <button
+            onClick={onClose}
+            className="absolute right-4 top-4 z-[110] flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/50 text-white/70 backdrop-blur-md transition-all hover:bg-white/10 hover:text-white sm:right-6 sm:top-6"
+            aria-label="Close details"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+
           <div className={styles.modalAura} aria-hidden="true" />
           <div className={styles.modalMedia}>
             <div className={styles.modalOrbitDisc} aria-hidden="true" />
-            <div className={styles.modalPhotoMask}>
-              <div className={styles.modalPhotoFrame}>
-                <Image
-                  src={withBasePath(performer.photo)}
-                  alt={performer.name}
-                  fill
-                  priority
-                  className={styles.modalPhoto}
-                  sizes="(min-width: 960px) 34vw, 92vw"
-                />
+            {performer.photo ? (
+              <div className={styles.modalPhotoMask}>
+                <div className={styles.modalPhotoFrame}>
+                  <Image
+                    src={performer.photo}
+                    alt={performer.name}
+                    fill
+                    priority
+                    className={styles.modalPhoto}
+                    sizes="(min-width: 960px) 34vw, 92vw"
+                  />
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
 
@@ -263,10 +278,7 @@ export default function PerformancesPage() {
   }, []);
 
   return (
-    <section
-      className={styles.page}
-      data-modal-open={activePerformer ? "true" : "false"}
-    >
+    <section className={styles.page} data-modal-open={activePerformer ? "true" : "false"}>
       <div className={styles.backdrop} aria-hidden="true">
         <Image
           src={withBasePath("/gradient_green.png")}
@@ -298,18 +310,20 @@ export default function PerformancesPage() {
               >
                 <div className={styles.stage}>
                   <div className={styles.orbitDisc} aria-hidden="true" />
-                  <div className={styles.photoMask}>
-                    <div className={styles.photoFrame}>
-                      <Image
-                        src={withBasePath(performer.photo)}
-                        alt={performer.name}
-                        fill
-                        priority
-                        className={styles.photo}
-                        sizes="(min-width: 1200px) 14vw, (min-width: 768px) 20vw, 54vw"
-                      />
+                  {performer.photo ? (
+                    <div className={styles.photoMask}>
+                      <div className={styles.photoFrame}>
+                        <Image
+                          src={performer.photo}
+                          alt={performer.name}
+                          fill
+                          priority
+                          className={styles.photo}
+                          sizes="(min-width: 1200px) 14vw, (min-width: 768px) 20vw, 54vw"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  ) : null}
                 </div>
 
                 <div className={styles.caption}>
