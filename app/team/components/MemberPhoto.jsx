@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SmoothImage from "./SmoothImage";
 
 import { pickCollectiveImage } from "../collectiveImages";
@@ -61,6 +61,20 @@ function GlobeIcon() {
 
 export default function MemberPhoto({ member, containerClassName = "", containerStyle }) {
   const [showSocial, setShowSocial] = useState(false);
+
+  // Auto-reset mobile state after 5 seconds of inactivity
+  useEffect(() => {
+    let timer;
+    if (showSocial && typeof window !== "undefined" && window.matchMedia("(hover: none)").matches) {
+      timer = setTimeout(() => {
+        setShowSocial(false);
+      }, 5000);
+    }
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [showSocial]);
+
   const social = member.social;
   const hasSocial = !!(
   social && (
