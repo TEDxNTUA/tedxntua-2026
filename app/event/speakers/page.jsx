@@ -235,6 +235,18 @@ function SpeakerModal({ speaker, onClose }) {
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className={styles.modalStage}>
+          {/* Close button for mobile and desktop */}
+          <button
+            onClick={onClose}
+            className="absolute right-4 top-4 z-[110] flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/50 text-white/70 backdrop-blur-md transition-all hover:bg-white/10 hover:text-white sm:right-6 sm:top-6"
+            aria-label="Close details"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+
           <div className={styles.modalAura} aria-hidden="true" />
           <div className={styles.modalRings} aria-hidden="true" />
           <div className={styles.modalMedia}>

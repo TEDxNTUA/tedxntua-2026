@@ -32,8 +32,16 @@ export default function InfoBox({ time, name, title, itemColor, description }) {
                 <h3 className="mt-1 text-xl font-semibold leading-tight sm:text-2xl">{name}</h3>
               </div>
 
-              <span className={`rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-emerald-50 transition-colors duration-300 ${isExpanded ? 'bg-emerald-300/20 text-white' : 'text-emerald-50/80'}`}>
-                {isExpanded ? 'Hide details' : 'Tap for details'}
+              <span className={`flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.24em] transition-colors duration-300 ${isExpanded ? 'bg-emerald-300/30 text-white border-emerald-300/50' : 'text-emerald-50/80'}`}>
+                {isExpanded ? (
+                  <>
+                    <span>Hide details</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </>
+                ) : 'Tap for details'}
               </span>
             </div>
 

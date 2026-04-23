@@ -42,10 +42,21 @@ export default function ProgramInfoBoxWorkshops({ time, workshop, color }) {
               </p>
             </div>
             
-            <div className={`mt-1 md:mt-2 transition-all duration-300 ${isExpanded ? 'rotate-180 text-white' : 'text-white/20 group-hover:text-white/40'}`}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m6 9 6 6 6-6"/>
-              </svg>
+            <div className={`mt-1 md:mt-2 transition-all duration-300 text-white`}>
+              {isExpanded ? (
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white/70 transition-all hover:bg-white/20 hover:text-white">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              ) : (
+                <div className="text-white/20 group-hover:text-white/40">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m6 9 6 6 6-6"/>
+                  </svg>
+                </div>
+              )}
             </div>
           </div>
         </div>
