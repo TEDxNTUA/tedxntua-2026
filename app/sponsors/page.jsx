@@ -230,7 +230,8 @@ export default function SponsorsPage() {
       const viewportHeight = vh || window.innerHeight;
       
       // Hero reveal progress - deliberate cinematic window
-      const scrollDistance = viewportHeight * 2.5;
+      // Increased distance to make the unveiling slower
+      const scrollDistance = viewportHeight * 3.0;
       const revealProgress = Math.min(scrollY / scrollDistance, 1);
       targetProgressRef.current = revealProgress;
       setProgress(revealProgress);
@@ -348,17 +349,16 @@ export default function SponsorsPage() {
       </div>
 
       <div className="relative z-10">
-        <div className="relative h-[350vh] w-full">
+        <div className="relative h-[400vh] w-full">
           <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
             <div 
-              className="w-full px-4 text-center transition-all duration-700"
+              className="w-full px-4 text-center"
               style={{ 
-                // Letter-by-letter appearance: Hidden initially, then reveals, then fades out at the very end
-                opacity: dampedProgress < 0.05 ? 0 : (dampedProgress > 0.9 ? Math.max(0, 1 - (dampedProgress - 0.9) * 15) : 1),
-                transform: `scale(${dampedProgress < 0.05 ? 0.95 : 1})`
+                opacity: dampedProgress > 0.85 ? Math.max(0, 1 - (dampedProgress - 0.85) * 10) : 1,
+                transform: `scale(${dampedProgress > 0.85 ? Math.max(0.95, 1 - (dampedProgress - 0.85)) : 1})`
               }}
             >
-              <ScrollRevealText 
+              <ScrollRevealWord 
                 text="You help us at every step of the cycle."
                 progress={dampedProgress} 
                 className={`max-w-5xl mx-auto ${copixelDisplay.className} text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[1.1] tracking-tight font-black italic uppercase`}
