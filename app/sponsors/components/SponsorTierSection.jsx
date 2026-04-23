@@ -2,6 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import localFont from "next/font/local";
+
+const copixelDisplay = localFont({
+  src: "../../../Copixel-Futuristic-Font/Fonts/Copixel-Display.otf",
+  display: "swap",
+});
 
 export default function SponsorTierSection({ tier, index }) {
   const ref = useRef(null);
@@ -126,7 +132,7 @@ export default function SponsorTierSection({ tier, index }) {
           >
             Tier Excellence
           </span>
-          <h2 className={`text-4xl sm:text-5xl font-black tracking-tighter bg-gradient-to-r ${getTierColor()} bg-clip-text text-transparent uppercase`}>
+          <h2 className={`text-4xl sm:text-5xl font-black tracking-tighter bg-gradient-to-r ${getTierColor()} bg-clip-text text-transparent uppercase italic ${copixelDisplay.className}`}>
             {tier.tier}
           </h2>
           <div 

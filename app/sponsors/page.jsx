@@ -5,6 +5,7 @@ import { sponsorTiers } from "./sponsorsData";
 import SponsorTierSection from "./components/SponsorTierSection";
 import { withBasePath } from "../lib/basePath";
 import localFont from "next/font/local";
+import ScrollRevealText from "../components/ScrollRevealText";
 
 const copixelDisplay = localFont({
   src: "../../Copixel-Futuristic-Font/Fonts/Copixel-Display.otf",
@@ -20,100 +21,6 @@ const TIER_COLORS = {
   "Partners": { main: "#4ade80", glow: "rgba(74, 222, 128, 0.8)" },  // Green
   "Supporters": { main: "#a1a1aa", glow: "rgba(161, 161, 170, 0.8)" } // Zinc
 };
-
-// Refined Scroll reveal component for the thank you text
-function ScrollRevealText({ progress, reducedMotion }) {
-  const text = "You help us at every step of the cycle.";
-  const totalLength = text.length;
-  const halfPoint = Math.floor(totalLength / 2);
-
-  const visibleCharCount = reducedMotion ? text.length : Math.floor(progress * text.length * 1.15);
-
-  return (
-    <div className={`max-w-4xl mx-auto text-center px-4 select-none ${copixelDisplay.className}`}>
-      <p className="text-3xl sm:text-5xl md:text-6xl text-white leading-tight tracking-[0.1em] font-black italic uppercase">
-        {(() => {
-          let cursor = 0;
-          const parts = text.split(/(\s+)/);
-          const result = [];
-          
-          parts.forEach((part, partIdx) => {
-            if (/\s+/.test(part)) {
-              // Handle whitespace
-              part.split("").forEach((char) => {
-                const index = cursor;
-                cursor += 1;
-                const isVisible = index < visibleCharCount;
-                result.push(
-                  <span 
-                    key={`space-${index}`} 
-                    className="inline-block"
-                    style={{ opacity: isVisible ? 1 : 0 }}
-                  >
-                    {"\u00A0"}
-                  </span>
-                );
-              });
-            } else {
-              // Handle words
-              const wordStartIndex = cursor;
-              const charElements = part.split("").map((char) => {
-                const index = cursor;
-                cursor += 1;
-                const isVisible = index < visibleCharCount;
-                
-                // Half white, half red logic
-                const isRed = index >= halfPoint;
-                const baseColorClass = isRed ? "text-red-600" : "text-white";
-                const glowClass = isRed 
-                  ? "drop-shadow-[0_0_25px_rgba(220,38,38,0.6)]" 
-                  : "drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]";
-
-                return (
-                  <span
-                    key={`char-${index}`}
-                    className={`inline-block transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${baseColorClass} ${glowClass}`}
-                    style={{ 
-                      opacity: isVisible ? 1 : 0,
-                      filter: `blur(${isVisible ? 0 : 15}px)`,
-                      transform: `
-                        translateY(${isVisible ? 0 : 30}px) 
-                        scale(${isVisible ? 1 : 0.7}) 
-                        rotateX(${isVisible ? 0 : 80}deg)
-                        rotateY(${isVisible ? 0 : 20}deg)
-                      `,
-                      transitionDelay: `${(index % 20) * 15}ms`
-                    }}
-                  >
-                    {char}
-                  </span>
-                );
-              });
-
-              result.push(
-                <span key={`word-${wordStartIndex}`} className="inline-block whitespace-nowrap">
-                  {charElements}
-                </span>
-              );
-            }
-          });
-          return result;
-        })()}
-      </p>
-      
-      {!reducedMotion && (
-        <div 
-          className="mt-16 flex flex-col items-center gap-4 transition-opacity duration-1000"
-          style={{ opacity: progress < 0.1 ? 1 : Math.max(0, 1 - progress * 4) }}
-        >
-          <span className="text-green-500/50 text-[11px] font-black tracking-[0.5em] uppercase">Initialize Sequence</span>
-          <div className="w-px h-16 bg-gradient-to-b from-green-500/50 via-green-500/20 to-transparent animate-bounce" />
-        </div>
-      )}
-    </div>
-  );
-}
-
 
 // Professional Modal for Sponsor Contact
 function SponsorModal({ isOpen, onClose }) {
@@ -431,11 +338,27 @@ export default function SponsorsPage() {
       </div>
 
       <div className="relative z-10">
-        {/* REVEAL PHASE - Sticky text that eventually scrolls away */}
         <div className="relative h-[220vh] w-full">
           <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
             <div className="w-full px-4">
-              <ScrollRevealText progress={progress} reducedMotion={reducedMotion} />
+              <ScrollRevealText 
+                text="You help us at every step of the cycle."
+                progress={progress} 
+                reducedMotion={reducedMotion}
+                className={`max-w-4xl mx-auto text-center px-4 select-none ${copixelDisplay.className} text-3xl sm:text-5xl md:text-6xl text-white leading-tight tracking-[0.1em] font-black italic uppercase`}
+                colorMode="split"
+                stagger={40}
+              />
+              
+              {!reducedMotion && (
+                <div 
+                  className="mt-16 flex flex-col items-center gap-4 transition-opacity duration-1000"
+                  style={{ opacity: progress < 0.1 ? 1 : Math.max(0, 1 - progress * 4) }}
+                >
+                  <span className="text-green-500/50 text-[11px] font-black tracking-[0.5em] uppercase">Initialize Sequence</span>
+                  <div className="w-px h-16 bg-gradient-to-b from-green-500/50 via-green-500/20 to-transparent animate-bounce" />
+                </div>
+              )}
             </div>
           </div>
         </div>
