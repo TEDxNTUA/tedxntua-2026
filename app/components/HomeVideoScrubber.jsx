@@ -85,6 +85,58 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     };
   }, [getStableViewportHeight]);
 
+  const syncVideoToScroll = useCallback(() => {
+    const video = videoRef.current;
+    const { top, height, windowHeight } = layoutCache.current;
+
+    if (!video || !Number.isFinite(video.duration) || video.duration <= 0 || video.readyState < 2) {
+      frameIdRef.current = 0;
+      return;
+    }
+
+    const currentScroll = window.scrollY;
+    targetScrollRef.current = currentScroll;
+
+    const scrollDistance = currentScroll - top;
+    const total = height - windowHeight;
+    
+    if (total <= 0) {
+      frameIdRef.current = 0;
+      return;
+    }
+
+    // Update pin state
+    let nextPinState = "before";
+    if (currentScroll >= top + total) {
+      nextPinState = "after";
+    } else if (currentScroll >= top - 2) { // Small buffer to prevent flickering
+      nextPinState = "pinned";
+    }
+
+    if (pinStateRef.current !== nextPinState) {
+      pinStateRef.current = nextPinState;
+      setPinState(nextPinState);
+    }
+
+    // Calculate target time based on scroll
+    const progress = clamp(scrollDistance / total, 0, 1);
+    const targetTime = progress * (video.duration - 0.05);
+    
+    const smoothing = getSmoothing();
+    const newTime = currentVideoTimeRef.current + (targetTime - currentVideoTimeRef.current) * smoothing;
+    currentVideoTimeRef.current = newTime;
+
+    if (Math.abs(video.currentTime - newTime) > 0.008) {
+      video.currentTime = newTime;
+    }
+
+    if (Math.abs(targetTime - currentVideoTimeRef.current) > 0.001) {
+      frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
+    } else {
+      frameIdRef.current = 0;
+    }
+  }, []);
+
   const requestSync = useCallback(() => {
     if (!frameIdRef.current) {
       frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
