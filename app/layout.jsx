@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="preload" href={withBasePath("/fonts/Copixel-Display.otf")} as="font" type="font/otf" crossOrigin="anonymous" />
       </head>
-      <body className="site-shell bg-blue-100 text-gray-900">
+      <body className="site-shell bg-[#050505] text-gray-900">
         <ServiceWorkerRegistration />
         <AssetLoader />
         <ContentVisibilityWrapper>

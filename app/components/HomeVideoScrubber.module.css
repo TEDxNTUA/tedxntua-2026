@@ -10,8 +10,7 @@
 
 .introPanel,
 .outroPanel {
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: var(--vh, 100vh);
   padding: clamp(1.5rem, 4vw, 3rem);
   display: grid;
   place-items: center;
@@ -75,7 +74,7 @@
 .scrubberSection {
   position: relative;
   width: 100%;
-  min-height: calc(var(--beats) * 100vh);
+  min-height: calc(var(--beats) * var(--vh, 100vh));
   background: #000;
   isolation: isolate;
   flex-shrink: 0;
@@ -101,8 +100,7 @@
   position: sticky;
   top: 0;
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  height: var(--vh, 100vh);
   overflow: hidden;
   isolation: isolate;
   touch-action: manipulation;
@@ -201,8 +199,7 @@
 }
 
 .scrubberSectionBeat {
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: var(--vh, 100vh);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -266,8 +263,7 @@
   .scrubberSectionBeat {
     align-items: center; 
     padding: clamp(1rem, 7vw, 2.5rem);
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: var(--vh, 100vh);
     display: flex;
     justify-content: center;
   }

@@ -31,14 +31,15 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const [isVideoReady, setIsVideoReady] = useState(false);
   const layoutCache = useRef({ top: 0, height: 0, windowHeight: 0 });
   const currentVideoTimeRef = useRef(0);
+  const [vh, setVh] = useState(0);
+  const lastWidthRef = useRef(0);
 
   // Use a more stable viewport height for layout calculations
   const getStableViewportHeight = useCallback(() => {
+    if (vh > 0) return vh;
     if (typeof window === "undefined") return 800;
-    // On mobile, innerHeight is more stable for scroll-based layouts than visualViewport.height
-    // which changes when the address bar is toggled.
     return window.innerHeight;
-  }, []);
+  }, [vh]);
 
   // Smoothing factor: lower is smoother/slower, higher is more responsive
   const getSmoothing = () => {
@@ -46,26 +47,32 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     return window.innerWidth < 720 ? 0.08 : 0.10;
   };
 
-  useEffect(() => {
-    const getSrc = () => {
-      const isMobile = window.innerWidth < 720;
-      return withBasePath(
-        isMobile ? "/animations/output_mobile.mp4" : "/animations/output_desktop.mp4"
-      );
-    };
+  const updateLayout = useCallback((forcedHeight) => {
+    const section = sectionRef.current;
+    const video = videoRef.current;
 
-    setVideoSrc(getSrc());
+    if (!section || !video || !Number.isFinite(video.duration) || video.duration <= 0) {
+      return;
+    }
 
-    const handleResize = () => {
-      const nextSrc = getSrc();
-      setVideoSrc((prev) => (prev !== nextSrc ? nextSrc : prev));
-    };
+    const viewportHeight = forcedHeight || getStableViewportHeight();
+    const isMobile = window.innerWidth < 720;
+    
+    const pixelsPerSecond = (isCoarsePointer() || isMobile)
+      ? MOBILE_PIXELS_PER_SECOND
+      : PIXELS_PER_SECOND;
+    
+    // Use 100vh equivalent for beats to match CSS
+    const minHeight = viewportHeight * storyBeats.length;
+    const desiredHeight = Math.max(
+      minHeight,
+      video.duration * pixelsPerSecond + viewportHeight * 0.4,
+    );
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    setScrubHeight(`${Math.ceil(desiredHeight)}px`);
+  }, [getStableViewportHeight]);
 
-  const updateLayoutCache = useCallback(() => {
+  const updateLayoutCache = useCallback((forcedHeight) => {
     if (!sectionRef.current) return;
 
     const rect = sectionRef.current.getBoundingClientRect();
@@ -74,85 +81,9 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     layoutCache.current = {
       top: sectionTop,
       height: rect.height,
-      windowHeight: getStableViewportHeight(),
+      windowHeight: forcedHeight || getStableViewportHeight(),
     };
   }, [getStableViewportHeight]);
-
-  const updateLayout = useCallback(() => {
-    const section = sectionRef.current;
-    const video = videoRef.current;
-
-    if (!section || !video || !Number.isFinite(video.duration) || video.duration <= 0) {
-      return;
-    }
-
-    const viewportHeight = getStableViewportHeight();
-    const isMobile = window.innerWidth < 720;
-    
-    const pixelsPerSecond = (isCoarsePointer() || isMobile)
-      ? MOBILE_PIXELS_PER_SECOND
-      : PIXELS_PER_SECOND;
-    
-    const minHeight = viewportHeight * storyBeats.length;
-    const desiredHeight = Math.max(
-      minHeight,
-      video.duration * pixelsPerSecond + viewportHeight * 0.4, // Increased buffer slightly
-    );
-
-    setScrubHeight(`${Math.ceil(desiredHeight)}px`);
-  }, [getStableViewportHeight]);
-
-  const syncVideoToScroll = useCallback(() => {
-    const video = videoRef.current;
-    const { top, height, windowHeight } = layoutCache.current;
-
-    if (!video || !Number.isFinite(video.duration) || video.duration <= 0 || video.readyState < 2) {
-      frameIdRef.current = 0;
-      return;
-    }
-
-    const currentScroll = window.scrollY;
-    targetScrollRef.current = currentScroll;
-
-    const scrollDistance = currentScroll - top;
-    const total = height - windowHeight;
-    
-    if (total <= 0) {
-      frameIdRef.current = 0;
-      return;
-    }
-
-    // Update pin state
-    let nextPinState = "before";
-    if (currentScroll >= top + total) {
-      nextPinState = "after";
-    } else if (currentScroll >= top - 2) { // Small buffer to prevent flickering
-      nextPinState = "pinned";
-    }
-
-    if (pinStateRef.current !== nextPinState) {
-      pinStateRef.current = nextPinState;
-      setPinState(nextPinState);
-    }
-
-    // Calculate target time based on scroll
-    const progress = clamp(scrollDistance / total, 0, 1);
-    const targetTime = progress * (video.duration - 0.05);
-    
-    const smoothing = getSmoothing();
-    const newTime = currentVideoTimeRef.current + (targetTime - currentVideoTimeRef.current) * smoothing;
-    currentVideoTimeRef.current = newTime;
-
-    if (Math.abs(video.currentTime - newTime) > 0.008) {
-      video.currentTime = newTime;
-    }
-
-    if (Math.abs(targetTime - currentVideoTimeRef.current) > 0.001) {
-      frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
-    } else {
-      frameIdRef.current = 0;
-    }
-  }, []);
 
   const requestSync = useCallback(() => {
     if (!frameIdRef.current) {
@@ -160,6 +91,59 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     }
   }, [syncVideoToScroll]);
 
+  // Combined effect for VH locking and general resize handling
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const measureStableVh = () => {
+      // Create a temporary element to measure 100vh which is stable in most mobile browsers
+      // (it usually represents the large viewport height)
+      const div = document.createElement("div");
+      div.style.height = "100vh";
+      div.style.position = "fixed";
+      div.style.top = "0";
+      div.style.visibility = "hidden";
+      div.style.pointerEvents = "none";
+      document.body.appendChild(div);
+      const stableHeight = div.offsetHeight;
+      document.body.removeChild(div);
+      
+      setVh(stableHeight);
+      return stableHeight;
+    };
+
+    // Initial lock
+    const initialVh = measureStableVh();
+    lastWidthRef.current = window.innerWidth;
+
+    const handleResize = () => {
+      const currentWidth = window.innerWidth;
+      
+      // Handle source changes
+      const isMobile = currentWidth < 720;
+      const nextSrc = withBasePath(
+        isMobile ? "/animations/output_mobile.mp4" : "/animations/output_desktop.mp4"
+      );
+      setVideoSrc((prev) => (prev !== nextSrc ? nextSrc : prev));
+
+      // Only update layout on significant resize (width change)
+      if (Math.abs(currentWidth - lastWidthRef.current) > 5) {
+        lastWidthRef.current = currentWidth;
+        const newVh = measureStableVh();
+        
+        updateLayout(newVh);
+        setTimeout(() => {
+          updateLayoutCache(newVh);
+          requestSync();
+        }, 150);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [updateLayout, updateLayoutCache, requestSync]);
+
+  // Separate effect for scroll handling
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -167,15 +151,6 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const handleScroll = () => {
       targetScrollRef.current = window.scrollY;
       requestSync();
-    };
-
-    const handleResize = () => {
-      updateLayout();
-      // Use a slight delay to allow layout to settle on mobile
-      setTimeout(() => {
-        updateLayoutCache();
-        requestSync();
-      }, 100);
     };
 
     const handleLoadedData = async () => {
@@ -188,7 +163,6 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
       try {
         video.muted = true;
-        // Priming the video to ensure it can be scrubbed
         const playPromise = video.play();
         if (playPromise !== undefined) {
           await playPromise;
@@ -198,7 +172,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       } catch (err) {
         console.warn("Video priming failed:", err);
         video.pause();
-        setIsVideoReady(true); // Still show the video element
+        setIsVideoReady(true);
       }
 
       requestAnimationFrame(() => {
@@ -207,10 +181,9 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       });
     };
 
-    // Safety timeout: if video hasn't signaled ready in 2s, show it anyway
+    // Safety timeout
     const safetyTimeout = setTimeout(() => {
       if (!isVideoReady) {
-        console.log("Safety timeout: forcing video ready state");
         setIsVideoReady(true);
         updateLayout();
       }
@@ -220,7 +193,6 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     video.addEventListener("loadeddata", handleLoadedData);
     video.addEventListener("canplay", handleLoadedData);
     video.addEventListener("error", () => {
-      console.error("Home video scrubber failed to load");
       setIsVideoReady(true);
       updateLayout();
     });
@@ -230,13 +202,11 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleResize);
 
     return () => {
       clearTimeout(safetyTimeout);
       if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
       video.removeEventListener("loadedmetadata", handleLoadedData);
       video.removeEventListener("loadeddata", handleLoadedData);
       video.removeEventListener("canplay", handleLoadedData);
@@ -251,7 +221,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   }, [scrubHeight, requestSync, updateLayoutCache]);
 
   return (
-    <main className={styles.pageShell}>
+    <main className={styles.pageShell} style={{ "--vh": vh ? `${vh}px` : "100vh" }}>
       <section
         className={styles.introPanel}
         style={{ "--scrubber-gradient": `url(${withBasePath("/gradient.png")})` }}
