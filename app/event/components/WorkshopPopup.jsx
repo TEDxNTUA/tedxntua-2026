@@ -128,7 +128,7 @@ export default function WorkshopsPopup({ isOpen, onClose, workshop, originRect }
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full border border-emerald-400/30 bg-slate-950/70 text-2xl text-emerald-200 shadow-[0_0_18px_rgba(34,197,94,0.18)] transition-all duration-200 hover:bg-slate-900 hover:text-emerald-100 sm:right-5 sm:top-5">
+          className="absolute right-4 top-4 z-10 grid h-12 w-12 place-items-center rounded-full border border-emerald-400/30 bg-slate-950/70 text-2xl text-emerald-200 shadow-[0_0_18px_rgba(34,197,94,0.18)] transition-all duration-200 hover:bg-slate-900 hover:text-emerald-100 sm:right-5 sm:top-5">
           ✕
         </button>
 

@@ -4,6 +4,12 @@ import { useEffect, useRef, useState, useCallback, Fragment } from "react";
 import { sponsorTiers } from "./sponsorsData";
 import SponsorTierSection from "./components/SponsorTierSection";
 import { withBasePath } from "../lib/basePath";
+import localFont from "next/font/local";
+
+const copixelDisplay = localFont({
+  src: "../../Copixel-Futuristic-Font/Fonts/Copixel-Display.otf",
+  display: "swap",
+});
 
 const assetPath = (path) => encodeURI(withBasePath(path));
 
@@ -18,111 +24,96 @@ const TIER_COLORS = {
 // Refined Scroll reveal component for the thank you text
 function ScrollRevealText({ progress, reducedMotion }) {
   const text = "You help us at every step of the cycle.";
-  const tedMark = "TEDxNTUA";
-  const tedStart = text.indexOf(tedMark);
-  const tedEnd = tedStart === -1 ? -1 : tedStart + tedMark.length;
+  const totalLength = text.length;
+  const halfPoint = Math.floor(totalLength / 2);
 
   const visibleCharCount = reducedMotion ? text.length : Math.floor(progress * text.length * 1.15);
 
   return (
-    <div className="max-w-4xl mx-auto text-center px-4 select-none">
-      <p className="text-2xl sm:text-4xl md:text-5xl text-white leading-tight tracking-tight font-bold italic">
+    <div className={`max-w-4xl mx-auto text-center px-4 select-none ${copixelDisplay.className}`}>
+      <p className="text-3xl sm:text-5xl md:text-6xl text-white leading-tight tracking-[0.1em] font-black italic uppercase">
         {(() => {
           let cursor = 0;
-          const renderChars = (segment, specialType = null) => {
-            const parts = segment.split(/(\s+)/);
-            const result = [];
-            
-            parts.forEach((part, partIdx) => {
-              if (/\s+/.test(part)) {
-                // Handle whitespace
-                part.split("").forEach((char) => {
-                  const index = cursor;
-                  cursor += 1;
-                  const isVisible = index < visibleCharCount;
-                  result.push(
-                    <span 
-                      key={`space-${index}`} 
-                      className="inline-block transition-opacity duration-500"
-                      style={{ opacity: isVisible ? 1 : 0 }}
-                    >
-                      {"\u00A0"}
-                    </span>
-                  );
-                });
-              } else {
-                // Handle words
-                const wordStartIndex = cursor;
-                const charElements = part.split("").map((char) => {
-                  const index = cursor;
-                  cursor += 1;
-                  const isVisible = index < visibleCharCount;
-                  
-                  let specialClass = "";
-                  if (specialType === "red") {
-                    specialClass = "text-[#e62b1e] drop-shadow-[0_0_25px_rgba(230,43,30,0.5)] not-italic font-black";
-                  } else if (specialType === "white") {
-                    specialClass = "text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] not-italic font-black";
-                  }
-
-                  return (
-                    <span
-                      key={`char-${index}`}
-                      className={`inline-block transition-all duration-700 ease-out ${specialClass}`}
-                      style={{ 
-                        opacity: isVisible ? 1 : 0,
-                        filter: `blur(${isVisible ? 0 : 12}px)`,
-                        transform: `translateY(${isVisible ? 0 : 20}px) scale(${isVisible ? 1 : 0.85})`,
-                        transitionDelay: `${(index % 15) * 10}ms`
-                      }}
-                    >
-                      {char}
-                    </span>
-                  );
-                });
-
+          const parts = text.split(/(\s+)/);
+          const result = [];
+          
+          parts.forEach((part, partIdx) => {
+            if (/\s+/.test(part)) {
+              // Handle whitespace
+              part.split("").forEach((char) => {
+                const index = cursor;
+                cursor += 1;
+                const isVisible = index < visibleCharCount;
                 result.push(
-                  <span key={`word-${wordStartIndex}`} className="inline-block whitespace-nowrap">
-                    {charElements}
+                  <span 
+                    key={`space-${index}`} 
+                    className="inline-block"
+                    style={{ opacity: isVisible ? 1 : 0 }}
+                  >
+                    {"\u00A0"}
                   </span>
                 );
-              }
-            });
-            return result;
-          };
+              });
+            } else {
+              // Handle words
+              const wordStartIndex = cursor;
+              const charElements = part.split("").map((char) => {
+                const index = cursor;
+                cursor += 1;
+                const isVisible = index < visibleCharCount;
+                
+                // Half white, half red logic
+                const isRed = index >= halfPoint;
+                const baseColorClass = isRed ? "text-red-600" : "text-white";
+                const glowClass = isRed 
+                  ? "drop-shadow-[0_0_25px_rgba(220,38,38,0.6)]" 
+                  : "drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]";
 
-          if (tedStart === -1 || tedEnd === -1) return renderChars(text);
+                return (
+                  <span
+                    key={`char-${index}`}
+                    className={`inline-block transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${baseColorClass} ${glowClass}`}
+                    style={{ 
+                      opacity: isVisible ? 1 : 0,
+                      filter: `blur(${isVisible ? 0 : 15}px)`,
+                      transform: `
+                        translateY(${isVisible ? 0 : 30}px) 
+                        scale(${isVisible ? 1 : 0.7}) 
+                        rotateX(${isVisible ? 0 : 80}deg)
+                        rotateY(${isVisible ? 0 : 20}deg)
+                      `,
+                      transitionDelay: `${(index % 20) * 15}ms`
+                    }}
+                  >
+                    {char}
+                  </span>
+                );
+              });
 
-          const before = text.slice(0, tedStart);
-          const branding = text.slice(tedStart, tedEnd); // "TEDxNTUA"
-          const after = text.slice(tedEnd);
-
-          const tedxPart = branding.slice(0, 4); // "TEDx"
-          const ntuaPart = branding.slice(4); // "NTUA"
-
-          return [
-            ...renderChars(before),
-            <span key="tedx-brand" className="inline-block whitespace-nowrap">
-              {renderChars(tedxPart, "red")}
-              {renderChars(ntuaPart, "white")}
-            </span>,
-            ...renderChars(after),
-          ];
+              result.push(
+                <span key={`word-${wordStartIndex}`} className="inline-block whitespace-nowrap">
+                  {charElements}
+                </span>
+              );
+            }
+          });
+          return result;
         })()}
       </p>
       
       {!reducedMotion && (
         <div 
-          className="mt-12 flex flex-col items-center gap-3 transition-opacity duration-1000"
+          className="mt-16 flex flex-col items-center gap-4 transition-opacity duration-1000"
           style={{ opacity: progress < 0.1 ? 1 : Math.max(0, 1 - progress * 4) }}
         >
-          <span className="text-green-500/40 text-[10px] font-black tracking-[0.4em] uppercase">Engage Scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-green-500/40 to-transparent animate-bounce" />
+          <span className="text-green-500/50 text-[11px] font-black tracking-[0.5em] uppercase">Initialize Sequence</span>
+          <div className="w-px h-16 bg-gradient-to-b from-green-500/50 via-green-500/20 to-transparent animate-bounce" />
         </div>
       )}
     </div>
   );
 }
+
 
 // Professional Modal for Sponsor Contact
 function SponsorModal({ isOpen, onClose }) {

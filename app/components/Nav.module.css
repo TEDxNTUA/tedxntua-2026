@@ -229,14 +229,16 @@
   .coreInner { width: 32px; height: 32px; }
   .coreButton::after { font-size: 7px; bottom: 12%; }
 
-  .orbitalNode { width: 65px; height: 65px; }
-  .nodeIcon { width: 22px; height: 22px; }
-  .nodeLabel { font-size: 6px; }
+  /* Increased touch targets and label visibility */
+  .orbitalNode { width: 72px; height: 72px; }
+  .nodeIcon { width: 26px; height: 26px; }
+  .nodeLabel { font-size: 8px; letter-spacing: 0.15em; }
 
-  .nodeTeam.nodeOpen { transform: translate(-87.5px, 66.6px) scale(1); }
-  .nodeEvent.nodeOpen { transform: translate(0px, 116.6px) scale(1); }
-  .nodeSponsors.nodeOpen { transform: translate(87.5px, 66.6px) scale(1); }
+  /* Adjusted translations to accommodate larger nodes */
+  .nodeTeam.nodeOpen { transform: translate(-95px, 70px) scale(1); }
+  .nodeEvent.nodeOpen { transform: translate(0px, 120px) scale(1); }
+  .nodeSponsors.nodeOpen { transform: translate(95px, 70px) scale(1); }
 
-  .rootLines { width: 200px; height: 150px; }
+  .rootLines { width: 210px; height: 160px; }
 }
 

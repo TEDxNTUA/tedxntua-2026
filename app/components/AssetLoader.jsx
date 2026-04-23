@@ -10,8 +10,9 @@ const copixelDisplay = localFont({
   display: "swap",
 });
 
-const MIN_LOAD_TIME = 2000; // Targeted 2 seconds
+const MIN_LOAD_TIME = 1500; // Snappier initial load
 const CACHE_SESSION_PREFIX = "tedx_assets_loaded_";
+const GLOBAL_SESSION_KEY = "tedx_assets_loaded_session";
 
 const wait = (ms) =>
   new Promise((resolve) => {
@@ -21,11 +22,21 @@ const wait = (ms) =>
 const getCacheKey = (pathname) => `${CACHE_SESSION_PREFIX}${pathname || "/"}`;
 const isAssetsAlreadyCached = (pathname) => {
   if (typeof window === "undefined") return false;
-  try { return sessionStorage.getItem(getCacheKey(pathname)) === "true"; } catch { return false; }
+  try { 
+    const pathCached = sessionStorage.getItem(getCacheKey(pathname)) === "true";
+    const globalCached = sessionStorage.getItem(GLOBAL_SESSION_KEY) === "true";
+    return { pathCached, globalCached };
+  } catch { 
+    return { pathCached: false, globalCached: false };
+  }
 };
+
 const markAssetsCached = (pathname) => {
   if (typeof window === "undefined") return;
-  try { sessionStorage.setItem(getCacheKey(pathname), "true"); } catch {}
+  try { 
+    sessionStorage.setItem(getCacheKey(pathname), "true");
+    sessionStorage.setItem(GLOBAL_SESSION_KEY, "true");
+  } catch {}
 };
 
 export default function AssetLoader() {
@@ -41,7 +52,7 @@ export default function AssetLoader() {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.playbackRate = 2.5; // High speed reload
+      videoRef.current.playbackRate = 1.0; // Smoother natural playback during fade out
     }
   }, [isVisible]);
 
@@ -54,10 +65,10 @@ export default function AssetLoader() {
 
   useEffect(() => {
     // Check for cached state on mount/pathname change
-    const cached = isAssetsAlreadyCached(pathname);
-    setIsPathCached(cached);
+    const { pathCached, globalCached } = isAssetsAlreadyCached(pathname);
+    setIsPathCached(pathCached);
 
-    if (cached) {
+    if (pathCached) {
       setReadyPath(pathname);
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
@@ -77,7 +88,8 @@ export default function AssetLoader() {
       if (!isMounted) return;
       
       const elapsedTime = Date.now() - startTime;
-      const targetMinTime = cached ? 800 : MIN_LOAD_TIME; // Even faster if already seen this session
+      // targetMinTime: 500ms if globally cached, else 1500ms
+      const targetMinTime = globalCached ? 500 : MIN_LOAD_TIME;
       const remainingTime = Math.max(0, targetMinTime - elapsedTime);
 
       // Smoothly animate the progress to 100% over the remaining time
@@ -88,7 +100,7 @@ export default function AssetLoader() {
       
       const finishInterval = setInterval(() => {
         const finishElapsed = Date.now() - finishStartTime;
-        const finishDuration = Math.max(300, remainingTime); // Snappier final push
+        const finishDuration = Math.max(300, remainingTime); 
         const finishRate = Math.min(1, finishElapsed / finishDuration);
         
         const currentProgress = startProgress + (100 - startProgress) * finishRate;
@@ -112,7 +124,7 @@ export default function AssetLoader() {
               document.body.style.overflow = "";
               document.documentElement.style.overflow = "";
             }
-          }, 800); // Shorter fade wait
+          }, 800);
         }
       }, 16);
     };
@@ -159,7 +171,7 @@ export default function AssetLoader() {
 
   return (
     <div 
-      className={`fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center overflow-hidden transition-all duration-1000 ease-in-out ${
+      className={`fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center overflow-hidden transition-opacity duration-1000 ease-in-out ${
         isVisible ? "opacity-100 visible pointer-events-auto" : "opacity-0 invisible pointer-events-none"
       }`}
     >

@@ -23,6 +23,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preload" href={withBasePath("/fonts/Copixel-Display.otf")} as="font" type="font/otf" crossOrigin="anonymous" />
+      </head>
       <body className="site-shell bg-blue-100 text-gray-900">
         <ServiceWorkerRegistration />
         <AssetLoader />

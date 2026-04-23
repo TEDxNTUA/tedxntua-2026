@@ -80,13 +80,13 @@ export default function SiteHeader() {
     };
   }, []);
 
-  // On small and medium screens the side buttons slide out to make room for the expanded nav.
+  // On small and medium screens the side buttons scale down to make room for the expanded nav.
   const leftActionClasses = isHeaderNavOpen
-    ? "pointer-events-none -translate-x-[140%] opacity-0 lg:pointer-events-auto lg:translate-x-0 lg:opacity-100"
+    ? "scale-90 translate-y-2 opacity-90 lg:scale-100 lg:translate-y-0 lg:opacity-100"
     : "translate-x-0 opacity-100";
 
   const rightActionClasses = isHeaderNavOpen
-    ? "pointer-events-none translate-x-[140%] opacity-0 lg:pointer-events-auto lg:translate-x-0 lg:opacity-100"
+    ? "scale-90 translate-y-2 opacity-90 lg:scale-100 lg:translate-y-0 lg:opacity-100"
     : "translate-x-0 opacity-100";
 
   // Renders the top-level header container with conditional positioning and glassmorphism styling.
@@ -180,7 +180,6 @@ function ActionButton({ href, theme, icon, alt, children }) {
   return (
     <a
       href={href}
-      aria-disabled="true"
       className="pointer-events-auto group relative flex flex-col items-center justify-center transition-all lg:min-h-[76px] lg:min-w-[260px] lg:flex-row-reverse lg:justify-between lg:rounded-[1.75rem] lg:border lg:border-solid lg:px-5 lg:backdrop-blur-sm [--bg-final:transparent] [--brd-final:transparent] lg:[--bg-final:var(--bg-current,var(--base-bg))] lg:[--brd-final:var(--brd-current,var(--base-brd))]"
       style={{
         "--base-bg": baseBg,

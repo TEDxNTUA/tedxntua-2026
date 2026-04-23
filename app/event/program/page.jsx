@@ -42,7 +42,7 @@ function ProgramNav() {
           <a
             key={sec.id}
             href={`#${sec.id}`}
-            className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full text-[9px] md:text-[10px] font-black transition-all hover:bg-emerald-400 hover:text-black text-white/40 hover:scale-110 active:scale-95"
+            className="flex h-11 w-11 md:h-10 md:w-10 items-center justify-center rounded-full text-[10px] md:text-[10px] font-black transition-all hover:bg-emerald-400 hover:text-black text-white/40 hover:scale-110 active:scale-95"
           >
             {sec.label}
           </a>

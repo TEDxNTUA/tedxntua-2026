@@ -94,21 +94,21 @@ export default function EventSidebar({ visible }) {
                 className={`
                   peer group
                   pointer-events-auto
-                  relative flex-shrink-0 w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center
+                  relative flex-shrink-0 w-12 h-12 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center
                   transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] 
                   rounded-xl md:rounded-2xl border order-2
                   ${isActive
-                    ? 'bg-emerald-500 border-emerald-400 shadow-[0_0_40px_rgba(16,185,129,0.3)] scale-105 md:scale-110 md:translate-x-[-6px] z-10'
+                    ? 'bg-emerald-500 border-emerald-400 shadow-[0_0_50px_rgba(16,185,129,0.5)] scale-105 md:scale-110 md:translate-x-[-6px] z-10'
                     : 'bg-white/10 backdrop-blur-2xl border-white/10 hover:border-emerald-500/40 hover:bg-white/20 hover:-translate-y-0.5 md:hover:translate-x-[-3px] md:hover:translate-y-0 shadow-2xl'
                   }
                 `}
               >
                 <span
                   className={`
-                    pointer-events-none absolute right-[calc(100%+0.75rem)] top-1/2 hidden -translate-y-1/2 translate-x-2 whitespace-nowrap px-1 py-1 text-[10px] font-black uppercase tracking-[0.24em] opacity-0 drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)] transition-all duration-300 md:block
+                    pointer-events-none absolute right-[calc(100%+0.75rem)] top-1/2 -translate-y-1/2 translate-x-2 whitespace-nowrap px-1 py-1 text-[10px] font-black uppercase tracking-[0.24em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)] transition-all duration-300
                     ${isActive
-                      ? 'text-emerald-300 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100'
-                      : 'text-emerald-50/90 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100'
+                      ? 'text-emerald-300 opacity-100 translate-x-0'
+                      : 'text-emerald-50/90 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 md:block'
                     }
                   `}
                 >
@@ -122,7 +122,7 @@ export default function EventSidebar({ visible }) {
 
                 {/* Vector Icon */}
                 <div className={`
-                  relative w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 transition-all duration-500
+                  relative w-5 h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 transition-all duration-500
                   ${isActive ? 'text-slate-950 scale-110' : 'text-slate-950 group-hover:text-slate-900 group-hover:scale-110'}
                 `}>
                   {tab.icon}

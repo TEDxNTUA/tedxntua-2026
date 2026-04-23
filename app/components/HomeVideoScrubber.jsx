@@ -42,8 +42,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
   // Smoothing factor: lower is smoother/slower, higher is more responsive
   const getSmoothing = () => {
-    if (typeof window === "undefined") return 0.12;
-    return window.innerWidth < 720 ? 0.08 : 0.12;
+    if (typeof window === "undefined") return 0.10;
+    return window.innerWidth < 720 ? 0.08 : 0.10;
   };
 
   useEffect(() => {
@@ -271,10 +271,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
             style={{ opacity: isVideoReady ? 1 : 0 }}
             src={videoSrc}
             muted
-            autoPlay
-            loop
             playsInline
-            preload="auto"
+            preload="metadata"
             disableRemotePlayback
             disablePictureInPicture
             crossOrigin="anonymous"
