@@ -176,12 +176,13 @@ function SponsorModal({ isOpen, onClose }) {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-green-500/10 rounded-full blur-[80px] pointer-events-none" />
         
         <div className="relative z-10">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-bold text-white">Partner with TEDxNTUA</h3>
+          <div className="flex justify-between items-start mb-6 gap-4">
+            <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight">Partner with TEDxNTUA</h3>
             <button 
               onClick={onClose} 
               disabled={status === "sending"}
-              className="text-white/50 hover:text-white transition-colors text-2xl disabled:opacity-0"
+              className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/50 hover:text-white hover:bg-white/10 transition-all text-2xl disabled:opacity-0"
+              aria-label="Close modal"
             >
               &times;
             </button>
@@ -451,12 +452,12 @@ export default function SponsorsPage() {
             ))}
           </div>
 
-          <div className="mt-40 mb-32 flex justify-center">
+          <div className="mt-24 sm:mt-40 mb-32 flex justify-center">
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="group relative inline-flex items-center gap-4 px-10 py-4 rounded-full bg-white text-black font-black hover:scale-105 transition-all duration-300 shadow-xl shadow-white/5"
+              className="group relative inline-flex items-center gap-3 sm:gap-4 px-6 sm:px-10 py-4 rounded-full bg-white text-black font-black hover:scale-105 transition-all duration-300 shadow-xl shadow-white/5"
             >
-              <span className="text-sm uppercase tracking-wider">Become a Sponsor / Get in contact with us</span>
+              <span className="text-[11px] sm:text-sm uppercase tracking-wider">Become a Sponsor / Get in contact with us</span>
               <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center group-hover:translate-x-1 transition-transform">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
                   <path d="M5 12h14M12 5l7 7-7 7" />
