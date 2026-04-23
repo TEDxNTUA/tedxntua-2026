@@ -191,6 +191,9 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       }
     };
 
+    // Initialize source and layout immediately
+    handleResize();
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [updateLayout, updateLayoutCache, requestSync]);
