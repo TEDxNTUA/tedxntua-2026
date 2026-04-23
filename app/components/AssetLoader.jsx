@@ -130,6 +130,12 @@ export default function AssetLoader() {
     };
 
     const run = async () => {
+      // Emergency timeout to ensure loader always disappears
+      const emergencyTimeout = setTimeout(() => {
+        console.warn("AssetLoader: Emergency timeout reached");
+        finalize();
+      }, 5000);
+
       try {
         if (document.readyState === "loading") {
           setProgress(10);
@@ -152,8 +158,10 @@ export default function AssetLoader() {
           wait(1200),
         ]);
         
+        clearTimeout(emergencyTimeout);
         finalize();
       } catch (error) {
+        clearTimeout(emergencyTimeout);
         finalize();
       }
     };
@@ -174,6 +182,9 @@ export default function AssetLoader() {
       className={`fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center overflow-hidden transition-opacity duration-1000 ease-in-out ${
         isVisible ? "opacity-100 visible pointer-events-auto" : "opacity-0 invisible pointer-events-none"
       }`}
+      style={{
+        background: "radial-gradient(circle at center, #0a0a0a 0%, #050505 100%)"
+      }}
     >
       <div className="absolute inset-0 pointer-events-none opacity-40">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(34,197,94,0.1)_0%,_transparent_70%)]" />
@@ -193,7 +204,7 @@ export default function AssetLoader() {
           <div className="h-[2px] w-12 bg-green-500 mt-2 shadow-[0_0_10px_rgba(34,197,94,0.8)]" />
         </div>
 
-        <div className="relative w-full aspect-square flex items-center justify-center overflow-hidden">
+        <div className="relative w-full aspect-square flex items-center justify-center overflow-hidden bg-black/20 rounded-full">
           <video
             ref={videoRef}
             key={isMobile ? "mobile" : "desktop"}
@@ -201,6 +212,10 @@ export default function AssetLoader() {
             loop
             muted
             playsInline
+            onError={() => {
+              console.error("AssetLoader video failed to load");
+              // Video failure shouldn't block the progress bar which is outside this div
+            }}
             className="w-full h-full object-cover scale-[1.3] md:scale-[1.1] transition-opacity duration-700 mix-blend-lighten opacity-50"
           >
             <source src={withBasePath(isMobile ? "/loading_mobile.webm" : "/loading_desktop.webm")} type="video/webm" />

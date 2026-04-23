@@ -180,9 +180,15 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
     const handleLoadedData = async () => {
       if (!video) return;
-      updateLayout();
+      
+      // Update layout as soon as we have duration
+      if (Number.isFinite(video.duration) && video.duration > 0) {
+        updateLayout();
+      }
+
       try {
         video.muted = true;
+        // Priming the video to ensure it can be scrubbed
         const playPromise = video.play();
         if (playPromise !== undefined) {
           await playPromise;
@@ -190,19 +196,36 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
         }
         setIsVideoReady(true);
       } catch (err) {
+        console.warn("Video priming failed:", err);
         video.pause();
-        setIsVideoReady(true);
+        setIsVideoReady(true); // Still show the video element
       }
+
       requestAnimationFrame(() => {
         updateLayoutCache();
         requestSync();
       });
     };
 
+    // Safety timeout: if video hasn't signaled ready in 2s, show it anyway
+    const safetyTimeout = setTimeout(() => {
+      if (!isVideoReady) {
+        console.log("Safety timeout: forcing video ready state");
+        setIsVideoReady(true);
+        updateLayout();
+      }
+    }, 2000);
+
+    video.addEventListener("loadedmetadata", handleLoadedData);
     video.addEventListener("loadeddata", handleLoadedData);
     video.addEventListener("canplay", handleLoadedData);
+    video.addEventListener("error", () => {
+      console.error("Home video scrubber failed to load");
+      setIsVideoReady(true);
+      updateLayout();
+    });
 
-    if (video.readyState >= 2) {
+    if (video.readyState >= 1) {
       handleLoadedData();
     }
 
@@ -210,13 +233,16 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     window.addEventListener("resize", handleResize);
 
     return () => {
+      clearTimeout(safetyTimeout);
       if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
+      video.removeEventListener("loadedmetadata", handleLoadedData);
       video.removeEventListener("loadeddata", handleLoadedData);
       video.removeEventListener("canplay", handleLoadedData);
+      video.removeEventListener("error", () => {});
     };
-  }, [requestSync, updateLayout, updateLayoutCache]);
+  }, [requestSync, updateLayout, updateLayoutCache, isVideoReady]);
 
   useEffect(() => {
     if (scrubHeight === "0px") return;
@@ -272,7 +298,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
             src={videoSrc}
             muted
             playsInline
-            preload="metadata"
+            preload="auto"
+            poster={withBasePath("/gradient.png")}
             disableRemotePlayback
             disablePictureInPicture
             crossOrigin="anonymous"
