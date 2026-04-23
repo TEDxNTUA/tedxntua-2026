@@ -135,7 +135,7 @@ export const allSpeakers = applyPosterBasePath([
     title: "The importance of second breakfast",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[7].DescriptionGR,
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/speakers/photo-Katsamanis.png",
     personalDescription: Speakers[7].BioGR,
     socials: getSocials(Speakers, 7)
   },
@@ -208,7 +208,7 @@ export const allExpWorkshops = applyPosterBasePath([
     title: ExpWorkshops[0].ArtName,
     itemColor: "rgba(45, 35, 18, 0.9)",
     description: ExpWorkshops[0].DescriptionGR,
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/workshops/photo-SOUXOUMOUXOU.png",
     personalDescription: ExpWorkshops[0].BioGR,
     socials: getSocials(ExpWorkshops, 0)
   },
@@ -221,7 +221,7 @@ export const allExpWorkshops = applyPosterBasePath([
     title: ExpWorkshops[1].ArtName,
     itemColor: "rgba(20, 20, 20, 0.92)",
     description: ExpWorkshops[1].DescriptionGR,
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/workshops/photo-WABISABI.png",
     personalDescription: ExpWorkshops[1].BioGR,
     socials: getSocials(ExpWorkshops, 1)
   },
@@ -372,7 +372,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[3].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[3].DescriptionGR,
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/performancers/photo_GETUP.png",
     personalDescription: Performances[3].BioGR,
     socials: getSocials(Performances, 3)
   },
@@ -385,7 +385,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[4].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[4].DescriptionGR,
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/performancers/photo_GETUP.png",
     personalDescription: Performances[4].BioGR,
     socials: getSocials(Performances, 4)
   }
