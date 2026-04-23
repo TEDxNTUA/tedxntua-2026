@@ -184,12 +184,10 @@ export default function SponsorsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sectionMarkers, setSectionMarkers] = useState([]);
   const [activeSection, setActiveSection] = useState(null);
-  const [outroProgress, setOutroProgress] = useState(0);
   const [vh, setVh] = useState(0);
   
   const targetProgressRef = useRef(0);
   const currentProgressRef = useRef(0);
-  const outroRef = useRef(null);
 
   // Stable VH for mobile
   useEffect(() => {
@@ -231,8 +229,8 @@ export default function SponsorsPage() {
       const scrollY = window.scrollY;
       const viewportHeight = vh || window.innerHeight;
       
-      // Hero reveal progress - adjusted for faster initial appearance
-      const scrollDistance = viewportHeight * 1.5;
+      // Hero reveal progress - deliberate cinematic window
+      const scrollDistance = viewportHeight * 2.5;
       const revealProgress = Math.min(scrollY / scrollDistance, 1);
       targetProgressRef.current = revealProgress;
       setProgress(revealProgress);
@@ -240,15 +238,6 @@ export default function SponsorsPage() {
       // Unlock visuals once hero text is mostly materialized
       const unlocked = scrollY > viewportHeight * 0.7;
       if (unlocked !== isUnlocked) setIsUnlocked(unlocked);
-
-      // Outro tracking
-      if (outroRef.current) {
-        const rect = outroRef.current.getBoundingClientRect();
-        const start = viewportHeight * 0.95;
-        const end = viewportHeight * 0.25;
-        const p = Math.min(Math.max((start - rect.top) / (start - end), 0), 1);
-        setOutroProgress(p);
-      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -359,41 +348,46 @@ export default function SponsorsPage() {
       </div>
 
       <div className="relative z-10">
-        <div className="relative h-[280vh] w-full">
+        <div className="relative h-[350vh] w-full">
           <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
             <div 
-              className="w-full px-4 text-center transition-opacity duration-700"
+              className="w-full px-4 text-center transition-all duration-700"
               style={{ 
-                opacity: dampedProgress < 0.01 ? 0 : (dampedProgress > 0.9 ? Math.max(0, 1 - (dampedProgress - 0.9) * 10) : 1)
+                // Letter-by-letter appearance: Hidden initially, then reveals, then fades out at the very end
+                opacity: dampedProgress < 0.05 ? 0 : (dampedProgress > 0.9 ? Math.max(0, 1 - (dampedProgress - 0.9) * 15) : 1),
+                transform: `scale(${dampedProgress < 0.05 ? 0.95 : 1})`
               }}
             >
               <ScrollRevealText 
                 text="You help us at every step of the cycle."
                 progress={dampedProgress} 
-                reducedMotion={reducedMotion}
                 className={`max-w-5xl mx-auto ${copixelDisplay.className} text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[1.1] tracking-tight font-black italic uppercase`}
                 colorMode="green-split"
-                stagger={25}
               />
-              
-              {!reducedMotion && (
-                <div 
-                  className="mt-20 flex flex-col items-center gap-6 transition-all duration-1000"
-                  style={{ 
-                    opacity: dampedProgress < 0.05 ? 1 : Math.max(0, 1 - dampedProgress * 6),
-                    transform: `translateY(${dampedProgress * 40}px)`
-                  }}
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="text-green-500/60 text-[10px] font-black tracking-[0.6em] uppercase">Initialize Cycle</span>
-                    <div className="w-32 h-[1px] bg-white/10 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-green-500/50 animate-[shimmer_2s_infinite]" style={{ transform: 'translateX(-100%)' }} />
-                    </div>
-                  </div>
-                  <div className="w-px h-16 bg-gradient-to-b from-green-500/50 via-green-500/10 to-transparent animate-bounce" />
-                </div>
-              )}
             </div>
+
+            {!reducedMotion && (
+              <div 
+                className="absolute bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 transition-all duration-1000"
+                style={{ 
+                  opacity: dampedProgress < 0.15 ? 1 : Math.max(0, 1 - (dampedProgress - 0.15) * 8),
+                  transform: `translate(-50%, ${dampedProgress * 60}px)`
+                }}
+              >
+                <div className="flex items-center gap-4">
+                  <span className="text-green-500/60 text-[10px] font-black tracking-[0.6em] uppercase animate-pulse">Initialize Cycle</span>
+                  <div className="w-32 h-[1px] bg-white/10 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-green-500/50 animate-[shimmer_2s_infinite]" style={{ transform: 'translateX(-100%)' }} />
+                  </div>
+                </div>
+                <div className="flex flex-col items-center gap-2 animate-bounce">
+                  <div className="w-px h-12 bg-gradient-to-b from-green-500/50 to-green-500/10" />
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-green-500/50">
+                    <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+                  </svg>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -407,29 +401,6 @@ export default function SponsorsPage() {
                 <SponsorTierSection tier={tier} index={index} />
               </Fragment>
             ))}
-          </div>
-
-          {/* Visionary Story Section */}
-          <div ref={outroRef} className="mt-60 mb-20 py-32 border-y border-white/5 relative overflow-hidden rounded-[40px] bg-white/[0.01] backdrop-blur-3xl">
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-green-500/10 to-transparent" />
-              <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-green-500/10 to-transparent" />
-            </div>
-
-            <ScrollRevealWord 
-              text="Our vision is amplified by those who believe in the cycle. Every partnership is a restart, a new beginning, and a commitment to the genesis of a better tomorrow."
-              progress={outroProgress}
-              className={`max-w-5xl mx-auto text-center ${copixelDisplay.className} text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white leading-tight font-black italic uppercase tracking-wider px-6`}
-              colorMode="split"
-            />
-            
-            <div className="mt-20 flex flex-col items-center gap-4 opacity-50">
-              <span className="text-[10px] font-black tracking-[0.5em] text-green-500/80 uppercase">Genesis Complete</span>
-              <div 
-                className="h-px bg-green-500/40 transition-all duration-1000 shadow-[0_0_10px_rgba(34,197,94,0.4)]"
-                style={{ width: `${outroProgress * 100}%`, maxWidth: '300px' }}
-              />
-            </div>
           </div>
 
           <div className="mt-40 mb-32 flex flex-col items-center gap-12">

@@ -119,35 +119,41 @@ export default function ScrollRevealText({
       <style jsx>{`
         .reveal-container {
           --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-          perspective: 1000px;
+          perspective: 1200px;
         }
 
         .reveal-char, .reveal-space {
-          /* Physics-based materialization */
-          --offset: calc(var(--char-index) / var(--total-chars));
-          --factor: calc((var(--reveal-progress) - var(--offset) * 0.5) * 2);
+          /* Letter-by-letter timing linked to progress */
+          /* Starts at 0.1, ends at 0.9 */
+          --start-offset: 0.1;
+          --end-offset: 0.9;
+          --char-percent: calc(var(--char-index) / var(--total-chars));
+          --start: calc(var(--start-offset) + var(--char-percent) * (var(--end-offset) - var(--start-offset)));
+          --end: calc(var(--start) + 0.1);
+          
+          --factor: calc((var(--reveal-progress) - var(--start)) / (var(--end) - var(--start)));
           --vis: clamp(0, var(--factor), 1);
           --inv-vis: calc(1 - var(--vis));
 
           opacity: var(--vis);
-          filter: blur(calc(var(--inv-vis) * 12px));
+          filter: blur(calc(var(--inv-vis) * 15px));
           transform: 
             translateY(calc(var(--inv-vis) * 20px))
-            translateZ(calc(var(--inv-vis) * -50px))
-            rotateX(calc(var(--inv-vis) * 45deg))
+            translateZ(calc(var(--inv-vis) * -100px))
+            rotateX(calc(var(--inv-vis) * 60deg))
             scale(calc(1 + var(--inv-vis) * 0.2));
           
           transition: 
-            opacity 600ms var(--ease-out-expo), 
-            filter 800ms var(--ease-out-expo), 
-            transform 900ms var(--ease-out-expo);
+            opacity 800ms var(--ease-out-expo), 
+            filter 1000ms var(--ease-out-expo), 
+            transform 1200ms var(--ease-out-expo);
           will-change: opacity, filter, transform;
         }
 
         @media (max-width: 768px) {
           .reveal-char, .reveal-space {
-            filter: blur(calc(var(--inv-vis) * 6px));
-            transition-duration: 500ms;
+            filter: blur(calc(var(--inv-vis) * 8px));
+            transition-duration: 600ms;
           }
         }
 
@@ -157,7 +163,7 @@ export default function ScrollRevealText({
         }
 
         .reveal-char {
-          animation: flicker calc(2s + var(--char-index) * 0.1s) infinite;
+          animation: flicker calc(2.5s + var(--char-index) * 0.1s) infinite;
         }
       `}</style>
     </div>

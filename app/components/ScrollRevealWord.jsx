@@ -3,8 +3,8 @@
 import { useMemo, useEffect, useRef } from "react";
 
 /**
- * Specialized Word-by-Word Reveal for Sponsors Page.
- * Isolated from the global ScrollRevealText to preserve site-wide branding.
+ * Professional Word-by-Word Reveal for Sponsors Page.
+ * Features a "Digital Materialization" effect with individual word timing.
  */
 export default function ScrollRevealWord({ 
   text, 
@@ -45,6 +45,8 @@ export default function ScrollRevealWord({
           
           if (colorMode === "split") {
              colorClass = globalCharIndex >= halfPoint ? "text-red-600" : "text-white";
+          } else if (colorMode === "green-split") {
+             colorClass = globalCharIndex >= halfPoint ? "text-green-500" : "text-white";
           }
 
           return (
@@ -84,25 +86,41 @@ export default function ScrollRevealWord({
       {wordElements}
       <style jsx>{`
         .reveal-container-word {
-          --ease: cubic-bezier(0.33, 1, 0.68, 1);
+          --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+          perspective: 1200px;
         }
 
         .reveal-word {
-          /* Math: Each word gets its own 1/total slice of the progress */
-          --start: calc(var(--word-index) / var(--total-words));
-          --end: calc((var(--word-index) + 1) / var(--total-words));
+          /* Professional Timing: 
+             The reveal starts at 0.1 progress and finishes at 0.9.
+             Each word is strictly tied to its index. */
+          --start: calc(0.1 + (var(--word-index) / var(--total-words)) * 0.8);
+          --end: calc(0.1 + ((var(--word-index) + 0.5) / var(--total-words)) * 0.8);
           
-          /* Calculate local visibility for this word */
+          /* Calculate local visibility */
           --factor: calc((var(--reveal-progress) - var(--start)) / (var(--end) - var(--start)));
           --vis: clamp(0, var(--factor), 1);
           --inv-vis: calc(1 - var(--vis));
 
           opacity: var(--vis);
-          filter: blur(calc(var(--inv-vis) * 8px));
-          transform: translateY(calc(var(--inv-vis) * 10px));
+          filter: blur(calc(var(--inv-vis) * 12px));
+          transform: 
+            translateY(calc(var(--inv-vis) * 15px))
+            rotateX(calc(var(--inv-vis) * 45deg))
+            scale(calc(1 - var(--inv-vis) * 0.05));
           
-          transition: opacity 500ms var(--ease), filter 500ms var(--ease), transform 500ms var(--ease);
+          transition: 
+            opacity 700ms var(--ease-out-expo), 
+            filter 900ms var(--ease-out-expo), 
+            transform 1100ms var(--ease-out-expo);
           will-change: opacity, filter, transform;
+        }
+
+        @media (max-width: 768px) {
+          .reveal-word {
+            filter: blur(calc(var(--inv-vis) * 6px));
+            transition-duration: 500ms;
+          }
         }
       `}</style>
     </div>
