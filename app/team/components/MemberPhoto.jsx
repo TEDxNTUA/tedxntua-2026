@@ -74,6 +74,11 @@ export default function MemberPhoto({ member, containerClassName = "", container
     }
   };
 
+  const photos = Array.isArray(member.photos) ? member.photos : (member.photo ? [member.photo] : []);
+  const mainPhoto = photos[0] || pickCollectiveImage(member.id);
+  const hoverPhoto = photos[1];
+  const hasHoverPhoto = !!hoverPhoto;
+
   return (
     <div
       className={`relative group overflow-hidden ${containerClassName}`}
@@ -81,15 +86,26 @@ export default function MemberPhoto({ member, containerClassName = "", container
       
       {/* Zoom wrapper — separate from SmoothImage so opacity & transform transitions don't conflict */}
       <div 
-        className="w-full h-full transition-transform duration-300 ease-out group-hover:scale-110 cursor-pointer"
+        className="w-full h-full transition-transform duration-500 ease-out group-hover:scale-110 cursor-pointer relative"
         onClick={handleImageClick}>
+        
+        {/* Main Photo */}
         <SmoothImage
-          src={member.photo || pickCollectiveImage(member.id)}
+          src={mainPhoto}
           alt={member.name}
           loading="eager"
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover transition-opacity duration-700 ${hasHoverPhoto ? 'group-hover:opacity-0' : ''}`}
           style={{ objectPosition: "50% 12%" }} />
         
+        {/* Hover Photo */}
+        {hasHoverPhoto && (
+          <SmoothImage
+            src={hoverPhoto}
+            alt={member.name}
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+            style={{ objectPosition: "50% 12%" }} />
+        )}
       </div>
 
       {/* Social overlay — subtle visibility by default, enhanced on hover and toggle on mobile touch */}

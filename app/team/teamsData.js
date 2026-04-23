@@ -8,15 +8,18 @@ export const teams = [
     title: "Curator",
     description: "The people curating the talks and program.",
     heroImages: [
-      assetPath("/MTT/curators_mtt/angelos/mtt-255.jpg"),
-      assetPath("/MTT/curators_mtt/naria/mtt-63.jpg"),
-      assetPath("/MTT/curators_mtt/angelos/mtt-256.jpg")
+      assetPath("/MTT_final/Curators_ΤΕΛΙΚΕΣ✅/Άγγελος ✅/mtt-9.jpeg"),
+      assetPath("/MTT_final/Curators_ΤΕΛΙΚΕΣ✅/Νάρια ✅/mtt-69.jpeg"),
+      assetPath("/MTT_final/Curators_ΤΕΛΙΚΕΣ✅/Άγγελος ✅/mtt-278.jpeg")
     ],
     members: [
       {
         id: "aggelos",
         name: "Άγγελος Καρασαββίδης",
-        photo: assetPath("/MTT/curators_mtt/angelos/mtt-254.jpg"),
+        photos: [
+          assetPath("/MTT_final/Curators_ΤΕΛΙΚΕΣ✅/Άγγελος ✅/mtt-9.jpeg"),
+          assetPath("/MTT_final/Curators_ΤΕΛΙΚΕΣ✅/Άγγελος ✅/mtt-278.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/karasavvidiss",
         }
@@ -24,7 +27,10 @@ export const teams = [
       {
         id: "naria",
         name: "Νάρια Σπηλίδη",
-        photo: assetPath("/MTT/curators_mtt/naria/mtt-62.jpg"),
+        photos: [
+          assetPath("/MTT_final/Curators_ΤΕΛΙΚΕΣ✅/Νάρια ✅/mtt-76.jpeg"),
+          assetPath("/MTT_final/Curators_ΤΕΛΙΚΕΣ✅/Νάρια ✅/mtt-69.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/naria_spilidi",
         }
@@ -36,15 +42,18 @@ export const teams = [
     title: "Information and Technology",
     description: "Technology, infrastructure and stage management.",
     heroImages: [
-      assetPath("/MTT/it_mtt/nikos/mtt-306.jpg"),
-      assetPath("/MTT/it_mtt/antonis/mtt-528.jpg"),
-      assetPath("/MTT/it_mtt/misa/mtt-15.jpg")
+      assetPath("/MTT_final/IT_ΤΕΛΙΚΕΣ ✅/Νίκος ✅/mtt-43.jpeg"),
+      assetPath("/MTT_final/IT_ΤΕΛΙΚΕΣ ✅/Αντώνης ✅/mtt-532.jpeg"),
+      assetPath("/MTT_final/IT_ΤΕΛΙΚΕΣ ✅/Μίσα ✅/mtt-15.jpeg")
     ],
     members: [
       {
         id: "nikos",
         name: "Νικόλαος Αναγνώστου",
-        photo: assetPath("/MTT/it_mtt/nikos/mtt-44.jpg"),
+        photos: [
+          assetPath("/MTT_final/IT_ΤΕΛΙΚΕΣ ✅/Νίκος ✅/mtt-43.jpeg"),
+          assetPath("/MTT_final/IT_ΤΕΛΙΚΕΣ ✅/Νίκος ✅/mtt-46-_.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/nikos._anagnostou",
         }
@@ -52,7 +61,10 @@ export const teams = [
       {
         id: "antonis",
         name: "Αντώνης Βάκρινος",
-        photo: assetPath("/MTT/it_mtt/antonis/mtt-527.jpg"),
+        photos: [
+          assetPath("/MTT_final/IT_ΤΕΛΙΚΕΣ ✅/Αντώνης ✅/mtt-532.jpeg"),
+          assetPath("/MTT_final/IT_ΤΕΛΙΚΕΣ ✅/Αντώνης ✅/mtt-530.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/ant0nis__",
         }
@@ -60,7 +72,10 @@ export const teams = [
       {
         id: "misa",
         name: "Mykhailo Kartsev",
-        photo: assetPath("/MTT/it_mtt/misa/mtt-14.jpg"),
+        photos: [
+          assetPath("/MTT_final/IT_ΤΕΛΙΚΕΣ ✅/Μίσα ✅/mtt-15.jpeg"),
+          assetPath("/MTT_final/IT_ΤΕΛΙΚΕΣ ✅/Μίσα ✅/mtt-17.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/piwzik",
         }
@@ -80,7 +95,10 @@ export const teams = [
       {
         id: "argyro",
         name: "Αργυρώ Κλενιάτη",
-        photo: assetPath("/MTT/design_mtt/argyro/mtt-171.jpg"),
+        photos: [
+          assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Αργυρώ/mtt-180.jpg"),
+          assetPath("/MTT/design_mtt/argyro/mtt-171.jpg")
+        ],
         social: {
           instagram: "https://www.instagram.com/sylviaklen6",
         }
@@ -116,15 +134,18 @@ export const teams = [
     title: "Fundraising",
     description: "Sponsorships, donations and budget planning.",
     heroImages: [
-      assetPath("/MTT/fr_mtt/aristotelis/mtt-101.jpg"),
-      assetPath("/MTT/fr_mtt/artemis/mtt-126.jpg"),
-      assetPath("/MTT/fr_mtt/giorgos/mtt-304.jpg")
+      assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Αριστοτέλης ✅/mtt-100.jpeg"),
+      assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Άρτεμις ✅/mtt-128.jpeg"),
+      assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Γιώργος ✅/mtt-304.jpeg")
     ],
     members: [
       {
         id: "aristotelis",
         name: "Αριστοτέλης Ρούμπος",
-        photo: assetPath("/MTT/fr_mtt/aristotelis/mtt-100.jpg"),
+        photos: [
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Αριστοτέλης ✅/mtt-100.jpeg"),
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Αριστοτέλης ✅/mtt-103.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/aristotelis_roub",
         }
@@ -132,7 +153,10 @@ export const teams = [
       {
         id: "artemis",
         name: "Άρτεμις Κυριακου",
-        photo: assetPath("/MTT/fr_mtt/artemis/mtt-125.jpg"),
+        photos: [
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Άρτεμις ✅/mtt-128.jpeg"),
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Άρτεμις ✅/mtt-136.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/artemiskyriakouu",
         }
@@ -140,7 +164,10 @@ export const teams = [
       {
         id: "giorgos",
         name: "Γιώργος Ρούσης",
-        photo: assetPath("/MTT/fr_mtt/giorgos/mtt-303.jpg"),
+        photos: [
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Γιώργος ✅/mtt-97.jpeg"),
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Γιώργος ✅/mtt-99.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/rousis__",
         }
@@ -148,7 +175,10 @@ export const teams = [
       {
         id: "eirini",
         name: "Ειρήνη Ελένη Ιωαννίδου",
-        photo: assetPath("/MTT/fr_mtt/eirini/mtt-26.jpg"),
+        photos: [
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Ειρήνη ✅/mtt-30.jpeg"),
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Ειρήνη ✅/mtt-37.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/ioanniduu",
         }
@@ -156,7 +186,10 @@ export const teams = [
       {
         id: "eleni",
         name: "Ελένη Παπαϊωάννου",
-        photo: assetPath("/MTT/fr_mtt/eleni/mtt-104.jpg"),
+        photos: [
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Ελένη ✅/mtt-106.jpeg"),
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Ελένη ✅/mtt-116.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/elenippn",
         }
@@ -164,7 +197,10 @@ export const teams = [
       {
         id: "martina",
         name: "Μαρτίνα Ζακέο",
-        photo: assetPath("/MTT/fr_mtt/martina/mtt-118.jpg"),
+        photos: [
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Μαρτίνα ✅/mtt-120.jpeg"),
+          assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Μαρτίνα ✅/mtt-124.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/martinaazaccheo",
         }
@@ -176,15 +212,18 @@ export const teams = [
     title: "Speakers",
     description: "Speaker curation and liaison.",
     heroImages: [
-      assetPath("/MTT/speakers_mtt/elena_k/mtt-386.jpg"),
-      assetPath("/MTT/speakers_mtt/eleftheria/mtt-435.jpg"),
-      assetPath("/MTT/speakers_mtt/konstantinos/mtt-402.jpg")
+      assetPath("/MTT_final/Speakers_ΤΕΛΙΚΕΣ ✅/Έλενα ✅/mtt-445.jpeg"),
+      assetPath("/MTT_final/Speakers_ΤΕΛΙΚΕΣ ✅/Ελευθερία ✅/mtt-436.jpeg"),
+      assetPath("/MTT_final/Speakers_ΤΕΛΙΚΕΣ ✅/Κωνσταντίνος ✅/mtt-409.jpeg")
     ],
     members: [
       {
         id: "elena-k",
         name: "Έλενα Κοτσιαφίτη",
-        photo: assetPath("/MTT/speakers_mtt/elena_k/mtt-385.jpg"),
+        photos: [
+          assetPath("/MTT_final/Speakers_ΤΕΛΙΚΕΣ ✅/Έλενα ✅/mtt-445.jpeg"),
+          assetPath("/MTT_final/Speakers_ΤΕΛΙΚΕΣ ✅/Έλενα ✅/mtt-538.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/kotsiafiti_",
         }
@@ -192,7 +231,10 @@ export const teams = [
       {
         id: "eleftheria",
         name: "Ελευθερία Λαζαρίδη",
-        photo: assetPath("/MTT/speakers_mtt/eleftheria/mtt-434.jpg"),
+        photos: [
+          assetPath("/MTT_final/Speakers_ΤΕΛΙΚΕΣ ✅/Ελευθερία ✅/mtt-436.jpeg"),
+          assetPath("/MTT_final/Speakers_ΤΕΛΙΚΕΣ ✅/Ελευθερία ✅/mtt-512.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/eleftheria_laz_",
           linkedin: "https://www.linkedin.com/in/eleftheria-lazaridi",
@@ -202,7 +244,10 @@ export const teams = [
       {
         id: "konstantinos",
         name: "Κωνσταντίνος Καραγιαννόπουλος",
-        photo: assetPath("/MTT/speakers_mtt/konstantinos/mtt-401.jpg"),
+        photos: [
+          assetPath("/MTT_final/Speakers_ΤΕΛΙΚΕΣ ✅/Κωνσταντίνος ✅/mtt-409.jpeg"),
+          assetPath("/MTT_final/Speakers_ΤΕΛΙΚΕΣ ✅/Κωνσταντίνος ✅/mtt-404.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/d.karlos_",          linkedin: "https://www.linkedin.com/in/konstantinos-karagiannopoulos-5234ba39b/",
           facebook: "https://www.facebook.com/dinoskarlos.dinoskarlos?locale=el_GR",        }
@@ -214,15 +259,18 @@ export const teams = [
     title: "Experience",
     description: "Designing attendee and speaker experience.",
     heroImages: [
-      assetPath("/MTT/experience_mtt/areti/mtt-235.jpg"),
-      assetPath("/MTT/experience_mtt/elpida/mtt-282.jpg"),
-      assetPath("/MTT/experience_mtt/fani/mtt-329.jpg")
+      assetPath("/MTT_final/Experience_ΤΕΛΙΚΕΣ ✅/Αρετή ✅/mtt-242.jpeg"),
+      assetPath("/MTT_final/Experience_ΤΕΛΙΚΕΣ ✅/Ελπίδα ✅/mtt-286.jpeg"),
+      assetPath("/MTT_final/Experience_ΤΕΛΙΚΕΣ ✅/Φανή ✅/mtt-88.jpeg")
     ],
     members: [
       {
         id: "areti",
         name: "Αρετή Κωνσταντίνου",
-        photo: assetPath("/MTT/experience_mtt/areti/mtt-234.jpg"),
+        photos: [
+          assetPath("/MTT_final/Experience_ΤΕΛΙΚΕΣ ✅/Αρετή ✅/mtt-242.jpeg"),
+          assetPath("/MTT_final/Experience_ΤΕΛΙΚΕΣ ✅/Αρετή ✅/mtt-252.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/aretikonstantinouu",
         }
@@ -230,7 +278,10 @@ export const teams = [
       {
         id: "elpida",
         name: "Ελπίδα Λαυρενίδη",
-        photo: assetPath("/MTT/experience_mtt/elpida/mtt-230.jpg"),
+        photos: [
+          assetPath("/MTT_final/Experience_ΤΕΛΙΚΕΣ ✅/Ελπίδα ✅/mtt-286.jpeg"),
+          assetPath("/MTT_final/Experience_ΤΕΛΙΚΕΣ ✅/Ελπίδα ✅/mtt-335.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/elpidalav",
         }
@@ -238,7 +289,10 @@ export const teams = [
       {
         id: "nancy",
         name: "Νάνσυ Σουλτανοπούλου",
-        photo: assetPath("/MTT/experience_mtt/nancy/mtt-215.jpg"),
+        photos: [
+          assetPath("/MTT_final/Experience_ΤΕΛΙΚΕΣ ✅/Νάνσυ ✅/mtt-227.jpeg"),
+          assetPath("/MTT_final/Experience_ΤΕΛΙΚΕΣ ✅/Νάνσυ ✅/mtt-219.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/naancysllt",
           linkedin: "https://www.linkedin.com/in/nancy-soultanopoulou-6b3412239?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
@@ -247,7 +301,10 @@ export const teams = [
       {
         id: "fani",
         name: "Φανή Παναγιώτου",
-        photo: assetPath("/MTT/experience_mtt/fani/mtt-328.jpg"),
+        photos: [
+          assetPath("/MTT_final/Experience_ΤΕΛΙΚΕΣ ✅/Φανή ✅/mtt-88.jpeg"),
+          assetPath("/MTT_final/Experience_ΤΕΛΙΚΕΣ ✅/Φανή ✅/mtt-331.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/fannie.pn",
         }
@@ -259,15 +316,18 @@ export const teams = [
     title: "Social Media",
     description: "Communications, socials and outreach.",
     heroImages: [
-      assetPath("/MTT/media_mtt/elena_x/mtt-22.jpg"),
-      assetPath("/MTT/media_mtt/malvina/mtt-2.jpg"),
-      assetPath("/MTT/media_mtt/myrto/mtt-206.jpg")
+      assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Έλενα ✅/mtt-22.jpeg"),
+      assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-2.jpeg"),
+      assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μυρτώ ✅/mtt-209.jpg")
     ],
     members: [
       {
         id: "elena-x",
         name: "Έλενα Ξιξή",
-        photo: assetPath("/MTT/media_mtt/elena_x/mtt-21.jpg"),
+        photos: [
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Έλενα ✅/mtt-22.jpeg"),
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Έλενα ✅/mtt-313.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/helenaaa._.xixhhh",
         }
@@ -275,7 +335,11 @@ export const teams = [
       {
         id: "malvina",
         name: "Μαλβίνα Στεμπίλη",
-        photo: assetPath("/MTT/media_mtt/malvina/mtt-1.jpg"),
+        photos: [
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-56.jpeg"),
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-2.jpeg"),
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-59.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/malvinaast",
           linkedin: "https://www.linkedin.com/in/malvina-stempili-15995b392?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
@@ -284,7 +348,10 @@ export const teams = [
       {
         id: "myrto",
         name: "Μυρτώ Μπάντου",
-        photo: assetPath("/MTT/media_mtt/myrto/mtt-205.jpg"),
+        photos: [
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μυρτώ ✅/mtt-209.jpg"),
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μυρτώ ✅/mtt-204.jpg")
+        ],
         social: {
           instagram: "https://www.instagram.com/mimiminymoe",
           linkedin: "https://www.linkedin.com/in/myrto-badou",
@@ -293,7 +360,11 @@ export const teams = [
       {
         id: "konstantinos-x",
         name: "Κωνσταντίνος Χάρος",
-        photo: assetPath("/MTT/media_mtt/"),
+        photos: [
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Κώστας/mtt-300.jpg"),
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Κώστας/mtt-299.jpg"),
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Κώστας/mtt-301.jpg")
+        ],
         social: {
           instagram: "https://www.instagram.com/kostasharos",
         }
@@ -305,15 +376,18 @@ export const teams = [
     title: "Venue",
     description: "Venue logistics and on-site operations.",
     heroImages: [
-      assetPath("/MTT/venue_mtt/thodoris/mtt-540.jpg"),
-      assetPath("/MTT/venue_mtt/fenia/mtt-138.jpg"),
-      assetPath("/MTT/venue_mtt/fenia/mtt-139.jpg")
+      assetPath("/MTT_final/Venue_ΤΕΛΙΚΕΣ ✅/Θοδωρής ✅/mtt-539.jpeg"),
+      assetPath("/MTT_final/Venue_ΤΕΛΙΚΕΣ ✅/Φένια ✅/mtt-145.jpeg"),
+      assetPath("/MTT_final/Venue_ΤΕΛΙΚΕΣ ✅/Θοδωρής ✅/mtt-540.jpeg")
     ],
     members: [
       {
         id: "thodoris",
         name: "Θοδωρής Κεραμιανός",
-        photo: assetPath("/MTT/venue_mtt/thodoris/mtt-539.jpg"),
+        photos: [
+          assetPath("/MTT_final/Venue_ΤΕΛΙΚΕΣ ✅/Θοδωρής ✅/mtt-539.jpeg"),
+          assetPath("/MTT_final/Venue_ΤΕΛΙΚΕΣ ✅/Θοδωρής ✅/mtt-540.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/theodore_keramianos",
         }
@@ -321,7 +395,10 @@ export const teams = [
       {
         id: "fenia",
         name: "Φωτεινή Κωνσταντίνα Μπρίτσα",
-        photo: assetPath("/MTT/venue_mtt/fenia/mtt-137.jpg"),
+        photos: [
+          assetPath("/MTT_final/Venue_ΤΕΛΙΚΕΣ ✅/Φένια ✅/mtt-145.jpeg"),
+          assetPath("/MTT_final/Venue_ΤΕΛΙΚΕΣ ✅/Φένια ✅/mtt-138.jpeg")
+        ],
         social: {
           instagram: "https://www.instagram.com/fenia_br",
         }
