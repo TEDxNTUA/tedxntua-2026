@@ -3,13 +3,8 @@
 import { useMemo, useEffect, useRef } from "react";
 
 /**
- * High-Performance Character Reveal Component.
- * Optimized for "No-Lag" performance on all platforms.
- * 
- * Strategy:
- * 1. Renders character spans only ONCE when text changes.
- * 2. Uses CSS Variables and GPU-accelerated calc/clamp for scroll-linked reveals.
- * 3. Bypasses React re-renders for every scroll frame.
+ * High-Performance "Materialization" Reveal Component.
+ * Optimized for Cycle 0 Aesthetic.
  */
 export default function ScrollRevealText({ 
   text, 
@@ -23,8 +18,6 @@ export default function ScrollRevealText({
   const totalLength = text.length;
   const halfPoint = Math.floor(totalLength / 2);
 
-  // Update CSS variable on the container when progress changes.
-  // This is extremely light compared to re-rendering the whole component tree.
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.style.setProperty('--reveal-progress', progress);
@@ -81,6 +74,12 @@ export default function ScrollRevealText({
           } else if (colorMode === "green") {
             baseColorClass = "text-green-500";
             glowClass = "drop-shadow-[0_0_20px_rgba(34,197,94,0.6)]";
+          } else if (colorMode === "white") {
+            baseColorClass = "text-white";
+            glowClass = "drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]";
+          } else if (colorMode === "inherit") {
+            baseColorClass = "";
+            glowClass = "";
           }
 
           return (
@@ -89,9 +88,7 @@ export default function ScrollRevealText({
               className={`reveal-char inline-block ${baseColorClass} ${glowClass}`}
               style={{ 
                 "--char-index": index,
-                // If stagger is provided, we use it for a time-based transition (Hero)
-                // Otherwise, the CSS uses the --reveal-progress variable directly
-                transitionDelay: stagger > 0 ? `${(index % 30) * stagger}ms` : '0ms'
+                transitionDelay: stagger > 0 ? `${(index % 60) * stagger}ms` : '0ms'
               }}
             >
               {char}
@@ -121,30 +118,47 @@ export default function ScrollRevealText({
       {charParts}
       <style jsx>{`
         .reveal-container {
-          /* No-Lag Reveal Engine */
-          --ease: cubic-bezier(0.33, 1, 0.68, 1);
+          --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+          perspective: 1000px;
         }
 
         .reveal-char, .reveal-space {
-          /* Calculate visibility state purely in CSS based on parent's --reveal-progress */
-          /* factor becomes positive when char should be visible */
-          --factor: calc(var(--reveal-progress) * var(--total-chars) * 1.15 - var(--char-index));
+          /* Physics-based materialization */
+          --offset: calc(var(--char-index) / var(--total-chars));
+          --factor: calc((var(--reveal-progress) - var(--offset) * 0.5) * 2);
           --vis: clamp(0, var(--factor), 1);
           --inv-vis: calc(1 - var(--vis));
 
           opacity: var(--vis);
-          filter: blur(calc(var(--inv-vis) * 10px));
+          filter: blur(calc(var(--inv-vis) * 12px));
           transform: 
-            scale(calc(1 - var(--inv-vis) * 0.08))
-            rotateX(calc(var(--inv-vis) * 30deg));
+            translateY(calc(var(--inv-vis) * 20px))
+            translateZ(calc(var(--inv-vis) * -50px))
+            rotateX(calc(var(--inv-vis) * 45deg))
+            scale(calc(1 + var(--inv-vis) * 0.2));
           
-          /* Smoothness: Using transition only for the toggle ensures snappy but fluid motion */
-          transition: opacity 300ms var(--ease), filter 300ms var(--ease), transform 300ms var(--ease);
+          transition: 
+            opacity 600ms var(--ease-out-expo), 
+            filter 800ms var(--ease-out-expo), 
+            transform 900ms var(--ease-out-expo);
           will-change: opacity, filter, transform;
         }
 
-        /* If stagger is enabled (Hero), we let the transition delay do the heavy lifting */
-        /* If not, the variables drive the state directly with no overhead */
+        @media (max-width: 768px) {
+          .reveal-char, .reveal-space {
+            filter: blur(calc(var(--inv-vis) * 6px));
+            transition-duration: 500ms;
+          }
+        }
+
+        @keyframes flicker {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.85; }
+        }
+
+        .reveal-char {
+          animation: flicker calc(2s + var(--char-index) * 0.1s) infinite;
+        }
       `}</style>
     </div>
   );
