@@ -5,121 +5,26 @@ import { sponsorTiers } from "./sponsorsData";
 import SponsorTierSection from "./components/SponsorTierSection";
 import { withBasePath } from "../lib/basePath";
 import localFont from "next/font/local";
+import ScrollRevealText from "../components/ScrollRevealText";
+import ScrollRevealWord from "../components/ScrollRevealWord";
 
 const copixelDisplay = localFont({
   src: "../../Copixel-Futuristic-Font/Fonts/Copixel-Display.otf",
   display: "swap",
 });
 
-const assetPath = (path) => encodeURI(withBasePath(path));
-
 const TIER_COLORS = {
-  "Diamond": { main: "#22d3ee", glow: "rgba(34, 211, 238, 0.8)" },    // Cyan
-  "Platinum": { main: "#93c5fd", glow: "rgba(147, 197, 253, 0.8)" },  // Light Blue
-  "Grand": { main: "#facc15", glow: "rgba(250, 204, 21, 0.8)" },     // Gold
-  "Partners": { main: "#4ade80", glow: "rgba(74, 222, 128, 0.8)" },  // Green
-  "Supporters": { main: "#a1a1aa", glow: "rgba(161, 161, 170, 0.8)" } // Zinc
+  "Diamond": { main: "#22d3ee", glow: "rgba(34, 211, 238, 0.8)" },
+  "Platinum": { main: "#93c5fd", glow: "rgba(147, 197, 253, 0.8)" },
+  "Grand": { main: "#facc15", glow: "rgba(250, 204, 21, 0.8)" },
+  "Partners": { main: "#4ade80", glow: "rgba(74, 222, 128, 0.8)" },
+  "Supporters": { main: "#a1a1aa", glow: "rgba(161, 161, 170, 0.8)" }
 };
-
-// Refined Scroll reveal component for the thank you text
-function ScrollRevealText({ progress, reducedMotion }) {
-  const text = "You help us at every step of the cycle.";
-  const totalLength = text.length;
-  const halfPoint = Math.floor(totalLength / 2);
-
-  const visibleCharCount = reducedMotion ? text.length : Math.floor(progress * text.length * 1.15);
-
-  return (
-    <div className={`max-w-4xl mx-auto text-center px-4 select-none ${copixelDisplay.className}`}>
-      <p className="text-3xl sm:text-5xl md:text-6xl text-white leading-tight tracking-[0.1em] font-black italic uppercase">
-        {(() => {
-          let cursor = 0;
-          const parts = text.split(/(\s+)/);
-          const result = [];
-          
-          parts.forEach((part, partIdx) => {
-            if (/\s+/.test(part)) {
-              // Handle whitespace
-              part.split("").forEach((char) => {
-                const index = cursor;
-                cursor += 1;
-                const isVisible = index < visibleCharCount;
-                result.push(
-                  <span 
-                    key={`space-${index}`} 
-                    className="inline-block"
-                    style={{ opacity: isVisible ? 1 : 0 }}
-                  >
-                    {"\u00A0"}
-                  </span>
-                );
-              });
-            } else {
-              // Handle words
-              const wordStartIndex = cursor;
-              const charElements = part.split("").map((char) => {
-                const index = cursor;
-                cursor += 1;
-                const isVisible = index < visibleCharCount;
-                
-                // Half white, half red logic
-                const isRed = index >= halfPoint;
-                const baseColorClass = isRed ? "text-red-600" : "text-white";
-                const glowClass = isRed 
-                  ? "drop-shadow-[0_0_25px_rgba(220,38,38,0.6)]" 
-                  : "drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]";
-
-                return (
-                  <span
-                    key={`char-${index}`}
-                    className={`inline-block transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${baseColorClass} ${glowClass}`}
-                    style={{ 
-                      opacity: isVisible ? 1 : 0,
-                      filter: `blur(${isVisible ? 0 : 15}px)`,
-                      transform: `
-                        translateY(${isVisible ? 0 : 30}px) 
-                        scale(${isVisible ? 1 : 0.7}) 
-                        rotateX(${isVisible ? 0 : 80}deg)
-                        rotateY(${isVisible ? 0 : 20}deg)
-                      `,
-                      transitionDelay: `${(index % 20) * 15}ms`
-                    }}
-                  >
-                    {char}
-                  </span>
-                );
-              });
-
-              result.push(
-                <span key={`word-${wordStartIndex}`} className="inline-block whitespace-nowrap">
-                  {charElements}
-                </span>
-              );
-            }
-          });
-          return result;
-        })()}
-      </p>
-      
-      {!reducedMotion && (
-        <div 
-          className="mt-16 flex flex-col items-center gap-4 transition-opacity duration-1000"
-          style={{ opacity: progress < 0.1 ? 1 : Math.max(0, 1 - progress * 4) }}
-        >
-          <span className="text-green-500/50 text-[11px] font-black tracking-[0.5em] uppercase">Initialize Sequence</span>
-          <div className="w-px h-16 bg-gradient-to-b from-green-500/50 via-green-500/20 to-transparent animate-bounce" />
-        </div>
-      )}
-    </div>
-  );
-}
-
 
 // Professional Modal for Sponsor Contact
 function SponsorModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({ name: "", company: "", email: "", message: "" });
   const [status, setStatus] = useState("idle"); // idle, sending, success, error
-
   const [errorMessage, setErrorMessage] = useState("");
 
   if (!isOpen) return null;
@@ -141,9 +46,7 @@ function SponsorModal({ isOpen, onClose }) {
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Accept": "application/json"
-        },
+        headers: { "Accept": "application/json" },
         body: submissionData
       });
 
@@ -172,16 +75,15 @@ function SponsorModal({ isOpen, onClose }) {
         onClick={status === "sending" ? null : onClose}
       />
       <div className="relative w-full max-w-lg bg-zinc-900 border border-white/10 rounded-2xl p-8 shadow-2xl overflow-hidden">
-        {/* Glow effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-green-500/10 rounded-full blur-[80px] pointer-events-none" />
         
         <div className="relative z-10">
           <div className="flex justify-between items-start mb-6 gap-4">
-            <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight">Partner with TEDxNTUA</h3>
+            <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight uppercase italic">Partner with TEDxNTUA</h3>
             <button 
               onClick={onClose} 
               disabled={status === "sending"}
-              className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/50 hover:text-white hover:bg-white/10 transition-all text-2xl disabled:opacity-0"
+              className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/50 hover:text-white hover:bg-white/10 transition-all text-2xl"
               aria-label="Close modal"
             >
               &times;
@@ -195,8 +97,8 @@ function SponsorModal({ isOpen, onClose }) {
                   <path d="M20 6L9 17L4 12" />
                 </svg>
               </div>
-              <h4 className="text-xl font-bold text-white">Message Sent!</h4>
-              <p className="text-white/50">Our team will contact you shortly.</p>
+              <h4 className="text-xl font-bold text-white uppercase italic">Message Sent!</h4>
+              <p className="text-white/50 text-sm">Our team will contact you shortly.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -262,7 +164,7 @@ function SponsorModal({ isOpen, onClose }) {
               <button 
                 type="submit"
                 disabled={status === "sending"}
-                className="w-full bg-white text-black font-bold py-4 rounded-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 mt-2 disabled:bg-white/20 disabled:text-white/30 disabled:cursor-not-allowed"
+                className="w-full bg-white text-black font-black py-4 rounded-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 mt-2 disabled:bg-white/20 disabled:text-white/30 disabled:cursor-not-allowed uppercase italic tracking-wider"
               >
                 {status === "sending" ? "Sending Message..." : "Send Inquiry"}
               </button>
@@ -277,49 +179,84 @@ function SponsorModal({ isOpen, onClose }) {
 export default function SponsorsPage() {
   const [reducedMotion, setReducedMotion] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [dampedProgress, setDampedProgress] = useState(0);
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const [windowScrollProgress, setWindowScrollProgress] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sectionMarkers, setSectionMarkers] = useState([]);
   const [activeSection, setActiveSection] = useState(null);
+  const [outroProgress, setOutroProgress] = useState(0);
+  const [vh, setVh] = useState(0);
+  
+  const targetProgressRef = useRef(0);
+  const currentProgressRef = useRef(0);
+  const outroRef = useRef(null);
 
-  // Sync scroll to animation progress
+  // Stable VH for mobile
+  useEffect(() => {
+    const measureStableVh = () => {
+      const h = window.innerHeight;
+      setVh(h);
+      document.documentElement.style.setProperty('--vh', `${h}px`);
+    };
+    measureStableVh();
+    window.addEventListener("resize", measureStableVh);
+    return () => window.removeEventListener("resize", measureStableVh);
+  }, []);
+
+  // Smooth damping animation loop
+  useEffect(() => {
+    let frameId;
+    const animate = () => {
+      const damping = 0.12;
+      const diff = targetProgressRef.current - currentProgressRef.current;
+      currentProgressRef.current += diff * damping;
+      
+      setDampedProgress(currentProgressRef.current);
+      frameId = requestAnimationFrame(animate);
+    };
+    
+    frameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frameId);
+  }, []);
+
+  // Scroll sync logic
   useEffect(() => {
     if (reducedMotion) {
-      setProgress(1);
+      targetProgressRef.current = 1;
       setIsUnlocked(true);
       return;
     }
 
     const handleScroll = () => {
-      const vh = window.innerHeight;
       const scrollY = window.scrollY;
+      const viewportHeight = vh || window.innerHeight;
       
-      // dedicated scroll distance for animation - text fully reveals at 1.0vh
-      const scrollDistance = vh * 1.0;
+      // Hero reveal progress - adjusted for faster initial appearance
+      const scrollDistance = viewportHeight * 1.5;
       const revealProgress = Math.min(scrollY / scrollDistance, 1);
+      targetProgressRef.current = revealProgress;
       setProgress(revealProgress);
       
-      // Determine if we've scrolled enough to "unlock" the sponsors visuals
-      // Threshold increased to match the dwell time
-      const unlocked = scrollY > vh * 0.6;
-      if (unlocked !== isUnlocked) {
-        setIsUnlocked(unlocked);
-      }
+      // Unlock visuals once hero text is mostly materialized
+      const unlocked = scrollY > viewportHeight * 0.7;
+      if (unlocked !== isUnlocked) setIsUnlocked(unlocked);
 
-      // Sidebar progress tracking
-      const totalHeight = document.documentElement.scrollHeight - vh;
-      if (totalHeight > 0) {
-        setWindowScrollProgress(scrollY / totalHeight);
+      // Outro tracking
+      if (outroRef.current) {
+        const rect = outroRef.current.getBoundingClientRect();
+        const start = viewportHeight * 0.95;
+        const end = viewportHeight * 0.25;
+        const p = Math.min(Math.max((start - rect.top) / (start - end), 0), 1);
+        setOutroProgress(p);
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [reducedMotion, isUnlocked]);
+  }, [reducedMotion, isUnlocked, vh]);
 
-  // Markers and Observer
+  // Section markers and intersection observer
   useEffect(() => {
     const calculateMarkers = () => {
       const sections = document.querySelectorAll(".sponsor-tier-section");
@@ -328,30 +265,20 @@ export default function SponsorsPage() {
       
       const markers = Array.from(sections).map(section => {
         const rect = section.getBoundingClientRect();
-        const absoluteTop = rect.top + window.scrollY;
         return {
-          percent: Math.min(Math.max(absoluteTop / totalHeight, 0), 1),
+          percent: Math.min(Math.max((rect.top + window.scrollY) / totalHeight, 0), 1),
           name: section.getAttribute("data-tier")
         };
       });
       setSectionMarkers(markers);
     };
 
-    const observerOptions = {
-      root: null,
-      rootMargin: "-20% 0px -70% 0px",
-      threshold: 0
-    };
-
-    const observerCallback = (entries) => {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.getAttribute("data-tier"));
-        }
+        if (entry.isIntersecting) setActiveSection(entry.target.getAttribute("data-tier"));
       });
-    };
+    }, { rootMargin: "-20% 0px -70% 0px" });
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
     const sections = document.querySelectorAll(".sponsor-tier-section");
     sections.forEach(section => observer.observe(section));
 
@@ -365,56 +292,38 @@ export default function SponsorsPage() {
     };
   }, []);
 
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mq?.matches || false);
-  }, []);
-
   const scrollToSection = (index) => {
     const sections = document.querySelectorAll(".sponsor-tier-section");
     if (sections[index]) {
       const offset = 160;
-      const elementPosition = sections[index].getBoundingClientRect().top + window.scrollY;
       window.scrollTo({
-        top: elementPosition - offset,
+        top: sections[index].getBoundingClientRect().top + window.scrollY - offset,
         behavior: "smooth"
       });
     }
   };
 
   return (
-    <section className="relative min-h-screen bg-black text-white selection:bg-green-500/30">
-      {/* Professional Sponsors Navigation Pill */}
-      <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ${isUnlocked ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+    <section className="relative min-h-screen bg-[#050505] text-white selection:bg-green-500/30">
+      {/* Navigation Pill */}
+      <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-1000 ${isUnlocked ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
         <div className="flex items-center gap-1 sm:gap-2 rounded-full border border-white/10 bg-black/80 p-1.5 sm:p-2 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           {sectionMarkers.map((marker, i) => {
             const isCurrent = activeSection === marker.name;
-            const tierColor = TIER_COLORS[marker.name] || { main: "#ffffff", glow: "rgba(255,255,255,0.5)" };
-            const label = marker.name;
-
+            const tierColor = TIER_COLORS[marker.name] || { main: "#ffffff" };
             return (
               <button 
                 key={i}
                 onClick={() => scrollToSection(i)}
-                className={`
-                  group relative flex items-center justify-center px-3 py-2 sm:px-5 sm:py-2.5 rounded-full transition-all duration-500 overflow-hidden
-                  ${isCurrent ? "bg-white/[0.08]" : "hover:bg-white-[0.04]"}
-                `}
+                className={`group relative flex items-center justify-center px-3 py-2 sm:px-5 sm:py-2.5 rounded-full transition-all duration-500 ${isCurrent ? "bg-white/[0.08]" : "hover:bg-white/[0.04]"}`}
               >
-                {/* Active/Hover Indicator Line */}
                 <div 
-                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] rounded-t-full transition-all duration-500 ease-out ${isCurrent ? "w-1/2 opacity-100" : "w-0 opacity-0 group-hover:w-1/4 group-hover:opacity-50"}`}
-                  style={{ backgroundColor: tierColor.main, boxShadow: isCurrent ? `0 -2px 10px ${tierColor.glow}` : "none" }}
+                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] rounded-t-full transition-all duration-500 ${isCurrent ? "w-1/2 opacity-100" : "w-0 opacity-0 group-hover:w-1/4 group-hover:opacity-50"}`}
+                  style={{ backgroundColor: tierColor.main, boxShadow: isCurrent ? `0 -2px 10px ${tierColor.main}` : "none" }}
                 />
-                
-                <span 
-                  className={`
-                    relative z-10 text-[9px] sm:text-[10px] font-bold tracking-[0.25em] uppercase transition-colors duration-500
-                    ${isCurrent ? "text-white" : "text-white/40 group-hover:text-white/80"}
-                  `}
-                >
-                  <span className="hidden sm:inline">{label}</span>
-                  <span className="sm:hidden">{label.slice(0, 3)}</span>
+                <span className={`relative z-10 text-[9px] sm:text-[10px] font-black tracking-[0.25em] uppercase transition-colors ${isCurrent ? "text-white" : "text-white/40 group-hover:text-white/80"}`}>
+                  <span className="hidden sm:inline">{marker.name}</span>
+                  <span className="sm:hidden">{marker.name.slice(0, 3)}</span>
                 </span>
               </button>
             );
@@ -424,27 +333,75 @@ export default function SponsorsPage() {
 
       <SponsorModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      {/* Dynamic background */}
+      {/* Atmospheric Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-green-500/5 rounded-full filter blur-[160px] transition-opacity duration-1000" style={{ opacity: 0.3 + progress * 0.7 }} />
-        <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(#22c55e_1px,transparent_1px)] bg-[length:40px_40px]" />
+        <div className="absolute inset-0 bg-[#050505]" />
+        {/* Dynamic Grid */}
+        <div 
+          className="absolute inset-0 opacity-[0.03] transition-transform duration-500 ease-out"
+          style={{ 
+            backgroundImage: "radial-gradient(#22c55e 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+            transform: `translateY(${dampedProgress * -100}px) rotateX(15deg)`
+          }} 
+        />
+        {/* Glows */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[120vh] bg-gradient-to-b from-green-500/[0.07] via-transparent to-transparent opacity-0 transition-opacity duration-1000" style={{ opacity: Math.min(1, dampedProgress * 2) }} />
+        <div 
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-green-500/5 rounded-full filter blur-[180px] transition-all duration-1000" 
+          style={{ 
+            opacity: 0.2 + dampedProgress * 0.8,
+            transform: `translate(-50%, ${dampedProgress * 50}px) scale(${1 + dampedProgress * 0.2})`
+          }} 
+        />
+        {/* Digital Scanlines */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.02] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%]" />
       </div>
 
       <div className="relative z-10">
-        {/* REVEAL PHASE - Sticky text that eventually scrolls away */}
-        <div className="relative h-[220vh] w-full">
+        <div className="relative h-[280vh] w-full">
           <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
-            <div className="w-full px-4">
-              <ScrollRevealText progress={progress} reducedMotion={reducedMotion} />
+            <div 
+              className="w-full px-4 text-center transition-opacity duration-700"
+              style={{ 
+                opacity: dampedProgress < 0.01 ? 0 : (dampedProgress > 0.9 ? Math.max(0, 1 - (dampedProgress - 0.9) * 10) : 1)
+              }}
+            >
+              <ScrollRevealText 
+                text="You help us at every step of the cycle."
+                progress={dampedProgress} 
+                reducedMotion={reducedMotion}
+                className={`max-w-5xl mx-auto ${copixelDisplay.className} text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[1.1] tracking-tight font-black italic uppercase`}
+                colorMode="green-split"
+                stagger={25}
+              />
+              
+              {!reducedMotion && (
+                <div 
+                  className="mt-20 flex flex-col items-center gap-6 transition-all duration-1000"
+                  style={{ 
+                    opacity: dampedProgress < 0.05 ? 1 : Math.max(0, 1 - dampedProgress * 6),
+                    transform: `translateY(${dampedProgress * 40}px)`
+                  }}
+                >
+                  <div className="flex items-center gap-4">
+                    <span className="text-green-500/60 text-[10px] font-black tracking-[0.6em] uppercase">Initialize Cycle</span>
+                    <div className="w-32 h-[1px] bg-white/10 relative overflow-hidden">
+                      <div className="absolute inset-0 bg-green-500/50 animate-[shimmer_2s_infinite]" style={{ transform: 'translateX(-100%)' }} />
+                    </div>
+                  </div>
+                  <div className="w-px h-16 bg-gradient-to-b from-green-500/50 via-green-500/10 to-transparent animate-bounce" />
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Sponsors Grid - Starts once the text is fully revealed and stays a bit */}
+        {/* Sponsors Grid */}
         <div 
           className={`relative z-20 container mx-auto px-4 sm:px-6 pb-32 transition-all duration-1000 ${isUnlocked ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
         >
-          <div className="space-y-20 sm:space-y-32">
+          <div className="space-y-32 sm:space-y-48">
             {sponsorTiers.map((tier, index) => (
               <Fragment key={tier.tier}>
                 <SponsorTierSection tier={tier} index={index} />
@@ -452,21 +409,54 @@ export default function SponsorsPage() {
             ))}
           </div>
 
-          <div className="mt-24 sm:mt-40 mb-32 flex justify-center">
+          {/* Visionary Story Section */}
+          <div ref={outroRef} className="mt-60 mb-20 py-32 border-y border-white/5 relative overflow-hidden rounded-[40px] bg-white/[0.01] backdrop-blur-3xl">
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-green-500/10 to-transparent" />
+              <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-green-500/10 to-transparent" />
+            </div>
+
+            <ScrollRevealWord 
+              text="Our vision is amplified by those who believe in the cycle. Every partnership is a restart, a new beginning, and a commitment to the genesis of a better tomorrow."
+              progress={outroProgress}
+              className={`max-w-5xl mx-auto text-center ${copixelDisplay.className} text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white leading-tight font-black italic uppercase tracking-wider px-6`}
+              colorMode="split"
+            />
+            
+            <div className="mt-20 flex flex-col items-center gap-4 opacity-50">
+              <span className="text-[10px] font-black tracking-[0.5em] text-green-500/80 uppercase">Genesis Complete</span>
+              <div 
+                className="h-px bg-green-500/40 transition-all duration-1000 shadow-[0_0_10px_rgba(34,197,94,0.4)]"
+                style={{ width: `${outroProgress * 100}%`, maxWidth: '300px' }}
+              />
+            </div>
+          </div>
+
+          <div className="mt-40 mb-32 flex flex-col items-center gap-12">
+            <div className="h-20 w-px bg-gradient-to-b from-transparent to-white/20" />
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="group relative inline-flex items-center gap-3 sm:gap-4 px-6 sm:px-10 py-4 rounded-full bg-white text-black font-black hover:scale-105 transition-all duration-300 shadow-xl shadow-white/5"
+              className="group relative inline-flex items-center gap-4 sm:gap-6 px-10 sm:px-14 py-6 rounded-full bg-white text-black font-black hover:scale-105 transition-all duration-500 shadow-[0_0_40px_rgba(255,255,255,0.1)] active:scale-95"
             >
-              <span className="text-[11px] sm:text-sm uppercase tracking-wider">Become a Sponsor / Get in contact with us</span>
-              <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
+              <span className="text-xs sm:text-sm uppercase tracking-[0.2em] italic">Become a Sponsor</span>
+              <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center group-hover:translate-x-2 transition-transform duration-500 shadow-lg">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </div>
+              {/* Outer glow effect */}
+              <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500 -z-10" />
             </button>
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
     </section>
   );
 }

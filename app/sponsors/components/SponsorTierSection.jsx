@@ -2,15 +2,43 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import localFont from "next/font/local";
+import ScrollRevealText from "../../components/ScrollRevealText";
+
+const copixelDisplay = localFont({
+  src: "../../../Copixel-Futuristic-Font/Fonts/Copixel-Display.otf",
+  display: "swap",
+});
 
 export default function SponsorTierSection({ tier, index }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [headerProgress, setHeaderProgress] = useState(0);
 
   useEffect(() => {
     const mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mq) setReducedMotion(mq.matches);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      const vh = window.innerHeight;
+      
+      // Individual reveal for each tier header as it enters view
+      const start = vh * 0.95;
+      const end = vh * 0.75;
+      const current = rect.top;
+      
+      const p = Math.min(Math.max((start - current) / (start - end), 0), 1);
+      setHeaderProgress(p);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -126,12 +154,21 @@ export default function SponsorTierSection({ tier, index }) {
           >
             Tier Excellence
           </span>
-          <h2 className={`text-4xl sm:text-5xl font-black tracking-tighter bg-gradient-to-r ${getTierColor()} bg-clip-text text-transparent uppercase`}>
-            {tier.tier}
-          </h2>
+          <ScrollRevealText
+            text={tier.tier}
+            progress={headerProgress}
+            reducedMotion={reducedMotion}
+            className={`text-4xl sm:text-5xl font-black tracking-tighter uppercase italic ${copixelDisplay.className} bg-gradient-to-r ${getTierColor()} bg-clip-text text-transparent`}
+            colorMode="inherit"
+            stagger={0}
+          />
           <div 
-            className="h-1 w-12 rounded-full mt-4"
-            style={{ backgroundColor: getTierColorHex() }}
+            className="h-1 w-12 rounded-full mt-4 transition-all duration-1000"
+            style={{ 
+              backgroundColor: getTierColorHex(),
+              width: headerProgress > 0.5 ? "48px" : "0px",
+              opacity: headerProgress > 0.5 ? 1 : 0
+            }}
           />
         </div>
       </div>
