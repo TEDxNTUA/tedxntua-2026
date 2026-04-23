@@ -109,7 +109,7 @@ export default function ScrollRevealText({
   return (
     <div 
       ref={containerRef}
-      className={`reveal-container select-none ${className}`}
+      className={`reveal-container select-none ${stagger > 0 ? 'is-staggered' : 'is-scrolled'} ${className}`}
       style={{ 
         "--total-chars": totalLength,
         "--reveal-progress": reducedMotion ? 1 : progress 
@@ -129,7 +129,7 @@ export default function ScrollRevealText({
           --end-offset: 0.9;
           --char-percent: calc(var(--char-index) / var(--total-chars));
           --start: calc(var(--start-offset) + var(--char-percent) * (var(--end-offset) - var(--start-offset)));
-          --end: calc(var(--start) + 0.1);
+          --end: calc(var(--start) + 0.15);
           
           --factor: calc((var(--reveal-progress) - var(--start)) / (var(--end) - var(--start)));
           --vis: clamp(0, var(--factor), 1);
@@ -138,21 +138,35 @@ export default function ScrollRevealText({
           opacity: var(--vis);
           filter: blur(calc(var(--inv-vis) * 15px));
           transform: 
-            translateY(calc(var(--inv-vis) * 20px))
+            translateY(calc(var(--inv-vis) * 30px))
             translateZ(calc(var(--inv-vis) * -100px))
             rotateX(calc(var(--inv-vis) * 60deg))
             scale(calc(1 + var(--inv-vis) * 0.2));
           
+          will-change: opacity, filter, transform;
+        }
+
+        /* For 'time-based' hero reveals (Home page) */
+        .reveal-container.is-staggered .reveal-char,
+        .reveal-container.is-staggered .reveal-space {
           transition: 
             opacity 800ms var(--ease-out-expo), 
             filter 1000ms var(--ease-out-expo), 
             transform 1200ms var(--ease-out-expo);
-          will-change: opacity, filter, transform;
+        }
+
+        /* For 'scroll-based' reveals (Sponsors page) */
+        .reveal-container.is-scrolled .reveal-char,
+        .reveal-container.is-scrolled .reveal-space {
+          transition: none; /* Let the scroll progress dictate the exact state */
         }
 
         @media (max-width: 768px) {
           .reveal-char, .reveal-space {
             filter: blur(calc(var(--inv-vis) * 8px));
+          }
+          .reveal-container.is-staggered .reveal-char,
+          .reveal-container.is-staggered .reveal-space {
             transition-duration: 600ms;
           }
         }

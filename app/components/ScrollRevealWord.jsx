@@ -109,17 +109,13 @@ export default function ScrollRevealWord({
             rotateX(calc(var(--inv-vis) * 45deg))
             scale(calc(1 - var(--inv-vis) * 0.05));
           
-          transition: 
-            opacity 700ms var(--ease-out-expo), 
-            filter 900ms var(--ease-out-expo), 
-            transform 1100ms var(--ease-out-expo);
+          transition: none; /* The damped scroll progress ensures smooth transitions */
           will-change: opacity, filter, transform;
         }
 
         @media (max-width: 768px) {
           .reveal-word {
             filter: blur(calc(var(--inv-vis) * 6px));
-            transition-duration: 500ms;
           }
         }
       `}</style>

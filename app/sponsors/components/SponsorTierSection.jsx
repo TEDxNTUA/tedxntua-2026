@@ -154,14 +154,9 @@ export default function SponsorTierSection({ tier, index }) {
           >
             Tier Excellence
           </span>
-          <ScrollRevealText
-            text={tier.tier}
-            progress={headerProgress}
-            reducedMotion={reducedMotion}
-            className={`text-4xl sm:text-5xl font-black tracking-tighter uppercase italic ${copixelDisplay.className} bg-gradient-to-r ${getTierColor()} bg-clip-text text-transparent`}
-            colorMode="inherit"
-            stagger={0}
-          />
+          <h2 className={`text-4xl sm:text-5xl font-black tracking-tighter bg-gradient-to-r ${getTierColor()} bg-clip-text text-transparent uppercase italic ${copixelDisplay.className}`}>
+            {tier.tier}
+          </h2>
           <div 
             className="h-1 w-12 rounded-full mt-4 transition-all duration-1000"
             style={{ 
