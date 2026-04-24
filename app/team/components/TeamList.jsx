@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
 import MemberPhoto from "./MemberPhoto";
-
+import { removeAccents } from "../teamsData";
 
 export default function TeamList({ teams }) {
   return (
@@ -94,7 +93,7 @@ function TeamRow({ team, index }) {
               <div
             className="mt-3 w-full text-center text-[11px] sm:text-sm font-bold uppercase tracking-tight sm:tracking-widest text-rose-50/90 leading-tight px-1"
             style={{}}>
-                {m.name.split(' ').map((part, pi, arr) => (
+                {removeAccents(m.name).toUpperCase().split(' ').map((part, pi, arr) => (
                   <span key={pi} className="block sm:inline">
                     {part}{pi < arr.length - 1 ? <span className="hidden sm:inline">&nbsp;</span> : ""}
                   </span>

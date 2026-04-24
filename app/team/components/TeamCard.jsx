@@ -1,15 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
 import SmoothImage from "./SmoothImage";
 import collectiveImages from "../collectiveImages";
 import MemberPhoto from "./MemberPhoto";
-
-
-
-
-
+import { removeAccents } from "../teamsData";
 
 export default function TeamCard({ team, index = 0 }) {
   const ref = useRef(null);
@@ -89,7 +84,7 @@ export default function TeamCard({ team, index = 0 }) {
                 containerClassName="w-[72px] h-[72px] sm:w-20 sm:h-20 rounded-full bg-gray-100 flex-shrink-0" />
               
                 <div className="text-left">
-                  <div className="font-medium text-base">{m.name}</div>
+                  <div className="font-medium text-base uppercase tracking-tight">{removeAccents(m.name).toUpperCase()}</div>
                 </div>
               </div>
             )}

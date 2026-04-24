@@ -2,6 +2,26 @@ import { withBasePath } from "../lib/basePath";
 
 const assetPath = (path) => encodeURI(withBasePath(path));
 
+export const removeAccents = (str) => {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ά/g, "α")
+    .replace(/έ/g, "ε")
+    .replace(/ή/g, "η")
+    .replace(/ί/g, "ι")
+    .replace(/ό/g, "ο")
+    .replace(/ύ/g, "υ")
+    .replace(/ώ/g, "ω")
+    .replace(/Ά/g, "Α")
+    .replace(/Έ/g, "Ε")
+    .replace(/Ή/g, "Η")
+    .replace(/Ί/g, "Ι")
+    .replace(/Ό/g, "Ο")
+    .replace(/Ύ/g, "Υ")
+    .replace(/Ώ/g, "Ω");
+};
+
 export const teams = [
   {
     slug: "curator",
