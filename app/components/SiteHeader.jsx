@@ -21,6 +21,8 @@ const ARCH_SCALE_FACTOR = {
 
 /** Large screens switch to the fully expanded boxed action-button treatment. */
 const DESKTOP_BREAKPOINT = 1024;
+const TICKETS_URL =
+  "https://www.eventora.com/el/Events/tedxntua-2026?utm_id=97758_v0_s00_e0_tv0";
 
 /**
  * Renders the site-wide header shell and keeps its layout synchronized with header-nav state.
@@ -133,7 +135,7 @@ export default function SiteHeader() {
           {/* Right action button mirrors the left one by sliding to the opposite side when the nav opens. */}
           <div className={`flex items-center justify-end transition-all duration-500 ease-[cubic-bezier(0.8, 0.8, 0.5, 0.5)] ${rightActionClasses}`}>
             <ActionButton 
-              href="#" 
+              href={TICKETS_URL}
               theme={theme}
               icon="/LOGO_ASSET.png"
               alt="Ticket"
