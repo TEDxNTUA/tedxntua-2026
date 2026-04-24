@@ -47,6 +47,10 @@ export default function ScrollRevealWord({
              colorClass = globalCharIndex >= halfPoint ? "text-red-600" : "text-white";
           } else if (colorMode === "green-split") {
              colorClass = globalCharIndex >= halfPoint ? "text-green-500" : "text-white";
+          } else if (colorMode === "diamond-split") {
+             colorClass = globalCharIndex >= halfPoint ? "text-[#22d3ee]" : "text-white";
+          } else if (colorMode === "diamond") {
+             colorClass = "text-[#22d3ee]";
           }
 
           return (

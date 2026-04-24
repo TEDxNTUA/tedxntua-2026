@@ -71,9 +71,18 @@ export default function ScrollRevealText({
             glowClass = isGreen 
               ? "drop-shadow-[0_0_20px_rgba(34,197,94,0.6)]" 
               : "drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]";
+          } else if (colorMode === "diamond-split") {
+            const isDiamond = index >= halfPoint;
+            baseColorClass = isDiamond ? "text-[#22d3ee]" : "text-white";
+            glowClass = isDiamond 
+              ? "drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]" 
+              : "drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]";
           } else if (colorMode === "green") {
             baseColorClass = "text-green-500";
             glowClass = "drop-shadow-[0_0_20px_rgba(34,197,94,0.6)]";
+          } else if (colorMode === "diamond") {
+            baseColorClass = "text-[#22d3ee]";
+            glowClass = "drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]";
           } else if (colorMode === "white") {
             baseColorClass = "text-white";
             glowClass = "drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]";

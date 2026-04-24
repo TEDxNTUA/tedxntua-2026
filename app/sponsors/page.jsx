@@ -74,7 +74,7 @@ function SponsorModal({ isOpen, onClose }) {
         onClick={status === "sending" ? null : onClose}
       />
       <div className="relative w-full max-w-lg bg-zinc-900 border border-white/10 rounded-2xl p-8 shadow-2xl overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-green-500/10 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-[#22d3ee]/10 rounded-full blur-[80px] pointer-events-none" />
         
         <div className="relative z-10">
           <div className="flex justify-between items-start mb-6 gap-4">
@@ -91,8 +91,8 @@ function SponsorModal({ isOpen, onClose }) {
           
           {status === "success" ? (
             <div className="py-12 text-center space-y-4 animate-in fade-in zoom-in duration-300">
-              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto border border-green-500/50">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3">
+              <div className="w-16 h-16 bg-[#22d3ee]/20 rounded-full flex items-center justify-center mx-auto border border-[#22d3ee]/50">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" strokeWidth="3">
                   <path d="M20 6L9 17L4 12" />
                 </svg>
               </div>
@@ -108,7 +108,7 @@ function SponsorModal({ isOpen, onClose }) {
                   type="text"
                   name="name"
                   placeholder="Your Name"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors disabled:opacity-50"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee]/50 transition-colors disabled:opacity-50"
                   value={formData.name}
                   disabled={status === "sending"}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
@@ -122,7 +122,7 @@ function SponsorModal({ isOpen, onClose }) {
                     type="text"
                     name="company"
                     placeholder="Organization"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors disabled:opacity-50"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee]/50 transition-colors disabled:opacity-50"
                     value={formData.company}
                     disabled={status === "sending"}
                     onChange={e => setFormData({ ...formData, company: e.target.value })}
@@ -135,7 +135,7 @@ function SponsorModal({ isOpen, onClose }) {
                     type="email"
                     name="email"
                     placeholder="email@example.com"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors disabled:opacity-50"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee]/50 transition-colors disabled:opacity-50"
                     value={formData.email}
                     disabled={status === "sending"}
                     onChange={e => setFormData({ ...formData, email: e.target.value })}
@@ -149,7 +149,7 @@ function SponsorModal({ isOpen, onClose }) {
                   rows="4"
                   name="message"
                   placeholder="Tell us about your interest in sponsoring..."
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors resize-none disabled:opacity-50"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#22d3ee]/50 transition-colors resize-none disabled:opacity-50"
                   value={formData.message}
                   disabled={status === "sending"}
                   onChange={e => setFormData({ ...formData, message: e.target.value })}
@@ -295,7 +295,7 @@ export default function SponsorsPage() {
   };
 
   return (
-    <section className="relative min-h-screen bg-[#050505] text-white selection:bg-green-500/30">
+    <section className="relative min-h-screen bg-[#050505] text-white selection:bg-[#22d3ee]/30">
       {/* Navigation Pill */}
       <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-1000 ${isUnlocked ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
         <div className="flex items-center gap-1 sm:gap-2 rounded-full border border-white/10 bg-black/80 p-1.5 sm:p-2 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
@@ -331,15 +331,15 @@ export default function SponsorsPage() {
         <div 
           className="absolute inset-0 opacity-[0.03] transition-transform duration-500 ease-out"
           style={{ 
-            backgroundImage: "radial-gradient(#22c55e 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(#22d3ee 1px, transparent 1px)",
             backgroundSize: "40px 40px",
             transform: `translateY(${dampedProgress * -100}px) rotateX(15deg)`
           }} 
         />
         {/* Glows */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[120vh] bg-gradient-to-b from-green-500/[0.07] via-transparent to-transparent opacity-0 transition-opacity duration-1000" style={{ opacity: Math.min(1, dampedProgress * 2) }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[120vh] bg-gradient-to-b from-[#22d3ee]/[0.07] via-transparent to-transparent opacity-0 transition-opacity duration-1000" style={{ opacity: Math.min(1, dampedProgress * 2) }} />
         <div 
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-green-500/5 rounded-full filter blur-[180px] transition-all duration-1000" 
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-[#22d3ee]/5 rounded-full filter blur-[180px] transition-all duration-1000" 
           style={{ 
             opacity: 0.2 + dampedProgress * 0.8,
             transform: `translate(-50%, ${dampedProgress * 50}px) scale(${1 + dampedProgress * 0.2})`
@@ -362,7 +362,7 @@ export default function SponsorsPage() {
               <SponsorsHeroText 
                 text="You help us at every step of the cycle."
                 progress={dampedProgress} 
-                className={`max-w-5xl mx-auto ${copixelDisplay.className} text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tight font-black italic uppercase`}
+                className={`max-w-5xl mx-auto ${copixelDisplay.className} text-3xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tight font-black italic uppercase text-balance`}
               />
             </div>
 
@@ -375,19 +375,19 @@ export default function SponsorsPage() {
                 }}
               >
                 <span 
-                  className="text-green-500/60 text-[10px] font-black tracking-[0.6em] uppercase animate-pulse whitespace-nowrap" 
+                  className="text-[#22d3ee]/60 text-[10px] font-black tracking-[0.6em] uppercase animate-pulse whitespace-nowrap" 
                   style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
                 >
                   Initialize Cycle
                 </span>
                 
                 <div className="w-px h-32 bg-white/10 relative overflow-hidden mt-2">
-                  <div className="absolute inset-0 bg-green-500/50 animate-[shimmer-vertical_2s_infinite]" />
+                  <div className="absolute inset-0 bg-[#22d3ee]/50 animate-[shimmer-vertical_2s_infinite]" />
                 </div>
                 
                 <div className="flex flex-col items-center gap-0 animate-bounce mt-2">
-                  <div className="w-px h-12 bg-gradient-to-b from-green-500/50 to-transparent" />
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-green-500/50 -mt-1">
+                  <div className="w-px h-12 bg-gradient-to-b from-[#22d3ee]/50 to-transparent" />
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#22d3ee]/50 -mt-1">
                     <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
                   </svg>
                 </div>

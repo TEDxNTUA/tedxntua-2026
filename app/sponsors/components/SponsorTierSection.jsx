@@ -201,7 +201,7 @@ export default function SponsorTierSection({ tier, index }) {
                 border transition-all duration-500 w-full
                 flex flex-col items-center justify-center
                 ${getBorderColor()}
-                hover:border-green-400/80 hover:shadow-lg hover:shadow-green-500/20
+                hover:border-[#22d3ee]/80 hover:shadow-lg hover:shadow-[#22d3ee]/20
                 bg-gradient-to-br ${getGradientColor()}
                 backdrop-blur-md
                 p-4 sm:p-5
@@ -210,7 +210,7 @@ export default function SponsorTierSection({ tier, index }) {
             >
               {/* Animated background glow */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute -inset-full bg-gradient-to-r from-green-500/20 via-transparent to-green-500/20 animate-pulse" />
+                <div className="absolute -inset-full bg-gradient-to-r from-[#22d3ee]/20 via-transparent to-[#22d3ee]/20 animate-pulse" />
               </div>
 
               {/* Logo Image */}
@@ -230,7 +230,7 @@ export default function SponsorTierSection({ tier, index }) {
                   {/* Fallback text if image fails */}
                   <div
                     style={{ display: 'none' }}
-                    className="absolute inset-0 flex items-center justify-center group-hover:text-green-300 transition-colors duration-300"
+                    className="absolute inset-0 flex items-center justify-center group-hover:text-[#22d3ee] transition-colors duration-300"
                   >
                     <p className="text-xs sm:text-sm font-bold text-center text-white px-2">
                       {sponsor.name}
@@ -240,11 +240,11 @@ export default function SponsorTierSection({ tier, index }) {
               </div>
 
               {/* Gradient line at bottom */}
-              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#22d3ee]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
 
             {/* Company Name Below */}
-            <p className="mt-3 text-center text-sm sm:text-base font-semibold text-white group-hover:text-green-300 transition-colors duration-300 px-2 min-h-[2.5rem] flex items-center justify-center">
+            <p className="mt-3 text-center text-sm sm:text-base font-semibold text-white group-hover:text-[#22d3ee] transition-colors duration-300 px-2 min-h-[2.5rem] flex items-center justify-center">
               {sponsor.name}
             </p>
           </a>
