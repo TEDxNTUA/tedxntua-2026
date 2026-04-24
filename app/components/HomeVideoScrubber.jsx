@@ -6,11 +6,11 @@ import { withBasePath } from "../lib/basePath";
 import ScrollRevealText from "./ScrollRevealText";
 
 const storyBeats = [
-  "Identity is the code of our genesis.",
-  "Mastery emerges from the rhythm of repetition.",
-  "We are bound by the cosmic loops of nature.",
-  "Progress is an iterative pulse of evolution.",
-  "Every revolution returns to the essence.",
+  "Reforn the circle.",
+  "On 09.05.2026",
+  "Athens conservatoire",
+  "NINE speakers. FIVE performances. SEVEN workshops.",
+  "ONE unforgettable night.",
 ];
 
 const PIXELS_PER_SECOND = 1000;
