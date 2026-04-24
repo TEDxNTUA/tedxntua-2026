@@ -5,8 +5,7 @@ import { sponsorTiers } from "./sponsorsData";
 import SponsorTierSection from "./components/SponsorTierSection";
 import { withBasePath } from "../lib/basePath";
 import localFont from "next/font/local";
-import ScrollRevealText from "../components/ScrollRevealText";
-import ScrollRevealWord from "../components/ScrollRevealWord";
+import SponsorsHeroText from "./components/SponsorsHeroText";
 
 const copixelDisplay = localFont({
   src: "../../Copixel-Futuristic-Font/Fonts/Copixel-Display.otf",
@@ -229,15 +228,17 @@ export default function SponsorsPage() {
       const scrollY = window.scrollY;
       const viewportHeight = vh || window.innerHeight;
       
-      // Hero reveal progress - deliberate cinematic window
-      // Increased distance to make the unveiling slower
-      const scrollDistance = viewportHeight * 3.0;
+      // Hero reveal progress
+      // The container is 400vh tall, meaning it stays sticky for 300vh.
+      // We want the text to fully reveal by 200vh, and stay visible until it scrolls away.
+      const scrollDistance = viewportHeight * 2.0;
       const revealProgress = Math.min(scrollY / scrollDistance, 1);
       targetProgressRef.current = revealProgress;
       setProgress(revealProgress);
       
-      // Unlock visuals once hero text is mostly materialized
-      const unlocked = scrollY > viewportHeight * 0.7;
+      // Unlock visuals once hero text is fully materialized (which finishes around 0.85 * 2.0 = 1.7)
+      // Setting to 1.8 leaves a small breathing room before the tiers appear
+      const unlocked = scrollY > viewportHeight * 1.8;
       if (unlocked !== isUnlocked) setIsUnlocked(unlocked);
     };
 
@@ -354,15 +355,14 @@ export default function SponsorsPage() {
             <div 
               className="w-full px-4 text-center"
               style={{ 
-                opacity: dampedProgress > 0.85 ? Math.max(0, 1 - (dampedProgress - 0.85) * 10) : 1,
-                transform: `scale(${dampedProgress > 0.85 ? Math.max(0.95, 1 - (dampedProgress - 0.85)) : 1})`
+                opacity: 1,
+                transform: 'scale(1)'
               }}
             >
-              <ScrollRevealWord 
+              <SponsorsHeroText 
                 text="You help us at every step of the cycle."
                 progress={dampedProgress} 
-                className={`max-w-5xl mx-auto ${copixelDisplay.className} text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[1.1] tracking-tight font-black italic uppercase`}
-                colorMode="green-split"
+                className={`max-w-5xl mx-auto ${copixelDisplay.className} text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tight font-black italic uppercase`}
               />
             </div>
 
@@ -370,8 +370,8 @@ export default function SponsorsPage() {
               <div 
                 className="absolute bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 transition-all duration-1000"
                 style={{ 
-                  opacity: dampedProgress < 0.15 ? 1 : Math.max(0, 1 - (dampedProgress - 0.15) * 8),
-                  transform: `translate(-50%, ${dampedProgress * 60}px)`
+                  opacity: dampedProgress < 0.1 ? 1 : Math.max(0, 1 - (dampedProgress - 0.1) * 4),
+                  transform: `translate(-50%, ${dampedProgress * 40}px)`
                 }}
               >
                 <div className="flex items-center gap-4">

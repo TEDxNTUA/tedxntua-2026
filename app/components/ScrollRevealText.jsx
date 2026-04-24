@@ -91,7 +91,9 @@ export default function ScrollRevealText({
                 transitionDelay: stagger > 0 ? `${(index % 60) * stagger}ms` : '0ms'
               }}
             >
-              {char}
+              <span className="flicker-inner inline-block">
+                {char}
+              </span>
             </span>
           );
         });
@@ -123,27 +125,36 @@ export default function ScrollRevealText({
         }
 
         .reveal-char, .reveal-space {
-          /* Letter-by-letter timing linked to progress */
-          /* Starts at 0.1, ends at 0.9 */
-          --start-offset: 0.1;
-          --end-offset: 0.9;
+          /* Letter-by-letter strict sequential timing */
+          --start-offset: 0.05;
+          --end-offset: 0.90;
           --char-percent: calc(var(--char-index) / var(--total-chars));
-          --start: calc(var(--start-offset) + var(--char-percent) * (var(--end-offset) - var(--start-offset)));
-          --end: calc(var(--start) + 0.15);
+          
+          /* Calculate exact start and end for each character sequentially */
+          --total-duration: calc(var(--end-offset) - var(--start-offset));
+          --char-window: calc(var(--total-duration) / var(--total-chars));
+          
+          --start: calc(var(--start-offset) + var(--char-index) * var(--char-window));
+          --end: calc(var(--start) + var(--char-window));
           
           --factor: calc((var(--reveal-progress) - var(--start)) / (var(--end) - var(--start)));
           --vis: clamp(0, var(--factor), 1);
           --inv-vis: calc(1 - var(--vis));
 
           opacity: var(--vis);
-          filter: blur(calc(var(--inv-vis) * 15px));
+          filter: blur(calc(var(--inv-vis) * 10px));
           transform: 
-            translateY(calc(var(--inv-vis) * 30px))
-            translateZ(calc(var(--inv-vis) * -100px))
+            translateY(calc(var(--inv-vis) * 15px))
+            translateZ(calc(var(--inv-vis) * -20px))
             rotateX(calc(var(--inv-vis) * 60deg))
-            scale(calc(1 + var(--inv-vis) * 0.2));
+            scale(calc(1 - var(--inv-vis) * 0.1));
           
           will-change: opacity, filter, transform;
+          display: inline-block;
+        }
+
+        .flicker-inner {
+          opacity: 1;
         }
 
         /* For 'time-based' hero reveals (Home page) */
@@ -171,14 +182,6 @@ export default function ScrollRevealText({
           }
         }
 
-        @keyframes flicker {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.85; }
-        }
-
-        .reveal-char {
-          animation: flicker calc(2.5s + var(--char-index) * 0.1s) infinite;
-        }
       `}</style>
     </div>
   );
