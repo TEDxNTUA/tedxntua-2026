@@ -16,7 +16,12 @@ const EXTRA_ITEM_COLOR = "rgba(213, 128, 30, 0.28)";
 const applyPosterBasePath = (items) =>
   items.map((item) => ({
     ...item,
-    posterImageUrl: withBasePath(item.posterImageUrl),
+    posterImageUrl:
+      item.posterImageUrl &&
+      (item.posterImageUrl.startsWith("http://") ||
+        item.posterImageUrl.startsWith("https://"))
+        ? item.posterImageUrl
+        : withBasePath(item.posterImageUrl),
   }));
 
 // Normalize the social links shape across all JSON sources.
@@ -254,7 +259,7 @@ export const allProfWorkshops = applyPosterBasePath([
     description: ProfWorkshops[0].DescriptionGR,
     personal: ProfWorkshops[0].BioGR,
     itemColor: "rgba(25, 35, 12, 0.92)",
-    posterImageUrl: "",
+    posterImageUrl: "https://www.acg.edu/wp-content/uploads/2017/04/logo_white_ACGBigger.png",
     socials: getSocials(ProfWorkshops, 0)
   },
   // ProfWorkshops[1] = Dialectica
@@ -266,7 +271,7 @@ export const allProfWorkshops = applyPosterBasePath([
     description: ProfWorkshops[1].DescriptionGR,
     personal: ProfWorkshops[1].BioGR,
     itemColor: "rgba(25, 35, 12, 0.92)",
-    posterImageUrl: "",
+    posterImageUrl: "/Dialectica_idzOXMZJL7_0.png",
     socials: getSocials(ProfWorkshops, 1)
   },
   // ProfWorkshops[2] = Oliver Wyman
@@ -278,7 +283,7 @@ export const allProfWorkshops = applyPosterBasePath([
     description: ProfWorkshops[2].DescriptionGR,
     personal: ProfWorkshops[2].BioGR,
     itemColor: "rgba(25, 35, 12, 0.92)",
-    posterImageUrl: "",
+    posterImageUrl: "https://www.oliverwyman.com/content/dam/oliver-wyman/v3/logos/header-logo-oliver-wyman-black.svg",
     socials: getSocials(ProfWorkshops, 2)
   },
   // ProfWorkshops[3] = Alpha Bank
@@ -290,7 +295,7 @@ export const allProfWorkshops = applyPosterBasePath([
     description: ProfWorkshops[3].DescriptionGR,
     personal: ProfWorkshops[3].BioGR,
     itemColor: "rgba(25, 35, 12, 0.92)",
-    posterImageUrl: "",
+    posterImageUrl: "https://www.alpha.gr/-/media/AlphaGr/Images/logo/alphaBank_logo.svg?iar=0&hash=1F750DEDB5C3D48D59DCC4FB13FC7F07",
     socials: getSocials(ProfWorkshops, 3)
   }
 ]);

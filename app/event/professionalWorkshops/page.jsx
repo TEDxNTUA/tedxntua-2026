@@ -334,9 +334,9 @@ export default function ProfessionalWorkshopsPage() {
                   <h2 className={`${copixelDisplay.className} ${styles.name}`}>
                     {formatUppercaseNoAccents(item.name)}
                   </h2>
-                  <h3 className={`${copixelDisplay.className} ${styles.name}`}>
-                    {item.title}
-                  </h3>
+                  {item.title ? (
+                    <p className={styles.title_text}>{item.title}</p>
+                  ) : null}
                   <p className={styles.profession}>{item.profession}</p>
                 </div>
               </button>
