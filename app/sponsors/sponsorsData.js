@@ -17,41 +17,41 @@ export const sponsorTiers = [
   {
     tier: "Platinum",
     sponsors: [
-     {
-    "name": "Oliver Wyman",
-    "logo": "https://www.oliverwyman.com/content/dam/oliver-wyman/v3/logos/header-logo-oliver-wyman-black.svg",
-    "link": "https://www.oliverwyman.com/"
-  },
-    {
-    "name": "Deree",
-    "logo": "https://www.acg.edu/wp-content/uploads/2017/04/logo_white_ACGBigger.png",
-    "link": "https://www.acg.edu/"
-  },
-    {
-    "name": "Dialectica",
-    "logo": assetPath("/Dialectica_idzOXMZJL7_0.png"),
-    "link": "https://www.dialectica.io/"
-  },
-  {
-    "name": "Alpha Bank",
-    "logo": "https://www.alpha.gr/-/media/AlphaGr/Images/logo/alphaBank_logo.svg?iar=0&hash=1F750DEDB5C3D48D59DCC4FB13FC7F07",
-    "link": "https://www.alpha.gr/"
-  },
-  {
-    "name": "Iknowhow",
-    "logo": "https://www.iknowhow.com/wp-content/uploads/2024/12/IKH-LOGO-WEB.png",
-    "link": "https://www.iknowhow.com/"
-  },
+      {
+        "name": "Oliver Wyman",
+        "logo": "https://www.oliverwyman.com/content/dam/oliver-wyman/v3/logos/header-logo-oliver-wyman-black.svg",
+        "link": "https://www.oliverwyman.com/"
+      },
+      {
+        "name": "Deree",
+        "logo": "https://www.acg.edu/wp-content/uploads/2017/04/logo_white_ACGBigger.png",
+        "link": "https://www.acg.edu/"
+      },
+      {
+        "name": "Dialectica",
+        "logo": assetPath("/Dialectica_idzOXMZJL7_0.png"),
+        "link": "https://www.dialectica.io/"
+      },
+      {
+        "name": "Alpha Bank",
+        "logo": "https://www.alpha.gr/-/media/AlphaGr/Images/logo/alphaBank_logo.svg?iar=0&hash=1F750DEDB5C3D48D59DCC4FB13FC7F07",
+        "link": "https://www.alpha.gr/"
+      },
     ]
   },
   {
     tier: "Grand",
     sponsors: [
       {
-    "name": "PWC",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/PwC_2025_Logo.svg/120px-PwC_2025_Logo.svg.png?_=20250429090744",
-    "link": "https://www.pwc.com/"
-  },
+        "name": "PWC",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/PwC_2025_Logo.svg/120px-PwC_2025_Logo.svg.png?_=20250429090744",
+        "link": "https://www.pwc.com/"
+      },
+      {
+        "name": "Iknowhow",
+        "logo": "https://www.iknowhow.com/wp-content/uploads/2024/12/IKH-LOGO-WEB.png",
+        "link": "https://www.iknowhow.com/"
+      },
     ]
   },
   {
