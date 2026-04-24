@@ -44,7 +44,7 @@ export const allSpeakers = applyPosterBasePath([
     name: Speakers[0].NameEN,
     profession: Speakers[0].ProfessionGR,
     theme: Speakers[0].Theme,
-    title: "Fashion as identity",
+    title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[0].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_KAVVADA.png",
@@ -60,7 +60,7 @@ export const allSpeakers = applyPosterBasePath([
     profession: Speakers[2].ProfessionGR,
     profession2: Speakers[1].ProfessionGR,
     theme: Speakers[1].Theme,
-    title: "Crafting Architecture Stories",
+    title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[1].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Thanos&Chara.png",
@@ -76,7 +76,7 @@ export const allSpeakers = applyPosterBasePath([
     name: Speakers[3].NameEN,
     profession: Speakers[3].ProfessionEN,
     theme: Speakers[3].Theme,
-    title: "Why i gave my hair to a dwarf",
+    title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[3].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Daglis.png",
@@ -90,7 +90,7 @@ export const allSpeakers = applyPosterBasePath([
     name: Speakers[4].NameEN,
     profession: Speakers[4].ProfessionGR,
     theme: Speakers[4].Theme,
-    title: "The importance of second breakfast",
+    title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[4].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Mr Music.png",
@@ -104,7 +104,7 @@ export const allSpeakers = applyPosterBasePath([
     name: Speakers[5].NameEN,
     profession: Speakers[5].ProfessionGR,
     theme: Speakers[5].Theme,
-    title: "The importance of second breakfast",
+    title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[5].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Papadimitriou.png",
@@ -118,7 +118,7 @@ export const allSpeakers = applyPosterBasePath([
     name: Speakers[6].NameEN,
     profession: Speakers[6].ProfessionGR,
     theme: Speakers[6].Theme,
-    title: "The importance of second breakfast",
+    title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[6].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_VAKALIS.png",
@@ -132,7 +132,7 @@ export const allSpeakers = applyPosterBasePath([
     name: Speakers[7].NameEN,
     profession: Speakers[7].ProfessionGR,
     theme: Speakers[7].Theme,
-    title: "The importance of second breakfast",
+    title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[7].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo-Katsamanis.png",
@@ -146,7 +146,7 @@ export const allSpeakers = applyPosterBasePath([
     name: Speakers[8].NameEN,
     profession: Speakers[8].ProfessionGR,
     theme: Speakers[8].Theme,
-    title: "The importance of second breakfast",
+    title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[8].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Drakou.png",
@@ -160,7 +160,7 @@ export const allSpeakers = applyPosterBasePath([
     name: Speakers[9].NameEN,
     profession: Speakers[9].ProfessionGR,
     theme: Speakers[9].Theme,
-    title: "The importance of second breakfast",
+    title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[9].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Samolhs.png",
@@ -174,7 +174,7 @@ export const allSpeakers = applyPosterBasePath([
     name: Speakers[10].NameEN,
     profession: Speakers[10].ProfessionGR,
     theme: Speakers[10].Theme,
-    title: "The importance of second breakfast",
+    title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[10].DescriptionGR,
     posterImageUrl: "",
@@ -188,7 +188,7 @@ export const allSpeakers = applyPosterBasePath([
     name: Speakers[11].NameEN,
     profession: Speakers[11].ProfessionGR,
     theme: Speakers[11].Theme,
-    title: "The importance of second breakfast",
+    title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[11].DescriptionGR,
     posterImageUrl: "",
@@ -398,9 +398,6 @@ export const extra = applyPosterBasePath([
     itemCategory: "oppening",
     name: "Opening Hostess/ Backstage Host/ Curators",
     itemColor: EXTRA_ITEM_COLOR,
-    posterImageUrl: DEFAULT_POSTER_IMAGE,
-    personalDescription: "",
-    socials: ""
   },
   {
       time: "10:00 - ",
@@ -408,27 +405,18 @@ export const extra = applyPosterBasePath([
       name: "Registration",
       profession: "",
       itemColor: EXTRA_ITEM_COLOR,
-      posterImageUrl: DEFAULT_POSTER_IMAGE,
-      personalDescription: "",
-      socials: ""
     },
     {
         time: "19:35 - 19:45",
         itemCategory: "closing",
         name: "Closing & Curators",
         itemColor: EXTRA_ITEM_COLOR,
-        posterImageUrl: DEFAULT_POSTER_IMAGE,
-        personalDescription: "",
-        socials: ""
       },
     {
         time: "19:45 - ",
         itemCategory: "closing",
         name: "the team, the hug",
         itemColor: EXTRA_ITEM_COLOR,
-        posterImageUrl: DEFAULT_POSTER_IMAGE,
-        personalDescription: "",
-        socials: ""
       }]);
 
 // Session groupings consumed by the program UI.
@@ -490,6 +478,9 @@ export const myWorkshopsPack2 = [
   },
 ];
 
+
+
+
 export const myWorkshopsPack3 = [
   {
     time: WORKSHOP_TIME_3,
@@ -507,5 +498,4 @@ export const myWorkshopsPack3 = [
 export const mySideHappenings = [
   allSideHappenings[0],
   allSideHappenings[1],
-  allSideHappenings[2],
 ];
