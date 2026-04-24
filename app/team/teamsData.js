@@ -345,9 +345,8 @@ export const teams = [
         id: "malvina",
         name: "Μαλβίνα Στεμπίλη",
         photos: [
-          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-56.jpeg"),
           assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-59.jpeg"),
-          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-2.jpeg")
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-56.jpeg")
         ],
         social: {
           instagram: "https://www.instagram.com/malvinaast",
