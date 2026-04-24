@@ -368,21 +368,26 @@ export default function SponsorsPage() {
 
             {!reducedMotion && (
               <div 
-                className="absolute bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 transition-all duration-1000"
+                className="absolute top-1/2 right-4 sm:right-8 md:right-12 lg:right-20 flex flex-col items-center gap-4 transition-all duration-1000 scale-75 sm:scale-100"
                 style={{ 
-                  opacity: dampedProgress < 0.1 ? 1 : Math.max(0, 1 - (dampedProgress - 0.1) * 4),
-                  transform: `translate(-50%, ${dampedProgress * 40}px)`
+                  opacity: dampedProgress < 0.25 ? 1 : Math.max(0, 1 - (dampedProgress - 0.25) * 4),
+                  transform: `translateY(calc(-50% + ${dampedProgress * 40}px))`
                 }}
               >
-                <div className="flex items-center gap-4">
-                  <span className="text-green-500/60 text-[10px] font-black tracking-[0.6em] uppercase animate-pulse">Initialize Cycle</span>
-                  <div className="w-32 h-[1px] bg-white/10 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-green-500/50 animate-[shimmer_2s_infinite]" style={{ transform: 'translateX(-100%)' }} />
-                  </div>
+                <span 
+                  className="text-green-500/60 text-[10px] font-black tracking-[0.6em] uppercase animate-pulse whitespace-nowrap" 
+                  style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+                >
+                  Initialize Cycle
+                </span>
+                
+                <div className="w-px h-32 bg-white/10 relative overflow-hidden mt-2">
+                  <div className="absolute inset-0 bg-green-500/50 animate-[shimmer-vertical_2s_infinite]" />
                 </div>
-                <div className="flex flex-col items-center gap-2 animate-bounce">
-                  <div className="w-px h-12 bg-gradient-to-b from-green-500/50 to-green-500/10" />
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-green-500/50">
+                
+                <div className="flex flex-col items-center gap-0 animate-bounce mt-2">
+                  <div className="w-px h-12 bg-gradient-to-b from-green-500/50 to-transparent" />
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-green-500/50 -mt-1">
                     <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
                   </svg>
                 </div>
@@ -426,6 +431,10 @@ export default function SponsorsPage() {
         @keyframes shimmer {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
+        }
+        @keyframes shimmer-vertical {
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(100%); }
         }
       `}</style>
     </section>
