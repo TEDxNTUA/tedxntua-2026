@@ -121,7 +121,8 @@ function buildItemCard(item, index) {
 
   return {
     id: `${item.name}-${index}`,
-    name: item.title || item.artName || item.name,
+    name: item.name,
+    title: item.title,
     profession: capitalizeSegments(item.profession || "Workshop"),
     photo: resolvePhoto(item.posterImageUrl),
     description: item.description || "",
@@ -250,6 +251,9 @@ function ItemModal({ item, onClose }) {
           <h2 id="item-modal-name" className={`${copixelDisplay.className} ${styles.modalName}`}>
             {formatUppercaseNoAccents(item.name)}
           </h2>
+          {item.title ? (
+            <p className={styles.modalValue}>{formatUppercaseNoAccents(item.title)}</p>
+          ) : null}
           <p className={styles.modalValue}>{item.profession}</p>
           <SocialLinks
             links={item.socialLinks}
@@ -330,6 +334,9 @@ export default function ProfessionalWorkshopsPage() {
                   <h2 className={`${copixelDisplay.className} ${styles.name}`}>
                     {formatUppercaseNoAccents(item.name)}
                   </h2>
+                  <h3 className={`${copixelDisplay.className} ${styles.name}`}>
+                    {item.title}
+                  </h3>
                   <p className={styles.profession}>{item.profession}</p>
                 </div>
               </button>

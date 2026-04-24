@@ -119,9 +119,14 @@ function buildPerformerCard(performer, index) {
     return null;
   }
 
+  const artname = performer.artName || performer.title || performer.name;
+  const title = performer.title || "";
+
   return {
     id: `${performer.name}-${index}`,
-    name: performer.title || performer.artName || performer.name,
+    name: performer.name,
+    title,
+    artname,
     profession: capitalizeSegments(performer.profession || "Workshop"),
     photo: resolvePhoto(performer.posterImageUrl),
     description: performer.description || "",
@@ -248,8 +253,11 @@ function PerformerModal({ performer, onClose }) {
         <div className={styles.modalContent}>
           <p className={styles.modalEyebrow}>Experience Workshop</p>
           <h2 id="performer-modal-name" className={`${copixelDisplay.className} ${styles.modalName}`}>
-            {formatUppercaseNoAccents(performer.name)}
+            {formatUppercaseNoAccents(performer.artname)}
           </h2>
+          {performer.title ? (
+            <p className={styles.modalValue}>{formatUppercaseNoAccents(performer.title)}</p>
+          ) : null}
           <p className={styles.modalValue}>{performer.profession}</p>
           <SocialLinks
             links={performer.socialLinks}
@@ -328,7 +336,7 @@ export default function PerformancesPage() {
 
                 <div className={styles.caption}>
                   <h2 className={`${copixelDisplay.className} ${styles.name}`}>
-                    {formatUppercaseNoAccents(performer.name)}
+                    {formatUppercaseNoAccents(performer.artname)}
                   </h2>
                   <p className={styles.profession}>{performer.profession}</p>
                 </div>
