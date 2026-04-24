@@ -77,26 +77,29 @@ function TeamRow({ team, index }) {
         "opacity-0 translate-x-12"}`
         }
         style={{ transitionDelay: `${index * 50 + 100}ms` }}>
-        <div className="mx-auto flex w-full flex-wrap items-start justify-center gap-6 sm:gap-8">
+        <div className="mx-auto flex w-full flex-wrap items-start justify-center gap-x-8 gap-y-20 sm:gap-8 lg:gap-12">
           {members.map((m, mi) =>
           <div
             key={m.id}
-            className={`flex flex-col items-center transition-all duration-500 ${
+            className={`flex flex-col items-center transition-all duration-500 w-36 sm:w-60 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`
             }
             style={{ transitionDelay: `${index * 50 + 180 + mi * 60}ms` }}>
 
               <MemberPhoto
             member={m}
-            containerClassName="rounded-lg border border-rose-300/70 bg-slate-950 shadow-[0_0_18px_rgba(244,63,94,0.35)] w-32 h-40 sm:w-60 sm:h-80"
+            containerClassName="rounded-lg border border-rose-300/70 bg-slate-950 shadow-[0_0_18px_rgba(244,63,94,0.35)] w-full h-48 sm:h-80"
             containerStyle={{}} />
 
-              <span
-            className="mt-2 max-w-full text-center text-xs font-medium text-rose-50 sm:text-sm w-32 sm:w-60"
+              <div
+            className="mt-3 w-full text-center text-[11px] sm:text-sm font-bold uppercase tracking-tight sm:tracking-widest text-rose-50/90 leading-tight px-1"
             style={{}}>
-
-                {m.name}
-              </span>
+                {m.name.split(' ').map((part, pi, arr) => (
+                  <span key={pi} className="block sm:inline">
+                    {part}{pi < arr.length - 1 ? <span className="hidden sm:inline">&nbsp;</span> : ""}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
         </div>
