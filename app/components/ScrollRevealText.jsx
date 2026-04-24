@@ -182,11 +182,13 @@ export default function ScrollRevealText({
         }
 
         @media (max-width: 768px) {
-          .reveal-char, .reveal-space {
+          .reveal-char {
             filter: blur(calc(var(--inv-vis) * 8px));
           }
-          .reveal-container.is-staggered .reveal-char,
-          .reveal-container.is-staggered .reveal-space {
+          .reveal-space {
+            display: inline-block !important;
+          }
+          .reveal-container.is-staggered .reveal-char {
             transition-duration: 600ms;
           }
         }
