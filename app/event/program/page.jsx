@@ -57,7 +57,7 @@ export default function ProgramPage() {
   return (
     <EventPageShell 
       title="Program"
-      description="Εξερευνήστε το πλήρες πρόγραμμα του TEDxNTUA 2026. Μια ημέρα γεμάτη ομιλίες που προκαλούν τη σκέψη, πρωτοποριακά εργαστήρια και καλλιτεχνικές παραστάσεις."
+      description=""
     >
       <AnchorScrollHandler />
       

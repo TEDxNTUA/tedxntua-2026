@@ -467,9 +467,9 @@ export const myWorkshopsPack1 = [
     time: WORKSHOP_TIME_1,
     color: "rgba(15, 35, 30, 0.9)",
     workshop: [
-      allExpWorkshops[0], // Alexandros Galans, Dimitris Galanis, Vaggelis Dimopoulos
+      {/*allExpWorkshops[0], // Alexandros Galans, Dimitris Galanis, Vaggelis Dimopoulos
       allExpWorkshops[1], // Ifigenia Pappa
-      allProfWorkshops[0], // The American College of Greece - Deree
+      allProfWorkshops[0],*/} // The American College of Greece - Deree
     ],
   },
 ];
@@ -479,9 +479,9 @@ export const myWorkshopsPack2 = [
     time: WORKSHOP_TIME_2,
     color: "rgba(25, 35, 12, 0.92)",
     workshop: [
-      allExpWorkshops[2], // Theodora Koutsogaki
+      {/*allExpWorkshops[2], // Theodora Koutsogaki
       allProfWorkshops[1], // Dialectica
-      allProfWorkshops[2], // Oliver Wyman
+      allProfWorkshops[2],*/} // Oliver Wyman
     ],
   },
 ];
@@ -494,9 +494,9 @@ export const myWorkshopsPack3 = [
     time: WORKSHOP_TIME_3,
     color: "rgba(25, 35, 12, 0.92)",
     workshop: [
-      allProfWorkshops[0], // The American College of Greece - Deree
+      {/*allProfWorkshops[0], // The American College of Greece - Deree
       allProfWorkshops[1], // Dialectica
-      allProfWorkshops[2], // Oliver Wyman
+      allProfWorkshops[2],*/} // Oliver Wyman
     ],
   },
 ];

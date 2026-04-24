@@ -1,6 +1,6 @@
 export default function EventPageShell({ title, description, children }) {
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[radial-gradient(circle_at_top,rgba(74,222,128,0.3),transparent_52%),linear-gradient(360deg,#102118_0%,#0a1812_42%,#050907_100%)] text-white">
+    <div className="relative min-h-screen w-full overflow-hidden bg-[radial-gradient(circle_at_top,rgba(74,222,128,0.34),transparent_52%),linear-gradient(360deg,#1d3a2b_0%,#153125_42%,#0d1713_100%)] text-white">
       <div className="pointer-events-none absolute left-[-10%] top-28 h-72 w-72 rounded-full bg-emerald-400/12 blur-3xl" />
       <div className="pointer-events-none absolute right-[-6%] top-80 h-96 w-96 rounded-full bg-cyan-300/8 blur-3xl" />
 
