@@ -246,14 +246,14 @@
   }
 
   .beatText {
-    max-width: 80vw; /* Safer width to prevent edge touching */
-    font-size: clamp(1.6rem, 8vw, 2.4rem); /* Slightly smaller for better fit */
+    max-width: 85vw; /* Perfectly balanced for mobile centering */
+    font-size: clamp(1.4rem, 7vw, 2.2rem); /* Slightly smaller to guarantee fit */
     line-height: 1.2;
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
     text-align: center !important;
     margin: 0 auto !important;
-    display: block !important; /* Back to block for more reliable text-align */
+    display: block !important;
     width: 100% !important;
-    transform: none !important;
+    transform: none !important; /* Back to perfect center */
   }
 }

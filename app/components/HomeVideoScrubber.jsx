@@ -233,7 +233,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
                   zIndex: 10 + index,
                   opacity: beatProgress > 0.01 ? 1 : 0,
                   visibility: beatProgress > 0.01 ? 'visible' : 'hidden',
-                  transition: 'opacity 0.2s ease, visibility 0.2s' 
+                  transition: 'opacity 0.2s ease, visibility 0.2s'
                 }}
               >
 
