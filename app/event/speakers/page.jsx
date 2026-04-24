@@ -18,6 +18,7 @@ const copixelDisplay = localFont({
 
 const EMPTY_BASE_PATH = withBasePath("");
 const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
+const HOSTESS_CARD_NAME = "Chrysa Michalopoulou";
 
 const socialFields = [
   { field: "instagram", platform: "instagram", label: "Instagram" },
@@ -133,6 +134,7 @@ function buildSpeakerCard(speaker, index) {
     name: names.join(" & "),
     profession: professions.join(" & ") || "Speaker",
     photo: resolvePhoto(speaker.posterImageUrl),
+    eyebrow: speaker.modalEyebrow || "Speaker",
     description: speaker.description || "",
     bios,
     socialLinks: getSocialLinks(speaker.socials, speaker.socials2),
@@ -140,6 +142,10 @@ function buildSpeakerCard(speaker, index) {
 }
 
 const speakerCards = allSpeakers.map(buildSpeakerCard).filter(Boolean);
+const orderedSpeakerCards = [
+  ...speakerCards.filter((speaker) => speaker.name === HOSTESS_CARD_NAME),
+  ...speakerCards.filter((speaker) => speaker.name !== HOSTESS_CARD_NAME),
+];
 
 function SpeakerModal({ speaker, onClose }) {
   const [mounted, setMounted] = useState(false);
@@ -258,7 +264,7 @@ function SpeakerModal({ speaker, onClose }) {
         </div>
 
         <div className={styles.modalContent}>
-          <p className={styles.modalEyebrow}>Speaker</p>
+          <p className={styles.modalEyebrow}>{speaker.eyebrow}</p>
           <h2 id="speaker-modal-name" className={`${copixelDisplay.className} ${styles.modalName}`}>
             {formatUppercaseNoAccents(speaker.name)}
           </h2>
@@ -312,7 +318,7 @@ export default function SpeakersPage() {
         </div>
 
         <div className={styles.speakerRow}>
-          {speakerCards.map((speaker) => (
+          {orderedSpeakerCards.map((speaker) => (
             <article key={speaker.id} className={styles.card}>
               <button
                 type="button"

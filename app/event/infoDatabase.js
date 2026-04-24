@@ -182,7 +182,8 @@ export const allSpeakers = applyPosterBasePath([
     title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[10].DescriptionGR,
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/speakers/hostess_photo-01.png",
+    modalEyebrow: "Hostess",
     personalDescription: Speakers[10].BioGR,
     socials: getSocials(Speakers, 10)
   },
