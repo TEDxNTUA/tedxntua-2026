@@ -174,7 +174,7 @@ export default function Popup({ isOpen, onClose, infoBase, originRect }) {
               </div>
             )}
 
-            <div className="rounded-[24px] border border-emerald-400/20 bg-slate-950/85 p-4 shadow-[0_0_35px_rgba(34,197,94,0.08)] backdrop-blur-sm">
+            <div className="rounded-[24px] border border-emerald-400/20 bg-slate-950/85 p-4 shadow-[0_0_35px_rgba(34,197,94,0.08)] backdrop-blur-sm text-center md:text-left flex flex-col items-center md:items-start">
               <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-emerald-300">Speaker_01</p>
               <h2 className="mt-2 font-mono text-2xl font-semibold leading-tight text-emerald-50 break-words sm:text-[2.15rem]">
                 {infoBase.name}{infoBase.name2 ? ` & ${infoBase.name2}` : ''}
@@ -183,7 +183,7 @@ export default function Popup({ isOpen, onClose, infoBase, originRect }) {
                 {displayProfession}
               </p>
 
-              <section className="mt-5 flex flex-wrap justify-start gap-4">
+              <section className="mt-5 flex flex-wrap justify-center md:justify-start gap-4">
                 <SocialConnection
                   socials={infoBase.socials}
                   size="25px"
@@ -192,7 +192,7 @@ export default function Popup({ isOpen, onClose, infoBase, originRect }) {
                 />
               </section>
               {infoBase.personalDescription2 && (
-                <section className="mt-4 flex flex-wrap justify-start gap-4 border-t border-emerald-400/20 pt-4">
+                <section className="mt-4 flex flex-wrap justify-center md:justify-start gap-4 border-t border-emerald-400/20 pt-4 w-full">
                   <SocialConnection
                     socials={infoBase.socials2}
                     size="25px"

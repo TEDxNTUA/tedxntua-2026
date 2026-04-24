@@ -9,9 +9,9 @@ export default function ProgramInfoBoxWorkshops({ time, workshop, color }) {
       onClick={() => setIsExpanded(!isExpanded)}
       className="group relative border-b border-white/10 hover:bg-white/[0.02] transition-colors cursor-pointer"
     >
-      <div className="flex flex-col md:flex-row py-6 md:py-8 items-start md:items-center">
+      <div className="flex flex-col md:flex-row py-6 md:py-8 items-center md:items-center">
         {/* Time Section - Minimal Typography */}
-        <div className="flex items-baseline md:flex-col md:items-center justify-start md:justify-center mb-3 md:mb-0 md:w-48 shrink-0">
+        <div className="flex items-baseline md:flex-col md:items-center justify-center md:justify-center mb-3 md:mb-0 md:w-48 shrink-0">
           <span className="font-mono text-lg md:text-xl font-black tracking-tighter text-white">
             {time?.split(' - ')[0]}
           </span>
@@ -22,8 +22,8 @@ export default function ProgramInfoBoxWorkshops({ time, workshop, color }) {
         </div>
 
         {/* Content Section */}
-        <div className="flex-1 w-full">
-          <div className="flex flex-wrap items-center gap-2 mb-2">
+        <div className="flex-1 w-full text-center md:text-left">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-2">
             <span className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-[0.15em] border border-yellow-500/30 from-yellow-400/20 to-yellow-500/10 bg-gradient-to-br text-yellow-300">
               Workshops
             </span>
@@ -32,8 +32,8 @@ export default function ProgramInfoBoxWorkshops({ time, workshop, color }) {
             </span>
           </div>
 
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex-1">
+          <div className="flex items-center md:items-start justify-between gap-4">
+            <div className="flex-1 flex flex-col items-center md:items-start">
               <h4 className="text-xl md:text-2xl font-black text-white tracking-tight mb-1 group-hover:text-yellow-400 transition-colors">
                 Workshop Breakout
               </h4>
@@ -69,11 +69,11 @@ export default function ProgramInfoBoxWorkshops({ time, workshop, color }) {
       `}>
         <div className="overflow-hidden">
           <div className="md:ml-48">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2 px-4 md:px-0">
               {workshop.map((info, index) => (
                 <div 
                   key={index} 
-                  className="group/item relative p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all duration-300"
+                  className="group/item relative p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all duration-300 text-left"
                 >
                   <div className="flex flex-col gap-2">
                     <div className="flex justify-between items-start">

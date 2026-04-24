@@ -51,7 +51,7 @@ function TeamRow({ team, index }) {
     <div
       id={`team-${team.slug}`}
       ref={ref}
-      className="mx-auto w-full max-w-6xl px-4 py-1 sm:px-8 sm:py-2 lg:pb-48 scroll-mt-32">
+      className="mx-auto w-full max-w-6xl px-6 py-1 sm:px-8 sm:py-2 lg:pb-48 scroll-mt-32">
       <div
         className={`mb-6 text-center transition-all duration-700 sm:mb-8 ${
         visible ?
@@ -61,7 +61,7 @@ function TeamRow({ team, index }) {
         style={{ transitionDelay: `${index * 50}ms` }}>
 
         <div className="mx-auto mb-3 h-px w-44 bg-gradient-to-r from-transparent via-rose-300/70 to-transparent" />
-        <h3 className="mb-2 text-2xl font-bold uppercase tracking-[0.22em] text-rose-200 drop-shadow-[0_0_10px_rgba(244,63,94,0.45)] sm:text-3xl">{team.title}</h3>
+        <h3 className="mb-2 text-2xl font-bold uppercase tracking-widest text-rose-200 drop-shadow-[0_0_10px_rgba(244,63,94,0.45)] sm:text-3xl sm:tracking-[0.22em] px-2">{team.title}</h3>
         {/* {
         // team.description &&
         <p className="mx-auto max-w-2xl text-sm text-gray-300 sm:text-base">{team.description}</p>
@@ -76,7 +76,7 @@ function TeamRow({ team, index }) {
         "opacity-0 translate-x-12"}`
         }
         style={{ transitionDelay: `${index * 50 + 100}ms` }}>
-        <div className="mx-auto flex w-full flex-wrap items-start justify-center gap-x-8 gap-y-20 sm:gap-8 lg:gap-12">
+        <div className="mx-auto flex w-full flex-wrap items-start justify-center gap-x-8 gap-y-12 sm:gap-8 lg:gap-12">
           {members.map((m, mi) =>
           <div
             key={m.id}
@@ -91,7 +91,7 @@ function TeamRow({ team, index }) {
             containerStyle={{}} />
 
               <div
-            className="mt-3 w-full text-center text-[11px] sm:text-sm font-bold uppercase tracking-tight sm:tracking-widest text-rose-50/90 leading-tight px-1"
+            className="mt-3 w-full text-center text-[11px] sm:text-sm font-bold uppercase tracking-wide sm:tracking-widest text-rose-50/90 leading-tight px-1"
             style={{}}>
                 {removeAccents(m.name).toUpperCase().split(' ').map((part, pi, arr) => (
                   <span key={pi} className="block sm:inline">

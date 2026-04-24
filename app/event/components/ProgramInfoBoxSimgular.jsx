@@ -74,9 +74,9 @@ export default function ProgramInfoBoxSimgular({
       onClick={() => canExpand && setIsExpanded(!isExpanded)}
       className={`group relative border-b border-white/10 hover:bg-white/[0.02] transition-colors ${canExpand ? 'cursor-pointer' : ''}`}
     >
-      <div className="flex flex-col md:flex-row py-6 md:py-8 items-start md:items-center">
+      <div className="flex flex-col md:flex-row py-6 md:py-8 items-center md:items-center">
         {/* Time Section - Minimal Typography */}
-        <div className="flex items-baseline md:flex-col md:items-center justify-start md:justify-center mb-3 md:mb-0 md:w-48 shrink-0">
+        <div className="flex items-baseline md:flex-col md:items-center justify-center md:justify-center mb-3 md:mb-0 md:w-48 shrink-0">
           <span className="font-mono text-lg md:text-xl font-black tracking-tighter text-white">
             {time?.split(' - ')[0]}
           </span>
@@ -87,8 +87,8 @@ export default function ProgramInfoBoxSimgular({
         </div>
 
         {/* Content Section */}
-        <div className="flex-1 w-full">
-          <div className="flex flex-wrap items-center gap-2 mb-2">
+        <div className="flex-1 w-full text-center md:text-left">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-2">
             <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-[0.15em] border ${config.border} ${config.color} ${config.text}`}>
               {config.label}
             </span>
@@ -99,8 +99,8 @@ export default function ProgramInfoBoxSimgular({
             )}
           </div>
 
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex-1">
+          <div className="flex items-center md:items-start justify-between gap-4">
+            <div className="flex-1 flex flex-col items-center md:items-start">
               <h4 className="text-xl md:text-2xl font-black text-white tracking-tight mb-1 group-hover:text-emerald-400 transition-colors">
                 {displayName}
               </h4>
@@ -148,11 +148,11 @@ export default function ProgramInfoBoxSimgular({
       `}>
         <div className="overflow-hidden">
           <div className="md:ml-48">
-            <div className="max-w-2xl">
+            <div className="max-w-2xl mx-auto md:mx-0 text-center md:text-left">
               <p className="text-sm md:text-base leading-relaxed text-white/60 font-medium">
                 {description}
               </p>
-              <div className="mt-4 flex gap-2">
+              <div className="mt-4 flex justify-center md:justify-start gap-2">
                 <div className={`h-1 w-8 rounded-full bg-gradient-to-r ${config.color.replace('/20', '/60')}`} />
               </div>
             </div>
@@ -175,7 +175,7 @@ function SocialConnection({ socials = {}, ownerName, hoverColor }) {
 
   return (
     <div
-      className="mt-3 flex flex-wrap items-center gap-3"
+      className="mt-3 flex flex-wrap items-center justify-center md:justify-start gap-3"
       onClick={(event) => event.stopPropagation()}
       onMouseDown={(event) => event.stopPropagation()}
     >

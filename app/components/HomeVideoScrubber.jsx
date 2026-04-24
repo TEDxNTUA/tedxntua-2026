@@ -191,11 +191,11 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
         <div className={`${styles.introPanelContent} relative z-10 w-full flex justify-center items-center ${heroTitleClassName}`}>
           <div className="flex flex-col items-center">
-            <h1 className="text-6xl md:text-8xl lg:text-[13rem] font-black tracking-[0.1em] md:tracking-[0.15em] uppercase italic flex items-center">
+            <h1 className="text-6xl md:text-8xl lg:text-[13rem] font-black tracking-[0.1em] md:tracking-[0.15em] uppercase italic flex flex-wrap justify-center items-center gap-x-4 md:gap-x-10">
               <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
                 <ScrollRevealText text="Cycle" progress={heroReveal} colorMode="white" stagger={12} />
               </span>
-              <span className="ml-4 md:ml-10 text-green-500">
+              <span className="text-green-500">
                 <ScrollRevealText text="0" progress={heroReveal} colorMode="green" stagger={12} />
               </span>
             </h1>

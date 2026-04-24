@@ -22,7 +22,7 @@ export default function SpeakerInfoBox(speaker) {
       type="button"
       aria-haspopup="dialog"
       aria-expanded={showPopup}
-      className={`group relative mb-7 flex w-full max-w-[360px] flex-col overflow-hidden rounded-[30px] ${separtorLine} bg-[linear-gradient(180deg,rgba(6,95,70,0.96),rgba(2,27,22,0.98))] text-left text-white shadow-[0_18px_60px_rgba(6,95,70,0.22)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(6,95,70,0.34)] active:scale-[0.99] sm:max-w-[420px]`}
+      className={`group relative mb-7 flex w-full max-w-[360px] flex-col overflow-hidden rounded-[30px] ${separtorLine} bg-[linear-gradient(180deg,rgba(6,95,70,0.96),rgba(2,27,22,0.98))] text-center sm:text-left text-white shadow-[0_18px_60px_rgba(6,95,70,0.22)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(6,95,70,0.34)] active:scale-[0.99] sm:max-w-[420px]`}
       onClick={(e) => {
         setOriginRect(e.currentTarget.getBoundingClientRect());
         setShowPopup(true);
@@ -42,7 +42,7 @@ export default function SpeakerInfoBox(speaker) {
           </div>
         </div>
 
-        <section className="flex flex-wrap items-center gap-2 text-emerald-50/90">
+        <section className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-emerald-50/90">
           <SocialConnection
             socials={speaker.socials}
             size="25px"
@@ -89,7 +89,7 @@ export function PerformancesInfoBox(performance) {
       type="button"
       aria-haspopup="dialog"
       aria-expanded={showPopup}
-      className={`group relative mb-7 flex w-full max-w-[360px] flex-col overflow-hidden rounded-[30px] ${separtorLine} bg-[linear-gradient(180deg,rgba(6,95,70,0.96),rgba(2,27,22,0.98))] text-left text-white shadow-[0_18px_60px_rgba(6,95,70,0.22)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(6,95,70,0.34)] active:scale-[0.99] sm:max-w-[420px]`}
+      className={`group relative mb-7 flex w-full max-w-[360px] flex-col overflow-hidden rounded-[30px] ${separtorLine} bg-[linear-gradient(180deg,rgba(6,95,70,0.96),rgba(2,27,22,0.98))] text-center sm:text-left text-white shadow-[0_18px_60px_rgba(6,95,70,0.22)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(6,95,70,0.34)] active:scale-[0.99] sm:max-w-[420px]`}
       onClick={(e) => {
         setOriginRect(e.currentTarget.getBoundingClientRect());
         setShowPopup(true);
@@ -109,7 +109,7 @@ export function PerformancesInfoBox(performance) {
           </div>
         </div>
 
-        <section className="flex flex-wrap items-center gap-2 text-emerald-50/90">
+        <section className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-emerald-50/90">
           <SocialConnection
             socials={performance.socials}
             size="25px"
@@ -156,7 +156,7 @@ export function SideHappeningsInfoBox(sideHappening) {
       type="button"
       aria-haspopup="dialog"
       aria-expanded={showPopup}
-      className={`group relative mb-7 flex w-full max-w-[360px] flex-col overflow-hidden rounded-[30px] ${separtorLine} bg-[linear-gradient(180deg,rgba(6,95,70,0.96),rgba(2,27,22,0.98))] text-left text-white shadow-[0_18px_60px_rgba(6,95,70,0.22)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(6,95,70,0.34)] active:scale-[0.99] sm:max-w-[420px]`}
+      className={`group relative mb-7 flex w-full max-w-[360px] flex-col overflow-hidden rounded-[30px] ${separtorLine} bg-[linear-gradient(180deg,rgba(6,95,70,0.96),rgba(2,27,22,0.98))] text-center sm:text-left text-white shadow-[0_18px_60px_rgba(6,95,70,0.22)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(6,95,70,0.34)] active:scale-[0.99] sm:max-w-[420px]`}
       onClick={(e) => {
         setOriginRect(e.currentTarget.getBoundingClientRect());
         setShowPopup(true);
@@ -176,7 +176,7 @@ export function SideHappeningsInfoBox(sideHappening) {
           </div>
         </div>
 
-        <section className="flex flex-wrap items-center gap-2 text-emerald-50/90">
+        <section className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-emerald-50/90">
           <SocialConnection socials={sideHappening.socials} size="25px" mode="greenyellow" />
         </section>
 

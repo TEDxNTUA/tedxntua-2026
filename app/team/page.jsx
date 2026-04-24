@@ -9,7 +9,7 @@ export default function TeamPage() {
       <TeamNavigation teams={teams} />
       
       {/* Team List */}
-      <div className="bg-black text-white px-4 sm:px-8">
+      <div className="bg-black text-white px-0 sm:px-8">
         <div className="max-w-5xl mx-auto">
           <TeamList teams={teams} />
         </div>

@@ -121,7 +121,7 @@ export default function SiteHeader() {
             >
               <div className="mr-3 flex items-center h-4 sm:h-7">
                 <img 
-                  src={withBasePath("/tedxntua_logo.png")} 
+                  src={withBasePath("/tedxntua_logo-black.png")} 
                   alt="TEDxNTUA Logo" 
                   className="h-full w-auto object-contain bg-transparent border-none p-0"
                 />

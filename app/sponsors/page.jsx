@@ -353,7 +353,7 @@ export default function SponsorsPage() {
         <div className="relative h-[400vh] w-full">
           <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
             <div 
-              className="w-full px-4 text-center"
+              className="w-full px-6 text-center"
               style={{ 
                 opacity: 1,
                 transform: 'scale(1)'
@@ -398,7 +398,7 @@ export default function SponsorsPage() {
 
         {/* Sponsors Grid */}
         <div 
-          className={`relative z-20 container mx-auto px-4 sm:px-6 pb-32 transition-all duration-1000 ${isUnlocked ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
+          className={`relative z-20 container mx-auto px-6 sm:px-8 pb-32 transition-all duration-1000 ${isUnlocked ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
         >
           <div className="space-y-32 sm:space-y-48">
             {sponsorTiers.map((tier, index) => (

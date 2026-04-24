@@ -141,12 +141,12 @@ export default function SponsorTierSection({ tier, index }) {
       data-tier={tier.tier}
       style={{ transitionDelay: reducedMotion ? "0ms" : `${index * 100}ms` }}
       className={`
-        sponsor-tier-section transform transition-all duration-700
+        sponsor-tier-section w-full transform transition-all duration-700
         ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
       `}
     >
       {/* Tier Header */}
-      <div className={`mb-10 text-center ${index === 0 ? "mb-12" : ""}`}>
+      <div className={`mb-10 px-4 text-center ${index === 0 ? "mb-12" : ""}`}>
         <div className="flex flex-col items-center justify-center gap-2">
           <span 
             className="text-[10px] font-black uppercase tracking-[0.4em] mb-1"
@@ -171,7 +171,7 @@ export default function SponsorTierSection({ tier, index }) {
       {/* Sponsors Grid */}
       <div
         className={`
-          flex flex-wrap justify-center gap-6 sm:gap-8
+          flex flex-wrap justify-center gap-6 sm:gap-8 w-full
           ${getSizeClasses()}
         `}
       >

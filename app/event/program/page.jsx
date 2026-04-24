@@ -10,8 +10,8 @@ import { myWorkshopsPack1, myWorkshopsPack2, myWorkshopsPack3 } from "../infoDat
 function ProgramSection({ children, title, id }) {
   return (
     <section id={id} className="mb-20 md:mb-32 scroll-mt-32">
-      <div className="mb-6 md:mb-10 flex items-center gap-4">
-        <div className="flex flex-col">
+      <div className="mb-6 md:mb-10 flex flex-col items-center md:items-start gap-4 text-center md:text-left">
+        <div className="flex flex-col items-center md:items-start">
           <h3 className="text-lg md:text-2xl font-black uppercase tracking-[0.3em] text-emerald-400">
             {title}
           </h3>

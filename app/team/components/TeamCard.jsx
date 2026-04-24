@@ -63,18 +63,18 @@ export default function TeamCard({ team, index = 0 }) {
         </div>
       </div>
 
-      <div className="flex-1">
+      <div className="flex-1 text-center sm:text-left">
         <h3 className="text-xl font-semibold">{team.title}</h3>
         {team.description && <p className="text-sm text-gray-600">{team.description}</p>}
       </div>
 
-      <div className="self-stretch flex items-center">
-        <div className="ml-auto w-full sm:w-auto">
+      <div className="self-stretch flex items-center justify-center sm:justify-start">
+        <div className="w-full sm:w-auto">
           <div className="flex flex-col gap-3">
             {members.map((m, i) =>
             <div
               key={m.id}
-              className={`flex items-center gap-3 rounded p-1 transition-opacity transition-transform duration-600 ${
+              className={`flex flex-col sm:flex-row items-center gap-2 sm:gap-3 rounded p-1 transition-opacity transition-transform duration-600 ${
               visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`
               }
               style={{ transitionDelay: reducedMotion ? "0ms" : `${index * 80 + i * 60}ms` }}>
@@ -83,8 +83,14 @@ export default function TeamCard({ team, index = 0 }) {
                 member={m}
                 containerClassName="w-[72px] h-[72px] sm:w-20 sm:h-20 rounded-full bg-gray-100 flex-shrink-0" />
               
-                <div className="text-left">
-                  <div className="font-medium text-base uppercase tracking-tight">{removeAccents(m.name).toUpperCase()}</div>
+                <div className="text-center sm:text-left leading-tight">
+                  <div className="font-medium text-base uppercase tracking-tight">
+                    {removeAccents(m.name).toUpperCase().split(' ').map((part, pi, arr) => (
+                      <span key={pi} className="block sm:inline">
+                        {part}{pi < arr.length - 1 ? <span className="hidden sm:inline">&nbsp;</span> : ""}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}

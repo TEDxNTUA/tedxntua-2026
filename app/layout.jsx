@@ -16,7 +16,7 @@ import Image from 'next/image';
 // Page metadata for SEO and browser tab display
 export const metadata = {
   title: "TEDxNTUA 2026",
-  description: "TEDxNTUA 2026 - Ideas Worth Spreading"
+  description: "TEDxNTUA 2026 - Ideas Change Everything"
 };
 
 // Define the layout component
@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
                     </div>
                     
                     <p className="max-w-md text-[11px] leading-relaxed text-white/40 font-medium italic">
-                      In the spirit of "Ideas Worth Spreading", TEDx is a program of local, self-organized events that bring people together to share a TED-like experience.
+                      In the spirit of "Ideas Change Everything", TEDx is a program of local, self-organized events that bring people together to share a TED-like experience.
                     </p>
 
                     <div className="flex flex-wrap gap-3">

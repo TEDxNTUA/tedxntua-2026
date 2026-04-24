@@ -166,7 +166,7 @@ export default function AssetLoader() {
 
       <div className="relative flex flex-col items-center w-full max-w-lg px-8">
         <div className={`mb-6 flex flex-col items-center animate-pulse ${copixelDisplay.className}`}>
-          <h1 className="text-4xl md:text-6xl font-black tracking-[0.25em] uppercase italic flex items-center">
+          <h1 className="text-[1.75rem] sm:text-4xl md:text-6xl font-black tracking-[0.2em] sm:tracking-[0.25em] uppercase italic flex items-center">
             <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">Cycle</span>
             <span className="ml-4 text-green-500">0</span>
           </h1>
@@ -190,13 +190,13 @@ export default function AssetLoader() {
           <div className="absolute inset-0 shadow-[inset_0_0_80px_60px_#050505] pointer-events-none" />
         </div>
 
-        <div className="mt-12 flex flex-col items-center w-full max-w-[240px] gap-6">
+        <div className="mt-12 flex flex-col items-center w-full max-w-[240px] gap-6 px-2">
           <div className="relative w-full h-[1px] bg-white/10 overflow-hidden">
             <div className="absolute left-0 top-0 h-full bg-green-500/80 w-0" style={{ width: `${progress}%` }} />
           </div>
-          <div className="flex justify-between w-full text-[10px] uppercase tracking-[0.4em] text-white/30 font-light">
-            <span>Preparing Experience</span>
-            <span className="tabular-nums text-white/50 font-mono tracking-wider">{Math.round(progress)}%</span>
+          <div className="flex justify-between w-full text-[9px] sm:text-[10px] uppercase tracking-[0.1em] sm:tracking-[0.4em] text-white/30 font-light">
+            <span className="whitespace-nowrap">Preparing Experience</span>
+            <span className="tabular-nums text-white/50 font-mono tracking-wider ml-2">{Math.round(progress)}%</span>
           </div>
         </div>
       </div>
