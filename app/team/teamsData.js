@@ -5,7 +5,7 @@ const assetPath = (path) => encodeURI(withBasePath(path));
 export const teams = [
   {
     slug: "curator",
-    title: "Curator",
+    title: "Curators",
     description: "The people curating the talks and program.",
     heroImages: [
       assetPath("/MTT_final/Curators_ΤΕΛΙΚΕΣ✅/Άγγελος ✅/mtt-9.jpeg"),
@@ -183,7 +183,7 @@ export const teams = [
       },
       {
         id: "eirini",
-        name: "Ειρήνη Ελένη Ιωαννίδου",
+        name: "Ειρήνη Ιωαννίδου",
         photos: [
           assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Ειρήνη ✅/mtt-37.jpeg"),
           assetPath("/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Ειρήνη ✅/mtt-30.jpeg")
@@ -322,7 +322,7 @@ export const teams = [
   },
   {
     slug: "social-media",
-    title: "Social Media",
+    title: "Media & Marketing",
     description: "Communications, socials and outreach.",
     heroImages: [
       assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Έλενα ✅/mtt-22.jpeg"),
@@ -345,9 +345,9 @@ export const teams = [
         id: "malvina",
         name: "Μαλβίνα Στεμπίλη",
         photos: [
-          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-2.jpeg"),
           assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-56.jpeg"),
-          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-59.jpeg")
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-59.jpeg"),
+          assetPath("/MTT_final/Media_ΤΕΛΙΚΕΣ/Μαλβίνα ✅/mtt-2.jpeg")
         ],
         social: {
           instagram: "https://www.instagram.com/malvinaast",
