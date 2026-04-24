@@ -238,9 +238,11 @@
     height: var(--vh, 100vh);
     display: flex;
     align-items: center; 
-    justify-content: center;
-    padding: clamp(1.5rem, 8vw, 3rem);
+    justify-content: center !important;
+    padding: clamp(1rem, 5vw, 2rem);
     pointer-events: none;
+    text-align: center;
+    width: 100%;
   }
 
   .beatText {
@@ -250,7 +252,7 @@
     text-shadow: 
       0 0 20px rgba(0, 0, 0, 0.9),
       0 2px 5px rgba(0, 0, 0, 1);
-    text-align: center;
-    margin: 0;
+    text-align: center !important;
+    margin: 0 auto !important;
   }
 }
