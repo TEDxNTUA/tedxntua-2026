@@ -6,7 +6,7 @@
   width: auto;
   height: auto;
   z-index: 60;
-  transform: translateX(-50%) translateY(20px);
+  transform: translateX(-50%) translateY(-15px);
   transition: transform 600ms cubic-bezier(0.23, 1, 0.32, 1), opacity 500ms ease;
   pointer-events: none;
   display: flex;
@@ -40,8 +40,8 @@
 }
 
 .coreButtonOpen {
-  border-color: rgba(34, 197, 94, 0.8);
-  box-shadow: 0 0 50px rgba(34, 197, 94, 0.25), 0 15px 50px rgba(0, 0, 0, 0.9);
+  border-color: #fbbf24;
+  box-shadow: 0 0 50px rgba(251, 191, 36, 0.25), 0 15px 50px rgba(0, 0, 0, 0.9);
 }
 
 .coreButton::after {
@@ -53,12 +53,13 @@
   letter-spacing: 0.4em;
   color: rgba(255, 255, 255, 0.25);
   transition: all 400ms ease;
+  white-space: nowrap;
 }
 
 .coreButtonOpen::after {
-  content: "HOME";
-  color: #22c55e;
-  letter-spacing: 0.5em;
+  content: "HOME PAGE";
+  color: #fbbf24;
+  letter-spacing: 0.2em;
 }
 
 .coreInner {
@@ -77,168 +78,67 @@
 }
 
 .coreButtonNotHome .coreInner {
-  color: #22c55e;
+  color: #fbbf24;
 }
 
-/* --- 3. Fancy Neural Roots (SVG Branches) --- */
-.rootLines {
+/* --- 3. Radial Semisphere Menu --- */
+.radialWrapper {
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translateX(-50%);
-  width: 240px;
-  height: 180px;
-  z-index: 40;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.rootPath {
-  fill: none;
-  stroke: rgba(34, 197, 94, 0.4);
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-dasharray: 300;
-  stroke-dashoffset: 300;
-  transition: stroke-dashoffset 900ms cubic-bezier(0.23, 1, 0.32, 1), stroke 400ms ease;
-}
-
-.rootPathGlow {
-  fill: none;
-  stroke: rgba(34, 197, 94, 0.2);
-  stroke-width: 5;
-  stroke-linecap: round;
-  filter: blur(6px);
-  stroke-dasharray: 300;
-  stroke-dashoffset: 300;
-  transition: stroke-dashoffset 900ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.rootPathOpen {
-  stroke-dashoffset: 0;
-}
-
-.rootJunction {
-  fill: #22c55e;
+  width: 500px;
+  height: 500px;
+  transform: translate(-50%, -50%) scale(0.3);
   opacity: 0;
-  transition: opacity 500ms ease, transform 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition-delay: 700ms;
-  transform: scale(0);
-}
-
-.rootPathOpen ~ .rootJunction {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* --- 4. Orbital Nodes (Graph Nodes) --- */
-.orbitalNode {
-  position: absolute;
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: rgba(8, 8, 8, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
   pointer-events: none;
-  opacity: 0;
+  transition: all 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: 50;
-  transform: scale(0.4) translate(0, 0);
-  transition: all 600ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.nodeOpen {
+.radialOpen {
+  transform: translate(-50%, -50%) scale(1);
   opacity: 1;
   pointer-events: auto;
 }
 
-/* DESKTOP POSITIONS */
-.nodeTeam.nodeOpen { transform: translate(-105px, 80px) scale(1); }
-.nodeEvent.nodeOpen { transform: translate(0px, 140px) scale(1); }
-.nodeSponsors.nodeOpen { transform: translate(105px, 80px) scale(1); }
-
-.nodeTeam { transition-delay: 80ms; }
-.nodeEvent { transition-delay: 160ms; }
-.nodeSponsors { transition-delay: 240ms; }
-
-.nodeActive {
-  background: rgba(34, 197, 94, 0.15);
-  border-color: rgba(34, 197, 94, 0.8);
-  box-shadow: 0 0 25px rgba(34, 197, 94, 0.2), inset 0 0 15px rgba(34, 197, 94, 0.1);
-  animation: pulseActive 2s infinite ease-in-out;
-}
-
-@keyframes pulseActive {
-  0% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.1), inset 0 0 10px rgba(34, 197, 94, 0.05); }
-  50% { box-shadow: 0 0 30px rgba(34, 197, 94, 0.2), inset 0 0 15px rgba(34, 197, 94, 0.1); }
-  100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.1), inset 0 0 10px rgba(34, 197, 94, 0.05); }
-}
-
-/* --- 5. Node Content --- */
-.nodeIcon {
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 4px;
-  transition: all 400ms ease;
-}
-
-.nodeActive .nodeIcon {
-  color: #22c55e;
-  transform: scale(1.1);
-}
-
-.nodeLabel {
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.3);
-  text-transform: uppercase;
-  transition: all 400ms ease;
-}
-
-.nodeActive .nodeLabel {
-  color: #fff;
-  letter-spacing: 0.25em;
-}
-
-.svgIcon {
+.radialImage {
   width: 100%;
   height: 100%;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  object-fit: contain;
+  /* Optional: filter to make it pop more against dark bg */
+  filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
 }
 
-/* --- 6. Mobile --- */
+.radialSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.radialPath {
+  fill: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: fill 300ms ease;
+}
+
+.radialPath:hover {
+  fill: rgba(34, 197, 94, 0.08);
+}
+
+/* --- 4. Mobile --- */
 @media (max-width: 768px) {
-  .menuContainer { transform: translateX(-50%) translateY(15px); }
+  .menuContainer { transform: translateX(-50%) translateY(-10px); }
   
   .coreButton { width: 85px; height: 85px; }
   .coreInner { width: 32px; height: 32px; }
   .coreButton::after { font-size: 7px; bottom: 12%; }
 
-  /* Increased touch targets and label visibility */
-  .orbitalNode { width: 72px; height: 72px; }
-  .nodeIcon { width: 26px; height: 26px; }
-  .nodeLabel { font-size: 8px; letter-spacing: 0.15em; }
-
-  /* Adjusted translations to accommodate larger nodes */
-  .nodeTeam.nodeOpen { transform: translate(-95px, 70px) scale(1); }
-  .nodeEvent.nodeOpen { transform: translate(0px, 120px) scale(1); }
-  .nodeSponsors.nodeOpen { transform: translate(95px, 70px) scale(1); }
-
-  .rootLines { width: 210px; height: 160px; }
+  .radialWrapper {
+    width: 320px;
+    height: 320px;
+  }
 }
 

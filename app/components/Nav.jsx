@@ -1,41 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useHeaderNav } from "./EventNavProvider";
 import { useScrollDirection } from "../hooks/useScrollDirection";
+import { withBasePath } from "../lib/basePath";
 import classes from "./Nav.module.css";
 
 /**
- * Fancy Neural Roots Navigation - Version 7.0
- * Features glow-layered branches and junction nodes.
- * ABSOLUTELY NO movement on hover.
+ * Radial Navigation - Version 8.0
+ * Replaces neural roots with a semisphere image-based menu.
  */
-
-const TeamIcon = () => (
-  <svg viewBox="0 0 24 24" className={classes.svgIcon}>
-    <circle cx="12" cy="7" r="4" />
-    <path d="M17 21v-2a4 4 0 0 0-4-4H11a4 4 0 0 0-4 4v2" />
-    <circle cx="6" cy="11" r="2" />
-    <circle cx="18" cy="11" r="2" />
-  </svg>
-);
-
-const EventIcon = () => (
-  <svg viewBox="0 0 24 24" className={classes.svgIcon}>
-    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-    <circle cx="12" cy="12" r="4" />
-  </svg>
-);
-
-const SponsorsIcon = () => (
-  <svg viewBox="0 0 24 24" className={classes.svgIcon}>
-    <path d="M12 3l8.66 5v10L12 21l-8.66-5V8z" />
-    <path d="M12 8l4.33 2.5v5L12 18l-4.33-2.5v-5z" />
-    <path d="M12 3v5M20.66 18l-4.33-2.5M3.34 18l4.33-2.5" />
-  </svg>
-);
 
 const HomeIcon = () => (
   <svg viewBox="0 0 24 24" className={classes.svgIcon}>
@@ -44,27 +20,34 @@ const HomeIcon = () => (
   </svg>
 );
 
+const CloseIcon = () => (
+  <svg viewBox="0 0 24 24" className={classes.svgIcon}>
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+);
+
 export default function Nav() {
   const pathname = usePathname() ?? "/";
+  const router = useRouter();
   const { isOpen, open, close } = useHeaderNav();
   const isHiddenOnScroll = useScrollDirection({ threshold: 40 });
   const containerRef = useRef(null);
 
   const isHomePage = pathname === "/";
-  const isEventPage = pathname.startsWith("/event");
-  const isSponsorsPage = pathname.startsWith("/sponsors");
-  const isTeamPage = pathname.startsWith("/team");
 
   const handleCoreClick = (e) => {
+    e.preventDefault();
     if (!isOpen) {
-      e.preventDefault();
       open();
     } else {
-      if (isHomePage) {
-        e.preventDefault();
-        close();
-      }
+      close();
     }
+  };
+
+  const navigate = (href) => {
+    close();
+    router.push(href);
   };
 
   useEffect(() => {
@@ -86,85 +69,50 @@ export default function Nav() {
   return (
     <nav className={containerClasses} ref={containerRef}>
       
-      {/* Root SVG Lines - Fancy Glow Edition */}
-      <svg className={classes.rootLines} viewBox="0 0 240 180">
-        {/* Team Branch */}
-        <path d="M 120 0 C 100 25, 60 50, 15 80" className={`${classes.rootPathGlow} ${isOpen ? classes.rootPathOpen : ""}`} />
-        <path d="M 120 0 C 100 25, 60 50, 15 80" className={`${classes.rootPath} ${isOpen ? classes.rootPathOpen : ""}`} />
-        <circle cx="15" cy="80" r="3" className={classes.rootJunction} />
-        
-        {/* Event Branch */}
-        <path d="M 120 0 L 120 140" className={`${classes.rootPathGlow} ${isOpen ? classes.rootPathOpen : ""}`} style={{ transitionDelay: '80ms' }} />
-        <path d="M 120 0 L 120 140" className={`${classes.rootPath} ${isOpen ? classes.rootPathOpen : ""}`} style={{ transitionDelay: '80ms' }} />
-        <circle cx="120" cy="140" r="3" className={classes.rootJunction} style={{ transitionDelay: '750ms' }} />
-
-        {/* Sponsors Branch */}
-        <path d="M 120 0 C 140 25, 180 50, 225 80" className={`${classes.rootPathGlow} ${isOpen ? classes.rootPathOpen : ""}`} style={{ transitionDelay: '160ms' }} />
-        <path d="M 120 0 C 140 25, 180 50, 225 80" className={`${classes.rootPath} ${isOpen ? classes.rootPathOpen : ""}`} style={{ transitionDelay: '160ms' }} />
-        <circle cx="225" cy="80" r="3" className={classes.rootJunction} style={{ transitionDelay: '800ms' }} />
-
-        {/* Central Junction */}
-        <circle cx="120" cy="0" r="4" className={classes.rootJunction} style={{ transitionDelay: '0ms' }} />
-      </svg>
+      {/* Radial Semisphere Menu */}
+      <div className={`${classes.radialWrapper} ${isOpen ? classes.radialOpen : ""}`}>
+        <img 
+          src={withBasePath("/site_navigator.png")} 
+          alt="Navigation Menu" 
+          className={classes.radialImage}
+        />
+        <svg viewBox="0 0 100 100" className={classes.radialSvg}>
+          {/* TEAM - Right Sector (0 to 60 deg approx) */}
+          <path 
+            d="M 50 50 L 100 50 A 50 50 0 0 1 75 93.3 Z" 
+            className={classes.radialPath}
+            onClick={() => navigate("/team")}
+          />
+          {/* SPONSORS - Center Sector (60 to 120 deg approx) */}
+          <path 
+            d="M 50 50 L 75 93.3 A 50 50 0 0 1 25 93.3 Z" 
+            className={classes.radialPath}
+            onClick={() => navigate("/sponsors")}
+          />
+          {/* HOME - Left Sector (120 to 180 deg approx) */}
+          <path 
+            d="M 50 50 L 25 93.3 A 50 50 0 0 1 0 50 Z" 
+            className={classes.radialPath}
+            onClick={() => navigate("/")}
+          />
+        </svg>
+      </div>
 
       {/* Central Root Node */}
-      <Link
-        href="/"
+      <button
         onClick={handleCoreClick}
         className={`
           ${classes.coreButton} 
           ${isOpen ? classes.coreButtonOpen : ""} 
           ${!isHomePage ? classes.coreButtonNotHome : ""}
         `}
-        aria-label={isOpen ? (isHomePage ? "Close menu" : "Go home") : "Open navigation"}
+        aria-label={isOpen ? "Close menu" : "Open navigation"}
       >
         <span className={classes.coreInner}>
-          <HomeIcon />
+          {isOpen ? <CloseIcon /> : <HomeIcon />}
         </span>
-      </Link>
+      </button>
 
-      {/* Orbital Graph Nodes */}
-      <Link
-        href="/team"
-        onClick={() => close()}
-        className={`
-          ${classes.orbitalNode} 
-          ${classes.nodeTeam} 
-          ${isOpen ? classes.nodeOpen : ""} 
-          ${isTeamPage ? classes.nodeActive : ""}
-        `}
-      >
-        <span className={classes.nodeIcon}><TeamIcon /></span>
-        <span className={classes.nodeLabel}>Team</span>
-      </Link>
-
-      <Link
-        href="/event"
-        onClick={() => close()}
-        className={`
-          ${classes.orbitalNode} 
-          ${classes.nodeEvent} 
-          ${isOpen ? classes.nodeOpen : ""} 
-          ${isEventPage ? classes.nodeActive : ""}
-        `}
-      >
-        <span className={classes.nodeIcon}><EventIcon /></span>
-        <span className={classes.nodeLabel}>Event</span>
-      </Link>
-
-      <Link
-        href="/sponsors"
-        onClick={() => close()}
-        className={`
-          ${classes.orbitalNode} 
-          ${classes.nodeSponsors} 
-          ${isOpen ? classes.nodeOpen : ""} 
-          ${isSponsorsPage ? classes.nodeActive : ""}
-        `}
-      >
-        <span className={classes.nodeIcon}><SponsorsIcon /></span>
-        <span className={classes.nodeLabel}>Sponsors</span>
-      </Link>
     </nav>
   );
 }

@@ -100,6 +100,11 @@ export default function SiteHeader() {
           : "sticky top-0 border-b border-white/8 max-h-[120px]"
       }`}
     >
+      {/* Positions the central circular navigation component as an absolute overlay at the very top of the header (the "ceiling"). */}
+      <div className="pointer-events-auto absolute inset-x-0 top-0 flex justify-center">
+        <Nav />
+      </div>
+
       {/* Renders the dynamic background rings using viewport-relative percentages. */}
       <BackgroundDecorations scale={ARCH_SCALE_FACTOR} />
 
@@ -150,11 +155,6 @@ export default function SiteHeader() {
               </span>
             </ActionButton>
           </div>
-        </div>
-
-        {/* Positions the central circular navigation component as an absolute overlay at the top of the container. */}
-        <div className="pointer-events-auto absolute inset-x-0 top-0 flex justify-center">
-          <Nav />
         </div>
       </div>
     </header>
