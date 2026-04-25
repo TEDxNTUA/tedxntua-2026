@@ -1,7 +1,7 @@
 import localFont from 'next/font/local'
 
 const copixel = localFont({
-  src: '../../public/fonts/Copixel-Display.otf',
+  src: '../../public/fonts/Play-Regular.ttf',
   variable: '--font-copixel',
   display: 'swap',
 })
