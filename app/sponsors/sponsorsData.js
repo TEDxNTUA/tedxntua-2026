@@ -68,9 +68,9 @@ export const sponsorTiers = [
     tier: "Venue Sponsors",
     sponsors: [
       {
-    "name": "COCO-MAT EVENTS",
-    "logo": "/eventimages/COCO-MAT-EVENTS.png",
-    "link": "https://www.staycocomat.com/"
+    "name": "MEROPION - Athens Venue",
+    "logo": "/eventimages/MeropeionLogo.png",
+    "link": "https://www.meropion.com/"
     }
   ]
   },
