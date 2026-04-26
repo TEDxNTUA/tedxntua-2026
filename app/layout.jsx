@@ -82,7 +82,7 @@ export default function RootLayout({ children }) {
                   <div className="lg:col-span-2 flex flex-col gap-5">
                     <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-red-600">Explore</h4>
                     <nav className="flex flex-col gap-2.5 text-[10px] font-bold tracking-wider text-white/40">
-                      <Link href="/event/program" className="hover:text-emerald-400 transition-colors uppercase">Program</Link>
+                      <Link href="/event/constructionPage" className="hover:text-emerald-400 transition-colors uppercase">Program</Link>
                       <Link href="/event/speakers" className="hover:text-emerald-400 transition-colors uppercase">Speakers</Link>
                       <Link href="/event/performances" className="hover:text-emerald-400 transition-colors uppercase">Performances</Link>
                       <Link href="/sponsors" className="hover:text-emerald-400 transition-colors uppercase">Sponsors</Link>
