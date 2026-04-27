@@ -352,7 +352,7 @@ export default function SponsorsPage() {
             playsInline 
             className="w-full h-full object-cover filter blur-[1px]"
           >
-            <source src={withBasePath("/Enhancer-Ultra%20HD-cells_desktop.mp4")} type="video/mp4" />
+            <source src={withBasePath("/animations/Enhancer-Ultra%20HD-cells_desktop.mp4")} type="video/mp4" />
           </video>
         </div>
 

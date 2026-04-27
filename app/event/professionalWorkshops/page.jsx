@@ -285,7 +285,7 @@ export default function ProfessionalWorkshopsPage() {
     <section className={styles.page} data-modal-open={activeItem ? "true" : "false"}>
       <div className={styles.backdrop} aria-hidden="true">
         <Image
-          src={withBasePath("/gradient_pink.svg")}
+          src={withBasePath("/gradient_backgrounds/gradient_pink.svg")}
           alt=""
           fill
           priority

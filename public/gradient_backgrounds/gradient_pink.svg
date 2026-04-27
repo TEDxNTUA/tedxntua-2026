@@ -5,7 +5,7 @@
       <stop offset="0.18" stop-color="#FCF5F8"/>
       <stop offset="0.5" stop-color="#F8DDEB"/>
       <stop offset="0.78" stop-color="#EEA7CB"/>
-      <stop offset="1" stop-color="#CF5F9D"/>
+      <stop offset="1" stop-color="#EEA7CB"/>
     </linearGradient>
     <radialGradient id="pinkCloud" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(951 1524) rotate(106.306) scale(1091.82 1546.53)">
       <stop stop-color="#F19AC4"/>
@@ -40,15 +40,12 @@
     <ellipse cx="1433" cy="1809" rx="604" ry="605" fill="#E989BC" fill-opacity="0.82"/>
     <ellipse cx="410" cy="1267" rx="390" ry="643" fill="#F9D8E9" fill-opacity="0.96"/>
     <ellipse cx="1388" cy="931" rx="497" ry="568" fill="url(#whiteGlow)"/>
-    <ellipse cx="1126" cy="2266" rx="422" ry="321" fill="#FFF9FC" fill-opacity="0.92"/>
   </g>
 
   <g filter="url(#blur-md)">
     <ellipse cx="699" cy="913" rx="432" ry="288" fill="url(#roseCloud)" fill-opacity="0.96"/>
     <ellipse cx="1560" cy="1560" rx="243" ry="409" fill="white" fill-opacity="0.74"/>
     <ellipse cx="1711" cy="269" rx="354" ry="543" fill="#F5B4D1" fill-opacity="0.36"/>
-    <ellipse cx="271" cy="2320" rx="554" ry="706" fill="#D46AA4" fill-opacity="0.74"/>
     <ellipse cx="1143" cy="259" rx="490" ry="258" fill="#FCEAF3" fill-opacity="0.84"/>
-    <ellipse cx="927" cy="2050" rx="234" ry="314" fill="white" fill-opacity="0.82"/>
   </g>
 </svg>

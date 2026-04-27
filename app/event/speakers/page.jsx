@@ -239,7 +239,7 @@ function SpeakerModal({ speaker, onClose }) {
           <div className={styles.modalRings} aria-hidden="true" />
           <div className={styles.modalMedia}>
             <Image
-              src={withBasePath("/circle.png")}
+              src={withBasePath("/eventimages/circle.png")}
               alt=""
               fill
               priority
@@ -299,7 +299,7 @@ export default function SpeakersPage() {
     <section className={styles.page} data-modal-open={activeSpeaker ? "true" : "false"}>
       <div className={styles.backdrop} aria-hidden="true">
         <Image
-          src={withBasePath("/gradient.png")}
+          src={withBasePath("/gradient_backgrounds/gradient_blue.svg")}
           alt=""
           fill
           priority
@@ -329,7 +329,7 @@ export default function SpeakersPage() {
                 <div className={styles.stage}>
                   <div className={styles.stageGlow} />
                   <Image
-                    src={withBasePath("/circle.png")}
+                    src={withBasePath("/eventimages/circle.png")}
                     alt=""
                     fill
                     priority

@@ -29,7 +29,7 @@ export const sponsorTiers = [
       },
       {
         "name": "Dialectica",
-        "logo": assetPath("/Dialectica_idzOXMZJL7_0.png"),
+        "logo": assetPath("/eventimages/Dialectica_idzOXMZJL7_0.png"),
         "link": "https://www.dialectica.io/"
       },
       {

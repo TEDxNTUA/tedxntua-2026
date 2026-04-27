@@ -281,7 +281,7 @@ export default function PerformancesPage() {
     <section className={styles.page} data-modal-open={activePerformer ? "true" : "false"}>
       <div className={styles.backdrop} aria-hidden="true">
         <Image
-          src={withBasePath("/gradient_green.png")}
+          src={withBasePath("/gradient_backgrounds/gradient_green.svg")}
           alt=""
           fill
           priority

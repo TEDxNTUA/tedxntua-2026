@@ -206,7 +206,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
   return (
     <main className={styles.pageShell} style={{ "--vh": vh ? `${vh}px` : "100vh" }}>
-      <section className={styles.introPanel} style={{ "--scrubber-gradient": `url(${withBasePath("/background_gradient-transparency@4x.png")})` }}>
+      <section className={styles.introPanel} style={{ "--scrubber-gradient": `url(${withBasePath("/gradient_backgrounds/mainPage_gradient.png")})` }}>
         <div className="absolute inset-0 pointer-events-none opacity-40 z-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(34,197,94,0.15)_0%,_transparent_70%)]" />
         </div>

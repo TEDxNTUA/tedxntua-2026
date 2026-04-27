@@ -182,8 +182,8 @@ export default function AssetLoader() {
               autoPlay loop muted playsInline preload="auto"
               className="w-full h-full object-cover scale-[1.3] md:scale-[1.1] transition-opacity duration-700 mix-blend-lighten opacity-50"
             >
-              <source src={withBasePath(isAndroid() ? "/loading_android.mp4" : (isMobile ? "/loading_mobile.webm" : "/loading_desktop.webm"))} type="video/webm" />
-              <source src={withBasePath(isAndroid() ? "/loading_android.mp4" : (isMobile ? "/loading_mobile.mp4" : "/loading_desktop.mp4"))} type="video/mp4" />
+              <source src={withBasePath(isAndroid() ? "/loadings/loading_android.mp4" : (isMobile ? "/loadings/loading_mobile.webm" : "/loadings/loading_desktop.webm"))} type="video/webm" />
+              <source src={withBasePath(isAndroid() ? "/loadings/loading_android.mp4" : (isMobile ? "/loadings/loading_mobile.mp4" : "/loadings/loading_desktop.mp4"))} type="video/mp4" />
             </video>
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-green-500/10 to-transparent animate-pulse" />
