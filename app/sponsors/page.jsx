@@ -192,7 +192,7 @@ export default function SponsorsPage() {
   // Slow down the background video
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.playbackRate = 0.4;
+      videoRef.current.playbackRate = 0.07;
     }
   }, []);
 
