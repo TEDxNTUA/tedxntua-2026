@@ -74,10 +74,10 @@
 .scrubberSection {
   position: relative;
   width: 100%;
-  min-height: calc(var(--beats) * var(--vh, 100vh));
-  background: #000;
+  background: transparent; /* Changed to transparent for your theme */
   isolation: isolate;
-  flex-shrink: 0;
+  /* Ensure this matches your JS TOTAL_STEPS height */
+  height: var(--scrub-height); 
 }
 
 .scrubberSection::after {
@@ -186,12 +186,12 @@
 }
 
 .beatText {
-  max-width: 16ch;
+  max-width: 16ch !important;
   margin: 0;
   font-size: clamp(2.5rem, 6vw, 5.5rem);
   line-height: 0.95;
   letter-spacing: -0.04em;
-  text-wrap: balance;
+  text-wrap: center;
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
   text-align: center;
 }
@@ -255,5 +255,191 @@
     display: block !important;
     width: 100% !important;
     transform: none !important; /* Back to perfect center */
+  }
+}
+
+
+/* Update your existing scrubberSectionBeat class */
+.scrubberSectionBeat {
+  position: sticky; /* Keep this sticky! */
+  top: 0;
+  height: var(--vh, 100vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 5vw, 2rem);
+  pointer-events: auto; /* Allow interactions with the text */
+  width: 100%;
+}
+
+/* 1. Remove or modify the ::after gradient that adds a black fade to the bottom */
+.scrubberSection::after {
+  display: none; /* This prevents the black fade-out at the very bottom of the scroll */
+}
+
+/* 2. Ensure the sticky container stays visible and doesn't flicker at the end */
+.scrubberSectionStickyAfter {
+  opacity: 1;
+  pointer-events: auto; /* Ensure map stays interactive at the end */
+  position: absolute;
+  bottom: 0;
+  top: auto; /* Overrides the top: 0 from the sticky state */
+}
+
+/* 3. Final Image Styling */
+.finalRevealPhoto {
+  width: 100vw;
+  height: var(--vh, 100vh);
+  object-fit: cover;
+  object-position: center;
+  /* Remove drop shadow if it's full screen to avoid weird edges */
+  filter: none; 
+  display: block;
+}
+
+.finalRevealContainer {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: var(--vh, 100vh);
+  display: flex;
+  background: transparent;
+  overflow: hidden;
+}
+
+.finalRevealContainer {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: var(--vh, 100vh);
+  display: flex;
+  /* Use a transparent background or a semi-transparent dark tint */
+  background:transparent; /* Or use rgba(0, 0, 0, 0.3) for a subtle dark overlay */
+  backdrop-filter: blur(8px); /* Optional: adds a glass effect */
+  overflow: hidden;
+}
+
+/* LEFT: Map Side */
+.finalRevealLeft {
+  flex: 1; 
+  height: 100%;
+  background: transparent; /* Remove solid black */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* RIGHT: Image Side */
+.finalRevealRight {
+  flex: 1.8; 
+  height: 100%;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 2vw, 2rem) 0;
+  gap: clamp(0.75rem, 1.4vw, 1.25rem);
+}
+
+.splitPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center; 
+  display: block;
+}
+
+.finalRevealVenueText {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: #f5f1e8;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+  line-height: 1.2;
+  pointer-events: none;
+  text-align: center;
+}
+
+.finalRevealVenueText p {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.95rem);
+  font-weight: 700;
+}
+
+.finalRevealVenueImageWrap {
+  width: 100%;
+  height: min(68vh, calc(var(--vh, 100vh) * 0.68));
+  min-height: 260px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.mapWrapper {
+  width: 100%;
+  height: 100%;
+  background: transparent; /* Very subtle transparent tint */
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .finalRevealContainer {
+    display: flex;
+    flex-direction: column;
+    /* Use the VH variable we calculated in JS */
+    height: var(--vh, 100vh); 
+    width: 100vw;
+    position: sticky;
+    top: 0;
+    left: 0;
+    margin: 0;
+    background: transparent;
+  }
+
+  /* Map Container (Top) */
+  .finalRevealLeft {
+    flex: 1; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: transparent;
+  }
+
+  /* Image Container (Bottom) */
+  .finalRevealRight {
+    flex: 0 0 auto; 
+    height: 55%; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    padding: 0.75rem 0.75rem 0 !important;
+    margin: 0 !important;
+    overflow: visible;
+    gap: 0.6rem;
+  }
+
+  .splitPhoto {
+    width: 100%;
+    max-height: 100%; 
+    object-fit: contain; 
+    object-position: bottom center; 
+    display: block;
+    margin-bottom: -1px; /* Slight overlap to prevent 1px gap */
+  }
+
+  .finalRevealVenueText p {
+    font-size: clamp(1rem, 4.2vw, 1.35rem);
+  }
+
+  .finalRevealVenueImageWrap {
+    height: calc(var(--vh, 100vh) * 0.34);
+    min-height: 170px;
   }
 }

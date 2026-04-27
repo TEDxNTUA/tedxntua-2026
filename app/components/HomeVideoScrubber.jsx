@@ -12,7 +12,7 @@ const storyBeats = [
   "NINE speakers. FIVE performances. SEVEN workshops.",
   "ONE unforgettable night.",
 ];
-
+const TOTAL_STEPS = storyBeats.length + 1;
 const PIXELS_PER_SECOND = 1000;
 const MOBILE_PIXELS_PER_SECOND = 800;
 
@@ -59,7 +59,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const isMobile = window.innerWidth < 720;
     const pixelsPerSecond = (isCoarsePointer() || isMobile) ? MOBILE_PIXELS_PER_SECOND : PIXELS_PER_SECOND;
     
-    const minHeight = viewportHeight * storyBeats.length;
+    // FIX 1: Change this line to use TOTAL_STEPS (no extra multiplication)
+    const minHeight = viewportHeight * TOTAL_STEPS; 
     const desiredHeight = Math.max(minHeight, duration * pixelsPerSecond + viewportHeight * 0.5);
     setScrubHeight(`${Math.ceil(desiredHeight)}px`);
   }, [getStableViewportHeight]);
@@ -207,7 +208,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
         </div>
       </section>
 
-      <section ref={sectionRef} className={styles.scrubberSection} style={{ "--beats": storyBeats.length, "--scrub-height": scrubHeight }}>
+      {/* FIX 2: Pass TOTAL_STEPS to the CSS variable --beats */}
+      <section ref={sectionRef} className={styles.scrubberSection} style={{ "--beats": TOTAL_STEPS, "--scrub-height": scrubHeight }}>
         <div className={[styles.scrubberSectionSticky, pinState === "pinned" ? styles.scrubberSectionStickyPinned : "", pinState === "after" ? styles.scrubberSectionStickyAfter : ""].join(" ").trim()}>
           <video ref={videoRef} className={styles.scrubberSectionVideo} style={{ opacity: isVideoReady ? 1 : 0 }} src={videoSrc} muted playsInline preload="auto" crossOrigin="anonymous" />
           <div className={styles.scrubberSectionVeil} />
@@ -215,14 +217,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
         <div className={styles.scrubberSectionStory}>
           {storyBeats.map((beat, index) => {
-            // Calculate progress for each beat
-            // t is 0 when the beat zone starts, 0.5 at center, 1 at end
-            const t = (progress * storyBeats.length) - index;
-
-            // Plateau Math:
-            // Reveal in first 12.5% of its zone (slope 8)
-            // Stays fully visible for 75% of the zone (the pause)
-            // Hides in last 12.5% of the zone (slope -8)
+            // FIX 3: Multiply progress by TOTAL_STEPS so text matches the new scroll length
+            const t = (progress * TOTAL_STEPS) - index;
             const beatProgress = clamp(Math.min(t * 8, (1 - t) * 8), 0, 1);
             
             return (
@@ -233,10 +229,8 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
                   zIndex: 10 + index,
                   opacity: beatProgress > 0.01 ? 1 : 0,
                   visibility: beatProgress > 0.01 ? 'visible' : 'hidden',
-                  transition: 'opacity 0.2s ease, visibility 0.2s'
                 }}
               >
-
                 <ScrollRevealText
                   text={beat}
                   progress={beatProgress}
@@ -248,6 +242,60 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
             );
           })}
 
+          {/* --- FINAL SPLIT REVEAL (IMAGE + MAP) --- */}
+{(() => {
+  const imageIndex = storyBeats.length;
+  const t = (progress * TOTAL_STEPS) - imageIndex;
+  const imageProgress = clamp(t * 8, 0, 1); 
+
+  // Replace with your actual embed URL
+  const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3173.829585195268!2d23.74057301141338!3d37.97332700058085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd41a90a05e7%3A0x243e905afaf27568!2zzqnOtM61zq_OvyDOkc64zrfOvc-Ozr0!5e1!3m2!1sel!2sgr!4v1777305408083!5m2!1sel!2sgr";
+
+  return (
+    <div 
+  className={styles.finalRevealContainer}
+  style={{ 
+    zIndex: 50,
+    opacity: imageProgress,
+    visibility: imageProgress > 0.01 ? 'visible' : 'hidden',
+    pointerEvents: imageProgress > 0.5 ? 'auto' : 'none' 
+  }}
+>
+  {/* NOW ON THE LEFT: The Map Portal */}
+  <div className={styles.finalRevealLeft}>
+    <div className={styles.mapWrapper}>
+      <iframe
+        src={mapUrl}
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        allowFullScreen=""
+        loading="lazy"
+        title="Location Map"
+        className={styles.mapPortal}
+      />
+    </div>
+  </div>
+
+  {/* NOW ON THE RIGHT: Venue info + image */}
+  <div className={styles.finalRevealRight}>
+    <div className={styles.finalRevealVenueText}>
+      <p>Athens Conservatoire</p>
+      <p>Rigillis &amp; Vassileos Georgiou II 17-19</p>
+      <p>Metro: Line 3 ("Evangelismos" Station)</p>
+      
+    </div>
+    <div className={styles.finalRevealVenueImageWrap}>
+      <img
+        src={withBasePath("/PhotoWdeioText.png")}
+        alt="Athens Conservatoire"
+        className={styles.splitPhoto}
+      />
+    </div>
+  </div>
+</div>
+  );
+})()}
         </div>
       </section>
     </main>
