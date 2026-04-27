@@ -64,7 +64,7 @@ export default function TeamCard({ team, index = 0 }) {
       </div>
 
       <div className="flex-1 text-center sm:text-left">
-        <h3 className="text-xl font-semibold">{team.title}</h3>
+        <h3 className="text-xl font-semibold font-copixel">{team.title}</h3>
         {team.description && <p className="text-sm text-gray-600">{team.description}</p>}
       </div>
 

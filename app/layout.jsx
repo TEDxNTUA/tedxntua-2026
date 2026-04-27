@@ -38,6 +38,11 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preload" href={withBasePath("/fonts/Copixel-Display.otf")} as="font" type="font/otf" crossOrigin="anonymous" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          if (/Android/i.test(navigator.userAgent)) {
+            document.documentElement.classList.add('is-android');
+          }
+        `}} />
       </head>
       <body className="site-shell bg-[#050505] text-gray-900">
         <ServiceWorkerRegistration />

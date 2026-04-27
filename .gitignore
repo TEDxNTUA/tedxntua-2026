@@ -10,3 +10,8 @@ build/
 coverage/
 .idea/
 .vscode/
+.gemini/
+*.skill
+seo-expert/
+qq
+

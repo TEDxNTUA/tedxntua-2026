@@ -132,7 +132,7 @@ export default function TeamNavigation({ teams }) {
         {teams.map((team) => (
           <div key={team.slug} className="flex items-center justify-end">
             <div className="flex items-center group/btn">
-              <span className="opacity-0 group-hover/btn:opacity-100 lg:block hidden transition-all duration-300 translate-x-2 group-hover/btn:translate-x-0 mr-3 px-3 py-1.5 bg-slate-950/80 backdrop-blur-xl border border-emerald-500/30 text-emerald-400 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap shadow-2xl pointer-events-none">
+              <span className="opacity-0 group-hover/btn:opacity-100 lg:block hidden transition-all duration-300 translate-x-2 group-hover/btn:translate-x-0 mr-3 px-3 py-1.5 bg-slate-950/80 backdrop-blur-xl border border-emerald-500/30 text-emerald-400 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap shadow-2xl pointer-events-none font-copixel">
                 {team.title}
               </span>
               <button

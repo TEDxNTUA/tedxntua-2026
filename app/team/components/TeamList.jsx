@@ -61,7 +61,7 @@ function TeamRow({ team, index }) {
         style={{ transitionDelay: `${index * 50}ms` }}>
 
         <div className="mx-auto mb-3 h-px w-44 bg-gradient-to-r from-transparent via-rose-300/70 to-transparent" />
-        <h3 className="mb-2 text-2xl font-bold uppercase tracking-widest text-rose-200 drop-shadow-[0_0_10px_rgba(244,63,94,0.45)] sm:text-3xl sm:tracking-[0.22em] px-2">{team.title}</h3>
+        <h3 className="mb-2 text-2xl font-bold uppercase tracking-widest text-rose-200 drop-shadow-[0_0_10px_rgba(244,63,94,0.45)] sm:text-3xl sm:tracking-[0.22em] px-2 font-copixel">{team.title}</h3>
         {/* {
         // team.description &&
         <p className="mx-auto max-w-2xl text-sm text-gray-300 sm:text-base">{team.description}</p>

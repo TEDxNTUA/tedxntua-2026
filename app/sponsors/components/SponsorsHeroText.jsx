@@ -36,7 +36,7 @@ export default function SponsorsHeroText({ text, progress, className }) {
               const charStart = startReveal + index * staggerStep;
               const charEnd = charStart + 0.04;
 
-              let opacity = 0;
+              let opacity = 0.03; // Base "ghostly" visibility
               let translateY = 15;
               let rotateX = 60;
               let blur = 10;
@@ -48,7 +48,7 @@ export default function SponsorsHeroText({ text, progress, className }) {
                 blur = 0;
               } else if (progress > charStart) {
                 const localProgress = (progress - charStart) / (charEnd - charStart);
-                opacity = localProgress;
+                opacity = 0.03 + (localProgress * 0.97);
                 translateY = 15 * (1 - localProgress);
                 rotateX = 60 * (1 - localProgress);
                 blur = 10 * (1 - localProgress);

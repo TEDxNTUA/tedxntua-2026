@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { withBasePath } from "../lib/basePath";
 import localFont from "next/font/local";
+import { isAndroid } from "../lib/isAndroid";
 
 const copixelDisplay = localFont({
   src: "../../Copixel-Futuristic-Font/Fonts/Copixel-Display.otf",
@@ -181,8 +182,8 @@ export default function AssetLoader() {
               autoPlay loop muted playsInline preload="auto"
               className="w-full h-full object-cover scale-[1.3] md:scale-[1.1] transition-opacity duration-700 mix-blend-lighten opacity-50"
             >
-              <source src={withBasePath(isMobile ? "/loading_mobile.webm" : "/loading_desktop.webm")} type="video/webm" />
-              <source src={withBasePath(isMobile ? "/loading_mobile.mp4" : "/loading_desktop.mp4")} type="video/mp4" />
+              <source src={withBasePath(isAndroid() ? "/loading_android.mp4" : (isMobile ? "/loading_mobile.webm" : "/loading_desktop.webm"))} type="video/webm" />
+              <source src={withBasePath(isAndroid() ? "/loading_android.mp4" : (isMobile ? "/loading_mobile.mp4" : "/loading_desktop.mp4"))} type="video/mp4" />
             </video>
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-green-500/10 to-transparent animate-pulse" />

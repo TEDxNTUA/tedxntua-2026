@@ -17,6 +17,25 @@
   --font-copixel: var(--font-copixel), ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Android-specific performance optimizations */
+.is-android * {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.is-android .blur-[120px],
+.is-android .blur-[100px],
+.is-android .blur-[80px] {
+  filter: blur(40px) !important;
+}
+
+.is-android .blur-[18px],
+.is-android .blur-[16px],
+.is-android .blur-[26px] {
+  filter: none !important;
+}
+
 .font-copixel {
   font-family: var(--font-copixel);
 }
