@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import Nav from "./Nav";
 import { useHeaderNav } from "./EventNavProvider";
 import { withBasePath } from "../lib/basePath";
@@ -100,6 +101,11 @@ export default function SiteHeader() {
           : "sticky top-0 border-b border-white/8 max-h-[120px]"
       }`}
     >
+      {/* Positions the central circular navigation component as an absolute overlay at the very top of the header (the "ceiling"). */}
+      <div className="pointer-events-auto absolute inset-x-0 top-0 flex justify-center">
+        <Nav />
+      </div>
+
       {/* Renders the dynamic background rings using viewport-relative percentages. */}
       <BackgroundDecorations scale={ARCH_SCALE_FACTOR} />
 
@@ -111,19 +117,18 @@ export default function SiteHeader() {
         {/* Mobile/tablet keep a simple flex row, while desktop switches to a three-column header grid. */}
         <div className="flex items-start justify-between lg:grid lg:grid-cols-[minmax(260px,1fr)_auto_minmax(260px,1fr)] lg:gap-6">
           
-          {/* Left action button animates off-canvas when the radial nav opens on non-desktop breakpoints. */}
+          {/* Home action button with logo, replaces the old archive button. */}
           <div className={`flex justify-start transition-all duration-500 ease-[cubic-bezier(0.8, 0.8, 0.5, 0.5)] ${leftActionClasses}`}>
             <ActionButton 
-              href="https://www.tedxntua.com/" 
+              href="/" 
               theme={theme}
-              icon="/archive.png"
-              alt="Archive"
+              isInternal={true}
             >
-              <div className="mr-3 flex items-center h-4 sm:h-7">
+              <div className="flex w-full items-center justify-center py-1 sm:py-2">
                 <img 
-                  src={withBasePath("/tedxntua_logo-black.png")} 
-                  alt="TEDxNTUA Logo" 
-                  className="h-full w-auto object-contain bg-transparent border-none p-0"
+                  src={withBasePath(isHomePage ? "/tedxntua_logo-black.png" : "/tedxntua_logo.png")} 
+                  alt="TEDxNTUA Home" 
+                  className="h-6 w-auto object-contain transition-all duration-300 group-hover:scale-105 sm:h-8 lg:h-9"
                 />
               </div>
             </ActionButton>
@@ -151,11 +156,6 @@ export default function SiteHeader() {
             </ActionButton>
           </div>
         </div>
-
-        {/* Positions the central circular navigation component as an absolute overlay at the top of the container. */}
-        <div className="pointer-events-auto absolute inset-x-0 top-0 flex justify-center">
-          <Nav />
-        </div>
       </div>
     </header>
   );
@@ -167,50 +167,80 @@ export default function SiteHeader() {
  * @param {{
  *   href: string,
  *   theme: {bg: string, bgOp: number, brd: string, brdOp: number, hvr: string, hvrOp: number},
- *   icon: string,
- *   alt: string,
+ *   icon?: string,
+ *   alt?: string,
+ *   isInternal?: boolean,
  *   children: import("react").ReactNode
  * }} props
  * @returns {JSX.Element}
  */
-function ActionButton({ href, theme, icon, alt, children }) {
+function ActionButton({ href, theme, icon, alt, isInternal = false, children }) {
   // Theme-derived colors keep the action button visuals consistent with the current page variant.
   const baseBg = `rgba(${theme.bg}, ${theme.bgOp})`;
   const baseBorder = `rgba(${theme.brd}, ${theme.brdOp})`;
   const hoverBg = `rgba(${theme.hvr}, ${theme.hvrOp})`;
 
-  return (
-    <a
-      href={href}
-      className="pointer-events-auto group relative flex flex-col items-center justify-center transition-all lg:min-h-[76px] lg:min-w-[260px] lg:flex-row-reverse lg:justify-between lg:rounded-[1.75rem] lg:border lg:border-solid lg:px-5 lg:backdrop-blur-sm [--bg-final:transparent] [--brd-final:transparent] lg:[--bg-final:var(--bg-current,var(--base-bg))] lg:[--brd-final:var(--brd-current,var(--base-brd))]"
-      style={{
-        "--base-bg": baseBg,
-        "--base-brd": baseBorder,
-        backgroundColor: "var(--bg-final)",
-        borderColor: "var(--brd-final)",
-      }}
-      suppressHydrationWarning
-      onMouseEnter={(e) => { 
-        e.currentTarget.style.setProperty("--bg-current", hoverBg);
-      }}
-      onMouseLeave={(e) => { 
-        e.currentTarget.style.setProperty("--bg-current", "var(--base-bg)");
-      }}
-    >
-      {/* The icon stays visible at every breakpoint and scales up once the desktop treatment is active. */}
-      <img
-        src={withBasePath(icon)}
-        alt={alt}
-        className="relative h-10 w-auto rounded-full border border-white/12 bg-black/30 p-1.5 transition-transform duration-300 group-hover:scale-110 lg:h-12 xl:h-14"
-      />
+  const sharedClasses = "pointer-events-auto group relative flex flex-col items-center justify-center transition-all lg:min-h-[76px] lg:min-w-[260px] lg:flex-row-reverse lg:justify-between lg:rounded-[1.75rem] lg:border lg:border-solid lg:px-5 lg:backdrop-blur-sm [--bg-final:transparent] [--brd-final:transparent] lg:[--bg-final:var(--bg-current,var(--base-bg))] lg:[--brd-final:var(--brd-current,var(--base-brd))]";
+  
+  const sharedStyle = {
+    "--base-bg": baseBg,
+    "--base-brd": baseBorder,
+    backgroundColor: "var(--bg-final)",
+    borderColor: "var(--brd-final)",
+  };
 
-      {/* Text sits below the icon on compact layouts and snaps inline once the desktop layout starts. */}
-      <div className="mt-1 flex items-center leading-none lg:mt-0">
+  const handleMouseEnter = (e) => { 
+    e.currentTarget.style.setProperty("--bg-current", hoverBg);
+  };
+  
+  const handleMouseLeave = (e) => { 
+    e.currentTarget.style.setProperty("--bg-current", "var(--base-bg)");
+  };
+
+  const content = (
+    <>
+      {/* Optional icon: if provided, it renders in a circular glass-box. */}
+      {icon && (
+        <img
+          src={withBasePath(icon)}
+          alt={alt}
+          className="relative h-10 w-auto rounded-full border border-white/12 bg-black/30 p-1.5 transition-transform duration-300 group-hover:scale-110 lg:h-12 xl:h-14"
+        />
+      )}
+
+      {/* Main button content: centers text or logos. */}
+      <div className={`mt-1 flex items-center leading-none lg:mt-0 ${!icon ? 'w-full justify-center' : ''}`}>
         {children}
       </div>
 
       {/* Decorative geometry is reserved for the larger desktop button variant only. */}
       <div className="pointer-events-none absolute right-4 top-1/2 hidden h-28 w-28 -translate-y-1/2 rounded-full lg:block" />
+    </>
+  );
+
+  if (isInternal) {
+    return (
+      <Link
+        href={href}
+        className={sharedClasses}
+        style={sharedStyle}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      className={sharedClasses}
+      style={sharedStyle}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {content}
     </a>
   );
 }
