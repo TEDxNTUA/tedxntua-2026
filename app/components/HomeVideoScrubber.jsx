@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./HomeVideoScrubber.module.css";
 import { withBasePath } from "../lib/basePath";
 import ScrollRevealText from "./ScrollRevealText";
+import { isAndroid } from "../lib/isAndroid";
 
 const storyBeats = [
   "Reforn the circle.",
@@ -44,10 +45,13 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     return window.innerHeight;
   }, [vh]);
 
-  const getSmoothing = () => {
+  const getSmoothing = useCallback(() => {
     if (typeof window === "undefined") return 0.18;
+    // Android "No-Lag" approach: Disable interpolation (smoothing = 1) 
+    // to avoid constant expensive frame updates.
+    if (isAndroid()) return 1.0; 
     return window.innerWidth < 720 ? 0.15 : 0.18;
-  };
+  }, []);
 
   const updateLayout = useCallback((forcedHeight) => {
     const section = sectionRef.current;
@@ -100,13 +104,24 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 8.0;
     const targetTime = currentProgress * (duration - 0.02);
     const smoothing = getSmoothing();
+    
     const newTime = currentVideoTimeRef.current + (targetTime - currentVideoTimeRef.current) * smoothing;
     currentVideoTimeRef.current = newTime;
 
-    if (Math.abs(video.currentTime - newTime) > 0.004) video.currentTime = newTime;
-    if (Math.abs(targetTime - currentVideoTimeRef.current) > 0.0001) frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
-    else frameIdRef.current = 0;
-  }, []);
+    // Android "No-Lag" approach: Use a much larger threshold (0.02s) 
+    // to only seek when there's a significant change.
+    const threshold = isAndroid() ? 0.02 : 0.004;
+
+    if (Math.abs(video.currentTime - newTime) > threshold) {
+      video.currentTime = newTime;
+    }
+
+    if (Math.abs(targetTime - currentVideoTimeRef.current) > 0.0001) {
+      frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
+    } else {
+      frameIdRef.current = 0;
+    }
+  }, [getSmoothing]);
 
   const requestSync = useCallback(() => {
     if (!frameIdRef.current) frameIdRef.current = requestAnimationFrame(syncVideoToScroll);
@@ -135,7 +150,13 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const handleResize = () => {
       const w = window.innerWidth;
       const isMobile = w < 720;
-      const src = withBasePath(isMobile ? "/animations/output_mobile.mp4" : "/animations/output_desktop.mp4");
+      
+      let srcPath = isMobile ? "/animations/output_mobile.mp4" : "/animations/output_desktop.mp4";
+      if (isAndroid()) {
+        srcPath = "/animations/output_android.mp4";
+      }
+
+      const src = withBasePath(srcPath);
       setVideoSrc(prev => prev !== src ? src : prev);
 
       if (Math.abs(w - lastWidthRef.current) > 10) {

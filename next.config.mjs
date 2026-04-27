@@ -14,7 +14,7 @@ const basePath = hasConfiguredBasePath
 
 const nextConfig = {
   output: "export",
-  allowedDevOrigins: ["10.255.220.70"],
+  allowedDevOrigins: ["192.168.2.12", "localhost:3000"],
   basePath,
   assetPrefix: basePath ? `${basePath}/` : undefined,
   env: {
