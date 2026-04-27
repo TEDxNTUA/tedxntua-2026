@@ -130,7 +130,7 @@ export default function RootLayout({ children }) {
                     </div>
                     
                     <p className="max-w-md text-[11px] leading-relaxed text-white/40 font-medium italic">
-                      In the spirit of "Ideas Change Everything", TEDx is a program of local, self-organized events that bring people together to share a TED-like experience.
+                      TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation and the power of ideas that redefine our future. Operated under license from TED.
                     </p>
 
                     <div className="flex flex-wrap gap-3">
