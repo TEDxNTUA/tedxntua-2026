@@ -52,10 +52,17 @@ export const metadata = {
     shortcut: "/favicons/favicon-32x32.png",
     apple: "/favicons/favicon-32x32.png",
   },
+  manifest: "/favicons/manifest.json", // Optional: If we want to be very thorough
   robots: {
     index: true,
     follow: true,
   }
+};
+
+export const viewport = {
+  themeColor: "#DC2626",
+  width: "device-width",
+  initialScale: 1,
 };
 
 // Define the layout component

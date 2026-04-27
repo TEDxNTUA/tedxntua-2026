@@ -1,0 +1,21 @@
+{
+  "name": "TEDxNTUA 2026",
+  "short_name": "TEDxNTUA",
+  "description": "TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation and the power of ideas that redefine our future.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#DC2626",
+  "icons": [
+    {
+      "src": "/favicons/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicons/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ]
+}
