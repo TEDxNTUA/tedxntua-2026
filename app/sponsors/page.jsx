@@ -187,6 +187,14 @@ export default function SponsorsPage() {
   
   const targetProgressRef = useRef(0);
   const currentProgressRef = useRef(0);
+  const videoRef = useRef(null);
+
+  // Slow down the background video
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.4;
+    }
+  }, []);
 
   // Stable VH for mobile
   useEffect(() => {
@@ -327,6 +335,27 @@ export default function SponsorsPage() {
       {/* Atmospheric Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute inset-0 bg-[#050505]" />
+        
+        {/* Subtle Background Video */}
+        <div 
+          className="absolute inset-0 mix-blend-screen pointer-events-none overflow-hidden transition-opacity duration-1000"
+          style={{ 
+            opacity: 0.20 - (dampedProgress * 0.12),
+            transform: `scale(${1.1 + (dampedProgress * 0.05)})`
+          }}
+        >
+          <video 
+            ref={videoRef}
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="w-full h-full object-cover filter blur-[1px]"
+          >
+            <source src={withBasePath("/Enhancer-Ultra%20HD-cells_desktop.mp4")} type="video/mp4" />
+          </video>
+        </div>
+
         {/* Dynamic Grid */}
         <div 
           className="absolute inset-0 opacity-[0.03] transition-transform duration-500 ease-out"
@@ -337,11 +366,14 @@ export default function SponsorsPage() {
           }} 
         />
         {/* Glows */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[120vh] bg-gradient-to-b from-[#22d3ee]/[0.07] via-transparent to-transparent opacity-0 transition-opacity duration-1000" style={{ opacity: Math.min(1, dampedProgress * 2) }} />
+        <div 
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[120vh] bg-gradient-to-b from-[#22d3ee]/[0.07] via-transparent to-transparent transition-opacity duration-1000" 
+          style={{ opacity: 0.2 + Math.min(0.8, dampedProgress * 2) }} 
+        />
         <div 
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-[#22d3ee]/5 rounded-full filter blur-[180px] transition-all duration-1000" 
           style={{ 
-            opacity: 0.2 + dampedProgress * 0.8,
+            opacity: 0.4 + dampedProgress * 0.6,
             transform: `translate(-50%, ${dampedProgress * 50}px) scale(${1 + dampedProgress * 0.2})`
           }} 
         />
