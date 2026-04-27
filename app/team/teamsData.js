@@ -42,6 +42,8 @@ export const teams = [
         ],
         social: {
           instagram: "https://www.instagram.com/karasavvidiss",
+          linkedin: "https://www.linkedin.com/in/angelos-karasavvidis-3a3802231/",
+          facebook: "https://www.facebook.com/chrisangelkar/",
         }
       },
       {
@@ -76,6 +78,8 @@ export const teams = [
         ],
         social: {
           instagram: "https://www.instagram.com/nikos._anagnostou",
+          linkedin: "https://www.linkedin.com/me?trk=p_mwlite_feed-secondary_nav",
+          facebook: "https://m.facebook.com/profile.php?id=100008612345838",
         }
       },
       {
@@ -232,6 +236,7 @@ export const teams = [
         ],
         social: {
           instagram: "https://www.instagram.com/martinaazaccheo",
+          linkedin: "https://www.linkedin.com/in/martina-zaccheo-b52a7a2b6/",
         }
       }
     ]
@@ -255,6 +260,8 @@ export const teams = [
         ],
         social: {
           instagram: "https://www.instagram.com/kotsiafiti_",
+          linkedin: "https://www.linkedin.com/in/elena-kotsiafiti",
+          facebook: "https://www.facebook.com/profile.php?id=100010189967802",
         }
       },
       {
@@ -418,6 +425,7 @@ export const teams = [
         ],
         social: {
           instagram: "https://www.instagram.com/theodore_keramianos",
+          linkedin: "https://www.linkedin.com/in/theodore-keramianos-7943903b3?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
         }
       },
       {
