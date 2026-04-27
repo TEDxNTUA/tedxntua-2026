@@ -142,17 +142,21 @@ export default function SiteHeader() {
             <ActionButton 
               href={TICKETS_URL}
               theme={theme}
-              icon="/LOGO_ASSET.png"
-              alt="Ticket"
             >
-              {/* Removed 'hidden', adjusted tracking for mobile readability */}
-              <span 
-                className="text-[9px] font-semibold uppercase tracking-widest sm:text-sm sm:tracking-[0.34em]"
-                style={{ color: `rgba(${theme.tx}, ${theme.txOp})` }}
-                suppressHydrationWarning
-              > 
-                Tickets
-              </span>
+              <div className="flex w-full flex-col items-center justify-center gap-1 py-1 sm:py-2">
+                <img
+                  src={withBasePath("/ticket-asset.png")}
+                  alt="Ticket"
+                  className="h-8 w-auto object-contain transition-all duration-300 group-hover:scale-105 sm:h-10 lg:h-11"
+                />
+                <span
+                  className="text-[9px] font-semibold uppercase tracking-widest sm:text-sm sm:tracking-[0.34em]"
+                  style={{ color: `rgba(${theme.tx}, ${theme.txOp})` }}
+                  suppressHydrationWarning
+                >
+                  Ticket
+                </span>
+              </div>
             </ActionButton>
           </div>
         </div>
