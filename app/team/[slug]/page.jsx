@@ -27,7 +27,7 @@ export default function TeamDetailPage({ params }) {
     <section className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto">
         <header className="mb-6">
-          <h1 className="text-3xl font-bold">{team.title}</h1>
+          <h1 className="text-3xl font-bold font-copixel">{team.title}</h1>
           {team.description && <p className="text-gray-600">{team.description}</p>}
         </header>
 
