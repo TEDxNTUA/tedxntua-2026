@@ -16,15 +16,41 @@ import Image from 'next/image';
 // Page metadata for SEO and browser tab display
 export const metadata = {
   metadataBase: new URL("https://2026.tedxntua.com"),
-  title: "TEDxNTUA 2026",
+  applicationName: "TEDxNTUA 2026",
+  title: {
+    default: "TEDxNTUA 2026",
+    template: "%s | TEDxNTUA 2026",
+  },
   description: "TEDxNTUA 2026 - Ideas Change Everything",
   openGraph: {
     title: "TEDxNTUA 2026",
     description: "TEDxNTUA 2026 - Ideas Change Everything",
     url: "https://2026.tedxntua.com",
     siteName: "TEDxNTUA 2026",
+    images: [
+      {
+        url: "/LOGO_ASSET.png",
+        width: 1200,
+        height: 630,
+        alt: "TEDxNTUA 2026",
+      },
+    ],
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TEDxNTUA 2026",
+    description: "TEDxNTUA 2026 - Ideas Change Everything",
+    images: ["/LOGO_ASSET.png"],
+  },
+  icons: {
+    icon: [
+      { url: "/favicons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: "/favicons/favicon-32x32.png",
+    apple: "/favicons/favicon-32x32.png",
   },
   robots: {
     index: true,
@@ -43,6 +69,19 @@ export default function RootLayout({ children }) {
             document.documentElement.classList.add('is-android');
           }
         `}} />
+        {/* JSON-LD for Site Name to ensure search engines show the correct brand name */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "TEDxNTUA 2026",
+              "alternateName": ["TEDxNTUA", "TEDx NTUA"],
+              "url": "https://2026.tedxntua.com"
+            }),
+          }}
+        />
       </head>
       <body className="site-shell bg-[#050505] text-gray-900">
         <ServiceWorkerRegistration />
