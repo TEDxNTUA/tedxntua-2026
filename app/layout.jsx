@@ -15,8 +15,21 @@ import Image from 'next/image';
 
 // Page metadata for SEO and browser tab display
 export const metadata = {
+  metadataBase: new URL("https://2026.tedxntua.com"),
   title: "TEDxNTUA 2026",
-  description: "TEDxNTUA 2026 - Ideas Change Everything"
+  description: "TEDxNTUA 2026 - Ideas Change Everything",
+  openGraph: {
+    title: "TEDxNTUA 2026",
+    description: "TEDxNTUA 2026 - Ideas Change Everything",
+    url: "https://2026.tedxntua.com",
+    siteName: "TEDxNTUA 2026",
+    locale: "en_US",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  }
 };
 
 // Define the layout component
