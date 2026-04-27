@@ -21,10 +21,10 @@ export const metadata = {
     default: "TEDxNTUA 2026",
     template: "%s | TEDxNTUA 2026",
   },
-  description: "TEDxNTUA 2026 - Ideas Change Everything",
+  description: "TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation and the power of ideas that redefine our future.",
   openGraph: {
     title: "TEDxNTUA 2026",
-    description: "TEDxNTUA 2026 - Ideas Change Everything",
+    description: "TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation and the power of ideas that redefine our future.",
     url: "https://2026.tedxntua.com",
     siteName: "TEDxNTUA 2026",
     images: [
@@ -41,7 +41,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "TEDxNTUA 2026",
-    description: "TEDxNTUA 2026 - Ideas Change Everything",
+    description: "TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation and the power of ideas that redefine our future.",
     images: ["/LOGO_ASSET.png"],
   },
   icons: {
