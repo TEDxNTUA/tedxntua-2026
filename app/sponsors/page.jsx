@@ -187,14 +187,6 @@ export default function SponsorsPage() {
   
   const targetProgressRef = useRef(0);
   const currentProgressRef = useRef(0);
-  const videoRef = useRef(null);
-
-  // Slow down the background video
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.1;
-    }
-  }, []);
 
   // Stable VH for mobile
   useEffect(() => {
@@ -349,23 +341,18 @@ export default function SponsorsPage() {
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute inset-0 bg-[#050505]" />
         
-        {/* Subtle Background Video */}
+        {/* Subtle Background Image */}
         <div 
           className="absolute inset-0 mix-blend-screen pointer-events-none overflow-hidden"
           style={{ 
             opacity: Math.max(0.08, 0.20 - (dampedProgress * 0.12))
           }}
         >
-          <video 
-            ref={videoRef}
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
+          <img 
+            src={withBasePath("/animations/cells_desktop_bg.jpg")} 
+            alt="Atmospheric Background"
             className="w-full h-full object-cover scale-110"
-          >
-            <source src={withBasePath("/animations/Enhancer-Ultra%20HD-cells_desktop.mp4")} type="video/mp4" />
-          </video>
+          />
         </div>
 
         {/* Dynamic Grid */}
