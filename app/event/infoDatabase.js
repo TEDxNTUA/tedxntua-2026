@@ -5,7 +5,7 @@ import ProfWorkshops from "./LineUpInfo/ProfWorkshopsIT.json";
 // import SideHappenings from "./LineUpInfo/SideHappeningsIT.json";
 import Performances from "./LineUpInfo/PerformancesIT.json";
 
-const DEFAULT_POSTER_IMAGE = "/eventimages/speakers/grogyResol.jpg";
+const DEFAULT_POSTER_IMAGE = "/eventimages/speakers/grogyResol.webp";
 const WORKSHOP_TIME_1 = "14:00 - 15:00";
 const WORKSHOP_TIME_2 = "15:00 - 16:00";
 const WORKSHOP_TIME_3 = "16:00 - 17:00";
@@ -52,7 +52,7 @@ export const allSpeakers = applyPosterBasePath([
     title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[0].DescriptionGR,
-    posterImageUrl: "/eventimages/speakers/photo_KAVVADA.png",
+    posterImageUrl: "/eventimages/speakers/photo_KAVVADA.webp",
     personalDescription: Speakers[0].BioGR,
     socials: getSocials(Speakers, 0)
   },
@@ -68,7 +68,7 @@ export const allSpeakers = applyPosterBasePath([
     title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[1].DescriptionGR,
-    posterImageUrl: "/eventimages/speakers/photo_Thanos&Chara.png",
+    posterImageUrl: "/eventimages/speakers/photo_Thanos&Chara.webp",
     personalDescription: Speakers[2].BioGR,
     personalDescription2: Speakers[1].BioGR,
     socials: getSocials(Speakers, 2),
@@ -84,7 +84,7 @@ export const allSpeakers = applyPosterBasePath([
     title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[3].DescriptionGR,
-    posterImageUrl: "/eventimages/speakers/photo_Daglis.png",
+    posterImageUrl: "/eventimages/speakers/photo_Daglis.webp",
     personalDescription: Speakers[3].BioGR,
     socials: getSocials(Speakers, 3)
   },
@@ -98,7 +98,7 @@ export const allSpeakers = applyPosterBasePath([
     title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[4].DescriptionGR,
-    posterImageUrl: "/eventimages/speakers/photo_Mr Music.png",
+    posterImageUrl: "/eventimages/speakers/photo_Mr Music.webp",
     personalDescription: Speakers[4].BioGR,
     socials: getSocials(Speakers, 4)
   },
@@ -112,7 +112,7 @@ export const allSpeakers = applyPosterBasePath([
     title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[5].DescriptionGR,
-    posterImageUrl: "/eventimages/speakers/photo_Papadimitriou.png",
+    posterImageUrl: "/eventimages/speakers/photo_Papadimitriou.webp",
     personalDescription: Speakers[5].BioGR,
     socials: getSocials(Speakers, 5)
   },
@@ -126,7 +126,7 @@ export const allSpeakers = applyPosterBasePath([
     title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[6].DescriptionGR,
-    posterImageUrl: "/eventimages/speakers/photo_VAKALIS.png",
+    posterImageUrl: "/eventimages/speakers/photo_VAKALIS.webp",
     personalDescription: Speakers[6].BioGR,
     socials: getSocials(Speakers, 6)
   },
@@ -140,7 +140,7 @@ export const allSpeakers = applyPosterBasePath([
     title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[7].DescriptionGR,
-    posterImageUrl: "/eventimages/speakers/photo-Katsamanis.png",
+    posterImageUrl: "/eventimages/speakers/photo-Katsamanis.webp",
     personalDescription: Speakers[7].BioGR,
     socials: getSocials(Speakers, 7)
   },
@@ -154,7 +154,7 @@ export const allSpeakers = applyPosterBasePath([
     title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[8].DescriptionGR,
-    posterImageUrl: "/eventimages/speakers/photo_Drakou.png",
+    posterImageUrl: "/eventimages/speakers/photo_Drakou.webp",
     personalDescription: Speakers[8].BioGR,
     socials: getSocials(Speakers, 8)
   },
@@ -168,7 +168,7 @@ export const allSpeakers = applyPosterBasePath([
     title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[9].DescriptionGR,
-    posterImageUrl: "/eventimages/speakers/photo_Samolhs.png",
+    posterImageUrl: "/eventimages/speakers/photo_Samolhs.webp",
     personalDescription: Speakers[9].BioGR,
     socials: getSocials(Speakers, 9)
   },
@@ -182,7 +182,7 @@ export const allSpeakers = applyPosterBasePath([
     title: "",
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[10].DescriptionGR,
-    posterImageUrl: "/eventimages/speakers/hostess_photo-01.png",
+    posterImageUrl: "/eventimages/speakers/hostess_photo-01.webp",
     modalEyebrow: "Hostess",
     personalDescription: Speakers[10].BioGR,
     socials: getSocials(Speakers, 10)
@@ -342,7 +342,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[0].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[0].DescriptionGR,
-    posterImageUrl: "/eventimages/performancers/photo_Psarianos.png",
+    posterImageUrl: "/eventimages/performancers/photo_Psarianos.webp",
     personalDescription: Performances[0].BioGR,
     socials: getSocials(Performances, 0)
   },
@@ -355,7 +355,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[1].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[1].DescriptionGR,
-    posterImageUrl: "/eventimages/performancers/photo_Fygetakis.png",
+    posterImageUrl: "/eventimages/performancers/photo_Fygetakis.webp",
     personalDescription: Performances[1].BioGR,
     socials: getSocials(Performances, 1)
   },
@@ -368,7 +368,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[2].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[2].DescriptionGR,
-    posterImageUrl: "/eventimages/performancers/photo_Konikou.png",
+    posterImageUrl: "/eventimages/performancers/photo_Konikou.webp",
     personalDescription: Performances[2].BioGR,
     socials: getSocials(Performances, 2)
   },
@@ -381,7 +381,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[3].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[3].DescriptionGR,
-    posterImageUrl: "/eventimages/performancers/photo_GETUP.png",
+    posterImageUrl: "/eventimages/performancers/photo_GETUP.webp",
     personalDescription: Performances[3].BioGR,
     socials: getSocials(Performances, 3)
   },
@@ -394,7 +394,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[4].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[4].DescriptionGR,
-    posterImageUrl: "/eventimages/performancers/photo_GETUP.png",
+    posterImageUrl: "/eventimages/performancers/photo_GETUP.webp",
     personalDescription: Performances[4].BioGR,
     socials: getSocials(Performances, 4)
   }
