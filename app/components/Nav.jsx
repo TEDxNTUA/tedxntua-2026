@@ -83,17 +83,17 @@ export default function Nav() {
             className={classes.radialPath}
             onClick={() => navigate("/team")}
           />
-          {/* SPONSORS - Center Sector (60 to 120 deg approx) */}
+          {/* EVENT - Center Sector (60 to 120 deg approx) */}
           <path 
             d="M 50 50 L 75 93.3 A 50 50 0 0 1 25 93.3 Z" 
             className={classes.radialPath}
-            onClick={() => navigate("/sponsors")}
+            onClick={() => navigate("/event")}
           />
-          {/* HOME - Left Sector (120 to 180 deg approx) */}
+          {/* SPONSORS - Left Sector (120 to 180 deg approx) */}
           <path 
             d="M 50 50 L 25 93.3 A 50 50 0 0 1 0 50 Z" 
             className={classes.radialPath}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/sponsors")}
           />
         </svg>
       </div>
