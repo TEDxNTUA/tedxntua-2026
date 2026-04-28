@@ -9,9 +9,11 @@ import { withBasePath } from "./lib/basePath";
 import AssetLoader from "./components/AssetLoader";
 import ContentVisibilityWrapper from "./components/ContentVisibilityWrapper";
 import ServiceWorkerRegistration from "./components/ServiceWorkerRegistration";
+import Analytics from "./components/Analytics";
 import Link from "next/link";
 import Image from 'next/image';
 
+const GTM_ID = "GTM-PZXR3FK5";
 
 // Page metadata for SEO and browser tab display
 export const metadata = {
@@ -91,6 +93,17 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="site-shell bg-[#050505] text-gray-900">
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe 
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0" 
+            width="0" 
+            style={{ display: 'none', visibility: 'hidden' }}
+          ></iframe>
+        </noscript>
+        
+        <Analytics />
         <ServiceWorkerRegistration />
         <AssetLoader />
         <ContentVisibilityWrapper>
