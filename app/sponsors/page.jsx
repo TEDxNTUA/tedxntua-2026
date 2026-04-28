@@ -192,7 +192,7 @@ export default function SponsorsPage() {
   // Slow down the background video
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.playbackRate = 0.07;
+      videoRef.current.playbackRate = 0.1;
     }
   }, []);
 
@@ -214,15 +214,28 @@ export default function SponsorsPage() {
     const animate = () => {
       const damping = 0.12;
       const diff = targetProgressRef.current - currentProgressRef.current;
-      currentProgressRef.current += diff * damping;
       
-      setDampedProgress(currentProgressRef.current);
-      frameId = requestAnimationFrame(animate);
+      if (Math.abs(diff) > 0.0001) {
+        currentProgressRef.current += diff * damping;
+        // Only update state if there's a meaningful change to reduce render pressure
+        setDampedProgress(currentProgressRef.current);
+        frameId = requestAnimationFrame(animate);
+      } else if (currentProgressRef.current !== targetProgressRef.current) {
+        currentProgressRef.current = targetProgressRef.current;
+        setDampedProgress(currentProgressRef.current);
+        frameId = null;
+      } else {
+        frameId = null;
+      }
     };
     
     frameId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frameId);
-  }, []);
+    return () => {
+      if (frameId) cancelAnimationFrame(frameId);
+    };
+  }, [progress]);
+
+
 
   // Scroll sync logic
   useEffect(() => {
@@ -338,10 +351,9 @@ export default function SponsorsPage() {
         
         {/* Subtle Background Video */}
         <div 
-          className="absolute inset-0 mix-blend-screen pointer-events-none overflow-hidden transition-opacity duration-1000"
+          className="absolute inset-0 mix-blend-screen pointer-events-none overflow-hidden"
           style={{ 
-            opacity: 0.20 - (dampedProgress * 0.12),
-            transform: `scale(${1.1 + (dampedProgress * 0.05)})`
+            opacity: Math.max(0.08, 0.20 - (dampedProgress * 0.12))
           }}
         >
           <video 
@@ -350,7 +362,7 @@ export default function SponsorsPage() {
             loop 
             muted 
             playsInline 
-            className="w-full h-full object-cover filter blur-[1px]"
+            className="w-full h-full object-cover scale-110"
           >
             <source src={withBasePath("/animations/Enhancer-Ultra%20HD-cells_desktop.mp4")} type="video/mp4" />
           </video>
