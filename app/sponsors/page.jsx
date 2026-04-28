@@ -349,7 +349,7 @@ export default function SponsorsPage() {
           }}
         >
           <img 
-            src={withBasePath("/animations/cells_desktop_bg.jpg")} 
+            src={withBasePath("/animations/cells_desktop_bg.webp")}
             alt="Atmospheric Background"
             className="w-full h-full object-cover scale-110"
           />

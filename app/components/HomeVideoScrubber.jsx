@@ -259,7 +259,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
   return (
     <main className={styles.pageShell} style={{ "--vh": vh ? `${vh}px` : "100vh" }}>
-      <section className={styles.introPanel} style={{ "--scrubber-gradient": `url(${withBasePath("/gradient_backgrounds/mainPage_gradient.png")})` }}>
+      <section className={styles.introPanel} style={{ "--scrubber-gradient": `url(${withBasePath("/gradient_backgrounds/mainPage_gradient.webp")})` }}>
         <div className="absolute inset-0 pointer-events-none opacity-40 z-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(34,197,94,0.15)_0%,_transparent_70%)]" />
         </div>
@@ -373,7 +373,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     </div>
     <div className={styles.finalRevealVenueImageWrap}>
       <img
-        src={withBasePath("/PhotoWdeioText.png")}
+        src={withBasePath("/PhotoWdeioText.webp")}
         alt="Athens Conservatoire"
         className={styles.splitPhoto}
       />

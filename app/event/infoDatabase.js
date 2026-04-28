@@ -215,7 +215,7 @@ export const allExpWorkshops = applyPosterBasePath([
     title: ExpWorkshops[0].Title,  
     itemColor: "rgba(45, 35, 18, 0.9)",
     description: ExpWorkshops[0].DescriptionGR,
-    posterImageUrl: "/eventimages/workshops/photo-SOUXOUMOUXOU.png",
+    posterImageUrl: "/eventimages/workshops/photo-SOUXOUMOUXOU.webp",
     personalDescription: ExpWorkshops[0].BioGR,
     socials: getSocials(ExpWorkshops, 0)
   },
@@ -229,7 +229,7 @@ export const allExpWorkshops = applyPosterBasePath([
     title: ExpWorkshops[1].Title,
     itemColor: "rgba(20, 20, 20, 0.92)",
     description: ExpWorkshops[1].DescriptionGR,
-    posterImageUrl: "/eventimages/workshops/photo-WABISABI.png",
+    posterImageUrl: "/eventimages/workshops/photo-WABISABI.webp",
     personalDescription: ExpWorkshops[1].BioGR,
     socials: getSocials(ExpWorkshops, 1)
   },

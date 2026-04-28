@@ -1,12 +1,12 @@
 import { withBasePath } from "../lib/basePath";
 
 const collectiveImages = [
-"/MTT/collective/collective-01.jpg",
-"/MTT/collective/collective-02.jpg",
-"/MTT/collective/collective-03.jpg",
-"/MTT/collective/collective-04.jpg",
-"/MTT/collective/collective-05.jpg",
-"/MTT/collective/collective-06.jpg"].map(withBasePath);
+"/MTT_final/Curators_ΤΕΛΙΚΕΣ✅/Άγγελος ✅/mtt-9.webp",
+"/MTT_final/IT_ΤΕΛΙΚΕΣ ✅/Νίκος ✅/mtt-43.webp",
+"/MTT_final/Design_ΤΕΛΙΚΕΣ/Αργυρώ/mtt-180.webp",
+"/MTT_final/FR_ΤΕΛΙΚΕΣ ✅/Άρτεμις ✅/mtt-128.webp",
+"/MTT_final/Speakers_ΤΕΛΙΚΕΣ ✅/Ελευθερία ✅/mtt-436.webp",
+"/MTT_final/Venue_ΤΕΛΙΚΕΣ ✅/Φένια ✅/mtt-145.webp"].map(withBasePath);
 
 
 export function pickCollectiveImage(seed = 0) {

@@ -74,7 +74,7 @@ export const sponsorTiers = [
     },
     {
     "name": "COCO-MAT Hotels",
-    "logo": "/eventimages/COCO-MAT-EVENTS.jpeg",
+    "logo": "/eventimages/COCO-MAT-EVENTS.webp",
     "link": "https://www.staycocomat.com/"
     }
   ]
