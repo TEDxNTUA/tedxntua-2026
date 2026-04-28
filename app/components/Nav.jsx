@@ -42,6 +42,9 @@ export default function Nav() {
       open();
     } else {
       close();
+      if (!isHomePage) {
+        router.push("/");
+      }
     }
   };
 
