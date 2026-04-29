@@ -145,6 +145,9 @@ export default function RootLayout({ children }) {
                     <p className="max-w-md text-[11px] leading-relaxed text-white/40 font-medium italic">
                       TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation and the power of ideas that redefine our future. Operated under license from TED.
                     </p>
+                    <p className="max-w-md text-[14px] leading-relaxed text-white/40 font-medium italic">
+                      "Ideas change everything" 
+                    </p>
 
                     <div className="flex flex-wrap gap-3">
                       {['youtube', 'instagram', 'linkedIn', 'tiktok', 'facebook'].map((social) => (
