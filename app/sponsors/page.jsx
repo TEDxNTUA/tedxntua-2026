@@ -179,6 +179,7 @@ export default function SponsorsPage() {
   const [reducedMotion, setReducedMotion] = useState(false);
   const [progress, setProgress] = useState(0);
   const [dampedProgress, setDampedProgress] = useState(0);
+  const [showScrollPrompt, setShowScrollPrompt] = useState(true);
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sectionMarkers, setSectionMarkers] = useState([]);
@@ -198,6 +199,19 @@ export default function SponsorsPage() {
     measureStableVh();
     window.addEventListener("resize", measureStableVh);
     return () => window.removeEventListener("resize", measureStableVh);
+  }, []);
+
+  // Initial subtle prompt to scroll down
+  useEffect(() => {
+    const hideOnScroll = () => {
+      if (window.scrollY > 8) setShowScrollPrompt(false);
+    };
+    const autoHideTimer = setTimeout(() => setShowScrollPrompt(false), 2400);
+    window.addEventListener("scroll", hideOnScroll, { passive: true });
+    return () => {
+      clearTimeout(autoHideTimer);
+      window.removeEventListener("scroll", hideOnScroll);
+    };
   }, []);
 
   // Smooth damping animation loop
@@ -336,6 +350,31 @@ export default function SponsorsPage() {
       </div>
 
       <SponsorModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <div className="fixed inset-0 z-40 pointer-events-none flex items-center justify-center" aria-hidden="true">
+        <div
+          className={`flex flex-col items-center gap-2 transition-all duration-700 ${
+            showScrollPrompt ? "opacity-95 scale-100" : "opacity-0 scale-95"
+          }`}
+        >
+          <span className={`${copixelDisplay.className} text-[#22d3ee]/80 text-[12px] font-black tracking-[0.45em] uppercase drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]`}>
+            Initialize circle
+          </span>
+          <div className="w-px h-20 bg-gradient-to-b from-[#22d3ee]/70 to-transparent relative overflow-hidden">
+            <div className="absolute inset-0 bg-[#22d3ee]/70 animate-[scrollLinePulse_1.4s_ease-in-out_infinite]" />
+          </div>
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="text-[#22d3ee]/90 animate-[scrollPulse_1.4s_ease-in-out_infinite] drop-shadow-[0_0_14px_rgba(34,211,238,0.55)]"
+          >
+            <path d="M7 10l5 5 5-5M7 4l5 5 5-5" />
+          </svg>
+        </div>
+      </div>
 
       {/* Atmospheric Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -466,6 +505,15 @@ export default function SponsorsPage() {
         @keyframes shimmer-vertical {
           0% { transform: translateY(-100%); }
           100% { transform: translateY(100%); }
+        }
+        @keyframes scrollPulse {
+          0% { transform: translateY(-3px) scale(0.92); opacity: 0.45; }
+          50% { transform: translateY(8px) scale(1.08); opacity: 1; }
+          100% { transform: translateY(14px) scale(0.96); opacity: 0.55; }
+        }
+        @keyframes scrollLinePulse {
+          0% { transform: translateY(-100%); opacity: 0.2; }
+          100% { transform: translateY(100%); opacity: 0.9; }
         }
       `}</style>
     </section>

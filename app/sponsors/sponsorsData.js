@@ -35,7 +35,8 @@ export const sponsorTiers = [
       {
         "name": "Alpha Bank",
         "logo": "https://www.alpha.gr/-/media/AlphaGr/Images/logo/alphaBank_logo.svg?iar=0&hash=1F750DEDB5C3D48D59DCC4FB13FC7F07",
-        "link": "https://www.alpha.gr/"
+        "link": "https://www.alpha.gr/",
+        "CVlink": "https://career55.sapsf.eu/sfcareer/jobreqcareerpvt?jobId=2383&company=alphabank&st=741D170957426F827F412FB389FC8CEA7E3F7391"
       },
     ]
   },

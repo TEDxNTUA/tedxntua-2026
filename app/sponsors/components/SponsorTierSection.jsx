@@ -176,10 +176,7 @@ export default function SponsorTierSection({ tier, index }) {
         `}
       >
         {tier.sponsors.map((sponsor, i) => (
-          <a
-            href={sponsor.link || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
+          <div
             key={`${tier.tier}-${i}`}
             style={{
               transitionDelay: reducedMotion ? "0ms" : `${index * 100 + i * 40}ms`
@@ -187,13 +184,18 @@ export default function SponsorTierSection({ tier, index }) {
             className={`
               group relative w-40 sm:w-48 flex flex-col items-center
               transform transition-all duration-500
-              ${visible 
-                ? "opacity-100 scale-100" 
+              ${visible
+                ? "opacity-100 scale-100"
                 : "opacity-0 scale-95"
               }
-              cursor-pointer
             `}
           >
+            <a
+              href={sponsor.link || "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex flex-col items-center cursor-pointer"
+            >
             {/* Card Container */}
             <div
               className={`
@@ -243,11 +245,23 @@ export default function SponsorTierSection({ tier, index }) {
               <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#22d3ee]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
 
-            {/* Company Name Below */}
-            <p className="mt-3 text-center text-sm sm:text-base font-semibold text-white group-hover:text-[#22d3ee] transition-colors duration-300 px-2 min-h-[2.5rem] flex items-center justify-center">
-              {sponsor.name}
-            </p>
-          </a>
+              {/* Company Name Below */}
+              <p className="mt-3 text-center text-sm sm:text-base font-semibold text-white group-hover:text-[#22d3ee] transition-colors duration-300 px-2 min-h-[2.5rem] flex items-center justify-center">
+                {sponsor.name}
+              </p>
+            </a>
+
+            {sponsor.CVlink && (
+              <a
+                href={sponsor.CVlink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 w-full rounded-md border border-[#22d3ee]/50 bg-[#22d3ee]/10 px-3 py-2 text-center text-xs sm:text-sm font-semibold text-[#a5f3fc] hover:bg-[#22d3ee]/20 hover:border-[#22d3ee] transition-colors duration-300"
+              >
+                Add your CV here!
+              </a>
+            )}
+          </div>
         ))}
       </div>
 
