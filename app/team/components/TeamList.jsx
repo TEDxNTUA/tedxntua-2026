@@ -39,7 +39,11 @@ function TeamRow({ team, index }) {
           obs.unobserve(el);
         }
       },
-      { threshold: 0.2 }
+      {
+        // Trigger a bit earlier so cards appear sooner while scrolling
+        threshold: 0.17,
+        rootMargin: "0px 0px -10% 0px",
+      }
     );
     obs.observe(el);
     return () => obs.disconnect();
