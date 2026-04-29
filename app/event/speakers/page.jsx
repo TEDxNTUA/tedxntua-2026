@@ -19,6 +19,7 @@ const copixelDisplay = localFont({
 const EMPTY_BASE_PATH = withBasePath("");
 const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
 const HOSTESS_CARD_NAME = "Chrysa Michalopoulou";
+const BACKSTAGE_HOST_CARD_NAME = "Manos";
 
 const socialFields = [
   { field: "instagram", platform: "instagram", label: "Instagram" },
@@ -144,7 +145,12 @@ function buildSpeakerCard(speaker, index) {
 const speakerCards = allSpeakers.map(buildSpeakerCard).filter(Boolean);
 const orderedSpeakerCards = [
   ...speakerCards.filter((speaker) => speaker.name === HOSTESS_CARD_NAME),
-  ...speakerCards.filter((speaker) => speaker.name !== HOSTESS_CARD_NAME),
+  ...speakerCards.filter((speaker) => speaker.name === BACKSTAGE_HOST_CARD_NAME),
+  ...speakerCards.filter(
+    (speaker) =>
+      speaker.name !== HOSTESS_CARD_NAME &&
+      speaker.name !== BACKSTAGE_HOST_CARD_NAME,
+  ),
 ];
 
 function SpeakerModal({ speaker, onClose }) {
