@@ -80,6 +80,9 @@ export default function Nav() {
           className={classes.radialImage}
           width={500}
           height={500}
+          loading="lazy"
+          fetchpriority="low"
+          sizes="(max-width: 768px) 400px, 500px"
         />
         <svg viewBox="0 0 100 100" className={classes.radialSvg}>
           {/* TEAM - Right Sector (0 to 60 deg approx) */}
@@ -87,18 +90,24 @@ export default function Nav() {
             d="M 50 50 L 100 50 A 50 50 0 0 1 75 93.3 Z" 
             className={classes.radialPath}
             onClick={() => navigate("/team")}
+            aria-label="Navigate to Team page"
+            role="button"
           />
           {/* EVENT - Center Sector (60 to 120 deg approx) */}
           <path 
             d="M 50 50 L 75 93.3 A 50 50 0 0 1 25 93.3 Z" 
             className={classes.radialPath}
             onClick={() => navigate("/event")}
+            aria-label="Navigate to Event page"
+            role="button"
           />
           {/* SPONSORS - Left Sector (120 to 180 deg approx) */}
           <path 
             d="M 50 50 L 25 93.3 A 50 50 0 0 1 0 50 Z" 
             className={classes.radialPath}
             onClick={() => navigate("/sponsors")}
+            aria-label="Navigate to Sponsors page"
+            role="button"
           />
         </svg>
       </div>

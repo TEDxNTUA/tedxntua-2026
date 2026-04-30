@@ -73,6 +73,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preload" href={withBasePath("/fonts/Copixel-Display.otf")} as="font" type="font/otf" crossOrigin="anonymous" />
+        <link rel="preload" href={withBasePath("/gradient_backgrounds/mainPage_gradient.png")} as="image" />
         <script dangerouslySetInnerHTML={{ __html: `
           if (/Android/i.test(navigator.userAgent)) {
             document.documentElement.classList.add('is-android');
@@ -141,13 +142,16 @@ export default function RootLayout({ children }) {
                           className="h-12 w-auto" 
                           width={180}
                           height={48}
+                          fetchpriority="low"
+                          loading="lazy"
+                          sizes="(max-width: 768px) 140px, 180px"
                         />
                     </div>
                     
-                    <p className="max-w-md text-[11px] leading-relaxed text-white/40 font-medium italic">
+                    <p className="max-w-md text-[11px] leading-relaxed text-white/60 font-medium italic">
                       TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation and the power of ideas that redefine our future. Operated under license from TED.
                     </p>
-                    <p className="max-w-md text-[14px] leading-relaxed text-white/40 font-medium italic">
+                    <p className="max-w-md text-[14px] leading-relaxed text-white/60 font-medium italic">
                       "Ideas change everything" 
                     </p>
 
@@ -163,7 +167,7 @@ export default function RootLayout({ children }) {
                   {/* Quick Links Column */}
                   <div className="lg:col-span-2 flex flex-col gap-5">
                     <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-red-600">Explore</h4>
-                    <nav className="flex flex-col gap-2.5 text-[10px] font-bold tracking-wider text-white/40">
+                    <nav className="flex flex-col gap-2.5 text-[10px] font-bold tracking-wider text-white/40" aria-label="Footer navigation">
                       <Link href="/event/constructionPage" className="hover:text-emerald-400 transition-colors uppercase">Program</Link>
                       <Link href="/event/speakers" className="hover:text-emerald-400 transition-colors uppercase">Speakers</Link>
                       <Link href="/event/performances" className="hover:text-emerald-400 transition-colors uppercase">Performances</Link>
@@ -189,7 +193,7 @@ export default function RootLayout({ children }) {
                   </div>
 
                   <div className="flex flex-col items-center lg:items-end text-center lg:text-right gap-0.5">
-                    <div className="text-[9px] font-bold text-white/20 tracking-wider uppercase">
+                    <div className="text-[9px] font-bold text-white/50 tracking-wider uppercase">
                       © 2026 TEDxNTUA — Operated under license from TED
                     </div>
                   </div>
