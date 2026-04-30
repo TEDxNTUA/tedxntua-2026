@@ -311,8 +311,11 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
         src={withBasePath("/PhotoWdeioText.png")}
         alt="Athens Conservatoire"
         className={styles.splitPhoto}
+        width={1200}
+        height={800}
       />
     </div>
+
   </div>
 </div>
   );

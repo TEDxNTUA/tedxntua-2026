@@ -139,6 +139,8 @@ export default function RootLayout({ children }) {
                           src={withBasePath("/LOGO_ASSET.png")} 
                           alt="TEDxNTUA Logo" 
                           className="h-12 w-auto" 
+                          width={180}
+                          height={48}
                         />
                     </div>
                     

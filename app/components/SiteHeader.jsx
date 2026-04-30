@@ -129,6 +129,8 @@ export default function SiteHeader() {
                   src={withBasePath(isHomePage ? "/tedxntua_logo-black.png" : "/tedxntua_logo.png")} 
                   alt="TEDxNTUA Home" 
                   className="h-6 w-auto object-contain transition-all duration-300 group-hover:scale-105 sm:h-8 lg:h-9"
+                  width={180}
+                  height={48}
                 />
               </div>
             </ActionButton>
@@ -148,6 +150,8 @@ export default function SiteHeader() {
                   src={withBasePath("/ticket-asset.png")}
                   alt="Ticket"
                   className="h-8 w-auto object-contain transition-all duration-300 group-hover:scale-105 sm:h-10 lg:h-11"
+                  width={48}
+                  height={48}
                 />
                 <span
                   className="text-[9px] font-semibold uppercase tracking-widest sm:text-sm sm:tracking-[0.34em]"

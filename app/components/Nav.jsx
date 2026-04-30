@@ -78,6 +78,8 @@ export default function Nav() {
           src={withBasePath("/site_navigator.png")} 
           alt="Navigation Menu" 
           className={classes.radialImage}
+          width={500}
+          height={500}
         />
         <svg viewBox="0 0 100 100" className={classes.radialSvg}>
           {/* TEAM - Right Sector (0 to 60 deg approx) */}
