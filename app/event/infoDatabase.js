@@ -53,6 +53,7 @@ export const allSpeakers = applyPosterBasePath([
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[0].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_KAVVADA.webp",
+    bcimageUrl: "/eventimages/circle.webp",
     personalDescription: Speakers[0].BioGR,
     socials: getSocials(Speakers, 0)
   },
@@ -69,6 +70,7 @@ export const allSpeakers = applyPosterBasePath([
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[1].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Thanos&Chara.webp",
+    bcimageUrl: "/eventimages/circle.webp",
     personalDescription: Speakers[2].BioGR,
     personalDescription2: Speakers[1].BioGR,
     socials: getSocials(Speakers, 2),
@@ -85,6 +87,7 @@ export const allSpeakers = applyPosterBasePath([
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[3].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Daglis.webp",
+    bcimageUrl: "/eventimages/circle.webp",
     personalDescription: Speakers[3].BioGR,
     socials: getSocials(Speakers, 3)
   },
@@ -99,6 +102,7 @@ export const allSpeakers = applyPosterBasePath([
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[4].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Mr Music.webp",
+    bcimageUrl: "/eventimages/circle.webp",
     personalDescription: Speakers[4].BioGR,
     socials: getSocials(Speakers, 4)
   },
@@ -113,6 +117,7 @@ export const allSpeakers = applyPosterBasePath([
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[5].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Papadimitriou.webp",
+    bcimageUrl: "/eventimages/circle.webp",
     personalDescription: Speakers[5].BioGR,
     socials: getSocials(Speakers, 5)
   },
@@ -127,6 +132,7 @@ export const allSpeakers = applyPosterBasePath([
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[6].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_VAKALIS.webp",
+    bcimageUrl: "/eventimages/circle.webp",
     personalDescription: Speakers[6].BioGR,
     socials: getSocials(Speakers, 6)
   },
@@ -141,6 +147,7 @@ export const allSpeakers = applyPosterBasePath([
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[7].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo-Katsamanis.webp",
+    bcimageUrl: "/eventimages/circle.webp",
     personalDescription: Speakers[7].BioGR,
     socials: getSocials(Speakers, 7)
   },
@@ -155,6 +162,7 @@ export const allSpeakers = applyPosterBasePath([
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[8].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Drakou.webp",
+    bcimageUrl: "/eventimages/circle.webp",
     personalDescription: Speakers[8].BioGR,
     socials: getSocials(Speakers, 8)
   },
@@ -169,6 +177,7 @@ export const allSpeakers = applyPosterBasePath([
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[9].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/photo_Samolhs.webp",
+    bcimageUrl: "/eventimages/circle.webp",
     personalDescription: Speakers[9].BioGR,
     socials: getSocials(Speakers, 9)
   },
@@ -183,6 +192,7 @@ export const allSpeakers = applyPosterBasePath([
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[10].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/hostess_photo-01.webp",
+    bcimageUrl: "/eventimages/Circle_Host.webp",
     modalEyebrow: "Hostess",
     personalDescription: Speakers[10].BioGR,
     socials: getSocials(Speakers, 10)
@@ -198,6 +208,8 @@ export const allSpeakers = applyPosterBasePath([
     itemColor: SPEAKER_ITEM_COLOR,
     description: Speakers[11].DescriptionGR,
     posterImageUrl: "/eventimages/speakers/back_host.webp",
+    bcimageUrl: "/eventimages/Circle_Host.webp",
+    modalEyebrow: "Backstage Host",
     personalDescription: Speakers[11].BioGR,
     socials: getSocials(Speakers, 11)
   },

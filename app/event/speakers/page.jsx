@@ -135,6 +135,7 @@ function buildSpeakerCard(speaker, index) {
     name: names.join(" & "),
     profession: professions.join(" & ") || "Speaker",
     photo: resolvePhoto(speaker.posterImageUrl),
+    bcimageUrl: speaker.bcimageUrl ? withBasePath(speaker.bcimageUrl) : null,
     eyebrow: speaker.modalEyebrow || "Speaker",
     description: speaker.description || "",
     bios,
@@ -245,7 +246,7 @@ function SpeakerModal({ speaker, onClose }) {
           <div className={styles.modalRings} aria-hidden="true" />
           <div className={styles.modalMedia}>
             <Image
-              src={withBasePath("/eventimages/circle.png")}
+              src={speaker.bcimageUrl ? withBasePath(speaker.bcimageUrl) : withBasePath("/eventimages/circle.webp")}
               alt=""
               fill
               priority
@@ -335,8 +336,8 @@ export default function SpeakersPage() {
                 <div className={styles.stage}>
                   <div className={styles.stageGlow} />
                   <Image
-                    src={withBasePath("/eventimages/circle.png")}
-                    alt=""
+                    src={speaker.bcimageUrl ? withBasePath(speaker.bcimageUrl) : withBasePath("/eventimages/circle.webp")}
+                    alt="Speaker background circle"
                     fill
                     priority
                     className={styles.circle}
