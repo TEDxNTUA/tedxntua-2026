@@ -81,7 +81,7 @@ export default function Nav() {
           width={500}
           height={500}
           loading="lazy"
-          fetchpriority="low"
+          fetchPriority="low"
           sizes="(max-width: 768px) 400px, 500px"
         />
         <svg viewBox="0 0 100 100" className={classes.radialSvg}>
