@@ -129,6 +129,11 @@ export default function SiteHeader() {
                   src={withBasePath(isHomePage ? "/tedxntua_logo-black.png" : "/tedxntua_logo.png")} 
                   alt="TEDxNTUA Home" 
                   className="h-6 w-auto object-contain transition-all duration-300 group-hover:scale-105 sm:h-8 lg:h-9"
+                  width={180}
+                  height={48}
+                  fetchpriority="high"
+                  loading="eager"
+                  sizes="(max-width: 640px) 120px, (max-width: 1024px) 150px, 180px"
                 />
               </div>
             </ActionButton>
@@ -146,8 +151,13 @@ export default function SiteHeader() {
               <div className="flex w-full flex-col items-center justify-center gap-1 py-1 sm:py-2">
                 <img
                   src={withBasePath("/ticket-asset.png")}
-                  alt="Ticket"
+                  alt="Get Tickets"
                   className="h-8 w-auto object-contain transition-all duration-300 group-hover:scale-105 sm:h-10 lg:h-11"
+                  width={48}
+                  height={48}
+                  fetchpriority="high"
+                  loading="eager"
+                  sizes="(max-width: 640px) 32px, (max-width: 1024px) 40px, 48px"
                 />
                 <span
                   className="text-[9px] font-semibold uppercase tracking-widest sm:text-sm sm:tracking-[0.34em]"

@@ -184,6 +184,7 @@ export default function AssetLoader() {
             >
               <source src={withBasePath(isAndroid() ? "/loadings/loading_android.mp4" : (isMobile ? "/loadings/loading_mobile.webm" : "/loadings/loading_desktop.webm"))} type="video/webm" />
               <source src={withBasePath(isAndroid() ? "/loadings/loading_android.mp4" : (isMobile ? "/loadings/loading_mobile.mp4" : "/loadings/loading_desktop.mp4"))} type="video/mp4" />
+              <track kind="captions" />
             </video>
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-green-500/10 to-transparent animate-pulse" />

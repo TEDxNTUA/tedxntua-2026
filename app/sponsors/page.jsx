@@ -389,8 +389,9 @@ export default function SponsorsPage() {
         >
           <img 
             src={withBasePath("/animations/cells_desktop_bg.jpg")} 
-            alt="Atmospheric Background"
+            alt="" 
             className="w-full h-full object-cover scale-110"
+            aria-hidden="true"
           />
         </div>
 

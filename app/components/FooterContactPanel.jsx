@@ -26,7 +26,7 @@ export default function FooterContactPanel() {
     <section className="flex w-full flex-col gap-4">
       <div className="flex flex-col gap-0.5">
         <h4 className="text-[9px] font-black uppercase tracking-[0.3em] text-red-600">Get in touch</h4>
-        <p className="text-xs font-medium text-white/40">Questions? We're here to help.</p>
+        <p className="text-xs font-medium text-white/60">Questions? We're here to help.</p>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -36,8 +36,8 @@ export default function FooterContactPanel() {
             className="group/item flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.03] p-3 transition-all hover:border-white/10 hover:bg-white/[0.06]"
           >
             <div className="flex flex-col gap-0.5 min-w-0">
-              <span className="text-[8px] font-bold uppercase tracking-wider text-white/20">Email</span>
-              <span className="truncate text-xs font-bold text-white/70">{email}</span>
+              <span className="text-[8px] font-bold uppercase tracking-wider text-white/50">Email</span>
+              <span className="truncate text-xs font-bold text-white/80">{email}</span>
             </div>
             <button
               type="button"

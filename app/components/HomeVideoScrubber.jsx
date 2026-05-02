@@ -232,7 +232,9 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       {/* FIX 2: Pass TOTAL_STEPS to the CSS variable --beats */}
       <section ref={sectionRef} className={styles.scrubberSection} style={{ "--beats": TOTAL_STEPS, "--scrub-height": scrubHeight }}>
         <div className={[styles.scrubberSectionSticky, pinState === "pinned" ? styles.scrubberSectionStickyPinned : "", pinState === "after" ? styles.scrubberSectionStickyAfter : ""].join(" ").trim()}>
-          <video ref={videoRef} className={styles.scrubberSectionVideo} style={{ opacity: isVideoReady ? 1 : 0 }} src={videoSrc} muted playsInline preload="auto" crossOrigin="anonymous" />
+          <video ref={videoRef} className={styles.scrubberSectionVideo} style={{ opacity: isVideoReady ? 1 : 0 }} src={videoSrc} muted playsInline preload="auto" crossOrigin="anonymous" autoPlay>
+            <track kind="captions" />
+          </video>
           <div className={styles.scrubberSectionVeil} />
         </div>
 
@@ -309,10 +311,15 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     <div className={styles.finalRevealVenueImageWrap}>
       <img
         src={withBasePath("/PhotoWdeioText.png")}
-        alt="Athens Conservatoire"
+        alt="Athens Conservatoire Venue"
         className={styles.splitPhoto}
+        width={1200}
+        height={800}
+        loading="lazy"
+        sizes="(max-width: 768px) 100vw, 50vw"
       />
     </div>
+
   </div>
 </div>
   );
