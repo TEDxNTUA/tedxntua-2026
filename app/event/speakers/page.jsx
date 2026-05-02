@@ -19,6 +19,7 @@ const copixelDisplay = localFont({
 const EMPTY_BASE_PATH = withBasePath("");
 const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
 const HOSTESS_CARD_NAME = "Chrysa Michalopoulou";
+const BACKSTAGE_HOST_CARD_NAME = "Manos";
 
 const socialFields = [
   { field: "instagram", platform: "instagram", label: "Instagram" },
@@ -134,6 +135,7 @@ function buildSpeakerCard(speaker, index) {
     name: names.join(" & "),
     profession: professions.join(" & ") || "Speaker",
     photo: resolvePhoto(speaker.posterImageUrl),
+    bcimageUrl: speaker.bcimageUrl ? withBasePath(speaker.bcimageUrl) : null,
     eyebrow: speaker.modalEyebrow || "Speaker",
     description: speaker.description || "",
     bios,
@@ -144,7 +146,12 @@ function buildSpeakerCard(speaker, index) {
 const speakerCards = allSpeakers.map(buildSpeakerCard).filter(Boolean);
 const orderedSpeakerCards = [
   ...speakerCards.filter((speaker) => speaker.name === HOSTESS_CARD_NAME),
-  ...speakerCards.filter((speaker) => speaker.name !== HOSTESS_CARD_NAME),
+  ...speakerCards.filter((speaker) => speaker.name === BACKSTAGE_HOST_CARD_NAME),
+  ...speakerCards.filter(
+    (speaker) =>
+      speaker.name !== HOSTESS_CARD_NAME &&
+      speaker.name !== BACKSTAGE_HOST_CARD_NAME,
+  ),
 ];
 
 function SpeakerModal({ speaker, onClose }) {
@@ -239,7 +246,7 @@ function SpeakerModal({ speaker, onClose }) {
           <div className={styles.modalRings} aria-hidden="true" />
           <div className={styles.modalMedia}>
             <Image
-              src={withBasePath("/eventimages/circle.png")}
+              src={speaker.bcimageUrl ? withBasePath(speaker.bcimageUrl) : withBasePath("/eventimages/circle.webp")}
               alt=""
               fill
               priority
@@ -329,8 +336,8 @@ export default function SpeakersPage() {
                 <div className={styles.stage}>
                   <div className={styles.stageGlow} />
                   <Image
-                    src={withBasePath("/eventimages/circle.png")}
-                    alt=""
+                    src={speaker.bcimageUrl ? withBasePath(speaker.bcimageUrl) : withBasePath("/eventimages/circle.webp")}
+                    alt="Speaker background circle"
                     fill
                     priority
                     className={styles.circle}
