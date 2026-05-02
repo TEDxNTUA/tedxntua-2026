@@ -227,7 +227,7 @@ export const allExpWorkshops = applyPosterBasePath([
     title: ExpWorkshops[0].Title,  
     itemColor: "rgba(45, 35, 18, 0.9)",
     description: ExpWorkshops[0].DescriptionGR,
-    posterImageUrl: "/eventimages/workshops/photo-SOUXOUMOUXOU.webp",
+    posterImageUrl: "/eventimages/workshops/photo-SOUXOUMOUXOU.png",
     personalDescription: ExpWorkshops[0].BioGR,
     socials: getSocials(ExpWorkshops, 0)
   },
@@ -241,7 +241,7 @@ export const allExpWorkshops = applyPosterBasePath([
     title: ExpWorkshops[1].Title,
     itemColor: "rgba(20, 20, 20, 0.92)",
     description: ExpWorkshops[1].DescriptionGR,
-    posterImageUrl: "/eventimages/workshops/photo-WABISABI.webp",
+    posterImageUrl: "/eventimages/workshops/photo-WABISABI.png",
     personalDescription: ExpWorkshops[1].BioGR,
     socials: getSocials(ExpWorkshops, 1)
   },
@@ -354,7 +354,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[0].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[0].DescriptionGR,
-    posterImageUrl: "/eventimages/performancers/photo_Psarianos.webp",
+    posterImageUrl: "/eventimages/performancers/photo_Psarianos.png",
     personalDescription: Performances[0].BioGR,
     socials: getSocials(Performances, 0)
   },
@@ -367,7 +367,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[1].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[1].DescriptionGR,
-    posterImageUrl: "/eventimages/performancers/photo_Fygetakis.webp",
+    posterImageUrl: "/eventimages/performancers/photo_Fygetakis.png",
     personalDescription: Performances[1].BioGR,
     socials: getSocials(Performances, 1)
   },
@@ -380,7 +380,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[2].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[2].DescriptionGR,
-    posterImageUrl: "/eventimages/performancers/photo_Konikou.webp",
+    posterImageUrl: "/eventimages/performancers/photo_Konikou.png",
     personalDescription: Performances[2].BioGR,
     socials: getSocials(Performances, 2)
   },
@@ -393,7 +393,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[3].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[3].DescriptionGR,
-    posterImageUrl: "/eventimages/performancers/photo_GETUP.webp",
+    posterImageUrl: "/eventimages/performancers/photo_GETUP.png",
     personalDescription: Performances[3].BioGR,
     socials: getSocials(Performances, 3)
   },
@@ -406,7 +406,7 @@ export const allPerformances = applyPosterBasePath([
     artName: Performances[4].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[4].DescriptionGR,
-    posterImageUrl: "/eventimages/performancers/photo_GETUP.webp",
+    posterImageUrl: "/eventimages/performancers/photo_GETUP.png",
     personalDescription: Performances[4].BioGR,
     socials: getSocials(Performances, 4)
   }
