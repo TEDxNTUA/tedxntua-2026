@@ -62,6 +62,11 @@ export const sponsorTiers = [
     "name": "ΑΦΗΣ",
     "logo": "https://afis.gr/wp-content/uploads/2023/12/afis-logo-big.png",
     "link": "https://afis.gr/"
+  },
+  {
+    "name": "GDM Assets",
+    "logo": "https://gdmassets.gr/wp-content/uploads/2023/06/GDM-Assets-Logo.webp",
+    "link": "https://gdmassets.gr/"
   }
     ]
   },
