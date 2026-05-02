@@ -6,8 +6,8 @@ import { withBasePath } from "../lib/basePath";
 import teams, { removeAccents } from "./teamsData";
 import styles from "./page.module.css";
 
-const copixelDisplay = localFont({
-  src: "../../Copixel-Futuristic-Font/Fonts/Copixel-Display.otf",
+const playFont = localFont({
+  src: "../../public/fonts/Play-Regular.ttf", // Update this path to where your .ttf is stored
   display: "swap",
 });
 
@@ -44,68 +44,7 @@ const memberPhotoOverrides = {
   fenia: "/mtt_photos/fenia.webp",
 };
 
-const greeklishMap = {
-  Α: "A",
-  Β: "V",
-  Γ: "G",
-  Δ: "D",
-  Ε: "E",
-  Ζ: "Z",
-  Η: "I",
-  Θ: "Th",
-  Ι: "I",
-  Κ: "K",
-  Λ: "L",
-  Μ: "M",
-  Ν: "N",
-  Ξ: "X",
-  Ο: "O",
-  Π: "P",
-  Ρ: "R",
-  Σ: "S",
-  Τ: "T",
-  Υ: "Y",
-  Φ: "F",
-  Χ: "Ch",
-  Ψ: "Ps",
-  Ω: "O",
-  α: "a",
-  β: "v",
-  γ: "g",
-  δ: "d",
-  ε: "e",
-  ζ: "z",
-  η: "i",
-  θ: "th",
-  ι: "i",
-  κ: "k",
-  λ: "l",
-  μ: "m",
-  ν: "n",
-  ξ: "x",
-  ο: "o",
-  π: "p",
-  ρ: "r",
-  σ: "s",
-  ς: "s",
-  τ: "t",
-  υ: "y",
-  φ: "f",
-  χ: "ch",
-  ψ: "ps",
-  ω: "o",
-};
 
-function transliterateGreek(value) {
-  return value
-    .split("")
-    .map((letter) => greeklishMap[letter] || letter)
-    .join("");
-}
-
-function formatName(name) {
-  return transliterateGreek(removeAccents(name)).toUpperCase();
-}
 
 function getSocialLinks(social = {}) {
   return socialFields.flatMap(({ field, platform, label }) => {
@@ -153,8 +92,8 @@ function TeamMemberCard({ member, teamTitle }) {
 
       <div className={styles.caption}>
         <p className={styles.teamLabel}>{teamTitle}</p>
-        <h2 className={`${copixelDisplay.className} ${styles.name}`}>
-          {formatName(member.name)}
+        <h2 className={`${playFont.className} ${styles.name}`}>
+          {member.name}
         </h2>
       </div>
 
@@ -195,7 +134,7 @@ export default function TeamPage() {
 
       <div className={styles.content}>
         <div className={styles.hero}>
-          <h1 className={`${copixelDisplay.className} ${styles.title}`}>
+          <h1 className={`${playFont.className} ${styles.title}`}>
             Meet the Team
           </h1>
         </div>
@@ -203,7 +142,7 @@ export default function TeamPage() {
         <div className={styles.teamSections}>
           {teams.map((team) => (
             <section key={team.slug} className={styles.teamSection}>
-              <h2 className={`${copixelDisplay.className} ${styles.sectionTitle}`}>
+              <h2 className={`${playFont.className} ${styles.sectionTitle}`}>
                 {team.title}
               </h2>
               <div className={styles.memberGrid}>
