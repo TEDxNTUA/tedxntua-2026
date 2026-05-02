@@ -2,7 +2,7 @@
   position: relative;
   min-height: 100vh;
   overflow: clip;
-  background: #f6f3ef;
+  background: #fffdf4;
   color: #131716;
   isolation: isolate;
 }
@@ -22,10 +22,10 @@
   background:
     linear-gradient(
       180deg,
-      rgba(246, 243, 239, 0.92) 0%,
-      rgba(246, 243, 239, 0.38) 24%,
-      rgba(246, 243, 239, 0.12) 56%,
-      rgba(246, 243, 239, 0.42) 100%
+      rgba(255, 255, 255, 0.88) 0%,
+      rgba(255, 255, 255, 0.5) 24%,
+      rgba(255, 255, 255, 0.22) 56%,
+      rgba(255, 255, 255, 0.54) 100%
     ),
     radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.72), transparent 18%);
 }
@@ -50,7 +50,7 @@
   width: min(40rem, 50vw);
   aspect-ratio: 1;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
-  opacity: 0.75;
+  opacity: 0.9;
 }
 
 .backdropFlare {
@@ -58,8 +58,8 @@
   left: 6%;
   width: min(34rem, 42vw);
   height: min(18rem, 26vw);
-  background: radial-gradient(circle, rgba(190, 244, 240, 0.72), rgba(190, 244, 240, 0));
-  opacity: 0.9;
+  background: radial-gradient(circle, rgba(255, 235, 47, 0.28), rgba(255, 235, 47, 0));
+  opacity: 0.72;
 }
 
 .content {
@@ -99,7 +99,7 @@
   line-height: 0.96;
   text-align: center;
   text-transform: uppercase;
-  color: #073936;
+  color: #5a4100;
 }
 
 .memberGrid {
@@ -129,7 +129,7 @@
 .card:hover {
   transform: translateY(-8px);
   background: rgba(255, 255, 255, 0.24);
-  box-shadow: 0 24px 50px rgba(7, 98, 93, 0.1);
+  box-shadow: 0 24px 50px rgba(158, 112, 0, 0.12);
 }
 
 .card:hover .stageGlow {
@@ -141,7 +141,7 @@
   transform: translateZ(0) scale(1.03) rotate(360deg);
   filter:
     drop-shadow(0 4px 16px rgba(255, 255, 255, 0.62))
-    drop-shadow(0 26px 70px rgba(0, 121, 116, 0.24));
+    drop-shadow(0 26px 70px rgba(214, 159, 0, 0.26));
 }
 
 .card:hover .photo {
@@ -149,7 +149,7 @@
 }
 
 .card:hover .name {
-  color: #0b7e72;
+  color: #b88100;
 }
 
 .stage {
@@ -163,8 +163,8 @@
   position: absolute;
   inset: 10% -8% 12%;
   background:
-    radial-gradient(circle at 50% 34%, rgba(88, 226, 219, 0.72) 0%, rgba(88, 226, 219, 0.22) 40%, rgba(88, 226, 219, 0) 68%),
-    radial-gradient(circle at 85% 82%, rgba(0, 154, 145, 0.3) 0%, rgba(0, 154, 145, 0) 32%);
+    radial-gradient(circle at 50% 34%, rgba(255, 235, 47, 0.62) 0%, rgba(255, 235, 47, 0.18) 40%, rgba(255, 235, 47, 0) 68%),
+    radial-gradient(circle at 85% 82%, rgba(221, 164, 0, 0.3) 0%, rgba(221, 164, 0, 0) 32%);
   filter: blur(18px);
   opacity: 0.88;
   transition:
@@ -182,7 +182,7 @@
     filter 220ms ease;
   filter:
     drop-shadow(0 2px 10px rgba(255, 255, 255, 0.5))
-    drop-shadow(0 20px 54px rgba(0, 121, 116, 0.18));
+    drop-shadow(0 20px 54px rgba(214, 159, 0, 0.2));
 }
 
 .photoMask {
@@ -270,7 +270,7 @@
 }
 
 .socials :global(a:focus-visible) {
-  outline: 2px solid rgba(11, 126, 114, 0.45);
+  outline: 2px solid rgba(217, 164, 0, 0.45);
   outline-offset: 4px;
 }
 

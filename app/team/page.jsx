@@ -28,8 +28,8 @@ const memberPhotoOverrides = {
   aristotelis: "/mtt_photos/aristotelis.webp",
   artemis: "/mtt_photos/artemis.webp",
   giorgos: "/mtt_photos/rousis.webp",
-  eirini: "/mtt_photos/eirinh.webp",
-  martina: "/mtt_photos/martina.webp",
+  eirini: "/mtt_photos/eirhnh_new.png",
+  martina: "/mtt_photos/martina_new.png",
   "elena-k": "/mtt_photos/elena_speakers.webp",
   eleftheria: "/mtt_photos/eleftheria.webp",
   konstantinos: "/mtt_photos/kostas_speakers.webp",
@@ -68,7 +68,7 @@ function TeamMemberCard({ member, teamTitle }) {
       <div className={styles.stage}>
         <div className={styles.stageGlow} />
         <Image
-          src={withBasePath("/eventimages/circle.png")}
+          src={withBasePath("/teamAssets/Asset_Circle_Team.png")}
           alt=""
           fill
           priority
@@ -106,7 +106,7 @@ function TeamMemberCard({ member, teamTitle }) {
               urlLink={link.url}
               size="24px"
               mode="blackgreen"
-              hoverColor="#088880"
+              hoverColor="#d9a400"
               ariaLabel={`${link.label} for ${member.name}`}
             />
           ))}
@@ -121,7 +121,7 @@ export default function TeamPage() {
     <section className={styles.page}>
       <div className={styles.backdrop} aria-hidden="true">
         <Image
-          src={withBasePath("/gradient_backgrounds/gradient_blue.svg")}
+          src={withBasePath("/gradient_backgrounds/gradient_yellow.svg")}
           alt=""
           fill
           priority
