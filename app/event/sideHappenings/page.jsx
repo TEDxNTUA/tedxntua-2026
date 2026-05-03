@@ -268,8 +268,10 @@ function PerformerModal({ performer, onClose }) {
 
 export default function PerformancesPage() {
   const [activePerformer, setActivePerformer] = useState(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     document.body.classList.add("compact-site-footer");
 
     return () => {
@@ -299,6 +301,7 @@ export default function PerformancesPage() {
           </h1>
         </div>
 
+        {mounted && (
         <div className={styles.performerRow}>
           {performerCards.map((performer) => (
             <article key={performer.id} className={styles.card}>
@@ -341,6 +344,7 @@ export default function PerformancesPage() {
             </article>
           ))}
         </div>
+        )}
       </div>
 
       <div className={styles.pageFx} aria-hidden="true">

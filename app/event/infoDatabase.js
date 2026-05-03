@@ -321,7 +321,7 @@ export const allSideHappenings = applyPosterBasePath([
     title: "",
     itemColor: "rgba(45, 12, 15, 0.9)",
     description: "",
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/sideevents/Stelios Pupet/A313E5D6-B022-41BC-91B3-B3855B4640DD.JPG",
     personalDescription: "",
     socials: {
       instagram:
@@ -335,7 +335,7 @@ export const allSideHappenings = applyPosterBasePath([
     title: "Video Loops",
     itemColor: "rgba(15, 25, 45, 0.9)",
     description: "οπτικοακουστικό installation με ταινιες μικρου μηκους σε λουπα",
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/sideevents/Στάθης Γιαννακόπουλος - Video loops/SG LOGO PNG.png",
     personalDescription: "",
     socials: {
     },
@@ -348,7 +348,7 @@ export const allSideHappenings = applyPosterBasePath([
     title: "Photo Booth Van",
     itemColor: "rgba(45, 12, 15, 0.9)",
     description: "Το Photo Booth Van είναι έτοιμο να σας ταξιδέψει! Φωτογραφηθείτε μέσα στο πιο διασκεδαστικό βαν και πάρτε τις εκτυπώσεις σας στο λεπτό. Οι ευχάριστες στιγμές και το άφθονο γέλιο με τα αγαπημένα σας πρόσωπα είναι εγγυημένες. Σίγουρα θα είναι το αντικείμενο συζήτησης στο τέλος της βραδιάς.",
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/sideevents/Photobooth_Van/PhotoBoothVan_LOGO.png",
     personalDescription: "",
     socials: {
       instagram: "https://www.instagram.com/photoboothvan/?hl=el"      },
@@ -359,7 +359,7 @@ export const allSideHappenings = applyPosterBasePath([
     title: "Souxoumouxou",
     itemColor: "rgba(45, 12, 15, 0.9)",
     description: "Stand των souxoumouxou με merch",
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/sideevents/Souxoumouxou/Logo souxoumouxou.png",
     personalDescription: "",
     socials: {
       instagram: "https://www.instagram.com/souxoumouxou.ath/"      },
@@ -370,7 +370,7 @@ export const allSideHappenings = applyPosterBasePath([
     title: "Will you... Marrow me?",
     itemColor: "rgba(45, 12, 15, 0.9)",
     description: "Το 'Will you... Marrow me?' είναι μία εθελοντική ομάδα της Επιστημονικής Εταιρείας Φοιτητών Ιατρικής Ελλάδος (ΕΕΦΙΕ). Ο σκοπός της ομάδας μας είναι η ενημέρωση για την δωρεά μυελού των οστών και τη καταγραφή εθελοντών δοτών στο εθνικό και παγκόσμιο μητρώο. Η ομάδα μας δημιουργήθηκε το 2016 με πρωτοβουλία του Παραρτήματος Αθηνών της Ε.Ε.Φ.Ι.Ε και με την βοήθεια της Τράπεζας Εθελοντών Δοτών Μυελού των Οστών 'Όραμα Ελπίδας' και την στήριξη του ΕΚΠΑ και μέσα στα χρόνια κατάφερε να επεκταθεί και στις υπόλοιπες Ιατρικές Σχολές της χώρας.Μέσα στα 9 χρόνια δράσης μας έχουμε καταφέρει να καταγράψουμε περισσότερους από 7.000 εθελοντές,  δότες μυελού, εκ των οποίων οι 11 βρέθηκαν συμβατοί και προχώρησαν σε δωρεά. Επίσης, επεκτείνουμε την ομάδα μας σε Θεσσαλονίκη, Πάτρα, Κρήτη, Ιωάννινα και Αλεξανδρούπολη με τη βοήθεια της Τράπεζας Εθελοντών Δοτών Μυελού των Οστών «Όραμα Ελπίδας» καθώς και του «ΚΕΔΜΟΠ- Χάρισε Ζωή».Μάλιστα, 14 από τα άτομα που κατέγραψε η ομάδα μας προχώρησαν σε δωρεά!",
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/sideevents/Will_you_Marrow_me/finalLOGO.png",
     personalDescription: "",
     socials: {
       instagram: "https://www.instagram.com/willyoumarrowme_/?hl=el"      },
@@ -381,7 +381,7 @@ export const allSideHappenings = applyPosterBasePath([
     title: "Animal center Vyronas",
     itemColor: "rgba(45, 12, 15, 0.9)",
     description: "Το καταφύγιο ζώων Βύρωνα αποτελείτε από μια ολιγομελή εθελοντική ομάδα. Σκοπός τους είναι η φροντίδα και η προώθηση για υιοθεσία των αδέσποτων ζώων του δήμου Βύρωνα, καθώς και η ενημέρωση και η ευαισθητοποίηση της κοινωνίας γύρω από θέματα που αφορούν τα αδέσποτα και την ευζωια τους.",
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/sideevents/Καταφύγιο Ζώων Βύρωνα/IMG_2058.JPG",
     personalDescription: "",
     socials: {
       instagram: "https://www.instagram.com/climatefresk?igsh=a29meGlnMmk2ZTVn"      },
@@ -392,7 +392,7 @@ export const allSideHappenings = applyPosterBasePath([
     title: "",
     itemColor: "rgba(45, 12, 15, 0.9)",
     description: "Οι Κινητές Μονάδες Πρόληψης και Εξέτασης «Checkpoint» ξεκίνησαν το ταξίδι τους το 2015 στην Αθήνα και το 2017 στη Θεσσαλονίκη. Υλοποιούν δράσεις προαγωγής της εξέτασης για HIV και ηπατίτιδες Β και C, τόσο στην Αττική και στη Θεσσαλονίκη, όσο και στην υπόλοιπη Ελλάδα. Η λειτουργία των Κινητών Μονάδων είναι μία πρωτοβουλία του Συλλόγου Ασθενών Ήπατος «Προμηθέας» και του Συλλόγου Οροθετικών Ελλάδος «Θετική Φωνή».",
-    posterImageUrl: "",
+    posterImageUrl: "/eventimages/sideevents/Checkpoint/3f6d3541-0526-442c-8c5f-be5ca0109587.jpeg",
     personalDescription: "",
     socials: {
       instagram: "https://www.instagram.com/my.checkpoint?igsh=c29qand6ZjRqcWYw"      },
