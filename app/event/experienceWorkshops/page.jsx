@@ -237,7 +237,7 @@ function PerformerModal({ performer, onClose }) {
               <div className={styles.modalPhotoMask}>
                 <div className={styles.modalPhotoFrame}>
                   <Image
-                    src={performer.photo}
+                    src={withBasePath(performer.photo)}
                     alt={performer.name}
                     fill
                     priority
@@ -322,7 +322,7 @@ export default function PerformancesPage() {
                     <div className={styles.photoMask}>
                       <div className={styles.photoFrame}>
                         <Image
-                          src={performer.photo}
+                          src={withBasePath(performer.photo)}
                           alt={performer.name}
                           fill
                           priority

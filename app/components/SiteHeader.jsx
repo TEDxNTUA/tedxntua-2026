@@ -131,7 +131,7 @@ export default function SiteHeader() {
                   className="h-6 w-auto object-contain transition-all duration-300 group-hover:scale-105 sm:h-8 lg:h-9"
                   width={180}
                   height={48}
-                  fetchpriority="high"
+                  fetchPriority="high"
                   loading="eager"
                   sizes="(max-width: 640px) 120px, (max-width: 1024px) 150px, 180px"
                 />
@@ -152,10 +152,10 @@ export default function SiteHeader() {
                 <img
                   src={withBasePath("/ticket-asset.png")}
                   alt="Get Tickets"
-                  className="h-8 w-auto object-contain transition-all duration-300 group-hover:scale-105 sm:h-10 lg:h-11"
+                  className="h-8 w-auto object-contain transition-all duration-all duration-300 group-hover:scale-105 sm:h-10 lg:h-11"
                   width={48}
                   height={48}
-                  fetchpriority="high"
+                  fetchPriority="high"
                   loading="eager"
                   sizes="(max-width: 640px) 32px, (max-width: 1024px) 40px, 48px"
                 />

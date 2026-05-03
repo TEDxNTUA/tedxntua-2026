@@ -115,7 +115,7 @@ function resolvePhoto(posterImageUrl) {
 }
 
 function buildPerformerCard(performer, index) {
-  if (!performer?.name) {
+  if (!performer?.name && !performer?.artName && !performer?.title) {
     return null;
   }
 
