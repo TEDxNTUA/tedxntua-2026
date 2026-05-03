@@ -90,7 +90,7 @@ export const sponsorTiers = [
     sponsors: [
       {
     "name": "Symetal",
-    "logo": "https://www.symetal.gr/img/site/symetal-logo-new.png",
+    "logo": assetPath("/eventimages/SYMETAL_sq-1.png"),
     "link": "https://www.symetal.gr/"
   },
   {
