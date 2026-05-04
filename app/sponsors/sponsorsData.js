@@ -77,6 +77,11 @@ export const sponsorTiers = [
     "name": "ZELUS IKE",
     "logo": withBasePath("/eventimages/Zelus_Logo.png"),
     "link": "https://zelus.gr/"
+  },
+  {
+    "name": "Evenly",
+    "logo": withBasePath("/eventimages/evenly-col-dark-tag.png"),
+    "link": "https://evenly.care/el/"
   }
     ]
   },
