@@ -6,9 +6,9 @@ import ProfWorkshops from "./LineUpInfo/ProfWorkshopsIT.json";
 import Performances from "./LineUpInfo/PerformancesIT.json";
 
 const DEFAULT_POSTER_IMAGE = "/eventimages/speakers/grogyResol.webp";
-const WORKSHOP_TIME_1 = "14:00 - 15:00";
-const WORKSHOP_TIME_2 = "15:00 - 16:00";
-const WORKSHOP_TIME_3 = "16:00 - 17:00";
+const WORKSHOP_TIME_1 = "12:30 - 13:45";
+const WORKSHOP_TIME_2 = "15:00 - 16:15";
+const WORKSHOP_TIME_3 = "17:25 - 18:40";
 const SPEAKER_ITEM_COLOR = "rgba(102, 187, 128, 0.28)";
 const PERFORMANCE_ITEM_COLOR = "rgba(98, 156, 227, 0.28)";
 const EXTRA_ITEM_COLOR = "rgba(213, 128, 30, 0.28)";
@@ -44,7 +44,7 @@ export const myEventInfo = {
 export const allSpeakers = applyPosterBasePath([
   // Speakers[0] = Eleni Kavvada
   {
-    time: "11:50 - 12:10",
+    time: "11:50",
     itemCategory: "speaker",
     name: Speakers[0].NameEN,
     profession: Speakers[0].ProfessionEN,
@@ -59,7 +59,7 @@ export const allSpeakers = applyPosterBasePath([
   },
   // Speakers[2] = Thanos Ioannidis, Speakers[1] = Chara Kontochristou
   {
-    time: "14:00 - 14:20",
+    time: "14:00",
     itemCategory: "speaker",
     name: Speakers[2].NameEN,
     name2: Speakers[1].NameEN,
@@ -78,7 +78,7 @@ export const allSpeakers = applyPosterBasePath([
   },
   // Speakers[3] = Yannis Daglis
   {
-    time: "18:40 - 19:00",
+    time: "18:40",
     itemCategory: "speaker",
     name: Speakers[3].NameEN,
     profession: Speakers[3].ProfessionEN,
@@ -93,7 +93,7 @@ export const allSpeakers = applyPosterBasePath([
   },
   // Speakers[4] = Dimitris Barmpas
   {
-    time: "14:40 - 15:00",
+    time: "14:40",
     itemCategory: "speaker",
     name: Speakers[4].NameEN,
     profession: Speakers[4].ProfessionEN,
@@ -108,7 +108,7 @@ export const allSpeakers = applyPosterBasePath([
   },
   // Speakers[5] = Elena Papadimitriou
   {
-    time: "16:30 - 16:50",
+    time: "16:30",
     itemCategory: "speaker",
     name: Speakers[5].NameEN,
     profession: Speakers[5].ProfessionEN,
@@ -123,7 +123,7 @@ export const allSpeakers = applyPosterBasePath([
   },
   // Speakers[6] = Stergios Vakalis
   {
-    time: "14:20 - 14:40",
+    time: "12:10",
     itemCategory: "speaker",
     name: Speakers[6].NameEN,
     profession: Speakers[6].ProfessionEN,
@@ -138,7 +138,7 @@ export const allSpeakers = applyPosterBasePath([
   },
   // Speakers[7] = Nassos Katsamanis
   {
-    time: "12:10 - 12:30",
+    time: "14:20",
     itemCategory: "speaker",
     name: Speakers[7].NameEN,
     profession: Speakers[7].ProfessionEN,
@@ -153,7 +153,7 @@ export const allSpeakers = applyPosterBasePath([
   },
   // Speakers[8] = Nora Drakou
   {
-    time: "19:00 - 19:20",
+    time: "19:00",
     itemCategory: "speaker",
     name: Speakers[8].NameEN,
     profession: Speakers[8].ProfessionEN,
@@ -168,7 +168,7 @@ export const allSpeakers = applyPosterBasePath([
   },
   // Speakers[9] = Dimitris Samolis
   {
-    time: "16:50 - 17:10",
+    time: "16:50",
     itemCategory: "speaker",
     name: Speakers[9].NameEN,
     profession: Speakers[9].ProfessionEN,
@@ -219,9 +219,9 @@ export const allSpeakers = applyPosterBasePath([
 export const allExpWorkshops = applyPosterBasePath([
   // ExpWorkshops[0] = Alexandros Galans, Dimitris Galanis, Vaggelis Dimopoulos
   {
-    time: "11:00 - 11:00",
+    time: WORKSHOP_TIME_1,
     name: ExpWorkshops[0].NameEN,
-    room: "Room 1",
+    room: "",
     profession: ExpWorkshops[0].ProfessionGR,
     artName: ExpWorkshops[0].ArtName,
     title: ExpWorkshops[0].Title,  
@@ -233,9 +233,9 @@ export const allExpWorkshops = applyPosterBasePath([
   },
   // ExpWorkshops[1] = Ifigenia Pappa
   {
-    time: "11:00 - 12:00",
+    time: WORKSHOP_TIME_2,
     name: ExpWorkshops[1].NameEN,
-    room: "Room 2",
+    room: "",
     profession: ExpWorkshops[1].ProfessionGR,
     artName: ExpWorkshops[1].ArtName,
     title: ExpWorkshops[1].Title,
@@ -247,12 +247,12 @@ export const allExpWorkshops = applyPosterBasePath([
   },
   // ExpWorkshops[2] = Theodora Koutsogaki
   {
-    time: "13:00 - 14:00",
+    time: WORKSHOP_TIME_3,
     name: ExpWorkshops[2].NameEN,
-    room: "Room 1",
+    room: "",
     profession: ExpWorkshops[2].ProfessionGR,
     artName: ExpWorkshops[2].ArtName,
-    title: ExpWorkshops[2].Title,
+    title: "Athenaides Project",
     itemColor: "rgba(45, 12, 15, 0.9)",
     description: ExpWorkshops[2].DescriptionGR,
     posterImageUrl: "/eventimages/workshops/photo-ATHENAIDES.png",
@@ -266,7 +266,7 @@ export const allProfWorkshops = applyPosterBasePath([
   // ProfWorkshops[0] = The American College of Greece - Deree
   {
     time: WORKSHOP_TIME_1,
-    room: "Room 1",
+    room: "",
     title: ProfWorkshops[0].Title,
     name: ProfWorkshops[0].NameEN,
     description: ProfWorkshops[0].DescriptionGR,
@@ -278,8 +278,8 @@ export const allProfWorkshops = applyPosterBasePath([
   // ProfWorkshops[1] = Dialectica
   {
     time: WORKSHOP_TIME_2,
-    room: "Room 1",
-    title: ProfWorkshops[1].Title,
+    room: "",
+    title: "Dialectica",
     name: ProfWorkshops[1].NameEN,
     description: ProfWorkshops[1].DescriptionGR,
     personal: ProfWorkshops[1].BioGR,
@@ -289,9 +289,9 @@ export const allProfWorkshops = applyPosterBasePath([
   },
   // ProfWorkshops[2] = Oliver Wyman
   {
-    time: WORKSHOP_TIME_3,
-    room: "Room 1",
-    title: ProfWorkshops[2].Title,
+    time: WORKSHOP_TIME_2,
+    room: "",
+    title: "Oliver Wyman",
     name: ProfWorkshops[2].NameEN,
     description: ProfWorkshops[2].DescriptionGR,
     personal: ProfWorkshops[2].BioGR,
@@ -301,9 +301,9 @@ export const allProfWorkshops = applyPosterBasePath([
   },
   // ProfWorkshops[3] = Alpha Bank
   {
-    time: WORKSHOP_TIME_3,
-    room: "Room 1",
-    title: ProfWorkshops[3].Title,
+    time: WORKSHOP_TIME_1,
+    room: "",
+    title: "Alpha Bank",
     name: ProfWorkshops[3].NameEN,
     description: ProfWorkshops[3].DescriptionGR,
     personal: ProfWorkshops[3].BioGR,
@@ -403,7 +403,7 @@ export const allSideHappenings = applyPosterBasePath([
 export const allPerformances = applyPosterBasePath([
   // Performances[0] = Marios Psarianos
   {
-    time: "13:45 - 14:00",
+    time: "13:45",
     name: Performances[0].NameEN,
     itemCategory: "performance",
     profession: Performances[0].ProfessionGR,
@@ -416,7 +416,7 @@ export const allPerformances = applyPosterBasePath([
   },
   // Performances[1] = Stratos Fygetakis
   {
-    time: "17:10 - 17:25",
+    time: "17:10",
     name: Performances[1].NameEN,
     itemCategory: "performance",
     profession: Performances[1].ProfessionGR,
@@ -429,7 +429,7 @@ export const allPerformances = applyPosterBasePath([
   },
   // Performances[2] = Konstantina Koutra / KONIKOU
   {
-    time: "19:20 - 19:35",
+    time: "19:20",
     name: Performances[2].NameEN,
     itemCategory: "performance",
     profession: Performances[2].ProfessionGR,
@@ -442,7 +442,7 @@ export const allPerformances = applyPosterBasePath([
   },
   // Performances[3] = Black Brides
   {
-    time: "16:15 - 16:30",
+    time: "16:15",
     name: Performances[3].NameEN,
     itemCategory: "performance",
     profession: Performances[3].ProfessionGR,
@@ -455,7 +455,7 @@ export const allPerformances = applyPosterBasePath([
   },
   // Performances[4] = Unforgetable
   {
-    time: "11:15 - 11:30",
+    time: "11:15",
     name: Performances[4].NameEN,
     itemCategory: "performance",
     profession: Performances[4].ProfessionGR,
@@ -471,28 +471,28 @@ export const allPerformances = applyPosterBasePath([
 
 export const extra = applyPosterBasePath([
   {
-    time: "11:30 - 11:50",
+    time: "11:30",
     itemCategory: "oppening",
-    name: "Opening Hostess/ Backstage Host/ Curators",
+    name: "Opening",
     itemColor: EXTRA_ITEM_COLOR,
   },
   {
-      time: "10:00 - ",
+      time: "10:00",
       itemCategory: "oppening",
       name: "Registration",
       profession: "",
       itemColor: EXTRA_ITEM_COLOR,
     },
     {
-        time: "19:35 - 19:45",
+        time: "19:35",
         itemCategory: "closing",
-        name: "Closing & Curators",
+        name: "Closing",
         itemColor: EXTRA_ITEM_COLOR,
       },
     {
-        time: "19:45 - ",
+        time: "20:00",
         itemCategory: "closing",
-        name: "the team, the hug",
+        name: "After Party",
         itemColor: EXTRA_ITEM_COLOR,
       }]);
 
@@ -502,13 +502,13 @@ export const mySessions1 = [
   allPerformances[4], // Unforgetable
   extra[0], // Opening Hostess / Backstage Host / Curators
   allSpeakers[0], // Eleni Kavvada
-  allSpeakers[6], // Nassos Katsamanis
+  allSpeakers[5], // Stergios Vakalis
 ];
 
 export const mySessions2 = [
   allPerformances[0], // Marios Psarianos
   allSpeakers[1], // Thanos Ioannidis + Chara Kontochristou
-  allSpeakers[5], // Stergios Vakalis
+  allSpeakers[6], // Nassos Katsamanis
   allSpeakers[3], // Dimitris Barmpas
 ];
 
@@ -536,9 +536,9 @@ export const myWorkshopsPack1 = [
     time: WORKSHOP_TIME_1,
     color: "rgba(15, 35, 30, 0.9)",
     workshop: [
-      {/*allExpWorkshops[0], // Alexandros Galans, Dimitris Galanis, Vaggelis Dimopoulos
-      allExpWorkshops[1], // Ifigenia Pappa
-      allProfWorkshops[0],*/} // The American College of Greece - Deree
+      allProfWorkshops[0], // The American College of Greece - Deree
+      allProfWorkshops[3], // Alpha Bank
+      allExpWorkshops[0], // Souxoumouxou
     ],
   },
 ];
@@ -548,9 +548,9 @@ export const myWorkshopsPack2 = [
     time: WORKSHOP_TIME_2,
     color: "rgba(25, 35, 12, 0.92)",
     workshop: [
-      {/*allExpWorkshops[2], // Theodora Koutsogaki
       allProfWorkshops[1], // Dialectica
-      allProfWorkshops[2],*/} // Oliver Wyman
+      allProfWorkshops[2], // Oliver Wyman
+      allExpWorkshops[1], // Wabi Sabi Lab
     ],
   },
 ];
@@ -563,9 +563,7 @@ export const myWorkshopsPack3 = [
     time: WORKSHOP_TIME_3,
     color: "rgba(25, 35, 12, 0.92)",
     workshop: [
-      {/*allProfWorkshops[0], // The American College of Greece - Deree
-      allProfWorkshops[1], // Dialectica
-      allProfWorkshops[2],*/} // Oliver Wyman
+      allExpWorkshops[2], // Athenaides
     ],
   },
 ];

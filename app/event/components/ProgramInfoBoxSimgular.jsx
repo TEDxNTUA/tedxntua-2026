@@ -77,13 +77,9 @@ export default function ProgramInfoBoxSimgular({
       <div className="flex flex-col md:flex-row py-6 md:py-8 items-center md:items-center">
         {/* Time Section - Minimal Typography */}
         <div className="flex items-baseline md:flex-col md:items-center justify-center md:justify-center mb-3 md:mb-0 md:w-48 shrink-0">
-          <span className="font-mono text-lg md:text-xl font-black tracking-tighter text-white">
-            {time?.split(' - ')[0]}
-          </span>
-          <span className="mx-2 md:my-0.5 font-mono text-[10px] md:text-xs font-bold text-white/20 uppercase tracking-widest">—</span>
-          <span className="font-mono text-sm md:text-sm font-bold text-white/40">
-            {time?.split(' - ')[1]}
-          </span>
+          <span className="font-mono text-lg md:text-2xl font-black tracking-tighter text-white">
+            {time}
+          </span>          
         </div>
 
         {/* Content Section */}
