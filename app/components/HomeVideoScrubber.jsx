@@ -16,10 +16,20 @@ const storyBeats = [
 const TOTAL_STEPS = storyBeats.length + 1;
 const PIXELS_PER_SECOND = 1000;
 const MOBILE_PIXELS_PER_SECOND = 800;
+const PHONE_BREAKPOINT = 720;
+const FRAME_FOLDER = "/animations/final_1";
+const FRAME_START = 1;
+const FRAME_STEP = 1;
+const FRAME_COUNT = 300;
+const FRAME_SEQUENCE_DURATION = 8.0;
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const getViewportHeight = () => window.visualViewport?.height ?? window.innerHeight;
 const isCoarsePointer = () => window.matchMedia("(pointer: coarse)").matches;
+const getFrameSrc = (index) => {
+  const frameNumber = FRAME_START + index * FRAME_STEP;
+  return withBasePath(`${FRAME_FOLDER}/koutsouro_semi${String(frameNumber).padStart(4, "0")}.webp`);
+};
 
 export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const sectionRef = useRef(null);
@@ -31,6 +41,9 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const [pinState, setPinState] = useState("before");
   const [videoSrc, setVideoSrc] = useState(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const [isPhoneFrameMode, setIsPhoneFrameMode] = useState(false);
+  const [frameIndex, setFrameIndex] = useState(0);
+  const [isFrameReady, setIsFrameReady] = useState(false);
   const [progress, setProgress] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
   const layoutCache = useRef({ top: 0, height: 0, windowHeight: 0 });
@@ -56,11 +69,16 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const updateLayout = useCallback((forcedHeight) => {
     const section = sectionRef.current;
     const video = videoRef.current;
-    if (!section || !video) return;
+    if (!section) return;
 
-    const duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 8.0;
+    const useFrames = window.innerWidth < PHONE_BREAKPOINT;
+    const duration = useFrames
+      ? FRAME_SEQUENCE_DURATION
+      : Number.isFinite(video?.duration) && video.duration > 0
+        ? video.duration
+        : FRAME_SEQUENCE_DURATION;
     const viewportHeight = forcedHeight || getStableViewportHeight();
-    const isMobile = window.innerWidth < 720;
+    const isMobile = window.innerWidth < PHONE_BREAKPOINT;
     const pixelsPerSecond = (isCoarsePointer() || isMobile) ? MOBILE_PIXELS_PER_SECOND : PIXELS_PER_SECOND;
     
     // FIX 1: Change this line to use TOTAL_STEPS (no extra multiplication)
@@ -83,7 +101,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const syncVideoToScroll = useCallback(() => {
     const video = videoRef.current;
     const { top, height, windowHeight } = layoutCache.current;
-    if (!video || height === 0) { frameIdRef.current = 0; return; }
+    if (height === 0) { frameIdRef.current = 0; return; }
 
     const currentScroll = window.scrollY;
     const scrollDistance = currentScroll - top;
@@ -101,8 +119,17 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
     const currentProgress = clamp(scrollDistance / total, 0, 1);
     setProgress(currentProgress);
+
+    const useFrames = window.innerWidth < PHONE_BREAKPOINT;
+    if (useFrames) {
+      setFrameIndex(Math.round(currentProgress * (FRAME_COUNT - 1)));
+      frameIdRef.current = 0;
+      return;
+    }
+
+    if (!video) { frameIdRef.current = 0; return; }
     
-    const duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 8.0;
+    const duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : FRAME_SEQUENCE_DURATION;
     const targetTime = currentProgress * (duration - 0.02);
     const smoothing = getSmoothing();
     
@@ -150,15 +177,22 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
     const handleResize = () => {
       const w = window.innerWidth;
-      const isMobile = w < 720;
+      const isPhone = w < PHONE_BREAKPOINT;
+      setIsPhoneFrameMode(isPhone);
+      setIsFrameReady(prev => isPhone ? prev : false);
       
-      let srcPath = isMobile ? "/animations/output_mobile.mp4" : "/animations/output_desktop.mp4";
-      if (isAndroid()) {
-        srcPath = "/animations/output_android.mp4";
-      }
+      if (isPhone) {
+        setVideoSrc(null);
+        setIsVideoReady(false);
+      } else {
+        let srcPath = "/animations/output_desktop.mp4";
+        if (isAndroid()) {
+          srcPath = "/animations/output_android.mp4";
+        }
 
-      const src = withBasePath(srcPath);
-      setVideoSrc(prev => prev !== src ? src : prev);
+        const src = withBasePath(srcPath);
+        setVideoSrc(prev => prev !== src ? src : prev);
+      }
 
       if (Math.abs(w - lastWidthRef.current) > 10) {
         lastWidthRef.current = w;
@@ -176,8 +210,18 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
     const handleScroll = () => requestSync();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    if (!video || isPhoneFrameMode) {
+      updateLayout();
+      requestAnimationFrame(() => { updateLayoutCache(); requestSync(); });
+      return () => {
+        if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+
     const handleLoadedData = async () => {
       updateLayout();
       try {
@@ -193,20 +237,29 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     video.addEventListener("loadeddata", handleLoadedData);
     if (video.readyState >= 1) handleLoadedData();
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
       window.removeEventListener("scroll", handleScroll);
       video.removeEventListener("loadedmetadata", handleLoadedData);
       video.removeEventListener("loadeddata", handleLoadedData);
     };
-  }, [requestSync, updateLayout, updateLayoutCache]);
+  }, [isPhoneFrameMode, requestSync, updateLayout, updateLayoutCache]);
+
+  useEffect(() => {
+    if (!isPhoneFrameMode || typeof window === "undefined") return;
+
+    const preloadIndexes = [0, 1, 2, Math.floor(FRAME_COUNT * 0.25), Math.floor(FRAME_COUNT * 0.5), Math.floor(FRAME_COUNT * 0.75), FRAME_COUNT - 1];
+    preloadIndexes.forEach((index) => {
+      const img = new Image();
+      img.src = getFrameSrc(index);
+    });
+  }, [isPhoneFrameMode]);
 
   useEffect(() => { if (scrubHeight !== "0px") { updateLayoutCache(); requestSync(); } }, [scrubHeight, requestSync, updateLayoutCache]);
 
   return (
     <main className={styles.pageShell} style={{ "--vh": vh ? `${vh}px` : "100vh" }}>
-      <section className={styles.introPanel} style={{ "--scrubber-gradient": `url(${withBasePath("/gradient_backgrounds/mainPage_gradient.png")})` }}>
+      <section className={styles.introPanel} style={{ "--scrubber-gradient": `url(${withBasePath("/gradient_backgrounds/mainPage_gradient.webp")})` }}>
         <div className="absolute inset-0 pointer-events-none opacity-40 z-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(34,197,94,0.15)_0%,_transparent_70%)]" />
         </div>
@@ -232,9 +285,19 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
       {/* FIX 2: Pass TOTAL_STEPS to the CSS variable --beats */}
       <section ref={sectionRef} className={styles.scrubberSection} style={{ "--beats": TOTAL_STEPS, "--scrub-height": scrubHeight }}>
         <div className={[styles.scrubberSectionSticky, pinState === "pinned" ? styles.scrubberSectionStickyPinned : "", pinState === "after" ? styles.scrubberSectionStickyAfter : ""].join(" ").trim()}>
-          <video ref={videoRef} className={styles.scrubberSectionVideo} style={{ opacity: isVideoReady ? 1 : 0 }} src={videoSrc} muted playsInline preload="auto" crossOrigin="anonymous" autoPlay>
-            <track kind="captions" />
-          </video>
+          {isPhoneFrameMode ? (
+            <img
+              className={styles.scrubberSectionFrame}
+              style={{ opacity: isFrameReady ? 1 : 0 }}
+              src={getFrameSrc(frameIndex)}
+              alt=""
+              aria-hidden="true"
+              decoding="async"
+              onLoad={() => setIsFrameReady(true)}
+            />
+          ) : (
+            <video ref={videoRef} className={styles.scrubberSectionVideo} style={{ opacity: isVideoReady ? 1 : 0 }} src={videoSrc} muted playsInline preload="auto" crossOrigin="anonymous" />
+          )}
           <div className={styles.scrubberSectionVeil} />
         </div>
 
@@ -310,16 +373,11 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     </div>
     <div className={styles.finalRevealVenueImageWrap}>
       <img
-        src={withBasePath("/PhotoWdeioText.png")}
-        alt="Athens Conservatoire Venue"
+        src={withBasePath("/PhotoWdeioText.webp")}
+        alt="Athens Conservatoire"
         className={styles.splitPhoto}
-        width={1200}
-        height={800}
-        loading="lazy"
-        sizes="(max-width: 768px) 100vw, 50vw"
       />
     </div>
-
   </div>
 </div>
   );

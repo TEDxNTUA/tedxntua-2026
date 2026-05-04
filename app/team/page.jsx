@@ -1,19 +1,166 @@
-import TeamList from "./components/TeamList";
-import TeamNavigation from "./components/TeamNavigation";
-import teams from "./teamsData";
+import Image from "next/image";
+import localFont from "next/font/local";
+
+import { SocialButton } from "../event/components/SocialButton";
+import { withBasePath } from "../lib/basePath";
+import teams, { removeAccents } from "./teamsData";
+import styles from "./page.module.css";
+
+const playFont = localFont({
+  src: "../../public/fonts/Play-Regular.ttf", // Update this path to where your .ttf is stored
+  display: "swap",
+});
+
+const socialFields = [
+  { field: "instagram", platform: "instagram", label: "Instagram" },
+  { field: "facebook", platform: "facebook", label: "Facebook" },
+  { field: "linkedin", platform: "linkedin", label: "LinkedIn" },
+  { field: "youtube", platform: "youtube", label: "YouTube" },
+  { field: "tiktok", platform: "tiktok", label: "TikTok" },
+  { field: "webpage", platform: "webpage", label: "Website" },
+];
+
+const memberPhotoOverrides = {
+  aggelos: "/mtt_photos/angelos.webp",
+  naria: "/mtt_photos/naria_new.png",
+  nikos: "/mtt_photos/nikos.webp",
+  antonis: "/mtt_photos/tony.png",
+  misa: "/mtt_photos/mykhailo.webp",
+  argyro: "/mtt_photos/argiro_new.png",
+  evilia: "/mtt_photos/evilia_new.png",
+  "kostas-p": "/mtt_photos/kostas_design.png",
+  maria: "/mtt_photos/maria_new.png",
+  aristotelis: "/mtt_photos/aristotelis.webp",
+  artemis: "/mtt_photos/artemis.webp",
+  giorgos: "/mtt_photos/rousis.webp",
+  eirini: "/mtt_photos/eirhnh_new.png",
+  eleni: "/mtt_photos/eleni_fr.png",
+  martina: "/mtt_photos/martina_new.png",
+  "elena-k": "/mtt_photos/elena_speakers.webp",
+  eleftheria: "/mtt_photos/eleftheria.webp",
+  konstantinos: "/mtt_photos/kostas_speakers.webp",
+  areti: "/mtt_photos/areti.webp",
+  elpida: "/mtt_photos/elpida.webp",
+  nancy: "/mtt_photos/nancy.webp",
+  fani: "/mtt_photos/fani.png",
+  "elena-x": "/mtt_photos/elena_media.webp",
+  malvina: "/mtt_photos/malvina.webp",
+  myrto: "/mtt_photos/myrtw.webp",
+  "konstantinos-x": "/mtt_photos/kostas_media.webp",
+  thodoris: "/mtt_photos/thodoris.webp",
+  fenia: "/mtt_photos/fenia.webp",
+};
+
+
+
+function getSocialLinks(social = {}) {
+  return socialFields.flatMap(({ field, platform, label }) => {
+    const url = typeof social[field] === "string" ? social[field].trim() : "";
+
+    if (!url) {
+      return [];
+    }
+
+    return { platform, label, url };
+  });
+}
+
+function TeamMemberCard({ member, teamTitle }) {
+  const photoOverride = memberPhotoOverrides[member.id];
+  const photo = photoOverride ? withBasePath(photoOverride) : "";
+  const socialLinks = getSocialLinks(member.social);
+
+  return (
+    <article className={styles.card}>
+      <div className={styles.stage}>
+        <div className={styles.stageGlow} />
+        <Image
+          src={withBasePath("/teamAssets/Asset_Circle_Team.png")}
+          alt=""
+          fill
+          priority
+          className={styles.circle}
+          sizes="(min-width: 1200px) 18vw, (min-width: 768px) 26vw, 72vw"
+        />
+        {photo ? (
+          <div className={styles.photoMask}>
+            <div className={styles.photoFrame}>
+              <Image
+                src={photo}
+                alt={member.name}
+                fill
+                className={styles.photo}
+                sizes="(min-width: 1200px) 14vw, (min-width: 768px) 20vw, 54vw"
+              />
+            </div>
+          </div>
+        ) : null}
+      </div>
+
+      <div className={styles.caption}>
+        <p className={styles.teamLabel}>{teamTitle}</p>
+        <h2 className={`${playFont.className} ${styles.name}`}>
+          {member.name}
+        </h2>
+      </div>
+
+      {socialLinks.length ? (
+        <div className={styles.socials}>
+          {socialLinks.map((link) => (
+            <SocialButton
+              key={`${member.id}-${link.platform}-${link.url}`}
+              name={link.platform}
+              urlLink={link.url}
+              size="24px"
+              mode="blackgreen"
+              hoverColor="#d9a400"
+              ariaLabel={`${link.label} for ${member.name}`}
+            />
+          ))}
+        </div>
+      ) : null}
+    </article>
+  );
+}
 
 export default function TeamPage() {
   return (
-    <section className="relative min-h-screen bg-center bg-fixed bg-repeat overflow-visible">
-      {/* Team Navigation */}
-      <TeamNavigation teams={teams} />
-      
-      {/* Team List */}
-      <div className="bg-black text-white px-0 sm:px-8">
-        <div className="max-w-5xl mx-auto">
-          <TeamList teams={teams} />
+    <section className={styles.page}>
+      <div className={styles.backdrop} aria-hidden="true">
+        <Image
+          src={withBasePath("/gradient_backgrounds/gradient_yellow.svg")}
+          alt=""
+          fill
+          priority
+          className={styles.backdropImage}
+          sizes="100vw"
+        />
+        <div className={styles.backdropMist} />
+        <div className={styles.backdropFlare} />
+      </div>
+
+      <div className={styles.content}>
+        <div className={styles.hero}>
+          <h1 className={`${playFont.className} ${styles.title}`}>
+            Meet the Team
+          </h1>
+        </div>
+
+        <div className={styles.teamSections}>
+          {teams.map((team) => (
+            <section key={team.slug} className={styles.teamSection}>
+              <h2 className={`${playFont.className} ${styles.sectionTitle}`}>
+                {team.title}
+              </h2>
+              <div className={styles.memberGrid}>
+                {team.members.map((member) => (
+                  <TeamMemberCard key={member.id} member={member} teamTitle={team.title} />
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }

@@ -1,0 +1,348 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow: clip;
+  background: #fffdf4;
+  color: #131716;
+  isolation: isolate;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.88) 0%,
+      rgba(255, 255, 255, 0.5) 24%,
+      rgba(255, 255, 255, 0.22) 56%,
+      rgba(255, 255, 255, 0.54) 100%
+    ),
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.72), transparent 18%);
+}
+
+.backdropImage {
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.98;
+  filter: saturate(114%) contrast(105%);
+}
+
+.backdropMist,
+.backdropFlare {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(28px);
+}
+
+.backdropMist {
+  right: -6%;
+  bottom: 4%;
+  width: min(40rem, 50vw);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+  opacity: 0.9;
+}
+
+.backdropFlare {
+  top: 8%;
+  left: 6%;
+  width: min(34rem, 42vw);
+  height: min(18rem, 26vw);
+  background: radial-gradient(circle, rgba(255, 235, 47, 0.28), rgba(255, 235, 47, 0));
+  opacity: 0.72;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 92rem);
+  margin: 0 auto;
+  padding: clamp(4.5rem, 6vw, 6rem) clamp(1rem, 3vw, 2.25rem) clamp(3rem, 6vw, 5rem);
+}
+
+.hero {
+  margin: 0 auto clamp(1.8rem, 4vw, 3.25rem);
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.1rem, 5vw, 5rem);
+  line-height: 0.94;
+  text-transform: uppercase;
+  color: #071918;
+}
+
+.teamSections {
+  display: grid;
+  gap: clamp(2.35rem, 5vw, 4.4rem);
+}
+
+.teamSection {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.55rem);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.5vw, 2.4rem);
+  line-height: 0.96;
+  text-align: center;
+  text-transform: uppercase;
+  color: #5a4100;
+}
+
+.memberGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 1.8rem);
+  align-items: start;
+}
+
+.card {
+  width: min(100%, 28rem);
+  flex: 0 1 calc((100% - clamp(1rem, 2vw, 1.8rem) * 2) / 3);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.2rem 0.2rem 0.35rem;
+  border-radius: 1.4rem;
+  text-align: center;
+  transition:
+    transform 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 24px 50px rgba(158, 112, 0, 0.12);
+}
+
+.card:hover .stageGlow {
+  transform: scale(1.06);
+  opacity: 1;
+}
+
+.card:hover .circle {
+  transform: translateZ(0) scale(1.03) rotate(360deg);
+  filter:
+    drop-shadow(0 4px 16px rgba(255, 255, 255, 0.62))
+    drop-shadow(0 26px 70px rgba(214, 159, 0, 0.26));
+}
+
+.card:hover .photo {
+  transform: scale(1.08);
+}
+
+.card:hover .name {
+  color: #b88100;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.14;
+  perspective: 1000px;
+}
+
+.stageGlow {
+  position: absolute;
+  inset: 10% -8% 12%;
+  background:
+    radial-gradient(circle at 50% 34%, rgba(255, 235, 47, 0.62) 0%, rgba(255, 235, 47, 0.18) 40%, rgba(255, 235, 47, 0) 68%),
+    radial-gradient(circle at 85% 82%, rgba(221, 164, 0, 0.3) 0%, rgba(221, 164, 0, 0) 32%);
+  filter: blur(18px);
+  opacity: 0.88;
+  transition:
+    transform 220ms ease,
+    opacity 220ms ease;
+}
+
+.circle {
+  object-fit: contain;
+  object-position: center center;
+  transform: translateZ(0) rotate(0deg);
+  will-change: transform;
+  transition:
+    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 220ms ease;
+  filter:
+    drop-shadow(0 2px 10px rgba(255, 255, 255, 0.5))
+    drop-shadow(0 20px 54px rgba(214, 159, 0, 0.2));
+}
+
+.photoMask {
+  position: absolute;
+  left: 50%;
+  top: 53%;
+  width: 76%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.photoFrame {
+  position: absolute;
+  inset: 7% 0 -14%;
+}
+
+.photo {
+  object-fit: contain;
+  object-position: center bottom;
+  transform: scale(1.04);
+  transition:
+    transform 220ms ease,
+    filter 220ms ease;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.08));
+}
+
+.caption {
+  display: flex;
+  min-height: 5rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 0.15rem;
+}
+
+.teamLabel {
+  margin: 0 0 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(8, 27, 26, 0.6);
+}
+
+.name {
+  margin: 0;
+  min-height: 2.05em;
+  font-size: clamp(1.05rem, 1.45vw, 1.42rem);
+  line-height: 0.98;
+  text-transform: uppercase;
+  color: #081b1a;
+  transition: color 220ms ease;
+}
+
+.socials {
+  display: flex;
+  min-height: 2.25rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.18rem;
+  margin-top: -0.5rem;
+  padding-bottom: 0.2rem;
+}
+
+.socials :global(a) {
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  opacity: 0.86;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease,
+    background-color 180ms ease;
+}
+
+.socials :global(a:hover),
+.socials :global(a:focus-visible) {
+  transform: translateY(-2px) scale(1.08);
+  opacity: 1;
+}
+
+.socials :global(a:focus-visible) {
+  outline: 2px solid rgba(217, 164, 0, 0.45);
+  outline-offset: 4px;
+}
+
+@media (max-width: 767px) {
+  .content {
+    padding-top: 4.7rem;
+    padding-bottom: 6.5rem;
+  }
+
+  .title {
+    font-size: clamp(1.65rem, 7.5vw, 2.8rem);
+  }
+
+  .memberGrid {
+    gap: 0.9rem;
+  }
+
+  .card {
+    flex-basis: calc((100% - 0.9rem) / 2);
+  }
+
+  .caption {
+    min-height: 4.95rem;
+    margin-top: 0.05rem;
+  }
+
+  .name {
+    min-height: 2.15em;
+    font-size: clamp(0.98rem, 2.7vw, 1.18rem);
+  }
+}
+
+@media (max-width: 560px) {
+  .memberGrid {
+    justify-content: center;
+  }
+
+  .card {
+    width: 100%;
+    flex-basis: min(100%, 24rem);
+    max-width: none;
+    margin-inline: 0;
+    padding-bottom: 0.55rem;
+  }
+
+  .stage {
+    width: 100%;
+    max-width: 21rem;
+    margin-inline: auto;
+  }
+
+  .caption {
+    min-height: 4.95rem;
+    margin-top: 0;
+  }
+
+  .socials {
+    margin-top: -0.25rem;
+  }
+
+  .name {
+    min-height: 2.15em;
+    font-size: clamp(1.05rem, 5vw, 1.3rem);
+  }
+}
+
+@media (max-width: 390px) {
+  .content {
+    padding-inline: 0.75rem;
+  }
+
+  .stage {
+    width: min(100%, 18.8rem);
+  }
+}

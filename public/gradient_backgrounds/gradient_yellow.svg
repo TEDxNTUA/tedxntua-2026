@@ -1,0 +1,51 @@
+<svg width="1800" height="2600" viewBox="0 0 1800 2600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="baseWash" x1="171.5" y1="159.5" x2="1653.5" y2="2329" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.18" stop-color="#FFFDF4"/>
+      <stop offset="0.5" stop-color="#FFF9D5"/>
+      <stop offset="0.78" stop-color="#FFEB2F"/>
+      <stop offset="1" stop-color="#FFEB2F"/>
+    </linearGradient>
+    <radialGradient id="yellowCloud" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(951 1524) rotate(106.306) scale(1091.82 1546.53)">
+      <stop stop-color="#FFEB2F"/>
+      <stop offset="0.38" stop-color="#F4C21F"/>
+      <stop offset="1" stop-color="#D89A00" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="warmCloud" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(681 904) rotate(63.1599) scale(532.312 777.654)">
+      <stop stop-color="#FFF26F"/>
+      <stop offset="1" stop-color="#FFF26F" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="whiteGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1428 1050) rotate(120.142) scale(632.522 862.879)">
+      <stop stop-color="white"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur-xl" x="-327" y="-354" width="2465" height="3311" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feGaussianBlur stdDeviation="110" result="effect1_foregroundBlur_262_1"/>
+    </filter>
+    <filter id="blur-md" x="-115" y="-56" width="2267" height="2560" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feGaussianBlur stdDeviation="70" result="effect1_foregroundBlur_262_2"/>
+    </filter>
+  </defs>
+
+  <rect width="1800" height="2600" fill="#FFFDF6"/>
+  <rect width="1800" height="2600" fill="url(#baseWash)" fill-opacity="0.16"/>
+
+  <g filter="url(#blur-xl)" opacity="0.96">
+    <ellipse cx="1004" cy="1602" rx="764" ry="540" fill="url(#yellowCloud)" fill-opacity="0.44"/>
+    <ellipse cx="1433" cy="1809" rx="604" ry="605" fill="#FFEB2F" fill-opacity="0.32"/>
+    <ellipse cx="410" cy="1267" rx="390" ry="643" fill="#FFF26F" fill-opacity="0.58"/>
+    <ellipse cx="1388" cy="931" rx="497" ry="568" fill="url(#whiteGlow)"/>
+  </g>
+
+  <g filter="url(#blur-md)">
+    <ellipse cx="699" cy="913" rx="432" ry="288" fill="url(#warmCloud)" fill-opacity="0.56"/>
+    <ellipse cx="1560" cy="1560" rx="243" ry="409" fill="white" fill-opacity="0.74"/>
+    <ellipse cx="1711" cy="269" rx="354" ry="543" fill="#FFEB2F" fill-opacity="0.14"/>
+    <ellipse cx="1143" cy="259" rx="490" ry="258" fill="#FFF26F" fill-opacity="0.44"/>
+  </g>
+</svg>
