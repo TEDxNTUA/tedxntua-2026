@@ -92,9 +92,9 @@
 
 .page[data-modal-open="true"] .backdrop,
 .page[data-modal-open="true"] .content {
-  filter: blur(8px);
+  filter: blur(5px) saturate(108%) brightness(1.04);
   transform: scale(0.99);
-  opacity: 0.5;
+  opacity: 0.62;
 }
 
 .pageFx {
@@ -107,7 +107,7 @@
 }
 
 .page[data-modal-open="true"] .pageFx {
-  opacity: 1;
+  opacity: 0.78;
 }
 
 .pageBlurBlob,
@@ -119,8 +119,8 @@
 
 .pageBlurBlob {
   border-radius: 999px;
-  backdrop-filter: blur(26px) saturate(112%);
-  -webkit-backdrop-filter: blur(26px) saturate(112%);
+  backdrop-filter: blur(18px) saturate(108%);
+  -webkit-backdrop-filter: blur(18px) saturate(108%);
   background:
     radial-gradient(circle, rgba(239, 148, 195, 0.26) 0%, rgba(255, 255, 255, 0.58) 34%, rgba(251, 227, 240, 0.34) 52%, rgba(255, 255, 255, 0) 74%);
   mix-blend-mode: screen;
@@ -150,8 +150,8 @@
 
 .pageBlurVeil {
   inset: 0;
-  backdrop-filter: blur(18px) saturate(104%);
-  -webkit-backdrop-filter: blur(18px) saturate(104%);
+  backdrop-filter: blur(10px) saturate(104%);
+  -webkit-backdrop-filter: blur(10px) saturate(104%);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.46) 0%, rgba(252, 236, 244, 0.32) 28%, rgba(255, 255, 255, 0.42) 100%),
     radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 42%);
@@ -586,7 +586,8 @@
 
 @media (max-width: 560px) {
   .performerRow {
-    grid-template-columns: minmax(0, min(100%, 24rem));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
     justify-content: center;
   }
 
@@ -602,12 +603,12 @@
 
   .cardButton {
     width: 100%;
-    padding-bottom: 0.55rem;
+    padding: 0.05rem 0.05rem 0.35rem;
   }
 
   .stage {
     width: 100%;
-    max-width: 21rem;
+    max-width: none;
     margin-inline: auto;
   }
 
@@ -622,14 +623,14 @@
 
   .name {
     min-height: 2.15em;
-    font-size: clamp(1.05rem, 5vw, 1.3rem);
+    font-size: clamp(0.82rem, 3.5vw, 1.05rem);
   }
 
   .profession {
     min-height: 2.55em;
-    max-width: 88%;
+    max-width: 96%;
     margin-top: 0.18rem;
-    font-size: clamp(0.8rem, 3.6vw, 0.94rem);
+    font-size: clamp(0.68rem, 2.6vw, 0.82rem);
   }
 
   .modal {

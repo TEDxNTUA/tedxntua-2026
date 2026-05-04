@@ -305,25 +305,26 @@
 
 @media (max-width: 560px) {
   .memberGrid {
+    gap: 0.7rem;
     justify-content: center;
   }
 
   .card {
-    width: 100%;
-    flex-basis: min(100%, 24rem);
+    width: auto;
+    flex-basis: calc((100% - 0.7rem) / 2);
     max-width: none;
     margin-inline: 0;
-    padding-bottom: 0.55rem;
+    padding: 0.05rem 0.05rem 0.35rem;
   }
 
   .stage {
     width: 100%;
-    max-width: 21rem;
+    max-width: none;
     margin-inline: auto;
   }
 
   .caption {
-    min-height: 4.95rem;
+    min-height: 4.5rem;
     margin-top: 0;
   }
 
@@ -333,7 +334,7 @@
 
   .name {
     min-height: 2.15em;
-    font-size: clamp(1.05rem, 5vw, 1.3rem);
+    font-size: clamp(0.82rem, 3.5vw, 1.05rem);
   }
 }
 
@@ -343,6 +344,6 @@
   }
 
   .stage {
-    width: min(100%, 18.8rem);
+    width: 100%;
   }
 }
