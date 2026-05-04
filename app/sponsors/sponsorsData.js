@@ -53,6 +53,11 @@ export const sponsorTiers = [
         "logo": "https://www.iknowhow.com/wp-content/uploads/2024/12/IKH-LOGO-WEB.png",
         "link": "https://www.iknowhow.com/"
       },
+      {
+        "name": "Epsilonnet",
+        "logo": withBasePath("/eventimages/LOGO_FILESEPSILONNET_logo.png"),
+        "link": "https://epsilonnet.gr/"
+      }
     ]
   },
   {
@@ -67,6 +72,11 @@ export const sponsorTiers = [
     "name": "GDM Assets",
     "logo": "https://gdmassets.gr/wp-content/uploads/2023/06/GDM-Assets-Logo.webp",
     "link": "https://gdmassets.gr/"
+  },
+  {
+    "name": "ZELUS IKE",
+    "logo": withBasePath("/eventimages/Zelus_Logo.png"),
+    "link": "https://zelus.gr/"
   }
     ]
   },
@@ -107,6 +117,16 @@ export const sponsorTiers = [
     "name": "IKY",
     "logo": "https://www.iky.gr/wp-content/uploads/2023/08/%CE%9B%CE%BF%CE%B3%CF%8C%CF%84%CF%85%CF%80%CE%BF_%CE%99%CE%9A%CE%A5-1-300x279.jpeg.webp",
     "link": "https://www.iky.gr/"
+  },
+  {
+    "name": "Deep Sea",
+    "logo": withBasePath("/eventimages/deepsea_logo.png"),
+    "link": "https://www.deepsea.ai/"
+  },
+  {
+    "name": "Nutribullet",
+    "logo": withBasePath("/eventimages/nutribullet.png"),
+    "link": "https://www.nutribullet.com/el-gr"
   }
     ]
   }

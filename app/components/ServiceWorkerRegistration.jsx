@@ -11,6 +11,12 @@ export default function ServiceWorkerRegistration() {
 
     const registerServiceWorker = async () => {
       try {
+        if (process.env.NODE_ENV !== "production") {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map((registration) => registration.unregister()));
+          return;
+        }
+
         const registration = await navigator.serviceWorker.register(withBasePath("/service-worker.js"));
         console.log("Service Worker registered with scope:", registration.scope);
       } catch (error) {

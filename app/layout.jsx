@@ -11,9 +11,10 @@ import ContentVisibilityWrapper from "./components/ContentVisibilityWrapper";
 import ServiceWorkerRegistration from "./components/ServiceWorkerRegistration";
 import Analytics from "./components/Analytics";
 import Link from "next/link";
-import Image from 'next/image';
+import Script from "next/script";
 
 const GTM_ID = "GTM-PZXR3FK5";
+const shouldCleanDevServiceWorker = process.env.NODE_ENV !== "production";
 
 // Page metadata for SEO and browser tab display
 export const metadata = {
@@ -72,6 +73,49 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {shouldCleanDevServiceWorker && (
+          <Script
+            id="dev-service-worker-cleanup"
+            strategy="beforeInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function () {
+                  var isLocalhost = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+                  var cleanupKey = "tedxntua-dev-service-worker-cleaned-v3";
+
+                  if (!isLocalhost || sessionStorage.getItem(cleanupKey)) {
+                    return;
+                  }
+
+                  if (!("serviceWorker" in navigator) && !("caches" in window)) {
+                    return;
+                  }
+
+                  sessionStorage.setItem(cleanupKey, "true");
+
+                  Promise.all([
+                    "serviceWorker" in navigator
+                      ? navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                          return Promise.all(registrations.map(function (registration) {
+                            return registration.unregister();
+                          }));
+                        })
+                      : Promise.resolve(),
+                    "caches" in window
+                      ? caches.keys().then(function (cacheNames) {
+                          return Promise.all(cacheNames.map(function (cacheName) {
+                            return caches.delete(cacheName);
+                          }));
+                        })
+                      : Promise.resolve()
+                  ]).finally(function () {
+                    location.replace(location.href);
+                  });
+                })();
+              `,
+            }}
+          />
+        )}
         <link rel="preload" href={withBasePath("/fonts/Copixel-Display.otf")} as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="preload" href={withBasePath("/gradient_backgrounds/mainPage_gradient.png")} as="image" />
         <script dangerouslySetInnerHTML={{ __html: `

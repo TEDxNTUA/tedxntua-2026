@@ -1,4 +1,4 @@
-const CACHE_NAME = "tedxntua-2026-v1";
+const CACHE_NAME = "tedxntua-2026-v2";
 const ASSETS_TO_CACHE = [
   // Fonts
   "/fonts/Copixel-Display.otf",
@@ -35,6 +35,11 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
 
+  if (url.pathname.includes("/_next/")) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   // Strategy: Cache First for static assets (Images, Videos, Fonts)
   const isStaticAsset = 
     url.pathname.endsWith(".mp4") || 
@@ -44,8 +49,7 @@ self.addEventListener("fetch", (event) => {
     url.pathname.endsWith(".jpeg") || 
     url.pathname.endsWith(".svg") || 
     url.pathname.endsWith(".otf") || 
-    url.pathname.endsWith(".ttf") ||
-    url.pathname.includes("/_next/static/");
+    url.pathname.endsWith(".ttf");
 
   if (isStaticAsset) {
     event.respondWith(

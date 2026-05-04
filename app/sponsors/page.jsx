@@ -17,6 +17,7 @@ const TIER_COLORS = {
   "Platinum": { main: "#93c5fd", glow: "rgba(147, 197, 253, 0.8)" },
   "Grand": { main: "#facc15", glow: "rgba(250, 204, 21, 0.8)" },
   "Partners": { main: "#4ade80", glow: "rgba(74, 222, 128, 0.8)" },
+  "Venue Sponsors": { main: "#fb7185", glow: "rgba(251, 113, 133, 0.8)" },
   "Supporters": { main: "#a1a1aa", glow: "rgba(161, 161, 170, 0.8)" }
 };
 
@@ -474,7 +475,11 @@ export default function SponsorsPage() {
           <div className="space-y-32 sm:space-y-48">
             {sponsorTiers.map((tier, index) => (
               <Fragment key={tier.tier}>
-                <SponsorTierSection tier={tier} index={index} />
+                <SponsorTierSection
+                  tier={tier}
+                  index={index}
+                  isLast={index === sponsorTiers.length - 1}
+                />
               </Fragment>
             ))}
           </div>

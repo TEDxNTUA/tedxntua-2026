@@ -1,20 +1,23 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import localFont from "next/font/local";
-import ScrollRevealText from "../../components/ScrollRevealText";
 
 const copixelDisplay = localFont({
   src: "../../../Copixel-Futuristic-Font/Fonts/Copixel-Display.otf",
   display: "swap",
 });
 
-export default function SponsorTierSection({ tier, index }) {
+export default function SponsorTierSection({ tier, index, isLast = false }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [headerProgress, setHeaderProgress] = useState(0);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -68,19 +71,6 @@ export default function SponsorTierSection({ tier, index }) {
     }
   };
 
-  const getPaddingLevel = () => {
-    switch (tier.tier) {
-      case "Diamond":
-        return "p-6 sm:p-8";
-      case "Platinum":
-        return "p-5 sm:p-7";
-      case "Grand":
-        return "p-4 sm:p-6";
-      default:
-        return "p-4 sm:p-5";
-    }
-  };
-
   const getGradientColor = () => {
     switch (tier.tier) {
       case "Diamond":
@@ -117,6 +107,8 @@ export default function SponsorTierSection({ tier, index }) {
         return "from-yellow-400 to-yellow-500";
       case "Partners":
         return "from-green-400 to-green-500";
+      case "Venue Sponsors":
+        return "from-rose-400 to-rose-500";
       case "Supporters":
         return "from-zinc-400 to-zinc-500";
       default:
@@ -130,10 +122,13 @@ export default function SponsorTierSection({ tier, index }) {
       case "Platinum": return "#93c5fd";
       case "Grand": return "#facc15";
       case "Partners": return "#4ade80";
+      case "Venue Sponsors": return "#fb7185";
       case "Supporters": return "#a1a1aa";
       default: return "#22c55e";
     }
   };
+
+  const hasDenseGrid = tier.sponsors.length >= 6;
 
   return (
     <div
@@ -171,18 +166,20 @@ export default function SponsorTierSection({ tier, index }) {
       {/* Sponsors Grid */}
       <div
         className={`
-          flex flex-wrap justify-center gap-6 sm:gap-8 w-full
+          ${hasDenseGrid
+            ? "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 justify-items-center gap-5 sm:gap-6 w-full max-w-7xl mx-auto"
+            : "flex flex-wrap justify-center gap-6 sm:gap-8 w-full"}
           ${getSizeClasses()}
         `}
       >
-        {tier.sponsors.map((sponsor, i) => (
+        {hasMounted && tier.sponsors.map((sponsor, i) => (
           <div
             key={`${tier.tier}-${i}`}
             style={{
               transitionDelay: reducedMotion ? "0ms" : `${index * 100 + i * 40}ms`
             }}
             className={`
-              group relative w-40 sm:w-48 flex flex-col items-center
+              group relative ${hasDenseGrid ? "w-full max-w-40 xl:max-w-44" : "w-40 sm:w-48"} flex flex-col items-center
               transform transition-all duration-500
               ${visible
                 ? "opacity-100 scale-100"
@@ -266,7 +263,7 @@ export default function SponsorTierSection({ tier, index }) {
       </div>
 
       {/* Separator line between tiers */}
-      {index < 4 && (
+      {!isLast && (
         <div 
           className="my-16 sm:my-20 h-px w-full max-w-lg mx-auto"
           style={{ 
