@@ -102,7 +102,7 @@ export default function ProgramInfoBoxSimgular({
               {displayProfession && (
                 <div className="text-xs md:text-sm font-medium text-white/50 uppercase tracking-[0.1em]">
                   <p>{displayProfession}</p>
-                  {displayProfession2 && <p>{displayProfession2}</p>}
+                  {displayProfession2 && <p>& {displayProfession2}</p>}
                 </div>
               )}
               <SocialConnection
