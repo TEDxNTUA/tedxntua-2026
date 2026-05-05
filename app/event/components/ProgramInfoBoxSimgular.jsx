@@ -88,11 +88,6 @@ export default function ProgramInfoBoxSimgular({
             <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-[0.15em] border ${config.border} ${config.color} ${config.text}`}>
               {config.label}
             </span>
-            {theme && (
-              <span className="text-white/30 text-[10px] md:text-xs font-medium italic tracking-wide">
-                "{theme}"
-              </span>
-            )}
           </div>
 
           <div className="flex items-center md:items-start justify-between gap-4">

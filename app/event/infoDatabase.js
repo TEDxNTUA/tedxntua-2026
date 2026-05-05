@@ -222,7 +222,7 @@ export const allExpWorkshops = applyPosterBasePath([
     time: WORKSHOP_TIME_1,
     name: ExpWorkshops[0].NameEN,
     room: "",
-    profession: ExpWorkshops[0].ProfessionGR,
+    profession: ExpWorkshops[0].ProfessionEN,
     artName: ExpWorkshops[0].ArtName,
     title: ExpWorkshops[0].Title,  
     itemColor: "rgba(45, 35, 18, 0.9)",
@@ -236,7 +236,7 @@ export const allExpWorkshops = applyPosterBasePath([
     time: WORKSHOP_TIME_2,
     name: ExpWorkshops[1].NameEN,
     room: "",
-    profession: ExpWorkshops[1].ProfessionGR,
+    profession: ExpWorkshops[1].ProfessionEN,
     artName: ExpWorkshops[1].ArtName,
     title: ExpWorkshops[1].Title,
     itemColor: "rgba(20, 20, 20, 0.92)",
@@ -250,7 +250,7 @@ export const allExpWorkshops = applyPosterBasePath([
     time: WORKSHOP_TIME_3,
     name: ExpWorkshops[2].NameEN,
     room: "",
-    profession: ExpWorkshops[2].ProfessionGR,
+    profession: ExpWorkshops[2].ProfessionEN,
     artName: ExpWorkshops[2].ArtName,
     title: "Athenaides Project",
     itemColor: "rgba(45, 12, 15, 0.9)",
@@ -406,7 +406,7 @@ export const allPerformances = applyPosterBasePath([
     time: "13:45",
     name: Performances[0].NameEN,
     itemCategory: "performance",
-    profession: Performances[0].ProfessionGR,
+    profession: Performances[0].ProfessionEN,
     artName: Performances[0].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[0].DescriptionGR,
@@ -419,7 +419,7 @@ export const allPerformances = applyPosterBasePath([
     time: "17:10",
     name: Performances[1].NameEN,
     itemCategory: "performance",
-    profession: Performances[1].ProfessionGR,
+    profession: Performances[1].ProfessionEN,
     artName: Performances[1].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[1].DescriptionGR,
@@ -432,7 +432,7 @@ export const allPerformances = applyPosterBasePath([
     time: "19:20",
     name: Performances[2].NameEN,
     itemCategory: "performance",
-    profession: Performances[2].ProfessionGR,
+    profession: Performances[2].ProfessionEN,
     artName: Performances[2].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[2].DescriptionGR,
@@ -445,7 +445,7 @@ export const allPerformances = applyPosterBasePath([
     time: "16:15",
     name: Performances[3].NameEN,
     itemCategory: "performance",
-    profession: Performances[3].ProfessionGR,
+    profession: Performances[3].ProfessionEN,
     artName: Performances[3].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[3].DescriptionGR,
@@ -458,7 +458,7 @@ export const allPerformances = applyPosterBasePath([
     time: "11:15",
     name: Performances[4].NameEN,
     itemCategory: "performance",
-    profession: Performances[4].ProfessionGR,
+    profession: Performances[4].ProfessionEN,
     artName: Performances[4].Artname,
     itemColor: PERFORMANCE_ITEM_COLOR,
     description: Performances[4].DescriptionGR,
@@ -497,8 +497,11 @@ export const extra = applyPosterBasePath([
       }]);
 
 // Session groupings consumed by the program UI.
-export const mySessions1 = [
+export const Registration = [
   extra[1], // Registration
+];
+
+export const mySessions1 = [
   allPerformances[4], // Unforgetable
   extra[0], // Opening Hostess / Backstage Host / Curators
   allSpeakers[0], // Eleni Kavvada
@@ -525,7 +528,7 @@ export const mySessions4 = [
   allPerformances[2], // Konstantina Koutra / KONIKOU
 ];
 
-export const theEnd = [
+export const mySessions5 = [
   extra[2], // Closing & Curators
   extra[3], // the team, the hug
 ];

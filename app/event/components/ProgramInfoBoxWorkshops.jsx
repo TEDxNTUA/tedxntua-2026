@@ -35,11 +35,8 @@ export default function ProgramInfoBoxWorkshops({ time, workshop, color }) {
           <div className="flex items-center md:items-start justify-between gap-4">
             <div className="flex-1 flex flex-col items-center md:items-start">
               <h4 className="text-xl md:text-2xl font-black text-white tracking-tight mb-1 group-hover:text-yellow-400 transition-colors">
-                Workshop Breakout
+                Workshops Overview
               </h4>
-              <p className="text-xs md:text-sm font-medium text-white/50 uppercase tracking-[0.1em]">
-                Select your preferred session
-              </p>
             </div>
             
             <div className={`mt-1 md:mt-2 transition-all duration-300 text-white`}>

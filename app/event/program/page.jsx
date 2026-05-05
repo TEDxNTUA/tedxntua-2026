@@ -4,7 +4,7 @@ import InfoSpeakerBox from "../components/ProgramInfoBoxSimgular";
 import InfoWorkshopBox from "../components/ProgramInfoBoxWorkshops";
 import EventPageShell from "../components/EventPageShell";
 
-import { mySessions1, mySessions2, mySessions3, mySessions4, theEnd } from "../infoDatabase";
+import { Registration, mySessions1, mySessions2, mySessions3, mySessions4, mySessions5 } from "../infoDatabase";
 import { myWorkshopsPack1, myWorkshopsPack2, myWorkshopsPack3 } from "../infoDatabase";
 
 function ProgramSection({ children, title, id }) {
@@ -64,13 +64,19 @@ export default function ProgramPage() {
       <ProgramNav />
 
       <div className="max-w-4xl mx-auto">
-        <ProgramSection title="Opening Session" id="session1">
+        <ProgramSection title="Registration" id="session1">
+          {Registration.map((item, index) => (
+            <InfoSpeakerBox key={index} {...item}/>
+          ))}
+        </ProgramSection>
+
+        <ProgramSection title="First Session" id="session1">
           {mySessions1.map((item, index) => (
             <InfoSpeakerBox key={index} {...item}/>
           ))}
         </ProgramSection>
 
-        <ProgramSection title="Workshops Series I" id="workshops1">
+        <ProgramSection title="First break (1.15 h)" id="workshops1">
           {myWorkshopsPack1.map((item, index) => (
             <InfoWorkshopBox key={index} {...item} />
           ))}
@@ -82,7 +88,7 @@ export default function ProgramPage() {
           ))}
         </ProgramSection>
 
-        <ProgramSection title="Workshops Series II" id="workshops2">
+        <ProgramSection title="Second break (1.15 h)" id="workshops2">
           {myWorkshopsPack2.map((item, index) => (
             <InfoWorkshopBox key={index} {...item} />
           ))}
@@ -94,7 +100,7 @@ export default function ProgramPage() {
           ))}
         </ProgramSection>
 
-        <ProgramSection title="Workshops Series III" id="workshops3">
+        <ProgramSection title="Third break (1.15 h)" id="workshops3">
           {myWorkshopsPack3.map((item, index) => (
             <InfoWorkshopBox key={index} {...item} />
           ))}
@@ -106,8 +112,8 @@ export default function ProgramPage() {
           ))}
         </ProgramSection>
 
-        <ProgramSection title="The End" id="theend">
-          {theEnd.map((item, index) => (
+        <ProgramSection title="After Party" id="theend">
+          {mySessions5.map((item, index) => (
             <InfoSpeakerBox key={index} {...item}/>
           ))}
         </ProgramSection>
