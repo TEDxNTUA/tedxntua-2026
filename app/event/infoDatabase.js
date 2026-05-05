@@ -526,10 +526,10 @@ export const mySessions4 = [
   allSpeakers[2], // Yannis Daglis
   allSpeakers[7], // Nora Drakou
   allPerformances[2], // Konstantina Koutra / KONIKOU
+  extra[2] // Closing & Curators
 ];
 
 export const mySessions5 = [
-  extra[2], // Closing & Curators
   extra[3], // the team, the hug
 ];
 

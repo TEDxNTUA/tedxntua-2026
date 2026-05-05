@@ -13,6 +13,7 @@ export default function ProgramInfoBoxSimgular({
   artName, 
   theme, 
   profession, 
+  profession2,
   itemColor, 
   description, 
   itemCategory,
@@ -59,6 +60,9 @@ export default function ProgramInfoBoxSimgular({
   const displayProfession = profession
     ? formatUppercaseNoAccents(capitalizeSegments(profession))
     : "";
+  const displayProfession2 = profession2
+    ? formatUppercaseNoAccents(capitalizeSegments(profession2))
+    : "";
   const displayName = (() => {
     if (itemCategory === 'speaker') {
       return name2 ? `${name} & ${name2}` : name;
@@ -95,10 +99,11 @@ export default function ProgramInfoBoxSimgular({
               <h4 className="text-xl md:text-2xl font-black text-white tracking-tight mb-1 group-hover:text-emerald-400 transition-colors">
                 {displayName}
               </h4>
-              {profession && (
-                <p className="text-xs md:text-sm font-medium text-white/50 uppercase tracking-[0.1em]">
-                  {displayProfession}
-                </p>
+              {displayProfession && (
+                <div className="text-xs md:text-sm font-medium text-white/50 uppercase tracking-[0.1em]">
+                  <p>{displayProfession}</p>
+                  {displayProfession2 && <p>{displayProfession2}</p>}
+                </div>
               )}
               <SocialConnection
                 socials={socials}
