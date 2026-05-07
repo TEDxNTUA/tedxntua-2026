@@ -132,6 +132,11 @@ export const sponsorTiers = [
     "name": "Nutribullet",
     "logo": withBasePath("/eventimages/nutribullet.png"),
     "link": "https://www.nutribullet.com/el-gr"
+  },
+  {
+    "name": "Havana Van",
+    "logo": withBasePath("/eventimages/HavanaVan.png"),
+    "link": "http://havana.gr/"
   }
     ]
   }
