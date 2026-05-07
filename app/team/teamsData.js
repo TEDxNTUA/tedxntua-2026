@@ -140,7 +140,7 @@ export const teams = [
       },
       {
         id: "kostas-p",
-        name: "Konstantinos Paliaros",
+        name: "Konstantinos Pariaros",
         photos: [
           assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Κώστας_/mtt-50.jpg"),
           assetPath("/MTT_final/Design_ΤΕΛΙΚΕΣ/Κώστας_/mtt-289.jpg")
