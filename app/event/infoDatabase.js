@@ -180,8 +180,12 @@ export const allSpeakers = applyPosterBasePath([
     bcimageUrl: "/eventimages/circle.webp",
     personalDescription: Speakers[9].BioGR,
     socials: getSocials(Speakers, 9)
-  },
-  // Speakers[10] = Chrysa Michalopoulou
+  }
+]);
+
+
+export const allHosts = applyPosterBasePath([
+  // Host[0] = Chrysa Michalopoulou
   {
     time: "",
     itemCategory: "",
@@ -197,7 +201,7 @@ export const allSpeakers = applyPosterBasePath([
     personalDescription: Speakers[10].BioGR,
     socials: getSocials(Speakers, 10)
   },
-  // Speakers[11] = Manos
+  // Host[1] = Manos
   {
     time: "",
     itemCategory: "",
@@ -212,8 +216,10 @@ export const allSpeakers = applyPosterBasePath([
     modalEyebrow: "Backstage Host",
     personalDescription: Speakers[11].BioGR,
     socials: getSocials(Speakers, 11)
-  },
-]);
+  }
+])
+
+
 
 // Experience workshops
 export const allExpWorkshops = applyPosterBasePath([

@@ -164,6 +164,16 @@
   align-items: start;
 }
 
+.sectionTitle {
+  grid-column: 1 / -1;
+  margin: clamp(1rem, 3vw, 2rem) 0 0.15rem;
+  font-size: clamp(1.35rem, 2.7vw, 2.7rem);
+  line-height: 0.95;
+  text-align: center;
+  text-transform: uppercase;
+  color: #071918;
+}
+
 .card {
   min-width: 0;
   display: flex;
@@ -479,6 +489,13 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: rgba(19, 23, 22, 0.9);
+}
+
+.modalHostEyebrow {
+  width: 100%;
+  text-align: left;
+  font-weight: 900;
+  color: #071918;
 }
 
 .modalName {

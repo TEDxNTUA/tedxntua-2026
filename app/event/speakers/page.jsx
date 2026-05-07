@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import localFont from "next/font/local";
 
-import { allSpeakers } from "../infoDatabase";
+import { allSpeakers, allHosts } from "../infoDatabase";
 import { SocialButton } from "../components/SocialButton";
 import { capitalizeSegments, formatUppercaseNoAccents } from "../textFormatters";
 import { withBasePath } from "../../lib/basePath";
@@ -18,8 +18,6 @@ const copixelDisplay = localFont({
 
 const EMPTY_BASE_PATH = withBasePath("");
 const SPEAKER_SOCIAL_HOVER_COLOR = "#088880";
-const HOSTESS_CARD_NAME = "Chrysa Michalopoulou";
-const BACKSTAGE_HOST_CARD_NAME = "Manos";
 
 const socialFields = [
   { field: "instagram", platform: "instagram", label: "Instagram" },
@@ -144,18 +142,11 @@ function buildSpeakerCard(speaker, index) {
 }
 
 const speakerCards = allSpeakers.map(buildSpeakerCard).filter(Boolean);
-const orderedSpeakerCards = [
-  ...speakerCards.filter((speaker) => speaker.name === HOSTESS_CARD_NAME),
-  ...speakerCards.filter((speaker) => speaker.name === BACKSTAGE_HOST_CARD_NAME),
-  ...speakerCards.filter(
-    (speaker) =>
-      speaker.name !== HOSTESS_CARD_NAME &&
-      speaker.name !== BACKSTAGE_HOST_CARD_NAME,
-  ),
-];
+const hostCards = allHosts.map(buildSpeakerCard).filter(Boolean);
 
 function SpeakerModal({ speaker, onClose }) {
   const [mounted, setMounted] = useState(false);
+  const isHost = speaker?.eyebrow === "Hostess" || speaker?.eyebrow === "Backstage Host";
 
   useEffect(() => {
     setMounted(true);
@@ -271,7 +262,9 @@ function SpeakerModal({ speaker, onClose }) {
         </div>
 
         <div className={styles.modalContent}>
-          <p className={styles.modalEyebrow}>{speaker.eyebrow}</p>
+          <p className={`${styles.modalEyebrow} ${isHost ? styles.modalHostEyebrow : ""}`}>
+            {speaker.eyebrow}
+          </p>
           <h2 id="speaker-modal-name" className={`${copixelDisplay.className} ${styles.modalName}`}>
             {formatUppercaseNoAccents(speaker.name)}
           </h2>
@@ -320,12 +313,69 @@ export default function SpeakersPage() {
       <div className={styles.content}>
         <div className={styles.hero}>
           <h1 className={`${copixelDisplay.className} ${styles.title}`}>
-            Meet our Hostess & Speakers
+            Meet our Speakers & Hosts
           </h1>
         </div>
 
         <div className={styles.speakerRow}>
-          {orderedSpeakerCards.map((speaker) => (
+          <h2 className={`${copixelDisplay.className} ${styles.sectionTitle}`}>
+            Speakers
+          </h2>
+
+          {speakerCards.map((speaker) => (
+            <article key={speaker.id} className={styles.card}>
+              <button
+                type="button"
+                className={styles.cardButton}
+                onClick={() => setActiveSpeaker(speaker)}
+                aria-label={`Open details for ${speaker.name}`}
+              >
+                <div className={styles.stage}>
+                  <div className={styles.stageGlow} />
+                  <Image
+                    src={speaker.bcimageUrl ? withBasePath(speaker.bcimageUrl) : withBasePath("/eventimages/circle.webp")}
+                    alt="Speaker background circle"
+                    fill
+                    priority
+                    className={styles.circle}
+                    sizes="(min-width: 1200px) 18vw, (min-width: 768px) 26vw, 72vw"
+                  />
+                  {speaker.photo ? (
+                    <div className={styles.photoMask}>
+                      <div className={styles.photoFrame}>
+                        <Image
+                          src={speaker.photo}
+                          alt={speaker.name}
+                          fill
+                          priority
+                          className={styles.photo}
+                          sizes="(min-width: 1200px) 14vw, (min-width: 768px) 20vw, 54vw"
+                        />
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+
+                <div className={styles.caption}>
+                  <h2 className={`${copixelDisplay.className} ${styles.name}`}>
+                    {formatUppercaseNoAccents(speaker.name)}
+                  </h2>
+                  <p className={styles.profession}>{speaker.profession}</p>
+                </div>
+              </button>
+              <SocialLinks
+                links={speaker.socialLinks}
+                ownerName={speaker.name}
+                className={styles.cardSocials}
+              />
+            </article>
+          ))}
+
+          <h2 className={`${copixelDisplay.className} ${styles.sectionTitle}`}>
+            Hosts
+          </h2>
+
+          {hostCards.map((speaker) => (
             <article key={speaker.id} className={styles.card}>
               <button
                 type="button"
