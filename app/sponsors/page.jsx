@@ -18,6 +18,8 @@ const TIER_COLORS = {
   "Grand": { main: "#facc15", glow: "rgba(250, 204, 21, 0.8)" },
   "Partners": { main: "#4ade80", glow: "rgba(74, 222, 128, 0.8)" },
   "Venue Sponsors": { main: "#fb7185", glow: "rgba(251, 113, 133, 0.8)" },
+  "Communication Partners": { main: "#f97316", glow: "rgba(249, 115, 22, 0.8)" },
+  "Media Partners": { main: "#c084fc", glow: "rgba(192, 132, 252, 0.8)" },
   "Supporters": { main: "#a1a1aa", glow: "rgba(161, 161, 170, 0.8)" }
 };
 

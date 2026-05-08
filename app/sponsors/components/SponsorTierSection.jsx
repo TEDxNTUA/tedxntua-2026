@@ -109,6 +109,10 @@ export default function SponsorTierSection({ tier, index, isLast = false }) {
         return "from-green-400 to-green-500";
       case "Venue Sponsors":
         return "from-rose-400 to-rose-500";
+      case "Communication Partners":
+        return "from-orange-400 to-orange-500";
+      case "Media Partners":
+        return "from-purple-400 to-purple-500";
       case "Supporters":
         return "from-zinc-400 to-zinc-500";
       default:
@@ -123,6 +127,8 @@ export default function SponsorTierSection({ tier, index, isLast = false }) {
       case "Grand": return "#facc15";
       case "Partners": return "#4ade80";
       case "Venue Sponsors": return "#fb7185";
+      case "Communication Partners": return "#f97316";
+      case "Media Partners": return "#c084fc";
       case "Supporters": return "#a1a1aa";
       default: return "#22c55e";
     }

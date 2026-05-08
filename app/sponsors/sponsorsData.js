@@ -130,6 +130,60 @@ export const sponsorTiers = [
   ]
   },
   {
+    tier: "Communication Partners",
+    sponsors: [
+      {
+    "name": "What They Said",
+    "logo": supporterLogo("whattheysaid.jpeg")
+  },
+  {
+    "name": "New Cult",
+    "logo": supporterLogo("new cult logo.png")
+  },
+  {
+    "name": "Studio Materiality",
+    "logo": supporterLogo("studioMateriality.png")
+  },
+  {
+    "name": "IEEE PES",
+    "logo": supporterLogo("community partners/ieeePes.png")
+  },
+  {
+    "name": "Kosmos tou Pari",
+    "logo": supporterLogo("community partners/kosmosTouParh.jpeg")
+  },
+  {
+    "name": "YM NKUA",
+    "logo": supporterLogo("community partners/YMNkua.png")
+  },
+  {
+    "name": "Athens Negotiations Tournament",
+    "logo": supporterLogo("community partners/logosANT-1.png")
+  },
+  {
+    "name": "FS DET",
+    "logo": supporterLogo("community partners/fsDet.png")
+  },
+  {
+    "name": "Euro Avia",
+    "logo": supporterLogo("community partners/euroavia.png")
+  }
+    ]
+  },
+  {
+    tier: "Media Partners",
+    sponsors: [
+      {
+    "name": "The Stack",
+    "logo": supporterLogo("theStack-1.png")
+  },
+  {
+    "name": "Kleidarithmos",
+    "logo": supporterLogo("kleidarithmos.png")
+  }
+    ]
+  },
+  {
     tier: "Supporters",
     sponsors: [
       {
@@ -180,14 +234,6 @@ export const sponsorTiers = [
     "logo": supporterLogo("xapsia.jpg")
   },
   {
-    "name": "The Stack",
-    "logo": supporterLogo("theStack-1.png")
-  },
-  {
-    "name": "What They Said",
-    "logo": supporterLogo("whattheysaid.jpeg")
-  },
-  {
     "name": "Piroskidis",
     "logo": supporterLogo("piroskidis-1.png")
   },
@@ -228,10 +274,6 @@ export const sponsorTiers = [
     "logo": supporterLogo("haribo.PNG")
   },
   {
-    "name": "Kleidarithmos",
-    "logo": supporterLogo("kleidarithmos.png")
-  },
-  {
     "name": "Kyana",
     "logo": supporterLogo("kyana-1.png")
   },
@@ -260,10 +302,6 @@ export const sponsorTiers = [
     "logo": supporterLogo("naturaSiberica.png")
   },
   {
-    "name": "New Cult",
-    "logo": supporterLogo("new cult logo.png")
-  },
-  {
     "name": "Oler Secreto",
     "logo": supporterLogo("olersecreto.jpg")
   },
@@ -282,10 +320,6 @@ export const sponsorTiers = [
   {
     "name": "Stergiou",
     "logo": supporterLogo("stergiou-1.png")
-  },
-  {
-    "name": "Studio Materiality",
-    "logo": supporterLogo("studioMateriality.png")
   },
   {
     "name": "TT Clean",
