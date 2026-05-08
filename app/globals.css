@@ -783,3 +783,106 @@ body.compact-site-footer .site-footer .pt-6 {
   color: #ffffff; /* always white */
   transition: color 180ms ease;
 }
+
+.event-app-launcher {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  min-width: min(78vw, 18rem);
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 1px solid rgba(230, 43, 30, 0.58);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(230, 43, 30, 0.96), rgba(12, 12, 12, 0.92));
+  color: #fff;
+  box-shadow: 0 16px 45px rgba(230, 43, 30, 0.28);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  padding: 0.78rem 1.15rem;
+  text-transform: uppercase;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.event-app-launcher:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 55px rgba(230, 43, 30, 0.36);
+  transform: translateY(-2px);
+}
+
+.event-app-launcher span {
+  font-size: clamp(0.84rem, 2.4vw, 1rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.event-app-launcher small {
+  border-left: 1px solid rgba(255, 255, 255, 0.28);
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding-left: 0.65rem;
+}
+
+.event-app-prompt {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.74);
+  padding: 1rem;
+}
+
+.event-app-prompt-panel {
+  width: min(100%, 24rem);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: #111;
+  color: #f7f7f7;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+  padding: 1.2rem;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.event-app-prompt-panel h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.event-app-prompt-panel p {
+  margin: 0 0 0.9rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.event-app-ios-note {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 0.78rem !important;
+}
+
+.event-app-prompt-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.event-app-prompt-actions button {
+  border: 0;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  font-weight: 900;
+  padding: 0.8rem 0.65rem;
+}
+
+.event-app-prompt-actions button:first-child {
+  background: #e62b1e;
+  color: #fff;
+}
+
+.event-app-prompt-actions button:last-child {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
