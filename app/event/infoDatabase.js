@@ -382,7 +382,7 @@ export const allSideHappenings = applyPosterBasePath([
       instagram: "https://www.instagram.com/willyoumarrowme_/?hl=el"      },
   },{
     name: "",
-    artName: "Animal center Vyronas",
+    artName: "Vyronas Animal Center",
     profession: "",
     title: "Animal center Vyronas",
     itemColor: "rgba(45, 12, 15, 0.9)",
@@ -402,6 +402,19 @@ export const allSideHappenings = applyPosterBasePath([
     personalDescription: "",
     socials: {
       instagram: "https://www.instagram.com/my.checkpoint?igsh=c29qand6ZjRqcWYw"      },
+  },
+  {
+    name: "SIVISSIDIS",
+    artName: "SIVISSIDIS",
+    profession: "",
+    title: "",
+    itemColor: "rgba(45, 12, 15, 0.9)",
+    description: "",
+    posterImageUrl: "/Installations/Sivissidis_Logo.png",
+    personalDescription: "",
+    socials: {
+      instagram: "https://www.instagram.com/sivissidis_billiards/"
+    },
   },
 ]);
 
