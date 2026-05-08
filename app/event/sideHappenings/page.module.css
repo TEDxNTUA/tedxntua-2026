@@ -158,13 +158,15 @@
 }
 
 .performerRow {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: clamp(1rem, 2vw, 1.8rem);
   align-items: start;
 }
 
 .card {
+  width: calc((100% - 2.1 * clamp(1rem, 2vw, 1.8rem)) / 3);
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -237,13 +239,13 @@
 
 .photoFrame {
   position: absolute;
-  inset: 0 -4% -16%;
+  inset: 0;
 }
 
 .photo {
   object-fit: contain;
-  object-position: center bottom;
-  transform: scale(1.08);
+  object-position: center center;
+  transform: scale(0.9);
   filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.08));
 }
 
@@ -405,13 +407,13 @@
 
 .modalPhotoFrame {
   position: absolute;
-  inset: -1% -5% -19%;
+  inset: 0;
 }
 
 .modalPhoto {
   object-fit: contain;
-  object-position: center bottom;
-  transform: scale(1.18);
+  object-position: center center;
+  transform: scale(0.9);
   filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.12));
 }
 
@@ -501,8 +503,15 @@
   }
 
   .performerRow {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 0.9rem;
+  }
+
+  .card {
+    width: calc((100% - 1.1 * 0.9rem) / 2);
+    min-width: 0;
   }
 
   .cardButton {
@@ -586,13 +595,14 @@
 
 @media (max-width: 560px) {
   .performerRow {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 0.7rem;
   }
 
   .card {
-    width: 100%;
+    width: calc((100% - 1.1 * 0.7rem) / 2);
     max-width: none;
     margin-inline: 0;
   }
@@ -658,11 +668,11 @@
   }
 
   .modalPhotoFrame {
-    inset: 0 -4% -17%;
+    inset: 0;
   }
 
   .modalPhoto {
-    transform: scale(1.14);
+    transform: scale(0.9);
   }
 
   .pageBlurBlobPrimary {
