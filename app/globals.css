@@ -877,20 +877,54 @@ body.compact-site-footer .site-footer .pt-6 {
   display: grid;
   place-items: center;
   padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(12px);
   animation: fadeIn 300ms ease-out;
+}
+
+/* Hide header when giveaways gate is open */
+.giveaways-open header,
+.giveaways-open .site-header {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
 }
 
 .giveaways-prompt-panel {
   width: 100%;
-  max-width: 400px;
+  max-width: 440px;
   background: #0c0c0c;
   border: 1px solid rgba(34, 197, 94, 0.3);
   border-radius: 1.5rem;
-  padding: 2rem;
+  padding: 2.5rem 2rem 2rem;
   position: relative;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 20px rgba(34, 197, 94, 0.1);
+  margin: auto;
+}
+
+.giveaways-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 180ms ease;
+  z-index: 10;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.giveaways-close-btn:hover {
+  color: #22c55e;
+  transform: rotate(90deg);
 }
 
 .giveaways-status-indicator {
@@ -925,17 +959,19 @@ body.compact-site-footer .site-footer .pt-6 {
 
 .giveaways-prompt-panel h2 {
   font-family: var(--font-copixel), sans-serif;
-  font-size: 1.75rem;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
   color: #fff;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.75rem;
   letter-spacing: 0.05em;
+  text-align: center;
 }
 
 .coming-soon-text {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.95rem;
-  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  line-height: 1.5;
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .giveaways-links-grid {

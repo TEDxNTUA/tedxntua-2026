@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const officialGiveaways = [
   { 
@@ -28,6 +28,17 @@ const officialGiveaways = [
 export default function GiveawaysButton() {
   const [showPrompt, setShowPrompt] = useState(false);
 
+  useEffect(() => {
+    if (showPrompt) {
+      document.documentElement.classList.add("giveaways-open");
+    } else {
+      document.documentElement.classList.remove("giveaways-open");
+    }
+    return () => {
+      document.documentElement.classList.remove("giveaways-open");
+    };
+  }, [showPrompt]);
+
   return (
     <>
       <button className="giveaways-launcher" type="button" onClick={() => setShowPrompt(true)}>
@@ -38,6 +49,13 @@ export default function GiveawaysButton() {
       {showPrompt && (
         <div className="giveaways-prompt" role="dialog" aria-modal="true" aria-labelledby="giveaways-prompt-title" onClick={() => setShowPrompt(false)}>
           <div className="giveaways-prompt-panel" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="giveaways-close-btn" 
+              onClick={() => setShowPrompt(false)}
+              aria-label="Close dialog"
+            >
+              ×
+            </button>
             <div className="giveaways-status-indicator">
               <div className="status-dot active"></div>
               <span>Status: Online</span>
