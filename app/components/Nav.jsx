@@ -74,16 +74,27 @@ export default function Nav() {
       
       {/* Radial Semisphere Menu */}
       <div className={`${classes.radialWrapper} ${isOpen ? classes.radialOpen : ""}`}>
-        <img 
-          src={withBasePath("/site_navigator.png")} 
-          alt="Navigation Menu" 
-          className={classes.radialImage}
-          width={500}
-          height={500}
-          loading="lazy"
-          fetchPriority="low"
-          sizes="(max-width: 768px) 400px, 500px"
-        />
+        <picture style={{ display: "block", width: "100%", height: "100%" }}>
+          <source
+            srcSet={[
+              `${withBasePath("/site_navigator-400.webp")} 400w`,
+              `${withBasePath("/site_navigator-500.webp")} 500w`,
+              `${withBasePath("/site_navigator-1000.webp")} 1000w`,
+            ].join(", ")}
+            type="image/webp"
+            sizes="(max-width: 768px) 400px, 500px"
+          />
+          <img
+            src={withBasePath("/site_navigator.png")}
+            alt="Navigation Menu"
+            className={classes.radialImage}
+            width={500}
+            height={500}
+            loading="lazy"
+            fetchPriority="low"
+            sizes="(max-width: 768px) 400px, 500px"
+          />
+        </picture>
         <svg viewBox="0 0 100 100" className={classes.radialSvg}>
           {/* TEAM - Right Sector (0 to 60 deg approx) */}
           <path 

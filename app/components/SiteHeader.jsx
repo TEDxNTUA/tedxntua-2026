@@ -149,16 +149,21 @@ export default function SiteHeader() {
               theme={theme}
             >
               <div className="flex w-full flex-col items-center justify-center gap-1 py-1 sm:py-2">
-                <img
-                  src={withBasePath("/ticket-asset.png")}
-                  alt="Get Tickets"
-                  className="h-8 w-auto object-contain transition-all duration-all duration-300 group-hover:scale-105 sm:h-10 lg:h-11"
-                  width={48}
-                  height={48}
-                  fetchPriority="high"
-                  loading="eager"
-                  sizes="(max-width: 640px) 32px, (max-width: 1024px) 40px, 48px"
-                />
+                <picture>
+                  <source
+                    srcSet={`${withBasePath("/ticket-asset-128.webp")} 1x, ${withBasePath("/ticket-asset-256.webp")} 2x`}
+                    type="image/webp"
+                  />
+                  <img
+                    src={withBasePath("/ticket-asset.png")}
+                    alt="Get Tickets"
+                    className="h-8 w-auto object-contain transition-all duration-all duration-300 group-hover:scale-105 sm:h-10 lg:h-11"
+                    width={128}
+                    height={44}
+                    fetchPriority="high"
+                    loading="eager"
+                  />
+                </picture>
                 <span
                   className="text-[9px] font-semibold uppercase tracking-widest sm:text-sm sm:tracking-[0.34em]"
                   style={{ color: `rgba(${theme.tx}, ${theme.txOp})` }}
