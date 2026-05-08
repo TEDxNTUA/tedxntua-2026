@@ -83,54 +83,6 @@ export const sponsorTiers = [
     "name": "Evenly",
     "logo": supporterLogo("evenly-col-dark-tag.png"),
     "link": "https://evenly.care/el/"
-  },
-  {
-    "name": "Traganos Tragos",
-    "logo": supporterLogo("traganosTragos.png")
-  },
-  {
-    "name": "Ta Grapha",
-    "logo": supporterLogo("tagrapha.png")
-  },
-  {
-    "name": "Xapsia",
-    "logo": supporterLogo("xapsia.jpg")
-  },
-  {
-    "name": "The Stack",
-    "logo": supporterLogo("theStack-1.png")
-  },
-  {
-    "name": "What They Said",
-    "logo": supporterLogo("whattheysaid.jpeg")
-  },
-  {
-    "name": "Piroskidis",
-    "logo": supporterLogo("piroskidis-1.png")
-  },
-  {
-    "name": "Pitsos Kabilo",
-    "logo": supporterLogo("pitsoskabilo.png")
-  },
-  {
-    "name": "Dionysakis",
-    "logo": supporterLogo("dionysakhs.png")
-  },
-  {
-    "name": "Lorda",
-    "logo": supporterLogo("lorda-1.png")
-  },
-  {
-    "name": "Big Nick",
-    "logo": supporterLogo("bignick-1.png")
-  },
-  {
-    "name": "Savikos",
-    "logo": supporterLogo("savikos.png")
-  },
-  {
-    "name": "Everest",
-    "logo": supporterLogo("everest-1.png")
   }
     ]
   },
@@ -186,6 +138,54 @@ export const sponsorTiers = [
     "name": "Havana Van",
     "logo": supporterLogo("HavanaVan.png"),
     "link": "http://havana.gr/"
+  },
+  {
+    "name": "Traganos Tragos",
+    "logo": supporterLogo("traganosTragos.png")
+  },
+  {
+    "name": "Ta Grapha",
+    "logo": supporterLogo("tagrapha.png")
+  },
+  {
+    "name": "Xapsia",
+    "logo": supporterLogo("xapsia.jpg")
+  },
+  {
+    "name": "The Stack",
+    "logo": supporterLogo("theStack-1.png")
+  },
+  {
+    "name": "What They Said",
+    "logo": supporterLogo("whattheysaid.jpeg")
+  },
+  {
+    "name": "Piroskidis",
+    "logo": supporterLogo("piroskidis-1.png")
+  },
+  {
+    "name": "Pitsos Kabilo",
+    "logo": supporterLogo("pitsoskabilo.png")
+  },
+  {
+    "name": "Dionysakis",
+    "logo": supporterLogo("dionysakhs.png")
+  },
+  {
+    "name": "Lorda",
+    "logo": supporterLogo("lorda-1.png")
+  },
+  {
+    "name": "Big Nick",
+    "logo": supporterLogo("bignick-1.png")
+  },
+  {
+    "name": "Savikos",
+    "logo": supporterLogo("savikos.png")
+  },
+  {
+    "name": "Everest",
+    "logo": supporterLogo("everest-1.png")
   }
     ]
   }
