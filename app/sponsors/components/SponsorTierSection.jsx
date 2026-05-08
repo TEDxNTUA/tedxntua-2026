@@ -172,7 +172,17 @@ export default function SponsorTierSection({ tier, index, isLast = false }) {
           ${getSizeClasses()}
         `}
       >
-        {hasMounted && tier.sponsors.map((sponsor, i) => (
+        {hasMounted && tier.sponsors.map((sponsor, i) => {
+          const Wrapper = sponsor.link ? "a" : "div";
+          const wrapperProps = sponsor.link
+            ? {
+                href: sponsor.link,
+                target: "_blank",
+                rel: "noopener noreferrer",
+              }
+            : {};
+
+          return (
           <div
             key={`${tier.tier}-${i}`}
             style={{
@@ -187,11 +197,9 @@ export default function SponsorTierSection({ tier, index, isLast = false }) {
               }
             `}
           >
-            <a
-              href={sponsor.link || "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full flex flex-col items-center cursor-pointer"
+            <Wrapper
+              {...wrapperProps}
+              className={`w-full flex flex-col items-center ${sponsor.link ? "cursor-pointer" : ""}`}
             >
             {/* Card Container */}
             <div
@@ -246,7 +254,7 @@ export default function SponsorTierSection({ tier, index, isLast = false }) {
               <p className="mt-3 text-center text-sm sm:text-base font-semibold text-white group-hover:text-[#22d3ee] transition-colors duration-300 px-2 min-h-[2.5rem] flex items-center justify-center">
                 {sponsor.name}
               </p>
-            </a>
+            </Wrapper>
 
             {sponsor.CVlink && (
               <a
@@ -259,7 +267,8 @@ export default function SponsorTierSection({ tier, index, isLast = false }) {
               </a>
             )}
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Separator line between tiers */}

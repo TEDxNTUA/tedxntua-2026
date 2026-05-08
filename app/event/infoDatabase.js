@@ -290,7 +290,7 @@ export const allProfWorkshops = applyPosterBasePath([
     description: ProfWorkshops[1].DescriptionGR,
     personal: ProfWorkshops[1].BioGR,
     itemColor: "rgba(25, 35, 12, 0.92)",
-    posterImageUrl: "/eventimages/Dialectica_idzOXMZJL7_0.png",
+    posterImageUrl: "/eventimages/supporters/Dialectica_idzOXMZJL7_0.png",
     socials: getSocials(ProfWorkshops, 1)
   },
   // ProfWorkshops[2] = Oliver Wyman

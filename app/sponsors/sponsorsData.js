@@ -1,6 +1,7 @@
 import { withBasePath } from "../lib/basePath";
 
 const assetPath = (path) => encodeURI(withBasePath(path));
+const supporterLogo = (fileName) => assetPath(`/eventimages/supporters/${fileName}`);
 
 export const sponsorTiers = [
   {
@@ -29,7 +30,7 @@ export const sponsorTiers = [
       },
       {
         "name": "Dialectica",
-        "logo": assetPath("/eventimages/Dialectica_idzOXMZJL7_0.png"),
+        "logo": supporterLogo("Dialectica_idzOXMZJL7_0.png"),
         "link": "https://www.dialectica.io/"
       },
       {
@@ -55,7 +56,7 @@ export const sponsorTiers = [
       },
       {
         "name": "Epsilonnet",
-        "logo": withBasePath("/eventimages/LOGO_FILESEPSILONNET_logo.png"),
+        "logo": supporterLogo("LOGO_FILESEPSILONNET_logo.png"),
         "link": "https://epsilonnet.gr/"
       }
     ]
@@ -75,13 +76,61 @@ export const sponsorTiers = [
   },
   {
     "name": "ZELUS IKE",
-    "logo": withBasePath("/eventimages/Zelus_Logo.png"),
+    "logo": supporterLogo("Zelus_Logo.png"),
     "link": "https://zelus.gr/"
   },
   {
     "name": "Evenly",
-    "logo": withBasePath("/eventimages/evenly-col-dark-tag.png"),
+    "logo": supporterLogo("evenly-col-dark-tag.png"),
     "link": "https://evenly.care/el/"
+  },
+  {
+    "name": "Traganos Tragos",
+    "logo": supporterLogo("traganosTragos.png")
+  },
+  {
+    "name": "Ta Grapha",
+    "logo": supporterLogo("tagrapha.png")
+  },
+  {
+    "name": "Xapsia",
+    "logo": supporterLogo("xapsia.jpg")
+  },
+  {
+    "name": "The Stack",
+    "logo": supporterLogo("theStack-1.png")
+  },
+  {
+    "name": "What They Said",
+    "logo": supporterLogo("whattheysaid.jpeg")
+  },
+  {
+    "name": "Piroskidis",
+    "logo": supporterLogo("piroskidis-1.png")
+  },
+  {
+    "name": "Pitsos Kabilo",
+    "logo": supporterLogo("pitsoskabilo.png")
+  },
+  {
+    "name": "Dionysakis",
+    "logo": supporterLogo("dionysakhs.png")
+  },
+  {
+    "name": "Lorda",
+    "logo": supporterLogo("lorda-1.png")
+  },
+  {
+    "name": "Big Nick",
+    "logo": supporterLogo("bignick-1.png")
+  },
+  {
+    "name": "Savikos",
+    "logo": supporterLogo("savikos.png")
+  },
+  {
+    "name": "Everest",
+    "logo": supporterLogo("everest-1.png")
   }
     ]
   },
@@ -90,12 +139,12 @@ export const sponsorTiers = [
     sponsors: [
       {
     "name": "MEROPION ATHENS",
-    "logo": "/eventimages/MeropeionLogo.png",
+    "logo": supporterLogo("MeropeionLogo.png"),
     "link": "https://www.meropion.com/"
     },
     {
     "name": "COCO-MAT Hotels",
-    "logo": "/eventimages/COCO-MAT-EVENTS.jpeg",
+    "logo": supporterLogo("COCO-MAT-EVENTS.jpeg"),
     "link": "https://www.staycocomat.com/"
     }
   ]
@@ -105,7 +154,7 @@ export const sponsorTiers = [
     sponsors: [
       {
     "name": "Symetal",
-    "logo": assetPath("/eventimages/SYMETAL_sq-1.png"),
+    "logo": supporterLogo("SYMETAL_sq-1.png"),
     "link": "https://www.symetal.gr/"
   },
   {
@@ -125,17 +174,17 @@ export const sponsorTiers = [
   },
   {
     "name": "Deep Sea",
-    "logo": withBasePath("/eventimages/deepsea_logo.png"),
+    "logo": supporterLogo("deepsea_logo.png"),
     "link": "https://www.deepsea.ai/"
   },
   {
     "name": "Nutribullet",
-    "logo": withBasePath("/eventimages/nutribullet.png"),
+    "logo": supporterLogo("nutribullet.png"),
     "link": "https://www.nutribullet.com/el-gr"
   },
   {
     "name": "Havana Van",
-    "logo": withBasePath("/eventimages/HavanaVan.png"),
+    "logo": supporterLogo("HavanaVan.png"),
     "link": "http://havana.gr/"
   }
     ]
