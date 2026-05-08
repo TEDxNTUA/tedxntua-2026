@@ -1,0 +1,86 @@
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/animations/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/event/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/eventimages/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicons/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/gradient_backgrounds/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/loadings/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/mtt_photos/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/teamAssets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.avif
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.gif
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.ico
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.mp4
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.otf
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.ttf
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webm
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/service-worker.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/*.html
+  Cache-Control: no-cache, must-revalidate
+
+/
+  Cache-Control: no-cache, must-revalidate

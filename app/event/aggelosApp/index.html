@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="el">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#E62B1E" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="TEDx" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <title>TEDxNTUA — Cycle 0</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    :root {
+      --ted: #E62B1E;
+      --ted-dark: #B01F15;
+      --ted-glow: rgba(230, 43, 30, 0.15);
+      --bg: #0a0a0a;
+      --s1: #141414;
+      --s2: #1c1c1c;
+      --s3: #242424;
+      --border: rgba(255, 255, 255, 0.07);
+      --border2: rgba(255, 255, 255, 0.12);
+      --text: #f0f0f0;
+      --muted: #888;
+      --dim: #555;
+      --r: 12px;
+      --r2: 8px;
+      --st: env(safe-area-inset-top, 0px);
+      --sb: env(safe-area-inset-bottom, 0px)
+    }
+
+    html,
+    body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow: hidden
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      max-width: 480px;
+      margin: 0 auto
+    }
+
+    /* HEADER */
+    header {
+      padding: calc(var(--st) + 14px) 18px 14px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 50
+    }
+
+    .hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px
+    }
+
+    .logo em {
+      color: var(--ted);
+      font-style: normal
+    }
+
+    .logo small {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 13px
+    }
+
+    .live-pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(230, 43, 30, 0.12);
+      border: 1px solid rgba(230, 43, 30, 0.25);
+      color: var(--ted);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: .5px
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ted);
+      animation: blink 1.4s infinite
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .2
+      }
+    }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      flex-shrink: 0;
+      scrollbar-width: none
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none
+    }
+
+    .tab {
+      flex: 0 0 auto;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dim);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      transition: all .2s
+    }
+
+    .tab.on {
+      color: var(--ted);
+      border-bottom-color: var(--ted)
+    }
+
+    /* PAGES */
+    .pages {
+      flex: 1;
+      overflow: hidden;
+      position: relative
+    }
+
+    .page {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      display: none;
+      padding: 16px;
+      padding-bottom: calc(var(--sb) + 24px)
+    }
+
+    .page.on {
+      display: block
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--s1);
+      border-radius: var(--r);
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+      overflow: hidden
+    }
+
+    .card-pad {
+      padding: 14px 16px
+    }
+
+    .sec-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin: 0 0 12px
+    }
+
+    /* SCHEDULE */
+    .talk-row {
+      display: flex;
+      align-items: stretch;
+      cursor: pointer;
+      transition: background .15s
+    }
+
+    .talk-row:active {
+      background: rgba(255, 255, 255, .03)
+    }
+
+    .t-time {
+      min-width: 58px;
+      padding: 14px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dim);
+      letter-spacing: .5px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .t-body {
+      padding: 13px 14px;
+      flex: 1;
+      min-width: 0
+    }
+
+    .t-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 5px
+    }
+
+    .t-sub {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .av {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--ted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 800;
+      flex-shrink: 0;
+      overflow: hidden
+    }
+
+    .av img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      color: var(--ted);
+      background: var(--ted-glow);
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin-top: 7px;
+      text-transform: uppercase
+    }
+
+    .now-badge {
+      font-size: 9px;
+      font-weight: 800;
+      color: #fff;
+      background: var(--ted);
+      border-radius: 4px;
+      padding: 2px 7px;
+      margin-left: 6px
+    }
+
+    .break-row {
+      padding: 9px 14px;
+      font-size: 12px;
+      color: var(--dim);
+      font-style: italic
+    }
+
+    /* SPEAKERS / PERFORMERS GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px
+    }
+
+    .sp-card {
+      background: var(--s1);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .2s, transform .15s
+    }
+
+    .sp-card:active {
+      transform: scale(.97);
+      border-color: rgba(230, 43, 30, .3)
+    }
+
+    .sp-img {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--s2);
+      overflow: hidden;
+      position: relative
+    }
+
+    .sp-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .sp-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--ted);
+      background: linear-gradient(135deg, var(--s2), var(--s3))
+    }
+
+    .sp-info {
+      padding: 10px 12px
+    }
+
+    .sp-name {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 3px
+    }
+
+    .sp-role {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.3
+    }
+
+    /* MODAL */
+    #modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .85);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center
+    }
+
+    #modal-overlay.on {
+      display: flex
+    }
+
+    #modal-box {
+      background: var(--s1);
+      border-radius: 20px 20px 0 0;
+      width: 100%;
+      max-width: 480px;
+      max-height: 88vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(var(--sb) + 20px)
+    }
+
+    .modal-handle {
+      width: 36px;
+      height: 4px;
+      background: var(--border2);
+      border-radius: 2px;
+      margin: 12px auto 0
+    }
+
+    .modal-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background: var(--s2)
+    }
+
+    .modal-img-sq {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      background: var(--s2);
+      max-height: 260px
+    }
+
+    .modal-body {
+      padding: 20px
+    }
+
+    .modal-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--ted);
+      text-transform: uppercase;
+      margin-bottom: 8px
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 6px
+    }
+
+    .modal-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px
+    }
+
+    .modal-desc {
+      font-size: 14px;
+      color: rgba(240, 240, 240, .8);
+      line-height: 1.65
+    }
+
+    .modal-close {
+      position: absolute;
+      top: calc(var(--st) + 14px);
+      right: 16px;
+      background: rgba(0, 0, 0, .5);
+      border: none;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 210
+    }
+
+    /* WORKSHOPS */
+    .ws-card {
+      background: var(--s1);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin-bottom: 10px;
+      overflow: hidden
+    }
+
+    .ws-head {
+      padding: 14px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .ws-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px
+    }
+
+    .ws-meta {
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .ws-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      flex-shrink: 0;
+      margin-left: 10px
+    }
+
+    .ws-badge.pro {
+      background: rgba(55, 138, 221, .15);
+      color: #5baeff;
+      border: 1px solid rgba(55, 138, 221, .25)
+    }
+
+    .ws-badge.exp {
+      background: rgba(30, 180, 120, .12);
+      color: #3ecf8e;
+      border: 1px solid rgba(30, 180, 120, .2)
+    }
+
+    .ws-seats {
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 4px
+    }
+
+    .seats-ok {
+      color: #3ecf8e
+    }
+
+    .seats-low {
+      color: #f59e0b
+    }
+
+    .seats-full {
+      color: var(--ted)
+    }
+
+    .ws-form {
+      padding: 0 16px 16px;
+      border-top: 1px solid var(--border)
+    }
+
+    .ws-form-inner {
+      padding-top: 14px
+    }
+
+    .field-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block
+    }
+
+    .inp {
+      width: 100%;
+      background: var(--s2);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      color: var(--text);
+      font-size: 14px;
+      padding: 11px 13px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .2s;
+      margin-bottom: 10px
+    }
+
+    .inp:focus {
+      border-color: rgba(230, 43, 30, .45)
+    }
+
+    .inp::placeholder {
+      color: var(--dim)
+    }
+
+    .btn-red {
+      width: 100%;
+      background: var(--ted);
+      color: #fff;
+      border: none;
+      border-radius: var(--r2);
+      padding: 13px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .2s;
+      margin-top: 4px
+    }
+
+    .btn-red:active {
+      opacity: .8
+    }
+
+    .btn-red:disabled {
+      opacity: .4;
+      cursor: not-allowed
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: var(--s3);
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width .4s;
+      background: var(--ted)
+    }
+
+    .progress-fill.ok {
+      background: #3ecf8e
+    }
+
+    .progress-fill.warn {
+      background: #f59e0b
+    }
+
+    /* GIVEAWAY */
+    .gw-header {
+      text-align: center;
+      padding: 24px 16px 0
+    }
+
+    .gw-icon {
+      font-size: 48px;
+      margin-bottom: 12px
+    }
+
+    .gw-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px
+    }
+
+    .gw-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.5
+    }
+
+    .gw-form {
+      background: var(--s1);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 18px;
+      margin-bottom: 16px
+    }
+
+    .gw-select {
+      width: 100%;
+      background: var(--s2);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      color: var(--text);
+      font-size: 14px;
+      padding: 11px 13px;
+      font-family: inherit;
+      outline: none;
+      margin-bottom: 10px;
+      appearance: none
+    }
+
+    .gw-count {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px
+    }
+
+    .gw-count strong {
+      color: var(--text)
+    }
+
+    /* SPONSORS */
+    .sponsors-page {
+      padding: 0 !important
+    }
+
+    .pdf-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block
+    }
+
+    .sponsors-fallback {
+      padding: 20px;
+      text-align: center
+    }
+
+    .sponsors-fallback a {
+      color: var(--ted);
+      font-size: 14px
+    }
+
+    /* ADMIN */
+    .admin-lock {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 16px;
+      padding: 30px
+    }
+
+    .admin-lock-icon {
+      font-size: 48px;
+      margin-bottom: 8px
+    }
+
+    .admin-lock h2 {
+      font-size: 20px;
+      font-weight: 800
+    }
+
+    .admin-lock p {
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center
+    }
+
+    .admin-content {
+      display: none
+    }
+
+    .admin-content.on {
+      display: block
+    }
+
+    .admin-section {
+      margin-bottom: 24px
+    }
+
+    .admin-section h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .gw-pick-card {
+      background: var(--s2);
+      border-radius: var(--r);
+      padding: 16px;
+      margin-bottom: 10px
+    }
+
+    .gw-pick-name {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px
+    }
+
+    .gw-pick-sub {
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .gw-winner-box {
+      background: rgba(230, 43, 30, .1);
+      border: 2px solid var(--ted);
+      border-radius: var(--r);
+      padding: 20px;
+      text-align: center;
+      margin-top: 12px;
+      display: none
+    }
+
+    .gw-winner-box.on {
+      display: block
+    }
+
+    .gw-winner-name {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 6px
+    }
+
+    .gw-winner-sub {
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .ws-reg-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px
+    }
+
+    .ws-reg-table th {
+      text-align: left;
+      padding: 8px 10px;
+      font-size: 10px;
+      letter-spacing: .8px;
+      color: var(--dim);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .ws-reg-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted)
+    }
+
+    .ws-reg-table td:first-child {
+      color: var(--text);
+      font-weight: 600
+    }
+
+    /* TOAST */
+    #toast {
+      position: fixed;
+      bottom: calc(var(--sb) + 70px);
+      left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: var(--s2);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: 1px solid var(--border2);
+      opacity: 0;
+      transition: all .3s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 300
+    }
+
+    #toast.on {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0)
+    }
+
+    /* INSTALL */
+    #install-bar {
+      display: none;
+      background: var(--s2);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px calc(var(--sb) + 12px);
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0
+    }
+
+    #install-bar.on {
+      display: flex
+    }
+
+    .inst-text {
+      flex: 1;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4
+    }
+
+    .inst-text b {
+      color: var(--text);
+      display: block;
+      font-size: 13px
+    }
+
+    .inst-btn {
+      background: var(--ted);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap
+    }
+
+    #inst-x {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 22px;
+      cursor: pointer;
+      line-height: 1
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 3px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border2);
+      border-radius: 2px
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0)
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h2 class="sr-only">TEDx Peristeri 2025 — Εφαρμογή Εκδήλωσης</h2>
+
+    <header>
+      <div class="hdr">
+        <!-- <div class="logo"><em>TED</em>x<small>NTUA · Cycle 0</small></div> -->
+        <img src="logo.png" style="height:36px;object-fit:contain;" alt="TEDxNTUA"/>
+        <div class="live-pill">
+          <div class="dot"></div>LIVE
+        </div>
+      </div>
+    </header>
+
+    <div class="tabs" id="tabs-bar">
+      <button class="tab on" onclick="nav('schedule',this)">Πρόγραμμα</button>
+      <button class="tab" onclick="nav('speakers',this)">Ομιλητές</button>
+      <button class="tab" onclick="nav('performers',this)">Performances</button>
+      <button class="tab" onclick="nav('workshops',this)">Workshops</button>
+      <button class="tab" onclick="nav('sponsors',this)">Sponsors</button>
+      <button class="tab" onclick="nav('giveaway',this)">Giveaway</button>
+    </div>
+
+    <div class="pages">
+
+      <!-- ═══════════════ SCHEDULE ═══════════════ -->
+      <div id="page-schedule" class="page on">
+        <p class="sec-label" id="evt-date-label">Σάββατο, 10 Μαΐου 2025</p>
+        <div id="schedule-list"></div>
+      </div>
+
+      <!-- ═══════════════ SPEAKERS ═══════════════ -->
+      <div id="page-speakers" class="page">
+        <p class="sec-label">Ομιλητές</p>
+        <div class="grid" id="speakers-grid"></div>
+      </div>
+
+      <!-- ═══════════════ PERFORMERS ═══════════════ -->
+      <div id="page-performers" class="page">
+        <p class="sec-label">Performances</p>
+        <div class="grid" id="performers-grid"></div>
+      </div>
+
+      <!-- ═══════════════ WORKSHOPS ═══════════════ -->
+      <div id="page-workshops" class="page">
+        <p class="sec-label">Κράτηση θέσης</p>
+        <div id="workshops-list"></div>
+      </div>
+
+      <!-- ═══════════════ SPONSORS ═══════════════ -->
+      <div id="page-sponsors" class="page sponsors-page">
+        <div class="sponsors-fallback">
+          <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Δείτε τους χορηγούς μας:</p>
+          <a id="sponsors-pdf-link" href="sponsors_banner-2026-v2.pdf" target="_blank"
+            style="display:inline-block;background:var(--ted);color:#fff;padding:12px 24px;border-radius:var(--r2);font-weight:700;font-size:14px;text-decoration:none">📄
+            Άνοιγμα Sponsors PDF</a>
+          <div id="sponsors-pdf-embed" style="margin-top:20px"></div>
+        </div>
+      </div>
+
+      <!-- ═══════════════ GIVEAWAY ═══════════════ -->
+      <!-- <div id="page-giveaway" class="page">
+        <div class="gw-header">
+          <div class="gw-icon">🎁</div>
+          <div class="gw-title">Giveaway</div>
+          <div class="gw-sub">Συμμετέχετε στην κλήρωση!<br>Ένας τυχαίος νικητής κερδίζει το δώρο.</div>
+        </div>
+        <div class="gw-form card-pad card">
+          <select class="gw-select" id="gw-select">
+            <option value="">Επιλέξτε Giveaway...</option>
+          </select>
+          <label class="field-label">Όνομα</label>
+          <input class="inp" id="gw-name" type="text" placeholder="Το όνομά σας" maxlength="60" />
+          <label class="field-label">Email</label>
+          <input class="inp" id="gw-email" type="email" placeholder="email@example.com" />
+          <button class="btn-red" id="gw-submit" onclick="submitGiveaway()">Συμμετοχή στην κλήρωση</button>
+        </div>
+        <div class="gw-count" id="gw-count-label"></div>
+      </div> -->
+      <div id="page-giveaway" class="page">
+        <div class="gw-header">
+          <div class="gw-icon">🎁</div>
+          <div class="gw-title">Giveaways</div>
+          <div class="gw-sub">Πατήστε σε κάθε giveaway για να συμμετάσχετε!</div>
+        </div>
+        <div id="giveaway-list"></div>
+      </div>
+
+    </div><!-- /pages -->
+
+    <div id="install-bar">
+      <div class="inst-text"><b>Εγκαταστήστε την εφαρμογή</b>Γρήγορη πρόσβαση από το κινητό σας</div>
+      <button class="inst-btn" id="inst-btn">Εγκατάσταση</button>
+      <button id="inst-x" onclick="closeBar()">✕</button>
+    </div>
+  </div><!-- /app -->
+
+  <!-- MODAL -->
+  <div id="modal-overlay" onclick="closeModal(event)">
+    <div id="modal-box">
+      <div class="modal-handle"></div>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ADMIN MODAL -->
+  <div id="admin-overlay"
+    style="position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:400;display:none;flex-direction:column;overflow-y:auto;padding:calc(var(--st)+16px) 16px calc(var(--sb)+24px)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="font-size:16px;font-weight:800">⚙️ Admin Panel</div>
+      <button onclick="closeAdmin()"
+        style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer">✕</button>
+    </div>
+    <div class="admin-lock" id="admin-lock">
+      <div class="admin-lock-icon">🔐</div>
+      <h2>Admin Access</h2>
+      <p>Εισάγετε τον κωδικό πρόσβασης</p>
+      <input class="inp" id="admin-pw" type="password" placeholder="Κωδικός..."
+        style="max-width:280px;text-align:center" onkeydown="if(event.key==='Enter')checkAdmin()" />
+      <button class="btn-red" style="max-width:200px" onclick="checkAdmin()">Είσοδος</button>
+    </div>
+    <div class="admin-content" id="admin-content">
+
+      <div class="admin-section">
+        <h3>🎁 Giveaway Κλήρωση</h3>
+        <div id="admin-gw-list"></div>
+      </div>
+
+      <div class="admin-section">
+        <h3>📋 Workshop Εγγραφές</h3>
+        <div id="admin-ws-list"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <!-- ═══ FIREBASE ═══ -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, orderBy, query, where, getDocs, serverTimestamp, runTransaction, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // 🔧 ΑΝΤΙΚΑΤΑΣΤΗΣΤΕ ΜΕ ΤΗ ΔΙΚΗ ΣΑΣ FIREBASE CONFIG
+    const cfg={
+  apiKey:"AIzaSyC8In2nvqKBVU4VCdI6H8Zp34r5pCbtWE4",
+  authDomain:"tedxntua-2026-1a82a.firebaseapp.com",
+  projectId:"tedxntua-2026-1a82a",
+  storageBucket:"tedxntua-2026-1a82a.firebasestorage.app",
+  messagingSenderId:"745278957839",
+  appId:"1:745278957839:web:1f69d753d00559f0ed367a",
+  measurementId:"G-MRBDV3QTJJ"
+};
+    const app = initializeApp(cfg);
+    const db = getFirestore(app);
+
+    // Expose to global scope
+    window._db = db;
+    window._col = collection;
+    window._addDoc = addDoc;
+    window._onSnapshot = onSnapshot;
+    window._query = query;
+    window._where = where;
+    window._orderBy = orderBy;
+    window._getDocs = getDocs;
+    window._serverTimestamp = serverTimestamp;
+    window._runTransaction = runTransaction;
+    window._doc = doc;
+    window._getDoc = getDoc;
+
+    // Real-time: giveaway participant counts
+    CONFIG.giveaways.forEach(gw => {
+      const q2 = query(collection(db, 'giveaway_entries'), where('giveaway_id', '==', gw.id));
+      onSnapshot(q2, snap => {
+        const cnt = snap.size;
+        const el = document.getElementById('gw-cnt-' + gw.id);
+        if (el) el.textContent = cnt + ' συμμετέχοντες';
+        const sel = document.getElementById('gw-select');
+        if (sel) {
+          Array.from(sel.options).forEach(o => { if (o.value === gw.id) o.textContent = gw.name + ' (' + cnt + ')' });
+        }
+      });
+    });
+
+    // Real-time: workshop seat counts
+    CONFIG.workshops.forEach(ws => {
+      const q3 = query(collection(db, 'workshop_registrations'), where('workshop_id', '==', ws.id));
+      onSnapshot(q3, snap => {
+        const taken = snap.size;
+        const avail = ws.seats - taken;
+        const el = document.getElementById('ws-seats-' + ws.id);
+        const bar = document.getElementById('ws-bar-' + ws.id);
+        const fill = document.getElementById('ws-fill-' + ws.id);
+        if (el) {
+          const pct = Math.round((taken / ws.seats) * 100);
+          el.className = 'ws-seats ' + (avail === 0 ? 'seats-full' : avail <= 5 ? 'seats-low' : 'seats-ok');
+          el.textContent = avail === 0 ? 'Πλήρης — Δεν υπάρχουν θέσεις' : `${avail} / ${ws.seats} θέσεις διαθέσιμες`;
+          if (fill) {
+            fill.style.width = pct + '%';
+            fill.className = 'progress-fill ' + (avail === 0 ? '' : avail <= 5 ? 'warn' : 'ok');
+          }
+          const btn = document.getElementById('ws-btn-' + ws.id);
+          if (btn) btn.disabled = (avail === 0);
+        }
+      });
+    });
+
+    console.log('Firebase OK ✓');
+  </script>
+
+  <script>
+    // ═══════════════════════════════════════════
+    //  CONFIG — ΑΛΛΑΞΤΕ ΟΛΑ ΑΥΤΑ
+    // ═══════════════════════════════════════════
+    const CONFIG = {
+      eventName: "TEDxNTUA",
+      eventDate: "Σάββατο, 9 Μαΐου 2026",
+      adminPass: "tedxadmin2026", // 🔧 ΑΛΛΑΞΤΕ ΤΟΝ ΚΩΔΙΚΟ
+
+      schedule: [
+        // Registration
+        { time: "10:00", title: "Registration", type: "break" },
+        // 1st Session
+        { time: "11:15", title: "Unforgetable", speaker: "Unforgetable", initials: "UF", performerId: "pf1", tag: "Performance" },
+        { time: "11:30", title: "Opening", type: "break" },
+        { time: "11:50", title: "Ελένη Καββάδα", speaker: "Ελένη Καββάδα", initials: "ΕΚ", speakerId: "s1", tag: "Talk" },
+        { time: "12:10", title: "Στέργιος Βακάλης", speaker: "Στέργιος Βακάλης", initials: "ΣΒ", speakerId: "s2", tag: "Talk" },
+        // 1st Break / Workshops
+        { time: "12:30", title: "1st Break — Workshops: The American College of Greece, AlphaBank, Souxoumouxou", type: "break" },
+        // 2nd Session
+        { time: "13:45", title: "Μάριος Ψαριανός", speaker: "Μάριος Ψαριανός", initials: "ΜΨ", performerId: "pf2", tag: "Performance" },
+        { time: "14:00", title: "Θάνος Ιωαννίδης & Χαρά Κοντοχρήστου", speaker: "Θάνος Ιωαννίδης & Χαρά Κοντοχρήστου", initials: "ΘΙ", speakerId: "s3", tag: "Talk" },
+        { time: "14:20", title: "Νάσος Κατσαμάνης", speaker: "Νάσος Κατσαμάνης", initials: "ΝΚ", speakerId: "s4", tag: "Talk" },
+        { time: "14:40", title: "Δημήτρης Μπάρμπας", speaker: "Δημήτρης Μπάρμπας", initials: "ΔΜ", speakerId: "s5", tag: "Talk" },
+        // 2nd Break / Workshops
+        { time: "15:00", title: "2nd Break — Workshops: Dialectica, Oliver Wyman, Wabi Sabi Lab", type: "break" },
+        // 3rd Session
+        { time: "16:15", title: "Black Brides", speaker: "Black Brides", initials: "BB", performerId: "pf1", tag: "Performance" },
+        { time: "16:30", title: "Έλενα Παπαδημητρίου", speaker: "Έλενα Παπαδημητρίου", initials: "ΕΠ", speakerId: "s6", tag: "Talk" },
+        { time: "16:50", title: "Δημήτρης Σαμόλης", speaker: "Δημήτρης Σαμόλης", initials: "ΔΣ", speakerId: "s7", tag: "Talk" },
+        { time: "17:10", title: "Στράτος Φυγετάκης", speaker: "Στράτος Φυγετάκης", initials: "ΣΦ", performerId: "pf3", tag: "Performance" },
+        // 3rd Break / Workshops
+        { time: "17:25", title: "3rd Break — Workshops: Athenaides", type: "break" },
+        // 4th Session
+        { time: "18:40", title: "Γιάννης Δαγκλής", speaker: "Γιάννης Δαγκλής", initials: "ΓΔ", speakerId: "s8", tag: "Talk" },
+        { time: "19:00", title: "Νόρα Δράκου", speaker: "Νόρα Δράκου", initials: "ΝΔ", speakerId: "s9", tag: "Talk" },
+        { time: "19:20", title: "KONIKOU", speaker: "KONIKOU", initials: "KN", performerId: "pf4", tag: "Performance" },
+        // Closing
+        { time: "19:35", title: "Closing", type: "break" },
+        { time: "20:00", title: "After Party 🎉", type: "break" },
+      ],
+
+      speakers: [
+        { id: "s1", name: "Ελένη Καββάδα", role: "Ιδρύτρια του brand υψηλής ραπτικής και installation 240791", photo: "photos/photo_KAVVADA.png", talkTitle: "", tag: "Talk", bio: "Η ομιλία, ακολουθώντας τη γενική θεματική του TEDx, πραγματεύεται την σημαντικότητα του κώδικα 0, σαν ταυτότητα του καλλιτέχνη. Τα προσωπικά του χαρακτηριστικά, που λειτουργούν σαν εφόδια και εργαλεία, απέναντι στην εκάστοτε δημιουργική πρόκληση. Θα συζητήσουμε την ισχύ της προσωπικής υπογραφής σε έναν κόσμο που βάλλεται από πληθώρα πληροφορίας και επιλογών και τη θέση του καλλιτέχνη απέναντι στα δεδομένα. Μέσω της μέχρι τώρα δικής της πορείας, η Ελένη Καββάδα θα μιλήσει για τους προσωπικούς της κώδικες κλειδιά και κατά πόσο την έχουν εξοπλίσει για την δική της διαδρομή. Πρέπει όλοι να έχουμε ένα σημείο 0; Το χτίζουμε στρατηγικά ή ηταν πάντα εκεί και πρέπει απλά να του δώσουμε την απαιτούμενη προσοχή;" },
+        { id: "s2", name: "Στέργιος Βακάλης", role: "Επίκουρος Καθηγητής Ενεργειακών Διεργασιών", photo: "photos/photo_VAKALIS.png", talkTitle: "", tag: "Talk", bio: "Η ομιλία εισάγει την έννοια του “Cycle 0” ως έναν τρόπο κατανόησης της προόδου: όχι ως μια γραμμική πορεία προς την τελειότητα, αλλά ως μια επαναληπτική διαδικασία δοκιμής, προσαρμογής και εξέλιξης. Μέσα από προσωπικές εμπειρίες και την ακαδημαϊκή του πορεία, ο Στέργιος Βακάλης εστιάζει στο ζήτημα της παραμονής των νέων στα νησιά και στην ανάγκη δημιουργίας συστημάτων που μπορούν πραγματικά να τους στηρίξουν. Από την ενέργεια και τα απόβλητα έως την καθημερινή ζωή, τα ελληνικά νησιά αποκαλύπτουν πώς τα τοπικά συστήματα λειτουργούν ως «πρώτες εκδοχές» λύσεων που διαρκώς βελτιώνονται. Η ομιλία συνδέει την τεχνολογία με την κοινωνία, δείχνοντας ότι η μετάβαση σε βιώσιμα μοντέλα δεν προκύπτει από τέλειο σχεδιασμό, αλλά μέσα από συνεχή πειραματισμό." },
+        { id: "s3", name: "Θάνος Ιωαννίδης & Χαρά Κοντοχρήστου", role: "(Θάνος) Αρχιτέκτονας Μηχανικός, Founding Partner of Erion Workshop - (Χαρά) Content Creator", photo: "photos/photo_Thanos&Chara.png", talkTitle: "", tag: "Talk", bio: "Η ομιλία πραγματεύεται την αρχιτεκτονική ως διαδικασία και ως αφήγηση. Μέσα από το έργο του Erion Workshop και το format της σειράς «Αρχιτεκτονική για το παγωτό σας», παρουσιάζεται πώς η αρχιτεκτονική δεν είναι μόνο το τελικό αποτέλεσμα, αλλά μια αλληλουχία αποφάσεων, επανασχεδιασμών και ερμηνειών. Παράλληλα, αναδεικνύεται η ανάγκη η αρχιτεκτονική να επιστρέψει στη δημόσια κουβέντα με πιο άμεσο, κατανοητό και σύγχρονο τρόπο. " },
+        { id: "s4", name: "Νάσος Κατσαμάνης", role: "Co-founder at Auxilis AI & Διευθυντής Ερευνών στο Ερευνητικό Κέντρο «Αθηνά»", photo: "photos/photo-Katsamanis.png", talkTitle: "", tag: "Talk", bio: "Στο μικροσκόπιο μπαίνει η νέα πραγματικότητα της υγείας: εκεί όπου οι AI agents δεν αντικαθιστούν τον γιατρό, αλλά τον «αποδεσμεύουν» από τη γραφειοκρατία. Η ομιλία αναλύει πώς ο κώδικας αναλαμβάνει το διοικητικό κομμάτι —από τον προγραμματισμό ραντεβού μέχρι τις συνταγογραφήσεις— επιστρέφοντας στους επαγγελματίες υγείας τον χρόνο που χρειάζονται για τον ασθενή τους. Kαταφέρνει να ξεκλειδώσει την ειλικρίνεια του ασθενούς περισσότερο από τις παραδοσιακές ιατρικές διαδικασίες, ένας ψηφιακός βοηθός που λειτουργεί χωρίς το φίλτρο της κριτικής; Πώς το εκλαμβάνονται οι ίδιοι οι χρήστες;" },
+        { id: "s5", name: "Δημήτρης Μπάρμπας", role: "Music Content Creator, Vocal Coach & Podcaster", photo: "photos/photo_Dimitris_Barbas.png", talkTitle: "", tag: "Talk", bio: "Το θέμα είναι «η επανάληψη» στη μουσική μέσα από ομόκεντρους κύκλους επαναληψιμότητας.  - Η επανάληψη στο τραγούδι                                                                                                                                                                                                                          - Η επανάληψη στη δισκογραφία  - Η επανάληψη στα μουσικά είδη   - Η επανάληψη στη μουσική ιστορία                                                                                                   " },
+        { id: "s6", name: "Έλενα Παπαδημητρίου", role: "Δημοσιογράφος", photo: "photos/photo_Papadimitriou.png", talkTitle: "", tag: "Talk", bio: "Τι είναι και τι δεν είναι είδηση; Πώς έρχεται σε εμάς; Πού αρχίζει και πού τελειώνει η δημοσιογραφική δουλειά και πού αυτή των χρηστών; Τι ξέρουμε για τη δουλειά των δημοσιογράφων; Τι πρέπει να έχουμε στο μυαλό μας στην εποχή των social media;  Τι εμποδίζει ο αλγόριθμος στην ενημέρωση των χρηστών; Τι από το περιεχόμενο που καταναλώνουμε είναι είδηση;" },
+        { id: "s7", name: "Δημήτρης Σαμόλης", role: "Ηθοποιός-Τραγουδοποιός ", photo: "photos/photo_Samolhs.png", talkTitle: "", tag: "Talk", bio: "Τι γίνεται όταν το τραγικό και το κωμικό δεν απέχουν, αλλά σχεδόν ακουμπούν; Ο Δημήτρης Σαμόλης έρχεται για να μιλήσει για τον κύκλο των αντιθέσεων που διατρέχει την ύπαρξή μας, από το τραύμα μέχρι τη θεραπεία, από την αρχή μέχρι το τέλος που μοιάζει να κλείνει έναν κύκλο. Μέσα από το θέατρο, τον χρόνο και την έννοια της έκφρασης, αναζητά τι μπορεί να σπάσει τον κύκλο της κακοποίησης και της σιωπής που επαναλαμβάνεται από γενιά σε γενιά. Είναι τελικά η παιδεία, η τέχνη ή η ατομική ευθύνη που αλλάζει την τροχιά αυτού του κύκλου;" },
+        { id: "s8", name: "Γιάννης Δαγκλής", role: "Καθηγητής Διαστημικής Φυσικής", photo: "photos/photo_Daglis.png", talkTitle: "", tag: "Talk", bio: "Η ομιλία μιλάει για την κυκλικότητα της μαγνητικής δραστηριότητας του Ήλιου και πώς αυτή αντανακλάται σε φαινόμενα του γεωδιαστήματος, όπως οι μαγνητικές καταιγίδες, το βόρειο σέλας και η κοσμική ακτινοβολία. Από φαινόμενα που κάποτε έμοιαζαν μακρινά και εντελώς άσχετα με την ανθρώπινη ζωή, σήμερα αγγίζουν άμεσα την τεχνολογία, την εξερεύνηση και ακόμη και τον τουρισμό. Πόσο έτοιμοι είμαστε να συνυπάρξουμε με κύκλους που μόλις αρχίζουμε να κατανοούμε;" },
+        { id: "s9", name: "Νόρα Δράκου", role: "Κολυμβήτρια της Εθνικής Ομάδας Ελλάδας, 4 φορές Ολυμπιονίκης", photo: "photos/photo_Drakou.png", talkTitle: "", tag: "Talk", bio: "Η ομιλία μιλάει για τη διαδρομή πίσω από την κορυφή και το τίμημα της συνέπειας στον χρόνο. Από το 2023 έως το 2024, η Νόρα Δράκου βρέθηκε αντιμέτωπη με δυσκολίες που δοκίμασαν τα όριά της, επιστρέφοντας όμως πιο δυνατή μέσα από τη δύναμη της επανάληψης. Πώς ένα στοιχείο που ξεκίνησε ως παιχνίδι μετατρέπεται σε πεδίο δοκιμασίας της ανθρώπινης αντοχής και επιμονής; Και τελικά, πόσο μακριά μπορεί να σε φτάσει η πειθαρχία;" },
+      ],
+
+      performers: [
+        { id: "pf1", name: "GET AP", role: "Χορευτική Ομάδα", photo: "photos/photo_GETUP.png", tag: "Performance", desc: "" },
+        { id: "pf2", name: "Μάριος Ψαριανός", role: "Τραγουδιστής", photo: "photos/photo_Psarianos.png", tag: "Performance", desc: "Ο Μάριος Ψαριανός, γεννημένος και μεγαλωμένος στην Αθήνα, είναι τραγουδοποιός και ερμηνευτής της σύγχρονης ελληνικής σκηνής. Σπούδασε στο Πάντειο Πανεπιστήμιο, στο Τμήμα Επικοινωνίας, Μέσων και Πολιτισμού, ενώ παράλληλα ασχολήθηκε με τη μουσική από μικρή ηλικία, με σπουδές την κιθάρα. Μεγαλωμένος σε ένα βαθιά μουσικό περιβάλλον, ανέπτυξε από νωρίς μια προσωπική, βιωματική σχέση με το τραγούδι. Στην πρώτη δουλειά του «Η Εποχή της Αποσύνδεσης» υπογράφει ο ίδιος στίχους και μουσική, δημιουργώντας τραγούδια που αντλούν έμπνευση από τη σύγχρονη καθημερινότητα, τις ανθρώπινες σχέσεις και την ανάγκη ελευθερία, αποτυπώνοντας με άμεσο και ειλικρινή τρόπο, σκέψεις και συναισθήματα της εποχής και του ίδιου. Με μια απλή και αυθεντική προσέγγιση, διαμορφώνει σταδιακά τη δική του ξεχωριστή παρουσία στη νέα γενιά δημιουργών." },
+        { id: "pf3", name: "Στράτος Φυγετάκης", role: "indie καλλιτέχνης", photo: "photos/photo_Fygetakis.png", tag: "Performance", desc: "Ο Stratos Fygetakis διαμορφώνει σταδιακά τη δική του ταυτότητα στην ελληνική εναλλακτική σκηνή, μέσα από μια συνεχή παρουσία στη δισκογραφία και τη ζωντανή μουσική. Έχει κυκλοφορήσει μια σειρά από singles καθώς και ένα EP, χτίζοντας έναν προσωπικό ήχο που ισορροπεί ανάμεσα στην indie, την pop και τη folk. Τα τραγούδια του έχουν βρει τη θέση τους τόσο στο ραδιόφωνο όσο και σε τηλεοπτικές εμφανίσεις, ενώ ο ίδιος έχει παρουσιάσει τη δουλειά του ζωντανά σε διάφορες μουσικές σκηνές της Αθήνας, ερχόμενος σε άμεση επαφή με το κοινό. Αυτή την περίοδο, βρίσκεται στο στάδιο προετοιμασίας του πρώτου του ολοκληρωμένου άλμπουμ με τη Mellowsophy Music, συνεχίζοντας να εξερευνά τη θεματική της νεότητας, της μετάβασης και της αναζήτησης μέσα από μια σύγχρονη, αφηγηματική μουσική προσέγγιση." },
+        { id: "pf4", name: "KONIKOU", role: "Τραγουδίστρια", photo: "photos/photo_Konikou.png", tag: "Performance", desc: "Η KONIKOU έρχεται στη σκηνή του TEDxNTUA 2026 για να συνδυάσει την μουσική και για τα τραγούδια της με τους κύκλους που επαναλαμβάνονται στις ανθρώπινες σχέσεις." },
+      ],
+
+      workshops: [
+        // ── Professional (40 θέσεις) ──
+        // 1st Break: 12:30–13:45
+        { id: "wp1", name: "The American College of Greece", type: "pro", typeLabel: "Professional", seats: 40, time: "12:30 – 13:45", desc: "— Προσθέστε περιγραφή workshop —" },
+        { id: "wp2", name: "AlphaBank", type: "pro", typeLabel: "Professional", seats: 40, time: "12:30 – 13:45", desc: "— Προσθέστε περιγραφή workshop —" },
+        // 2nd Break: 15:00–16:15
+        { id: "wp3", name: "Dialectica", type: "pro", typeLabel: "Professional", seats: 40, time: "15:00 – 16:15", desc: "— Προσθέστε περιγραφή workshop —" },
+        { id: "wp4", name: "Oliver Wyman", type: "pro", typeLabel: "Professional", seats: 40, time: "15:00 – 16:15", desc: "— Προσθέστε περιγραφή workshop —" },
+        // 3rd Break: 17:25–18:40
+        // ── Experience ──
+        // 1st Break: Souxoumouxou (15 θέσεις)
+        { id: "we1", name: "Souxoumouxou", type: "exp", typeLabel: "Experience", seats: 15, time: "12:30 – 13:45", desc: "— Προσθέστε περιγραφή experience —" },
+        // 2nd Break: Wabi Sabi Lab (30 θέσεις)
+        { id: "we2", name: "Wabi Sabi Lab", type: "exp", typeLabel: "Experience", seats: 30, time: "15:00 – 16:15", desc: "— Προσθέστε περιγραφή experience —" },
+        { id: "we5", name: "Athenaides", type: "exp", typeLabel: "Professional", seats: 15, time: "17:25 – 18:40", desc: "— Προσθέστε περιγραφή workshop —" },
+      ],
+
+      giveaways: [
+        { id: "gw1", name: "Giveaway #1", prize: "🎁 — Περιγραφή δώρου —", formUrl: "https://forms.gle/LINK_1" },
+        { id: "gw2", name: "Giveaway #2", prize: "🎁 — Περιγραφή δώρου —", formUrl: "https://forms.gle/LINK_2" },
+        { id: "gw3", name: "Giveaway #3", prize: "🎁 — Περιγραφή δώρου —", formUrl: "https://forms.gle/LINK_3" },
+      ]
+    };
+
+    // ═══════════════════════════════════════════
+    //  NAVIGATION
+    // ═══════════════════════════════════════════
+    function nav(page, btn) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+      document.getElementById('page-' + page).classList.add('on');
+      btn.classList.add('on');
+    }
+    window.nav = nav;
+
+    // ═══════════════════════════════════════════
+    //  SCHEDULE
+    // ═══════════════════════════════════════════
+    document.getElementById('evt-date-label').textContent = CONFIG.eventDate;
+    function nowStr() { const n = new Date(); return n.getHours().toString().padStart(2, '0') + ':' + n.getMinutes().toString().padStart(2, '0') }
+    function renderSchedule() {
+      const cur = nowStr();
+      const talks = CONFIG.schedule;
+      let nowIdx = -1;
+      for (let i = 0; i < talks.length - 1; i++) { if (cur >= talks[i].time && cur < talks[i + 1].time) { nowIdx = i; break } }
+      let h = '';
+      talks.forEach((t, i) => {
+        if (t.type === 'break') {
+          h += `<div class="card"><div class="break-row">⏸ ${t.time} — ${t.title}</div></div>`;
+        } else {
+          const isNow = i === nowIdx;
+          const clickTarget = t.speakerId ? `openSpeaker('${t.speakerId}')` : t.performerId ? `openPerformer('${t.performerId}')` : null;
+          const rowAttr = clickTarget ? `onclick="${clickTarget}" style="cursor:pointer"` : '';
+          h += `<div class="card ${isNow ? '' : ''}">
+        <div class="talk-row" ${rowAttr}>
+          <div class="t-time">${t.time}</div>
+          <div class="t-body">
+            <div class="t-title">${t.title}${isNow ? '<span class="now-badge">ΤΩΡΑ</span>' : ''}</div>
+            <div class="t-sub">
+              <div class="av">${t.initials || ''}</div>
+              ${t.speaker}
+            </div>
+            ${t.tag ? `<div class="tag">${t.tag}</div>` : ''}
+          </div>
+        </div>
+      </div>`;
+        }
+      });
+      document.getElementById('schedule-list').innerHTML = h;
+    }
+    renderSchedule();
+    setInterval(renderSchedule, 60000);
+
+    // ═══════════════════════════════════════════
+    //  SPEAKERS GRID
+    // ═══════════════════════════════════════════
+    function renderGrid(items, containerId, clickFn) {
+      const c = document.getElementById(containerId);
+      c.innerHTML = items.map(s => `
+    <div class="sp-card" onclick="${clickFn}('${s.id}')">
+      <div class="sp-img">
+        ${s.photo ? `<img src="${s.photo}" alt="${s.name}" onerror="this.parentElement.innerHTML='<div class=sp-img-placeholder>${s.initials || s.name[0]}</div>'">`
+          : `<div class="sp-img-placeholder">${s.initials || s.name[0]}</div>`}
+      </div>
+      <div class="sp-info">
+        <div class="sp-name">${s.name}</div>
+        <div class="sp-role">${s.role}</div>
+        ${s.tag ? `<div class="tag" style="margin-top:6px">${s.tag}</div>` : ''}
+      </div>
+    </div>`).join('');
+    }
+    renderGrid(CONFIG.speakers, 'speakers-grid', 'openSpeaker');
+    renderGrid(CONFIG.performers, 'performers-grid', 'openPerformer');
+
+    // ═══════════════════════════════════════════
+    //  MODALS
+    // ═══════════════════════════════════════════
+    function openModal(html) {
+      document.getElementById('modal-content').innerHTML = html;
+      document.getElementById('modal-overlay').classList.add('on');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(e) {
+      if (!e || e.target === document.getElementById('modal-overlay')) {
+        document.getElementById('modal-overlay').classList.remove('on');
+        document.body.style.overflow = '';
+      }
+    }
+    window.closeModal = closeModal;
+
+    function openSpeaker(id) {
+      const s = CONFIG.speakers.find(x => x.id === id);
+      if (!s) return;
+      openModal(`
+    <div class="sp-img" style="aspect-ratio:1;max-height:280px">
+      ${s.photo ? `<img class="modal-img-sq" src="${s.photo}" alt="${s.name}" onerror="this.src=''">`
+          : `<div class="sp-img-placeholder" style="height:260px;font-size:64px">${s.initials || s.name[0]}</div>`}
+    </div>
+    <div class="modal-body">
+      <div class="modal-tag">${s.tag || 'Ομιλητής'}</div>
+      <div class="modal-title">${s.name}</div>
+      <div class="modal-sub">${s.role}</div>
+      ${s.talkTitle ? `<div style="background:var(--ted-glow);border-left:3px solid var(--ted);padding:12px 14px;border-radius:0 var(--r2) var(--r2) 0;margin-bottom:16px;font-size:13px;font-weight:700;color:var(--ted)">"${s.talkTitle}"</div>` : ''}
+      <div class="modal-desc">${s.bio || ''}</div>
+    </div>`);
+    }
+    window.openSpeaker = openSpeaker;
+
+    function openPerformer(id) {
+      const p = CONFIG.performers.find(x => x.id === id);
+      if (!p) return;
+      openModal(`
+    <div class="sp-img" style="aspect-ratio:1;max-height:280px">
+      ${p.photo ? `<img class="modal-img-sq" src="${p.photo}" alt="${p.name}" onerror="this.src=''">`
+          : `<div class="sp-img-placeholder" style="height:260px;font-size:64px">${p.initials || p.name[0]}</div>`}
+    </div>
+    <div class="modal-body">
+      <div class="modal-tag">${p.tag || 'Performance'}</div>
+      <div class="modal-title">${p.name}</div>
+      <div class="modal-sub">${p.role}</div>
+      <div class="modal-desc">${p.desc || ''}</div>
+    </div>`);
+    }
+    window.openPerformer = openPerformer;
+
+    // ═══════════════════════════════════════════
+    //  WORKSHOPS
+    // ═══════════════════════════════════════════
+    function renderWorkshops() {
+      const el = document.getElementById('workshops-list');
+      const pros = CONFIG.workshops.filter(w => w.type === 'pro');
+      const exps = CONFIG.workshops.filter(w => w.type === 'exp');
+      let h = '<p class="sec-label">Professional</p>';
+      [...pros, ...[{ _sep: true }], ...exps].forEach(ws => {
+        if (ws._sep) { h += '<p class="sec-label" style="margin-top:20px">Experience</p>'; return }
+        const badgeCls = ws.type === 'pro' ? 'pro' : 'exp';
+        h += `<div class="ws-card" id="ws-card-${ws.id}">
+      <div class="ws-head" onclick="toggleWs('${ws.id}')">
+        <div>
+          <div class="ws-title">${ws.name}</div>
+          <div class="ws-meta">⏰ ${ws.time}</div>
+          <div class="ws-seats seats-ok" id="ws-seats-${ws.id}">Φόρτωση...</div>
+          <div class="progress-bar"><div class="progress-fill ok" id="ws-fill-${ws.id}" style="width:0%"></div></div>
+        </div>
+        <span class="ws-badge ${badgeCls}">${ws.typeLabel}</span>
+      </div>
+      <div class="ws-form" id="ws-form-${ws.id}" style="display:none">
+        <div class="ws-form-inner">
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.5">${ws.desc}</p>
+          <label class="field-label">Όνομα & Επώνυμο</label>
+          <input class="inp" id="ws-name-${ws.id}" type="text" placeholder="Ονοματεπώνυμο" maxlength="80"/>
+          <label class="field-label">Email</label>
+          <input class="inp" id="ws-email-${ws.id}" type="email" placeholder="email@example.com"/>
+          <label class="field-label">Αριθμός Εισιτηρίου</label>
+          <input class="inp" id="ws-ticket-${ws.id}" type="text" placeholder="π.χ. 1234" maxlength="20"/>
+          <button class="btn-red" id="ws-btn-${ws.id}" onclick="bookWorkshop('${ws.id}')">Κράτηση Θέσης</button>
+        </div>
+      </div>
+    </div>`;
+      });
+      el.innerHTML = h;
+    }
+    renderWorkshops();
+
+    function toggleWs(id) {
+      const f = document.getElementById('ws-form-' + id);
+      f.style.display = f.style.display === 'none' ? 'block' : 'none';
+    }
+    window.toggleWs = toggleWs;
+
+    async function bookWorkshop(id) {
+      const name = document.getElementById('ws-name-' + id).value.trim();
+      const email = document.getElementById('ws-email-' + id).value.trim();
+      const ticket = document.getElementById('ws-ticket-' + id).value.trim();
+      if (!name || !email || !ticket) { showToast('Συμπληρώστε όλα τα πεδία'); return }
+      if (!email.includes('@')) { showToast('Μη έγκυρο email'); return }
+      if (!window._db) { showToast('Σύνδεση...'); return }
+      const btn = document.getElementById('ws-btn-' + id);
+      btn.disabled = true; btn.textContent = 'Αποθήκευση...';
+      const ws = CONFIG.workshops.find(w => w.id === id);
+
+      // Check already registered
+      const existing = await window._getDocs(window._query(window._col(window._db, 'workshop_registrations'), window._where('workshop_id', '==', id), window._where('ticket', '==', ticket)));
+      if (!existing.empty) { showToast('Αυτό το εισιτήριο έχει ήδη δεσμευτεί!'); btn.disabled = false; btn.textContent = 'Κράτηση Θέσης'; return }
+
+      try {
+        // Atomic transaction to check seats
+        const wsRef = window._doc(window._db, 'workshop_meta', id);
+        await window._runTransaction(window._db, async tx => {
+          const regs = await window._getDocs(window._query(window._col(window._db, 'workshop_registrations'), window._where('workshop_id', '==', id)));
+          if (regs.size >= ws.seats) throw new Error('full');
+          await window._addDoc(window._col(window._db, 'workshop_registrations'), {
+            workshop_id: id, workshop_name: ws.name, name, email, ticket, registeredAt: window._serverTimestamp()
+          });
+        });
+        showToast('✓ Η θέση σας κρατήθηκε!');
+        document.getElementById('ws-name-' + id).value = '';
+        document.getElementById('ws-email-' + id).value = '';
+        document.getElementById('ws-ticket-' + id).value = '';
+        toggleWs(id);
+      } catch (e) {
+        if (e.message === 'full') showToast('Λυπούμαστε, δεν υπάρχουν θέσεις!');
+        else { showToast('Σφάλμα. Δοκιμάστε ξανά.'); console.error(e) }
+      }
+      btn.disabled = false; btn.textContent = 'Κράτηση Θέσης';
+    }
+    window.bookWorkshop = bookWorkshop;
+
+    // ═══════════════════════════════════════════
+    //  GIVEAWAY
+    // ═══════════════════════════════════════════
+    // (function initGiveaway() {
+    //   const sel = document.getElementById('gw-select');
+    //   CONFIG.giveaways.forEach(gw => {
+    //     const o = document.createElement('option');
+    //     o.value = gw.id; o.textContent = gw.name;
+    //     sel.appendChild(o);
+    //   });
+    //   sel.onchange = () => {
+    //     const gw = CONFIG.giveaways.find(g => g.id === sel.value);
+    //     document.getElementById('gw-count-label').innerHTML = gw ? `<span id="gw-cnt-${gw.id}">...</span>` : '';
+    //   };
+    // })();
+
+    // async function submitGiveaway() {
+    //   const gwId = document.getElementById('gw-select').value;
+    //   const name = document.getElementById('gw-name').value.trim();
+    //   const email = document.getElementById('gw-email').value.trim();
+    //   if (!gwId) { showToast('Επιλέξτε Giveaway'); return }
+    //   if (!name || !email) { showToast('Συμπληρώστε τα στοιχεία σας'); return }
+    //   if (!email.includes('@')) { showToast('Μη έγκυρο email'); return }
+    //   if (!window._db) { showToast('Σύνδεση...'); return }
+    //   const btn = document.getElementById('gw-submit');
+    //   btn.disabled = true; btn.textContent = '...';
+
+    //   // One entry per email per giveaway
+    //   const existing = await window._getDocs(window._query(window._col(window._db, 'giveaway_entries'), window._where('giveaway_id', '==', gwId), window._where('email', '==', email)));
+    //   if (!existing.empty) { showToast('Έχετε ήδη δηλώσει συμμετοχή!'); btn.disabled = false; btn.textContent = 'Συμμετοχή στην κλήρωση'; return }
+
+    //   try {
+    //     await window._addDoc(window._col(window._db, 'giveaway_entries'), {
+    //       giveaway_id: gwId, name, email, enteredAt: window._serverTimestamp()
+    //     });
+    //     showToast('✓ Συμμετείχατε στην κλήρωση!');
+    //     document.getElementById('gw-name').value = '';
+    //     document.getElementById('gw-email').value = '';
+    //     document.getElementById('gw-select').value = '';
+    //   } catch (e) { showToast('Σφάλμα. Δοκιμάστε ξανά.'); console.error(e) }
+    //   btn.disabled = false; btn.textContent = 'Συμμετοχή στην κλήρωση';
+    // }
+    // window.submitGiveaway = submitGiveaway;
+    (function initGiveaway() {
+  const el = document.getElementById('giveaway-list');
+  el.innerHTML = CONFIG.giveaways.map(gw => `
+    <div class="ws-card" style="margin-bottom:10px">
+      <div class="ws-head" style="cursor:default">
+        <div>
+          <div class="ws-title">${gw.name}</div>
+          <div class="ws-meta" style="margin-top:4px">${gw.prize}</div>
+        </div>
+        <span class="ws-badge pro">Giveaway</span>
+      </div>
+      <div style="padding:0 16px 16px">
+        <button class="btn-red" onclick="openGiveaway('${gw.id}')">🎁 Συμμετοχή</button>
+      </div>
+    </div>`).join('');
+})();
+
+    function openGiveaway(id) {
+      const gw = CONFIG.giveaways.find(g => g.id === id);
+      if (!gw || !gw.formUrl) { showToast('Το link δεν είναι διαθέσιμο ακόμα'); return }
+      window.open(gw.formUrl, '_blank');
+    }
+    window.openGiveaway = openGiveaway;
+
+    // ═══════════════════════════════════════════
+    //  ADMIN PANEL  (hidden — πρόσβαση μέσω triple-tap logo)
+    // ═══════════════════════════════════════════
+    let tapCount = 0, tapTimer = null;
+    document.querySelector('.logo').addEventListener('click', () => {
+      tapCount++;
+      if (tapTimer) clearTimeout(tapTimer);
+      tapTimer = setTimeout(() => tapCount = 0, 800);
+      if (tapCount >= 5) { tapCount = 0; openAdmin() }
+    });
+
+    function openAdmin() { document.getElementById('admin-overlay').style.display = 'flex' }
+    function closeAdmin() { document.getElementById('admin-overlay').style.display = 'none'; document.getElementById('admin-lock').style.display = 'flex'; document.getElementById('admin-content').classList.remove('on') }
+    window.closeAdmin = closeAdmin;
+
+    function checkAdmin() {
+      const pw = document.getElementById('admin-pw').value;
+      if (pw === CONFIG.adminPass) {
+        document.getElementById('admin-lock').style.display = 'none';
+        document.getElementById('admin-content').classList.add('on');
+        loadAdminData();
+      } else {
+        showToast('Λάθος κωδικός');
+        document.getElementById('admin-pw').value = '';
+      }
+    }
+    window.checkAdmin = checkAdmin;
+
+    async function loadAdminData() {
+      // Giveaway panels
+      const gwEl = document.getElementById('admin-gw-list');
+      gwEl.innerHTML = CONFIG.giveaways.map(gw => `
+    <div class="gw-pick-card">
+      <div class="gw-pick-name">${gw.name}</div>
+      <div class="gw-pick-sub">${gw.prize}</div>
+      <button class="btn-red" style="margin-top:12px" onclick="drawWinner('${gw.id}','${gw.name}')">🎲 Κλήρωση Νικητή</button>
+      <div class="gw-winner-box" id="winner-box-${gw.id}">
+        <div style="font-size:28px;margin-bottom:8px">🎉</div>
+        <div class="gw-winner-name" id="winner-name-${gw.id}"></div>
+        <div class="gw-winner-sub" id="winner-email-${gw.id}"></div>
+      </div>
+    </div>`).join('');
+
+      // Workshop registrations
+      const wsEl = document.getElementById('admin-ws-list');
+      wsEl.innerHTML = '<p style="font-size:12px;color:var(--muted)">Φόρτωση εγγραφών...</p>';
+      try {
+        const snap = await window._getDocs(window._col(window._db, 'workshop_registrations'));
+        const regs = [];
+        snap.forEach(d => regs.push(d.data()));
+        if (regs.length === 0) { wsEl.innerHTML = '<p style="font-size:13px;color:var(--muted)">Δεν υπάρχουν εγγραφές ακόμα.</p>'; return }
+        const byWs = {};
+        regs.forEach(r => { if (!byWs[r.workshop_name]) byWs[r.workshop_name] = []; byWs[r.workshop_name].push(r) });
+        wsEl.innerHTML = Object.entries(byWs).map(([name, entries]) => `
+      <div style="margin-bottom:20px">
+        <p style="font-size:13px;font-weight:700;margin-bottom:8px">${name} (${entries.length})</p>
+        <table class="ws-reg-table">
+          <tr><th>Όνομα</th><th>Εισιτήριο</th><th>Email</th></tr>
+          ${entries.map(e => `<tr><td>${e.name}</td><td>${e.ticket}</td><td>${e.email}</td></tr>`).join('')}
+        </table>
+      </div>`).join('');
+      } catch (e) { wsEl.innerHTML = '<p style="color:var(--ted);font-size:13px">Σφάλμα φόρτωσης</p>' }
+    }
+
+    async function drawWinner(gwId, gwName) {
+      if (!window._db) return;
+      const snap = await window._getDocs(window._query(window._col(window._db, 'giveaway_entries'), window._where('giveaway_id', '==', gwId)));
+      const entries = [];
+      snap.forEach(d => entries.push(d.data()));
+      if (entries.length === 0) { showToast('Δεν υπάρχουν συμμετέχοντες!'); return }
+      const winner = entries[Math.floor(Math.random() * entries.length)];
+      const box = document.getElementById('winner-box-' + gwId);
+      document.getElementById('winner-name-' + gwId).textContent = winner.name;
+      document.getElementById('winner-email-' + gwId).textContent = winner.email;
+      box.classList.add('on');
+      showToast('🎉 Νικητής: ' + winner.name);
+    }
+    window.drawWinner = drawWinner;
+
+    // ═══════════════════════════════════════════
+    //  TOAST
+    // ═══════════════════════════════════════════
+    let toastTimer = null;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.classList.add('on');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('on'), 2800);
+    }
+
+    // ═══════════════════════════════════════════
+    //  PWA INSTALL
+    // ═══════════════════════════════════════════
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault(); deferredPrompt = e;
+      setTimeout(() => document.getElementById('install-bar').classList.add('on'), 4000);
+    });
+    document.getElementById('inst-btn').onclick = async () => {
+      if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null }
+      closeBar();
+    };
+    function closeBar() { document.getElementById('install-bar').classList.remove('on') }
+    window.closeBar = closeBar;
+
+    // ═══════════════════════════════════════════
+    //  SERVICE WORKER
+    // ═══════════════════════════════════════════
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => { });
+    }
+  </script>
+</body>
+
+</html>

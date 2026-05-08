@@ -41,6 +41,10 @@ const markAssetsCached = (pathname) => {
 
 export default function AssetLoader() {
   const pathname = usePathname() ?? "/";
+  const [skipLoader, setSkipLoader] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return new URLSearchParams(window.location.search).has("noLoader");
+  });
   const [prevPathname, setPrevPathname] = useState(pathname);
   const [readyPath, setReadyPath] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -52,6 +56,19 @@ export default function AssetLoader() {
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const isPrivateNetwork =
+      /^10\./.test(window.location.hostname) ||
+      /^192\.168\./.test(window.location.hostname) ||
+      /^172\.(1[6-9]|2\d|3[0-1])\./.test(window.location.hostname);
+
+    if (process.env.NODE_ENV !== "production" && isPrivateNetwork) {
+      setSkipLoader(true);
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
   }, []);
 
   if (pathname !== prevPathname) {
@@ -152,7 +169,7 @@ export default function AssetLoader() {
     return () => { isMounted = false; if (progressInterval) clearInterval(progressInterval); };
   }, [pathname]);
 
-  if (isFinished) return null;
+  if (skipLoader || isFinished) return null;
 
   return (
     <div 

@@ -5,6 +5,7 @@ import styles from "./HomeVideoScrubber.module.css";
 import { withBasePath } from "../lib/basePath";
 import ScrollRevealText from "./ScrollRevealText";
 import { isAndroid } from "../lib/isAndroid";
+import HomeEventAppButton from "./HomeEventAppButton";
 
 const storyBeats = [
   "Reforn the circle.",
@@ -51,6 +52,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
   const [vh, setVh] = useState(0);
   const [heroReveal, setHeroReveal] = useState(0);
   const lastWidthRef = useRef(0);
+  const isNarrowViewport = typeof window !== "undefined" && window.innerWidth < 720;
 
   const getStableViewportHeight = useCallback(() => {
     if (vh > 0) return vh;
@@ -276,8 +278,9 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
             </h1>
             <div 
               className="h-[2px] md:h-[3px] bg-green-500 mt-6 md:mt-10 shadow-[0_0_15px_rgba(34,197,94,0.8)] transition-all duration-1000 ease-out"
-              style={{ width: heroReveal ? (window.innerWidth < 720 ? '160px' : '320px') : '0px', opacity: heroReveal ? 1 : 0 }}
+              style={{ width: heroReveal ? (isNarrowViewport ? '160px' : '320px') : '0px', opacity: heroReveal ? 1 : 0 }}
             />
+            <HomeEventAppButton />
           </div>
         </div>
       </section>
