@@ -82,9 +82,13 @@ export default function RootLayout({ children }) {
               __html: `
                 (function () {
                   var isLocalhost = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+                  var isPrivateNetwork =
+                    /^10\\./.test(location.hostname) ||
+                    /^192\\.168\\./.test(location.hostname) ||
+                    /^172\\.(1[6-9]|2\\d|3[0-1])\\./.test(location.hostname);
                   var cleanupKey = "tedxntua-dev-service-worker-cleaned-v3";
 
-                  if (!isLocalhost || sessionStorage.getItem(cleanupKey)) {
+                  if ((!isLocalhost && !isPrivateNetwork) || sessionStorage.getItem(cleanupKey)) {
                     return;
                   }
 
@@ -188,7 +192,7 @@ export default function RootLayout({ children }) {
                           className="h-12 w-auto" 
                           width={180}
                           height={48}
-                          fetchpriority="low"
+                          fetchPriority="low"
                           loading="lazy"
                           sizes="(max-width: 768px) 140px, 180px"
                         />

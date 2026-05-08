@@ -17,7 +17,7 @@ const nextConfig = {
   turbopack: {
     root: process.cwd(),
   },
-  allowedDevOrigins: ["172.20.10.12", "localhost:3000" , "192.168.2.12" , "192.168.2.3"],
+  allowedDevOrigins: ["172.20.10.12", "localhost:3000", "192.168.104.181:3000", "192.168.2.12", "192.168.2.3"],
   basePath,
   assetPrefix: basePath ? `${basePath}/` : undefined,
   env: {

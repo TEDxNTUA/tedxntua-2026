@@ -2,7 +2,34 @@
   "trailingSlash": true,
   "headers": [
     {
-      "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|avif|mp4|webm|otf|ttf|woff|woff2)",
+      "source": "**/*.@(html)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/service-worker.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/_next/static/**",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "**/*.@(js|css|jpg|jpeg|gif|png|svg|webp|avif|mp4|webm|otf|ttf|woff|woff2|ico|pdf)",
       "headers": [
         {
           "key": "Cache-Control",
