@@ -83,6 +83,34 @@ export const sponsorTiers = [
     "name": "Evenly",
     "logo": supporterLogo("evenly-col-dark-tag.png"),
     "link": "https://evenly.care/el/"
+  },
+  {
+    "name": "Mondelez",
+    "logo": supporterLogo("mondelez.png")
+  },
+  {
+    "name": "Vong",
+    "logo": supporterLogo("vong.png")
+  },
+  {
+    "name": "Septona",
+    "logo": supporterLogo("septona.jpg")
+  },
+  {
+    "name": "Doubia",
+    "logo": supporterLogo("doubia.png")
+  },
+  {
+    "name": "Frezyderm",
+    "logo": supporterLogo("frezyderm-1.png")
+  },
+  {
+    "name": "Papoutsanis",
+    "logo": supporterLogo("papoutsanis-1.png")
+  },
+  {
+    "name": "3E",
+    "logo": supporterLogo("3e.png")
   }
     ]
   },
@@ -192,16 +220,8 @@ export const sponsorTiers = [
     "logo": supporterLogo("aegeanBeauty.jpeg")
   },
   {
-    "name": "Doubia",
-    "logo": supporterLogo("doubia.png")
-  },
-  {
     "name": "efood",
     "logo": supporterLogo("efood-1.png")
-  },
-  {
-    "name": "Frezyderm",
-    "logo": supporterLogo("frezyderm-1.png")
   },
   {
     "name": "Haribo",
@@ -228,10 +248,6 @@ export const sponsorTiers = [
     "logo": supporterLogo("monReve.png")
   },
   {
-    "name": "Mondelez",
-    "logo": supporterLogo("mondelez.png")
-  },
-  {
     "name": "Mr Crepito",
     "logo": supporterLogo("mrCrepito.jpeg")
   },
@@ -252,10 +268,6 @@ export const sponsorTiers = [
     "logo": supporterLogo("olersecreto.jpg")
   },
   {
-    "name": "Papoutsanis",
-    "logo": supporterLogo("papoutsanis-1.png")
-  },
-  {
     "name": "Pellito",
     "logo": supporterLogo("pellito.jpg")
   },
@@ -266,10 +278,6 @@ export const sponsorTiers = [
   {
     "name": "Sdoukos",
     "logo": supporterLogo("sdoukos.png")
-  },
-  {
-    "name": "Septona",
-    "logo": supporterLogo("septona.jpg")
   },
   {
     "name": "Stergiou",
