@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Lenis from "../lib/lenis.mjs";
 import { isAndroid } from "../lib/isAndroid";
+import { isIOS } from "../lib/isIOS";
 
 const LENIS_OPTIONS = {
   duration: 1.15,
@@ -16,7 +17,7 @@ const prefersReducedMotion = () =>
 
 export default function ClientScrollProvider({ children }) {
   useEffect(() => {
-    if (prefersReducedMotion() || isAndroid()) {
+    if (prefersReducedMotion() || isAndroid() || isIOS()) {
       return undefined;
     }
 

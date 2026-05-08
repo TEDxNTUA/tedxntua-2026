@@ -5,6 +5,7 @@ import styles from "./HomeVideoScrubber.module.css";
 import { withBasePath } from "../lib/basePath";
 import ScrollRevealText from "./ScrollRevealText";
 import { isAndroid } from "../lib/isAndroid";
+import { isIOS } from "../lib/isIOS";
 import HomeEventAppButton from "./HomeEventAppButton";
 import GiveawaysButton from "./GiveawaysButton";
 
@@ -63,9 +64,9 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
   const getSmoothing = useCallback(() => {
     if (typeof window === "undefined") return 0.18;
-    // Android "No-Lag" approach: Disable interpolation (smoothing = 1) 
+    // Android/iOS "No-Lag" approach: Disable interpolation (smoothing = 1) 
     // to avoid constant expensive frame updates.
-    if (isAndroid()) return 1.0; 
+    if (isAndroid() || isIOS()) return 1.0; 
     return window.innerWidth < 720 ? 0.15 : 0.18;
   }, []);
 
@@ -139,9 +140,9 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const newTime = currentVideoTimeRef.current + (targetTime - currentVideoTimeRef.current) * smoothing;
     currentVideoTimeRef.current = newTime;
 
-    // Android "No-Lag" approach: Use a much larger threshold (0.02s) 
+    // Android/iOS "No-Lag" approach: Use a much larger threshold (0.02s) 
     // to only seek when there's a significant change.
-    const threshold = isAndroid() ? 0.02 : 0.004;
+    const threshold = (isAndroid() || isIOS()) ? 0.02 : 0.004;
 
     if (Math.abs(video.currentTime - newTime) > threshold) {
       video.currentTime = newTime;
@@ -189,7 +190,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
         setIsVideoReady(false);
       } else {
         let srcPath = "/animations/output_desktop.mp4";
-        if (isAndroid()) {
+        if (isAndroid() || isIOS()) {
           srcPath = "/animations/output_android.mp4";
         }
 
