@@ -2,6 +2,7 @@ import { withBasePath } from "../lib/basePath";
 
 const assetPath = (path) => encodeURI(withBasePath(path));
 const supporterLogo = (fileName) => assetPath(`/eventimages/supporters/${fileName}`);
+const internetLogo = (domain) => `https://www.google.com/s2/favicons?sz=256&domain=${domain}`;
 
 export const sponsorTiers = [
   {
@@ -64,6 +65,14 @@ export const sponsorTiers = [
   {
     tier: "Partners",
     sponsors: [
+      {
+    "name": "RedBull",
+    "logo": supporterLogo("rebull.webp")
+  },
+  {
+    "name": "Olympos",
+    "logo": supporterLogo("olympos.png")
+  },
       {
     "name": "ΑΦΗΣ",
     "logo": "https://afis.gr/wp-content/uploads/2023/12/afis-logo-big.png",
@@ -130,30 +139,30 @@ export const sponsorTiers = [
   ]
   },
   {
-    tier: "Communication Partners",
+    tier: "Community Partners",
     sponsors: [
       {
-    "name": "What They Said",
-    "logo": supporterLogo("whattheysaid.jpeg")
+    "name": "ThinkBiz",
+    "logo": supporterLogo("community partners/THINKBIZ.png")
   },
   {
-    "name": "New Cult",
-    "logo": supporterLogo("new cult logo.png")
+    "name": "Prometheus",
+    "logo": supporterLogo("community partners/prometheus.png")
   },
   {
-    "name": "Studio Materiality",
-    "logo": supporterLogo("studioMateriality.png")
+    "name": "Oceanos",
+    "logo": supporterLogo("community partners/oceanos.png")
   },
   {
     "name": "IEEE PES",
     "logo": supporterLogo("community partners/ieeePes.png")
   },
   {
-    "name": "Kosmos tou Pari",
+    "name": "O Kosmos tou Pari",
     "logo": supporterLogo("community partners/kosmosTouParh.jpeg")
   },
   {
-    "name": "YM NKUA",
+    "name": "Young Minds NKUA",
     "logo": supporterLogo("community partners/YMNkua.png")
   },
   {
@@ -171,6 +180,19 @@ export const sponsorTiers = [
     ]
   },
   {
+    tier: "Communication Sponsor",
+    sponsors: [
+      {
+    "name": "ERT GR",
+    "logo": supporterLogo("communication sponsor/ERT.png")
+  },
+  {
+    "name": "ERT Radio",
+    "logo": supporterLogo("communication sponsor/ertRadio.png")
+  }
+    ]
+  },
+  {
     tier: "Media Partners",
     sponsors: [
       {
@@ -180,12 +202,60 @@ export const sponsorTiers = [
   {
     "name": "Kleidarithmos",
     "logo": supporterLogo("kleidarithmos.png")
+  },
+  {
+    "name": "Athens Surreal",
+    "logo": supporterLogo("media partners/athensSurreal.png")
+  },
+  {
+    "name": "Drink Da Milk",
+    "logo": supporterLogo("media partners/drinkDaMilk.PNG")
+  },
+  {
+    "name": "ISWS",
+    "logo": supporterLogo("media partners/isws.jpeg")
+  },
+  {
+    "name": "Meltemi",
+    "logo": supporterLogo("media partners/meltemi.JPG")
+  },
+  {
+    "name": "Neolaia",
+    "logo": supporterLogo("media partners/neolaia.png")
+  },
+  {
+    "name": "Neopolis",
+    "logo": supporterLogo("media partners/neopolis.png")
+  },
+  {
+    "name": "Optiko",
+    "logo": supporterLogo("media partners/optiko_logo.jpg")
+  },
+  {
+    "name": "Toxiko Meli",
+    "logo": supporterLogo("media partners/toxiko-meli.png")
+  },
+  {
+    "name": "Yperoxi Athina",
+    "logo": supporterLogo("media partners/yperoxiAthina.png")
   }
     ]
   },
   {
     tier: "Supporters",
     sponsors: [
+      {
+    "name": "What They Said",
+    "logo": supporterLogo("whattheysaid.jpeg")
+  },
+  {
+    "name": "New Cult",
+    "logo": supporterLogo("new cult logo.png")
+  },
+  {
+    "name": "Studio Materiality",
+    "logo": supporterLogo("studioMateriality.png")
+  },
       {
     "name": "Symetal",
     "logo": supporterLogo("SYMETAL_sq-1.png"),
@@ -197,13 +267,13 @@ export const sponsorTiers = [
     "link": "https://hellenicproduction.org/"
   },
   {
-    "name": "HELINTECH",
-    "logo": "https://helintech.com/src/img/logo.png",
-    "link": "https://helintech.com/"
+    "name": "Helintec",
+    "logo": supporterLogo("helintec.jpeg"),
+    "link": "https://www.helintec.com/"
   },
   {
-    "name": "IKY",
-    "logo": "https://www.iky.gr/wp-content/uploads/2023/08/%CE%9B%CE%BF%CE%B3%CF%8C%CF%84%CF%85%CF%80%CE%BF_%CE%99%CE%9A%CE%A5-1-300x279.jpeg.webp",
+    "name": "IKY Erasmus +",
+    "logo": supporterLogo("ikyErasmus.jpg"),
     "link": "https://www.iky.gr/"
   },
   {
@@ -286,6 +356,10 @@ export const sponsorTiers = [
     "logo": supporterLogo("messinianSpa-1.png")
   },
   {
+    "name": "Mega Spileo Estate",
+    "logo": supporterLogo("megaSpileoEstate.png")
+  },
+  {
     "name": "Mon Reve",
     "logo": supporterLogo("monReve.png")
   },
@@ -332,6 +406,95 @@ export const sponsorTiers = [
   {
     "name": "Zografos",
     "logo": supporterLogo("zografos.png")
+  },
+  {
+    "name": "AB Vasilopoulos",
+    "logo": supporterLogo("ab.png"),
+    "link": "https://www.ab.gr/"
+  },
+  {
+    "name": "Ioniki",
+    "logo": supporterLogo("ioniki.png"),
+    "link": "https://www.ioniki.com/en"
+  },
+  {
+    "name": "TEFACO S.A.",
+    "logo": supporterLogo("tefaco.jpeg"),
+    "link": "http://www.tefaco.gr/"
+  },
+  {
+    "name": "Vamvalis Foods",
+    "logo": supporterLogo("vamvalisFoods.jpg"),
+    "link": "https://www.vamvalisfoods.com/"
+  },
+  {
+    "name": "PEGASOS S.A.",
+    "logo": supporterLogo("pigasosSA.png"),
+    "link": "https://pegasos.com.gr/en/"
+  },
+  {
+    "name": "Amam Smash",
+    "logo": supporterLogo("amamSmash.png"),
+    "link": "https://alimosagora.gr/en/listing/amam-smash/"
+  },
+  {
+    "name": "One Burger",
+    "logo": supporterLogo("oneBurger.png"),
+    "link": "https://www.oneburger.com/"
+  },
+  {
+    "name": "Starbucks",
+    "logo": supporterLogo("starbucks.png"),
+    "link": "https://www.starbucks.com.gr/"
+  },
+  {
+    "name": "Occhio Papavassiliou",
+    "logo": supporterLogo("occhioPapavassiliou.jpg"),
+    "link": "https://www.occhio.gr/en"
+  },
+  {
+    "name": "Cookie Land",
+    "logo": supporterLogo("cookieLand.png"),
+    "link": "https://cookieland.gr/en/"
+  },
+  {
+    "name": "Legit Coffee",
+    "logo": supporterLogo("legitCoffee.png"),
+    "link": "https://www.instagram.com/legitcoffeegr/"
+  },
+  {
+    "name": "Arla",
+    "logo": internetLogo("arlafoods.gr"),
+    "link": "https://www.arlafoods.gr/"
+  },
+  {
+    "name": "Pistachio Tales and Trails",
+    "logo": supporterLogo("pistachioTalesAndTrails.jpeg"),
+    "link": "https://www.pistachiotalesandtrails.com/"
+  },
+  {
+    "name": "Nymfi Beer",
+    "logo": supporterLogo("nymfi.jpg"),
+    "link": "https://nymfi-beer.gr/"
+  },
+  {
+    "name": "Archelaou Ena",
+    "logo": supporterLogo("archileouEna.png"),
+    "link": "https://www.google.com/maps/search/?api=1&query=Archelaou+1+Athens"
+  },
+  {
+    "name": "SKAG",
+    "logo": internetLogo("skag.gr"),
+    "link": "https://www.skag.gr/"
+  },
+  {
+    "name": "Sanitas",
+    "logo": supporterLogo("sanitas.webp"),
+    "link": "https://www.sanitas.com.gr/"
+  },
+  {
+    "name": "genAIRation",
+    "logo": supporterLogo("genAIRation.png")
   }
     ]
   }
