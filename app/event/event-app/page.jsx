@@ -193,9 +193,6 @@ export default function EventAppPage() {
               {openWorkshop === workshop.id && (
                 <div className={styles.workshopForm}>
                   <p className={styles.workshopDesc}>{workshop.desc}</p>
-                  <button className={styles.redButton} type="button" onClick={() => window.open('https://forms.gle/YOUR_WORKSHOP_FORM', '_blank', 'noopener,noreferrer')}>
-                    Κράτηση Θέσης
-                  </button>
                 </div>
               )}
             </div>
