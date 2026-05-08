@@ -186,6 +186,110 @@ export const sponsorTiers = [
   {
     "name": "Everest",
     "logo": supporterLogo("everest-1.png")
+  },
+  {
+    "name": "Aegean Beauty",
+    "logo": supporterLogo("aegeanBeauty.jpeg")
+  },
+  {
+    "name": "Doubia",
+    "logo": supporterLogo("doubia.png")
+  },
+  {
+    "name": "efood",
+    "logo": supporterLogo("efood-1.png")
+  },
+  {
+    "name": "Frezyderm",
+    "logo": supporterLogo("frezyderm-1.png")
+  },
+  {
+    "name": "Haribo",
+    "logo": supporterLogo("haribo.PNG")
+  },
+  {
+    "name": "Kleidarithmos",
+    "logo": supporterLogo("kleidarithmos.png")
+  },
+  {
+    "name": "Kyana",
+    "logo": supporterLogo("kyana-1.png")
+  },
+  {
+    "name": "La Greche",
+    "logo": supporterLogo("laGreche-1.png")
+  },
+  {
+    "name": "Messinian Spa",
+    "logo": supporterLogo("messinianSpa-1.png")
+  },
+  {
+    "name": "Mon Reve",
+    "logo": supporterLogo("monReve.png")
+  },
+  {
+    "name": "Mondelez",
+    "logo": supporterLogo("mondelez.png")
+  },
+  {
+    "name": "Mr Crepito",
+    "logo": supporterLogo("mrCrepito.jpeg")
+  },
+  {
+    "name": "Nanou",
+    "logo": supporterLogo("nanou-1.png")
+  },
+  {
+    "name": "Natura Siberica",
+    "logo": supporterLogo("naturaSiberica.png")
+  },
+  {
+    "name": "New Cult",
+    "logo": supporterLogo("new cult logo.png")
+  },
+  {
+    "name": "Oler Secreto",
+    "logo": supporterLogo("olersecreto.jpg")
+  },
+  {
+    "name": "Papoutsanis",
+    "logo": supporterLogo("papoutsanis-1.png")
+  },
+  {
+    "name": "Pellito",
+    "logo": supporterLogo("pellito.jpg")
+  },
+  {
+    "name": "Plac Control",
+    "logo": supporterLogo("placContol.jpg")
+  },
+  {
+    "name": "Sdoukos",
+    "logo": supporterLogo("sdoukos.png")
+  },
+  {
+    "name": "Septona",
+    "logo": supporterLogo("septona.jpg")
+  },
+  {
+    "name": "Stergiou",
+    "logo": supporterLogo("stergiou-1.png")
+  },
+  {
+    "name": "Studio Materiality",
+    "logo": supporterLogo("studioMateriality.png")
+  },
+  {
+    "name": "TT Clean",
+    "logo": supporterLogo("ttclean-1.png")
+  },
+  {
+    "name": "Wowchi",
+    "logo": supporterLogo("wowchi-1.png")
+  },
+  {
+    "name": "Zografos",
+    "logo": supporterLogo("zografos.png")
   }
     ]
   }
