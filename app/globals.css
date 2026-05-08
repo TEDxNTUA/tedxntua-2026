@@ -785,7 +785,6 @@ body.compact-site-footer .site-footer .pt-6 {
 }
 
 .event-app-launcher {
-  margin-top: 1.5rem;
   display: inline-flex;
   min-width: min(78vw, 18rem);
   align-items: center;
@@ -812,6 +811,8 @@ body.compact-site-footer .site-footer .pt-6 {
   font-size: clamp(0.84rem, 2.4vw, 1rem);
   font-weight: 900;
   letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .event-app-launcher small {
@@ -821,6 +822,169 @@ body.compact-site-footer .site-footer .pt-6 {
   font-weight: 800;
   letter-spacing: 0.1em;
   padding-left: 0.65rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Giveaways Launcher - Green Variant */
+.giveaways-launcher {
+  display: inline-flex;
+  min-width: min(78vw, 18rem);
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 1px solid rgba(34, 197, 94, 0.58);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.96), rgba(12, 12, 12, 0.92));
+  color: #fff;
+  box-shadow: 0 16px 45px rgba(34, 197, 94, 0.28);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  padding: 0.78rem 1.15rem;
+  text-transform: uppercase;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  cursor: pointer;
+}
+
+.giveaways-launcher:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 55px rgba(34, 197, 94, 0.36);
+  transform: translateY(-2px);
+}
+
+.giveaways-launcher span {
+  font-size: clamp(0.84rem, 2.4vw, 1rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.giveaways-launcher small {
+  border-left: 1px solid rgba(255, 255, 255, 0.28);
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding-left: 0.65rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.giveaways-prompt {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  animation: fadeIn 300ms ease-out;
+}
+
+.giveaways-prompt-panel {
+  width: 100%;
+  max-width: 400px;
+  background: #0c0c0c;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 20px rgba(34, 197, 94, 0.1);
+}
+
+.giveaways-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+.giveaways-status-indicator span {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(34, 197, 94, 0.8);
+  font-weight: 700;
+}
+
+.giveaways-prompt-panel h2 {
+  font-family: var(--font-copixel), sans-serif;
+  font-size: 1.75rem;
+  color: #fff;
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.05em;
+}
+
+.coming-soon-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.placeholder-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.placeholder-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(34, 197, 94, 0.2);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.placeholder-line {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.placeholder-line.long { width: 80%; }
+.placeholder-line.short { width: 40%; }
+
+.giveaways-prompt-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.giveaways-prompt-actions button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.6rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 180ms ease;
+  cursor: pointer;
+}
+
+.giveaways-prompt-actions button:hover {
+  border-color: #22c55e;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.05);
 }
 
 .event-app-prompt {
