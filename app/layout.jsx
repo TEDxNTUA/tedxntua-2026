@@ -9,6 +9,7 @@ import { withBasePath } from "./lib/basePath";
 import AssetLoader from "./components/AssetLoader";
 import ContentVisibilityWrapper from "./components/ContentVisibilityWrapper";
 import ServiceWorkerRegistration from "./components/ServiceWorkerRegistration";
+import SequentialRoutePrefetcher from "./components/SequentialRoutePrefetcher";
 import Analytics from "./components/Analytics";
 import Link from "next/link";
 import Script from "next/script";
@@ -150,6 +151,7 @@ export default function RootLayout({ children }) {
         
         <Analytics />
         <ServiceWorkerRegistration />
+        <SequentialRoutePrefetcher />
         <AssetLoader />
         <ContentVisibilityWrapper>
           <EventNavProvider>
@@ -212,11 +214,11 @@ export default function RootLayout({ children }) {
                   <div className="lg:col-span-2 flex flex-col gap-5">
                     <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-red-600">Explore</h4>
                     <nav className="flex flex-col gap-2.5 text-[10px] font-bold tracking-wider text-white/40" aria-label="Footer navigation">
-                      <Link href="/event/program" className="hover:text-emerald-400 transition-colors uppercase">Program</Link>
-                      <Link href="/event/speakers" className="hover:text-emerald-400 transition-colors uppercase">Speakers</Link>
-                      <Link href="/event/performances" className="hover:text-emerald-400 transition-colors uppercase">Performances</Link>
-                      <Link href="/sponsors" className="hover:text-emerald-400 transition-colors uppercase">Sponsors</Link>
-                      <Link href="/team" className="hover:text-emerald-400 transition-colors uppercase">Our Team</Link>
+                      <Link href="/event/program" prefetch={false} className="hover:text-emerald-400 transition-colors uppercase">Program</Link>
+                      <Link href="/event/speakers" prefetch={false} className="hover:text-emerald-400 transition-colors uppercase">Speakers</Link>
+                      <Link href="/event/performances" prefetch={false} className="hover:text-emerald-400 transition-colors uppercase">Performances</Link>
+                      <Link href="/sponsors" prefetch={false} className="hover:text-emerald-400 transition-colors uppercase">Sponsors</Link>
+                      <Link href="/team" prefetch={false} className="hover:text-emerald-400 transition-colors uppercase">Our Team</Link>
                     </nav>
                   </div>
 

@@ -236,6 +236,7 @@ function ActionButton({ href, theme, icon, alt, isInternal = false, children }) 
     return (
       <Link
         href={href}
+        prefetch={false}
         className={sharedClasses}
         style={sharedStyle}
         onMouseEnter={handleMouseEnter}

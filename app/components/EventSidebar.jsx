@@ -90,6 +90,7 @@ export default function EventSidebar({ visible }) {
               {/* Navigation Button */}
               <Link
                 href={tab.path}
+                prefetch={false}
                 aria-label={tab.label}
                 className={`
                   peer group
