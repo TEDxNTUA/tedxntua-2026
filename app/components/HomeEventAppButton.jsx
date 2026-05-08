@@ -20,7 +20,7 @@ export default function HomeEventAppButton() {
 
   const openApp = () => {
     setShowPrompt(false);
-    router.push("/event/aggelos-app");
+    router.push("/event/event-app");
   };
 
   const installAndOpen = async () => {

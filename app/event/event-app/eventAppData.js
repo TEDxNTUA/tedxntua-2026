@@ -56,8 +56,29 @@ export const eventAppConfig = {
     { id: "we5", name: "Athenaides", type: "exp", typeLabel: "Experience", seats: 15, time: "17:25 - 18:40", desc: "Περιγραφή workshop σύντομα διαθέσιμη." },
   ],
   giveaways: [
-    { id: "gw1", name: "Giveaway #1", prize: "Gift details coming soon", formUrl: "https://forms.gle/LINK_1" },
-    { id: "gw2", name: "Giveaway #2", prize: "Gift details coming soon", formUrl: "https://forms.gle/LINK_2" },
-    { id: "gw3", name: "Giveaway #3", prize: "Gift details coming soon", formUrl: "https://forms.gle/LINK_3" },
+    { 
+      id: "gw1", 
+      name: "Occhio Papavassiliou", 
+      prize: "Δύο γυαλιά ηλίου", 
+      formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScK992cla6A7UlB6AJZxi_5naSQNM1JFTJT2bB-ucLJ6n0KQg/viewform" 
+    },
+    { 
+      id: "gw2", 
+      name: "Pistachio Tales and Trails", 
+      prize: "Walking Food Tour στην Αίγινα (2 νικητές)", 
+      formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdVUvXUMpdwsEMhYNAx05IyIuEljqhPSUQTf6SzCrRwNSR-8w/viewform" 
+    },
+    { 
+      id: "gw3", 
+      name: "Εκδόσεις Κλειδάριθμος", 
+      prize: "Βιβλία αυτοβελτίωσης (3 νικητές)", 
+      formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSc-OANLBAGwU4PZ5UOIpZ2pdN504qM5xwlrkPve2xbkbmQ5ZA/viewform" 
+    },
+    { 
+      id: "gw4", 
+      name: "TTCLEAN", 
+      prize: "Μία ηλεκτρική σκούπα", 
+      formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSct3lMtvysy9Zd4JzKygzIo1qFJGZwWayzEvsDaq1KiRMUvTQ/viewform" 
+    },
   ],
 };
