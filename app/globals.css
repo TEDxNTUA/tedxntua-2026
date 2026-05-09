@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Play';
+  src: url('/fonts/Copy of Play/Play-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Play';
+  src: url('/fonts/Copy of Play/Play-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -1001,6 +1015,7 @@ body.compact-site-footer .site-footer .pt-6 {
   flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 2rem;
+  font-family: 'Play', sans-serif;
 }
 
 .giveaway-link-item {
