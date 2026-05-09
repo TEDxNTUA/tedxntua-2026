@@ -1,7 +1,9 @@
+import { withBasePath } from "../../lib/basePath";
+
 export const metadata = {
   title: "TEDxNTUA Event App",
   description: "Phone-only TEDxNTUA 2026 event app with program, speakers, workshops, sponsors, and giveaways.",
-  manifest: "/event/event-app/manifest.webmanifest",
+  manifest: withBasePath("/event/event-app/manifest.webmanifest"),
   appleWebApp: {
     capable: true,
     title: "TEDxNTUA",

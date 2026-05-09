@@ -56,7 +56,7 @@ export const metadata = {
     shortcut: "/favicons/favicon-32x32.png",
     apple: "/favicons/favicon-32x32.png",
   },
-  manifest: "/favicons/manifest.json", // Optional: If we want to be very thorough
+  manifest: withBasePath("/manifest.webmanifest"),
   robots: {
     index: true,
     follow: true,

@@ -7,6 +7,7 @@ export default function HomeEventAppButton() {
   const router = useRouter();
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showPrompt, setShowPrompt] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstall = (event) => {
@@ -14,8 +15,24 @@ export default function HomeEventAppButton() {
       setInstallPrompt(event);
     };
 
+    const handleInstalled = () => {
+      setIsInstalled(true);
+      setInstallPrompt(null);
+      setShowPrompt(false);
+    };
+
+    setIsInstalled(
+      window.matchMedia?.("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true,
+    );
+
     window.addEventListener("beforeinstallprompt", handleBeforeInstall);
-    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
+    window.addEventListener("appinstalled", handleInstalled);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
+      window.removeEventListener("appinstalled", handleInstalled);
+    };
   }, []);
 
   const openApp = () => {
@@ -26,8 +43,11 @@ export default function HomeEventAppButton() {
   const installAndOpen = async () => {
     if (installPrompt) {
       installPrompt.prompt();
-      await installPrompt.userChoice;
+      const { outcome } = await installPrompt.userChoice;
       setInstallPrompt(null);
+      if (outcome === "accepted") {
+        setIsInstalled(true);
+      }
     }
     openApp();
   };
@@ -44,15 +64,17 @@ export default function HomeEventAppButton() {
           <div className="event-app-prompt-panel">
             <h2 id="event-app-prompt-title">Create a home screen shortcut?</h2>
             <p>
-              This phone-only event app works best as a quick shortcut during TEDxNTUA 2026.
+              {isInstalled
+                ? "The event app shortcut is already installed on this device."
+                : "This phone-only event app works best as a quick shortcut during TEDxNTUA 2026."}
             </p>
-            {!installPrompt && (
+            {!installPrompt && !isInstalled && (
               <p className="event-app-ios-note">
                 If your browser does not show the install prompt, use Share or the browser menu, then Add to Home Screen.
               </p>
             )}
             <div className="event-app-prompt-actions">
-              <button type="button" onClick={installAndOpen}>Yes, continue</button>
+              <button type="button" onClick={installAndOpen}>{installPrompt ? "Install and open" : "Open app"}</button>
               <button type="button" onClick={openApp}>Just open</button>
             </div>
           </div>
