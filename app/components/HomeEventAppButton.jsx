@@ -8,11 +8,13 @@ export default function HomeEventAppButton() {
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [installStatus, setInstallStatus] = useState("");
 
   useEffect(() => {
     const handleBeforeInstall = (event) => {
       event.preventDefault();
       setInstallPrompt(event);
+      setInstallStatus("");
     };
 
     const handleInstalled = () => {
@@ -47,9 +49,18 @@ export default function HomeEventAppButton() {
       setInstallPrompt(null);
       if (outcome === "accepted") {
         setIsInstalled(true);
+        openApp();
+        return;
       }
+      setInstallStatus("Install was not completed. You can try again from the browser menu.");
+      return;
     }
-    openApp();
+
+    setInstallStatus(
+      /iphone|ipad|ipod/i.test(navigator.userAgent)
+        ? "iPhone/iPad does not allow a website button to create the shortcut. Use Share, then Add to Home Screen."
+        : "Install prompt is not available yet. Open the browser menu and choose Add to Home screen.",
+    );
   };
 
   return (
@@ -73,8 +84,9 @@ export default function HomeEventAppButton() {
                 If your browser does not show the install prompt, use Share or the browser menu, then Add to Home Screen.
               </p>
             )}
+            {installStatus && <p className="event-app-status">{installStatus}</p>}
             <div className="event-app-prompt-actions">
-              <button type="button" onClick={installAndOpen}>{installPrompt ? "Install and open" : "Open app"}</button>
+              <button type="button" onClick={installAndOpen}>{installPrompt ? "Install and open" : "Install shortcut"}</button>
               <button type="button" onClick={openApp}>Just open</button>
             </div>
           </div>

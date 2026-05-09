@@ -1118,6 +1118,15 @@ body.compact-site-footer .site-footer .pt-6 {
   font-size: 0.78rem !important;
 }
 
+.event-app-status {
+  border: 1px solid rgba(230, 43, 30, 0.32);
+  border-radius: 8px;
+  background: rgba(230, 43, 30, 0.12);
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-size: 0.8rem !important;
+  padding: 0.65rem 0.75rem;
+}
+
 .event-app-prompt-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;

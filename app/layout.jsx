@@ -54,7 +54,7 @@ export const metadata = {
       { url: "/favicons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
     ],
     shortcut: "/favicons/favicon-32x32.png",
-    apple: "/favicons/favicon-32x32.png",
+    apple: withBasePath("/event/eventApp/icons/icon-192.png"),
   },
   manifest: withBasePath("/manifest.webmanifest"),
   robots: {

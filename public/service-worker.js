@@ -1,18 +1,31 @@
 const CACHE_NAME = "tedxntua-2026-v2";
+const BASE_PATH = new URL(self.registration.scope).pathname.replace(/\/$/, "");
+
+const withBasePath = (path) => {
+  if (!BASE_PATH || BASE_PATH === "/") {
+    return path;
+  }
+
+  return `${BASE_PATH}${path}`;
+};
+
 const ASSETS_TO_CACHE = [
   // Fonts
-  "/fonts/Copixel-Display.otf",
+  withBasePath("/fonts/Copixel-Display.otf"),
   // Logo
-  "/LOGO_ASSET.png",
-  "/tedxntua_logo.png",
-  "/tedxntua_logo-black.png",
+  withBasePath("/LOGO_ASSET.png"),
+  withBasePath("/tedxntua_logo.png"),
+  withBasePath("/tedxntua_logo-black.png"),
+  // PWA icons
+  withBasePath("/event/eventApp/icons/icon-192.png"),
+  withBasePath("/event/eventApp/icons/icon-512.png"),
 ];
 
 // Cache strategies
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
+      return Promise.allSettled(ASSETS_TO_CACHE.map((asset) => cache.add(asset)));
     })
   );
   self.skipWaiting();

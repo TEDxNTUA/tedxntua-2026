@@ -7,6 +7,7 @@ export function GET() {
   return NextResponse.json({
     name: "TEDxNTUA Event App",
     short_name: "TEDxNTUA",
+    id: withBasePath("/event/event-app/"),
     description: "Program, speakers, workshops, sponsors, and giveaways for TEDxNTUA 2026.",
     start_url: withBasePath("/event/event-app/"),
     scope: withBasePath("/event/event-app/"),
