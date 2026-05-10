@@ -66,18 +66,16 @@ export default function HomeEventAppButton() {
   return (
     <>
       <button className="event-app-launcher" type="button" onClick={() => setShowPrompt(true)}>
-        <span>Open Event App</span>
-        <small>Phone shortcut</small>
+        <span>Event Web-App</span>
+        <small>Event finished</small>
       </button>
 
       {showPrompt && (
         <div className="event-app-prompt" role="dialog" aria-modal="true" aria-labelledby="event-app-prompt-title">
           <div className="event-app-prompt-panel">
-            <h2 id="event-app-prompt-title">Create a home screen shortcut?</h2>
+            <h2 id="event-app-prompt-title">The event has finished</h2>
             <p>
-              {isInstalled
-                ? "The event app shortcut is already installed on this device."
-                : "This phone-only event app works best as a quick shortcut during TEDxNTUA 2026."}
+              TEDxNTUA 2026: Cycle 0 has come to an end. You can still view the program and speakers in the app.
             </p>
             {!installPrompt && !isInstalled && (
               <p className="event-app-ios-note">
@@ -86,8 +84,8 @@ export default function HomeEventAppButton() {
             )}
             {installStatus && <p className="event-app-status">{installStatus}</p>}
             <div className="event-app-prompt-actions">
-              <button type="button" onClick={installAndOpen}>{installPrompt ? "Install and open" : "Install shortcut"}</button>
-              <button type="button" onClick={openApp}>Just open</button>
+              <button type="button" onClick={openApp} style={{ gridColumn: 'span 2' }}>Enter App</button>
+              <button type="button" onClick={() => setShowPrompt(false)} style={{ gridColumn: 'span 2', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)' }}>Close</button>
             </div>
           </div>
         </div>

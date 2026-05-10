@@ -113,6 +113,9 @@ export default function EventAppPage() {
 
   const renderSchedule = () => (
     <>
+      <div className={styles.eventOverBanner}>
+        EVENT FINISHED
+      </div>
       <p className={styles.sectionLabel}>Πρόγραμμα • {config.eventDate}</p>
       {config.schedule.map((item, index) => {
         if (item.type === "break") {
@@ -136,7 +139,6 @@ export default function EventAppPage() {
               <div className={styles.talkBody}>
                 <div className={styles.talkTitle}>
                   {item.title}
-                  {index === nowIndex && <span className={styles.nowBadge}>ΤΩΡΑ</span>}
                 </div>
                 <div className={styles.talkSub}>
                   <span className={styles.avatar}>{item.initials}</span>
@@ -183,7 +185,7 @@ export default function EventAppPage() {
               <button className={styles.workshopHead} type="button" onClick={() => setOpenWorkshop(openWorkshop === workshop.id ? null : workshop.id)}>
                 <div>
                   <div className={styles.workshopTitle}>{workshop.name}</div>
-                  <div className={styles.workshopMeta}>{workshop.time}</div>
+                  <div className={styles.workshopMeta}>{workshop.time} • CLOSED</div>
                 </div>
                 <span className={classNames(styles.workshopBadge, workshop.type === "pro" ? styles.professional : styles.experience)}>
                   {workshop.typeLabel}
@@ -230,19 +232,24 @@ export default function EventAppPage() {
         <div className={styles.giveawayHeader}>
           <div className={styles.giveawayIcon}>🎁</div>
           <div className={styles.giveawayTitle}>Exclusive Giveaways</div>
-          <div className={styles.giveawaySub}>Συμπληρώστε τη φόρμα για να μπείτε στην κλήρωση!</div>
+          <div className={styles.giveawaySub}>Archive of TEDxNTUA 2026 Giveaways</div>
         </div>
-        <div style={{ padding: '0 4px' }}>
+        <div style={{ padding: '0 4px', opacity: 0.7 }}>
           {config.giveaways.map((giveaway) => (
-            <div className={styles.giveawayCard} key={giveaway.id}>
-              <div className={styles.giveawayBadge}>Entry Open</div>
+            <div className={styles.giveawayCard} key={giveaway.id} style={{ borderStyle: 'dashed' }}>
+              <div className={styles.giveawayBadge} style={{ background: '#555' }}>Closed</div>
               <div className={styles.giveawayBody}>
                 <div className={styles.giveawayBrand}>{giveaway.name}</div>
                 <div className={styles.giveawayPrize}>{giveaway.prize}</div>
               </div>
               <div className={styles.giveawayFooter}>
-                <button className={styles.redButton} type="button" onClick={() => window.open(giveaway.formUrl, "_blank", "noopener,noreferrer")}>
-                  Δήλωση Συμμετοχής
+                <button 
+                  className={styles.redButton} 
+                  type="button" 
+                  disabled 
+                  style={{ background: '#333', cursor: 'not-allowed' }}
+                >
+                  ENTRY CLOSED
                 </button>
               </div>
             </div>
@@ -267,8 +274,7 @@ export default function EventAppPage() {
               <img className={styles.logo} src={asset("logo.png")} alt="TEDxNTUA" />
             </button>
             <div className={styles.livePill}>
-              <span className={styles.dot} />
-              LIVE
+              FINISHED
             </div>
           </div>
         </header>

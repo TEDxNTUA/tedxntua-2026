@@ -42,8 +42,8 @@ export default function GiveawaysButton() {
   return (
     <>
       <button className="giveaways-launcher" type="button" onClick={() => setShowPrompt(true)}>
-        <span>Giveaways gate</span>
-        <small>Exclusive perks</small>
+        <span>Giveaways Closed</span>
+        <small>Event finished</small>
       </button>
 
       {showPrompt && (
@@ -57,29 +57,27 @@ export default function GiveawaysButton() {
               ×
             </button>
             <div className="giveaways-status-indicator">
-              <div className="status-dot active"></div>
-              <span>Status: Online</span>
+              <div className="status-dot"></div>
+              <span>Status: Closed</span>
             </div>
             <h2 id="giveaways-prompt-title">Giveaways Gate</h2>
             <div className="giveaways-content">
               <p className="coming-soon-text">
-                The Gates are open. Select a giveaway below to participate.
+                The Giveaways are over. Here is the archive of our 2026 perks:
               </p>
-              <div className="giveaways-links-grid">
+              <div className="giveaways-links-grid" style={{ opacity: 0.6 }}>
                 {officialGiveaways.map((gw, i) => (
-                  <a 
+                  <div 
                     key={i} 
-                    href={gw.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
                     className="giveaway-link-item"
+                    style={{ cursor: 'default', borderStyle: 'dashed' }}
                   >
                     <div className="giveaway-link-content">
                       <span className="giveaway-link-name">{gw.name}</span>
                       <span className="giveaway-link-prize">{gw.prize}</span>
                     </div>
-                    <span className="giveaway-link-arrow">→</span>
-                  </a>
+                    <span className="giveaway-link-arrow" style={{ opacity: 0.3 }}>✕</span>
+                  </div>
                 ))}
               </div>
             </div>
