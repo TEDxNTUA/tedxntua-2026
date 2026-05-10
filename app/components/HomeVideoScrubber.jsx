@@ -24,7 +24,7 @@ const FRAME_FOLDER = "/animations/final_1";
 const FRAME_START = 1;
 const FRAME_STEP = 1;
 const FRAME_COUNT = 300;
-const FRAME_SEQUENCE_DURATION = 8.0;
+const FRAME_SEQUENCE_DURATION = 5.0;
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const getViewportHeight = () => window.visualViewport?.height ?? window.innerHeight;
@@ -75,7 +75,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const video = videoRef.current;
     if (!section) return;
 
-    const useFrames = window.innerWidth < PHONE_BREAKPOINT;
+    const useFrames = window.innerWidth < PHONE_BREAKPOINT && !isIOS();
     const duration = useFrames
       ? FRAME_SEQUENCE_DURATION
       : Number.isFinite(video?.duration) && video.duration > 0
@@ -124,7 +124,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const currentProgress = clamp(scrollDistance / total, 0, 1);
     setProgress(currentProgress);
 
-    const useFrames = window.innerWidth < PHONE_BREAKPOINT;
+    const useFrames = window.innerWidth < PHONE_BREAKPOINT && !isIOS();
     if (useFrames) {
       setFrameIndex(Math.round(currentProgress * (FRAME_COUNT - 1)));
       frameIdRef.current = 0;
@@ -137,12 +137,15 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
     const targetTime = currentProgress * (duration - 0.02);
     const smoothing = getSmoothing();
     
-    const newTime = currentVideoTimeRef.current + (targetTime - currentVideoTimeRef.current) * smoothing;
+    // For iOS, we can afford slightly more frequent updates with the new All-Intra video
+    const newTime = isIOS() 
+      ? targetTime 
+      : currentVideoTimeRef.current + (targetTime - currentVideoTimeRef.current) * smoothing;
+    
     currentVideoTimeRef.current = newTime;
 
-    // Android/iOS "No-Lag" approach: Use a much larger threshold (0.02s) 
-    // to only seek when there's a significant change.
-    const threshold = (isAndroid() || isIOS()) ? 0.02 : 0.004;
+    // iOS with All-Intra video can handle much finer seeking (0.001s)
+    const threshold = isIOS() ? 0.001 : (isAndroid() ? 0.02 : 0.004);
 
     if (Math.abs(video.currentTime - newTime) > threshold) {
       video.currentTime = newTime;
@@ -181,7 +184,7 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
 
     const handleResize = () => {
       const w = window.innerWidth;
-      const isPhone = w < PHONE_BREAKPOINT;
+      const isPhone = w < PHONE_BREAKPOINT && !isIOS();
       setIsPhoneFrameMode(isPhone);
       setIsFrameReady(prev => isPhone ? prev : false);
       
@@ -190,7 +193,9 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
         setIsVideoReady(false);
       } else {
         let srcPath = "/animations/output_desktop.mp4";
-        if (isAndroid() || isIOS()) {
+        if (isIOS()) {
+          srcPath = "/animations/output_ios.mp4";
+        } else if (isAndroid()) {
           srcPath = "/animations/output_android.mp4";
         }
 
