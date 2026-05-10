@@ -78,7 +78,7 @@ export const teams = [
         ],
         social: {
           instagram: "https://www.instagram.com/nikos._anagnostou",
-          linkedin: "https://www.linkedin.com/me?trk=p_mwlite_feed-secondary_nav",
+          linkedin: "https://www.linkedin.com/in/nikolaos-anagnostou-075809216/",
           facebook: "https://m.facebook.com/profile.php?id=100008612345838",
         }
       },
