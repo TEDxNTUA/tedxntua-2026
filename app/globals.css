@@ -841,6 +841,14 @@ body.compact-site-footer .site-footer .pt-6 {
 }
 
 /* Giveaways Launcher - Green Variant */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.03); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.03); }
+  70% { transform: scale(1); }
+}
+
 .giveaways-launcher {
   display: inline-flex;
   min-width: min(78vw, 18rem);
@@ -857,6 +865,7 @@ body.compact-site-footer .site-footer .pt-6 {
   text-transform: uppercase;
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
   cursor: pointer;
+  animation: heartbeat 1.5s infinite ease-in-out;
 }
 
 .giveaways-launcher:hover {
