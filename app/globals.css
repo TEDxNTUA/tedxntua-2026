@@ -855,22 +855,21 @@ body.compact-site-footer .site-footer .pt-6 {
   align-items: center;
   justify-content: center;
   gap: 0.65rem;
-  border: 1px solid rgba(34, 197, 94, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.96), rgba(12, 12, 12, 0.92));
+  background: linear-gradient(135deg, rgba(60, 60, 60, 0.96), rgba(12, 12, 12, 0.92));
   color: #fff;
-  box-shadow: 0 16px 45px rgba(34, 197, 94, 0.28);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4);
   font-family: "Avenir Next", "Segoe UI", sans-serif;
   padding: 0.78rem 1.15rem;
   text-transform: uppercase;
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
   cursor: pointer;
-  animation: heartbeat 1.5s infinite ease-in-out;
 }
 
 .giveaways-launcher:hover {
   border-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 20px 55px rgba(34, 197, 94, 0.36);
+  box-shadow: 0 20px 55px rgba(255, 255, 255, 0.12);
   transform: translateY(-2px);
 }
 

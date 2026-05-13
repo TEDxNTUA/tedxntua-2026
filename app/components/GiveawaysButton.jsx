@@ -7,7 +7,7 @@ const officialGiveaways = [
     name: "Coca-Cola Giveaway", 
     prize: "Double Tickets", 
     url: "https://docs.google.com/forms/d/e/1FAIpQLSfwD9HJ9EFwYZJRBPJ-p2fjRu1LCkovf3bjTqK1LYQ_2IAluA/viewform",
-    isActive: true
+    isActive: false
   },
   { 
     name: "Occhio Papavassiliou", 
@@ -48,8 +48,8 @@ export default function GiveawaysButton() {
   return (
     <>
       <button className="giveaways-launcher" type="button" onClick={() => setShowPrompt(true)}>
-        <span>Giveaways Live</span>
-        <small>Sudden Perk</small>
+        <span>Giveaways Gate</span>
+        <small>Exclusive Perks</small>
       </button>
 
       {showPrompt && (
@@ -63,48 +63,38 @@ export default function GiveawaysButton() {
               ×
             </button>
             <div className="giveaways-status-indicator">
-              <div className="status-dot animate-pulse" style={{ backgroundColor: '#22c55e' }}></div>
-              <span className="text-green-500 font-bold">Status: LIVE</span>
+              <div className="status-dot" style={{ backgroundColor: '#666' }}></div>
+              <span className="text-gray-400 font-bold">Status: CLOSED</span>
             </div>
             <h2 id="giveaways-prompt-title">Giveaways Gate</h2>
             <div className="giveaways-content">
               <p className="coming-soon-text">
-                A sudden giveaway has risen! Enter now to win our special prize:
+                All giveaways have concluded. Thank you for participating!
               </p>
               <div className="giveaways-links-grid">
                 {officialGiveaways.map((gw, i) => (
-                  gw.isActive ? (
-                    <a 
-                      key={i} 
-                      href={gw.url} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="giveaway-link-item active-giveaway"
-                      style={{ 
-                        borderColor: '#22c55e', 
-                        background: 'rgba(34, 197, 94, 0.1)',
-                        cursor: 'pointer' 
-                      }}
-                    >
-                      <div className="giveaway-link-content">
-                        <span className="giveaway-link-name text-green-400">{gw.name}</span>
-                        <span className="giveaway-link-prize">{gw.prize}</span>
-                      </div>
-                      <span className="giveaway-link-arrow">→</span>
-                    </a>
-                  ) : (
-                    <div 
-                      key={i} 
-                      className="giveaway-link-item archived-giveaway"
-                      style={{ cursor: 'default', borderStyle: 'dashed', opacity: 0.5 }}
-                    >
-                      <div className="giveaway-link-content">
-                        <span className="giveaway-link-name">{gw.name}</span>
-                        <span className="giveaway-link-prize">{gw.prize}</span>
-                      </div>
-                      <span className="giveaway-link-arrow" style={{ opacity: 0.3 }}>✕</span>
+                  <a 
+                    key={i} 
+                    href={gw.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className={`giveaway-link-item ${gw.isActive ? "active-giveaway" : "archived-giveaway"}`}
+                    style={gw.isActive ? { 
+                      borderColor: '#22c55e', 
+                      background: 'rgba(34, 197, 94, 0.1)',
+                      cursor: 'pointer' 
+                    } : { 
+                      cursor: 'pointer', 
+                      borderStyle: 'dashed', 
+                      opacity: 0.7 
+                    }}
+                  >
+                    <div className="giveaway-link-content">
+                      <span className={`giveaway-link-name ${gw.isActive ? "text-green-400" : ""}`}>{gw.name}</span>
+                      <span className="giveaway-link-prize">{gw.prize}</span>
                     </div>
-                  )
+                    <span className="giveaway-link-arrow">{gw.isActive ? "→" : "↗"}</span>
+                  </a>
                 ))}
               </div>
             </div>
