@@ -1,6 +1,20 @@
 import TeamHero from "../components/TeamHero";
 import MemberPhoto from "../components/MemberPhoto";
 import teams from "../teamsData";
+import { pageMetadata } from "../../lib/seo";
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const team = teams.find((item) => item.slug === slug);
+  if (!team) return {};
+
+  return pageMetadata({
+    title: `${team.title} | TEDxNTUA 2026`,
+    description: team.description || `Meet the ${team.title} team behind TEDxNTUA 2026: Cycle 0.`,
+    path: `/team/${slug}/`,
+  });
+}
+
 export function generateStaticParams() {
   return teams.map((team) => ({ slug: team.slug }));
 }

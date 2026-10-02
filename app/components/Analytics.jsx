@@ -7,26 +7,24 @@ const GTM_ID = "GTM-PZXR3FK5";
 
 export default function Analytics() {
   const [consent, setConsent] = useState(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Check local storage for existing consent
+    setMounted(true);
     const storedConsent = localStorage.getItem("cookie-consent");
     setConsent(storedConsent);
   }, []);
 
   useEffect(() => {
     if (consent === "accepted") {
-      // Initialize dataLayer
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         "gtm.start": new Date().getTime(),
         event: "gtm.js",
       });
 
-      // Global click tracker
       const handleGlobalClick = (e) => {
         const target = e.target;
-        // Track buttons, links, images and elements with 'data-track' attribute
         const trackable = target.closest("button, a, img, [data-track]");
         
         if (trackable) {
@@ -58,9 +56,9 @@ export default function Analytics() {
     setConsent("declined");
   };
 
-  if (consent === null) {
+  if (!mounted || consent === null) {
     return (
-      <div className="fixed bottom-6 left-6 right-6 z-[9999] flex flex-col md:flex-row items-center justify-between gap-4 rounded-2xl border border-emerald-500/30 bg-black/90 p-6 backdrop-blur-2xl md:left-auto md:max-w-xl transition-all duration-500 ease-out animate-bounce-subtle">
+      <div className="fixed bottom-6 left-6 right-6 z-[9999] flex flex-col md:flex-row items-center justify-between gap-4 rounded-2xl border border-emerald-500/30 bg-black/90 p-6 backdrop-blur-2xl md:left-auto md:max-w-xl transition-all duration-500 ease-out animate-bounce-subtle" suppressHydrationWarning>
         <style dangerouslySetInnerHTML={{ __html: `
           @keyframes bounce-subtle {
             0%, 100% { transform: translateY(0); }
@@ -97,7 +95,6 @@ export default function Analytics() {
   if (consent === "accepted") {
     return (
       <>
-        {/* Google Tag Manager - Script */}
         <Script
           id="gtm-script"
           strategy="afterInteractive"

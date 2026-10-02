@@ -22,21 +22,20 @@ export const metadata = {
   metadataBase: new URL("https://2026.tedxntua.com"),
   applicationName: "TEDxNTUA 2026",
   title: {
-    default: "TEDxNTUA 2026",
+    default: "TEDxNTUA 2026: Cycle 0",
     template: "%s | TEDxNTUA 2026",
   },
-  description: "TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation and the power of ideas that redefine our future.",
+  description: "TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation. Join us for a day of powerful ideas, inspiring talks, and unforgettable performances at Athens Conservatoire. September 5th, 2026.",
   openGraph: {
-    title: "TEDxNTUA 2026",
-    description: "TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation and the power of ideas that redefine our future.",
-    url: "https://2026.tedxntua.com",
+    title: "TEDxNTUA 2026: Cycle 0",
+    description: "TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation. Join us September 5th, 2026 at Athens Conservatoire for a day of powerful ideas and performances.",
     siteName: "TEDxNTUA 2026",
     images: [
       {
         url: "/LOGO_ASSET.png",
-        width: 1200,
-        height: 630,
-        alt: "TEDxNTUA 2026",
+        width: 2015,
+        height: 1164,
+        alt: "TEDxNTUA 2026 Event Logo",
       },
     ],
     locale: "en_US",
@@ -44,8 +43,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TEDxNTUA 2026",
-    description: "TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation and the power of ideas that redefine our future.",
+    title: "TEDxNTUA 2026: Cycle 0",
+    description: "TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation. Join us September 5th, 2026.",
     images: ["/LOGO_ASSET.png"],
   },
   icons: {
@@ -78,6 +77,7 @@ export default function RootLayout({ children }) {
           <Script
             id="dev-service-worker-cleanup"
             strategy="beforeInteractive"
+            suppressHydrationWarning
             dangerouslySetInnerHTML={{
               __html: `
                 (function () {
@@ -123,20 +123,52 @@ export default function RootLayout({ children }) {
         )}
         <link rel="preload" href={withBasePath("/fonts/Copixel-Display.otf")} as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="preload" href={withBasePath("/gradient_backgrounds/mainPage_gradient.png")} as="image" />
-        <script dangerouslySetInnerHTML={{ __html: `
+        <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: `
           if (/Android/i.test(navigator.userAgent)) {
             document.documentElement.classList.add('is-android');
           }
         `}} />
-        {/* JSON-LD for Site Name to ensure search engines show the correct brand name */}
+        {/* JSON-LD for Site Name and Event Schema */}
         <script
           type="application/ld+json"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "TEDxNTUA 2026",
               "alternateName": ["TEDxNTUA", "TEDx NTUA"],
+              "url": "https://2026.tedxntua.com"
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Event",
+              "name": "TEDxNTUA 2026: Cycle 0",
+              "description": "TEDxNTUA 2026: Cycle 0 — Exploring the origins of innovation. A day of powerful ideas, inspiring talks, and unforgettable performances.",
+              "image": "https://2026.tedxntua.com/LOGO_ASSET.png",
+              "startDate": "2026-09-05T00:00:00",
+              "endDate": "2026-09-05T23:59:59",
+              "location": {
+                "@type": "Place",
+                "name": "Athens Conservatoire",
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": "Rigillis & Vassileos Georgiou II 17-19",
+                  "addressLocality": "Athens",
+                  "addressCountry": "GR"
+                }
+              },
+              "organizer": {
+                "@type": "Organization",
+                "name": "TEDxNTUA",
+                "url": "https://2026.tedxntua.com"
+              },
               "url": "https://2026.tedxntua.com"
             }),
           }}

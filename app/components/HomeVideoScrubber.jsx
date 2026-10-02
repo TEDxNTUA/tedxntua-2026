@@ -238,7 +238,10 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
         await video.play();
         video.pause();
         setIsVideoReady(true);
-      } catch (err) { video.pause(); setIsVideoReady(true); }
+      } catch (err) {
+        console.warn('Autoplay failed, user interaction required:', err);
+        setIsVideoReady(true);
+      }
       requestAnimationFrame(() => { updateLayoutCache(); requestSync(); });
     };
 
@@ -309,7 +312,22 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
               onLoad={() => setIsFrameReady(true)}
             />
           ) : (
-            <video ref={videoRef} className={styles.scrubberSectionVideo} style={{ opacity: isVideoReady ? 1 : 0 }} src={videoSrc} muted playsInline preload="auto" crossOrigin="anonymous" />
+            <video
+              ref={videoRef}
+              className={styles.scrubberSectionVideo}
+              style={{ opacity: isVideoReady ? 1 : 0 }}
+              src={videoSrc}
+              muted
+              playsInline
+              preload="auto"
+              crossOrigin="anonymous"
+              loop
+              autoPlay
+              height="100%"
+              width="100%"
+              onError={(e) => console.error('Video playback error:', e)}
+              onCanPlay={() => setIsVideoReady(true)}
+            />
           )}
           <div className={styles.scrubberSectionVeil} />
         </div>

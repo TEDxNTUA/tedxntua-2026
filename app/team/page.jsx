@@ -1,5 +1,12 @@
 import Image from "next/image";
 import localFont from "next/font/local";
+import { pageMetadata } from "../lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Our Team | TEDxNTUA 2026",
+  description: "Meet the volunteer team behind TEDxNTUA 2026: Cycle 0.",
+  path: "/team/",
+});
 
 import { SocialButton } from "../event/components/SocialButton";
 import { withBasePath } from "../lib/basePath";

@@ -1,5 +1,20 @@
 import teams from "../../../teamsData";
 import MemberPhoto from "../../../components/MemberPhoto";
+import { pageMetadata } from "../../../../lib/seo";
+
+export async function generateMetadata({ params }) {
+  const { slug, memberId } = await params;
+  const team = teams.find((item) => item.slug === slug);
+  const member = team?.members?.find((item) => item.id === memberId);
+  if (!team || !member) return {};
+
+  return pageMetadata({
+    title: `${member.name} | TEDxNTUA 2026`,
+    description: `Meet ${member.name} from the ${team.title} team behind TEDxNTUA 2026: Cycle 0.`,
+    path: `/team/${slug}/members/${memberId}/`,
+  });
+}
+
 export function generateStaticParams() {
   return teams.flatMap((team) =>
     (team.members || []).map((member) => ({
