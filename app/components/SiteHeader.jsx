@@ -22,9 +22,9 @@ const ARCH_SCALE_FACTOR = {
 
 /** Large screens switch to the fully expanded boxed action-button treatment. */
 const DESKTOP_BREAKPOINT = 1024;
-const TICKETS_URL =
-  "https://www.eventora.com/el/Events/tedxntua-2026?utm_id=97758_v0_s00_e0_tv0";
-
+const BOOKLET_URL =
+  withBasePath("/event/eventApp/BOOKLET_CYCLE%200_.pdf");
+const bookletPhoto = withBasePath("/event/eventApp/booklet-photo.png")
 /**
  * Renders the site-wide header shell and keeps its layout synchronized with header-nav state.
  * @returns {JSX.Element}
@@ -35,24 +35,24 @@ export default function SiteHeader() {
   const isHomePage = pathname === "/";
   // Mirror the real nav open state so the action buttons animate in lockstep with the semicircle menu.
   const { isOpen: isHeaderNavOpen } = useHeaderNav();
-  
+
   // Tracks the previous scroll position using a Ref to compare against new scroll values without re-rendering.
   const lastScrollYRef = useRef(0);
 
   // Configures a theme object containing dynamic RGB color values and opacities based on the current page route.
-  const theme = isHomePage 
+  const theme = isHomePage
     ? {
-        bg: "202, 221, 221", bgOp: 0.35,
-        brd: "195, 199, 214", brdOp: 0.7,
-        hvr: "160, 240, 200", hvrOp: 0.15,
-        tx: "0, 0, 0", txOp: 0.9,
-      }
+      bg: "202, 221, 221", bgOp: 0.35,
+      brd: "195, 199, 214", brdOp: 0.7,
+      hvr: "160, 240, 200", hvrOp: 0.15,
+      tx: "0, 0, 0", txOp: 0.9,
+    }
     : {
-        bg: "255, 255, 255", bgOp: 0.05,
-        brd: "255, 255, 255", brdOp: 0.3,
-        hvr: "160, 240, 200", hvrOp: 0.15,
-        tx: "255, 255, 255", txOp: 0.9,
-      };
+      bg: "255, 255, 255", bgOp: 0.05,
+      brd: "255, 255, 255", brdOp: 0.3,
+      hvr: "160, 240, 200", hvrOp: 0.15,
+      tx: "255, 255, 255", txOp: 0.9,
+    };
 
   // Broadcast downward scrolling so the nav can hide itself without this component owning that visibility state.
   useEffect(() => {
@@ -95,11 +95,10 @@ export default function SiteHeader() {
   // Renders the top-level header container with conditional positioning and glassmorphism styling.
   return (
     <header
-      className={`site-header z-40 overflow-visible bg-transparent text-white ${
-        isHomePage 
-          ? "pointer-events-none fixed inset-x-0 top-0 border-b-0" 
+      className={`site-header z-40 overflow-visible bg-transparent text-white ${isHomePage
+          ? "pointer-events-none fixed inset-x-0 top-0 border-b-0"
           : "sticky top-0 border-b border-white/8 max-h-[120px]"
-      }`}
+        }`}
     >
       {/* Positions the central circular navigation component as an absolute overlay at the very top of the header (the "ceiling"). */}
       <div className="pointer-events-auto absolute inset-x-0 top-0 flex justify-center">
@@ -110,24 +109,23 @@ export default function SiteHeader() {
       <BackgroundDecorations scale={ARCH_SCALE_FACTOR} />
 
       {/* Provides a responsive container that adjusts vertical padding based on the current page route. */}
-      <div className={`container relative mx-auto px-4 py-3 sm:px-6 sm:py-4 ${
-        isHomePage ? "min-h-[108px] pt-5 sm:min-h-[120px]" : "min-h-[128px] sm:min-h-[144px]"
-      }`}>
-        
+      <div className={`container relative mx-auto px-4 py-3 sm:px-6 sm:py-4 ${isHomePage ? "min-h-[108px] pt-5 sm:min-h-[120px]" : "min-h-[128px] sm:min-h-[144px]"
+        }`}>
+
         {/* Mobile/tablet keep a simple flex row, while desktop switches to a three-column header grid. */}
         <div className="flex items-start justify-between lg:grid lg:grid-cols-[minmax(260px,1fr)_auto_minmax(260px,1fr)] lg:gap-6">
-          
+
           {/* Home action button with logo, replaces the old archive button. */}
           <div className={`flex justify-start transition-all duration-500 ease-[cubic-bezier(0.8, 0.8, 0.5, 0.5)] ${leftActionClasses}`}>
-            <ActionButton 
-              href="/" 
+            <ActionButton
+              href="/"
               theme={theme}
               isInternal={true}
             >
               <div className="flex w-full items-center justify-center py-1 sm:py-2">
-                <img 
-                  src={withBasePath(isHomePage ? "/tedxntua_logo-black.png" : "/tedxntua_logo.png")} 
-                  alt="TEDxNTUA Home" 
+                <img
+                  src={withBasePath(isHomePage ? "/tedxntua_logo-black.png" : "/tedxntua_logo.png")}
+                  alt="TEDxNTUA Home"
                   className="h-6 w-auto object-contain transition-all duration-300 group-hover:scale-105 sm:h-8 lg:h-9"
                   width={180}
                   height={48}
@@ -144,18 +142,18 @@ export default function SiteHeader() {
 
           {/* Right action button mirrors the left one by sliding to the opposite side when the nav opens. */}
           <div className={`flex items-center justify-end transition-all duration-500 ease-[cubic-bezier(0.8, 0.8, 0.5, 0.5)] ${rightActionClasses}`}>
-            <ActionButton 
-              href={TICKETS_URL}
+            <ActionButton
+              href={BOOKLET_URL}
               theme={theme}
             >
               <div className="flex w-full flex-col items-center justify-center gap-1 py-1 sm:py-2">
                 <picture>
                   <source
-                    srcSet={`${withBasePath("/ticket-asset-128.webp")} 1x, ${withBasePath("/ticket-asset-256.webp")} 2x`}
+                    srcSet={`${bookletPhoto} 1x, ${bookletPhoto} 2x`}
                     type="image/webp"
                   />
                   <img
-                    src={withBasePath("/ticket-asset.png")}
+                    src={bookletPhoto}
                     alt="Get Tickets"
                     className="h-8 w-auto object-contain transition-all duration-all duration-300 group-hover:scale-105 sm:h-10 lg:h-11"
                     width={128}
@@ -169,7 +167,7 @@ export default function SiteHeader() {
                   style={{ color: `rgba(${theme.tx}, ${theme.txOp})` }}
                   suppressHydrationWarning
                 >
-                  Ticket
+                  Booklet
                 </span>
               </div>
             </ActionButton>
@@ -200,7 +198,7 @@ function ActionButton({ href, theme, icon, alt, isInternal = false, children }) 
   const hoverBg = `rgba(${theme.hvr}, ${theme.hvrOp})`;
 
   const sharedClasses = "pointer-events-auto group relative flex flex-col items-center justify-center transition-all lg:min-h-[76px] lg:min-w-[260px] lg:flex-row-reverse lg:justify-between lg:rounded-[1.75rem] lg:border lg:border-solid lg:px-5 lg:backdrop-blur-sm [--bg-final:transparent] [--brd-final:transparent] lg:[--bg-final:var(--bg-current,var(--base-bg))] lg:[--brd-final:var(--brd-current,var(--base-brd))]";
-  
+
   const sharedStyle = {
     "--base-bg": baseBg,
     "--base-brd": baseBorder,
@@ -208,11 +206,11 @@ function ActionButton({ href, theme, icon, alt, isInternal = false, children }) 
     borderColor: "var(--brd-final)",
   };
 
-  const handleMouseEnter = (e) => { 
+  const handleMouseEnter = (e) => {
     e.currentTarget.style.setProperty("--bg-current", hoverBg);
   };
-  
-  const handleMouseLeave = (e) => { 
+
+  const handleMouseLeave = (e) => {
     e.currentTarget.style.setProperty("--bg-current", "var(--base-bg)");
   };
 
@@ -255,6 +253,8 @@ function ActionButton({ href, theme, icon, alt, isInternal = false, children }) 
   return (
     <a
       href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       className={sharedClasses}
       style={sharedStyle}
       onMouseEnter={handleMouseEnter}
@@ -276,22 +276,22 @@ function BackgroundDecorations({ scale }) {
     <>
       {/* Transparent overlay keeps the decoration layer aligned with the header bounds. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[transparent_100%)]" />
-      
+
       {/* Left and right ring pairs create the orbital framing behind the header content. */}
       <div
-        className="pointer-events-none absolute left-[-2rem] top-[-3.5rem] rounded-full border border-white/30" 
+        className="pointer-events-none absolute left-[-2rem] top-[-3.5rem] rounded-full border border-white/30"
         style={{ width: `${scale.ring1}vw`, height: `${scale.ring1}vw` }}
       />
-      <div 
-        className="pointer-events-none absolute left-[2.5rem] top-[-5rem] rounded-full border border-white/18" 
+      <div
+        className="pointer-events-none absolute left-[2.5rem] top-[-5rem] rounded-full border border-white/18"
         style={{ width: `${scale.ring2}vw`, height: `${scale.ring2}vw` }}
       />
-      <div 
-        className="pointer-events-none absolute right-[-3rem] top-[-4rem] rounded-full border border-white/30" 
+      <div
+        className="pointer-events-none absolute right-[-3rem] top-[-4rem] rounded-full border border-white/30"
         style={{ width: `${scale.ring3}vw`, height: `${scale.ring3}vw` }}
       />
-      <div 
-        className="pointer-events-none absolute right-[2rem] top-[-5.5rem] rounded-full border border-white/18" 
+      <div
+        className="pointer-events-none absolute right-[2rem] top-[-5.5rem] rounded-full border border-white/18"
         style={{ width: `${scale.ring4}vw`, height: `${scale.ring4}vw` }}
       />
     </>

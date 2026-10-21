@@ -6,8 +6,6 @@ import { withBasePath } from "../lib/basePath";
 import ScrollRevealText from "./ScrollRevealText";
 import { isAndroid } from "../lib/isAndroid";
 import { isIOS } from "../lib/isIOS";
-import HomeEventAppButton from "./HomeEventAppButton";
-import GiveawaysButton from "./GiveawaysButton";
 
 const storyBeats = [
   "Reforn the circle.",
@@ -287,10 +285,6 @@ export default function HomeVideoScrubber({ heroTitleClassName = "" }) {
               className="h-[2px] md:h-[3px] bg-green-500 mt-6 md:mt-10 shadow-[0_0_15px_rgba(34,197,94,0.8)] transition-all duration-1000 ease-out"
               style={{ width: heroReveal ? (isNarrowViewport ? '160px' : '320px') : '0px', opacity: heroReveal ? 1 : 0 }}
             />
-            <div className="flex flex-col items-center gap-4 mt-8 md:mt-10">
-              <HomeEventAppButton />
-              <GiveawaysButton />
-            </div>
           </div>
         </div>
       </section>
